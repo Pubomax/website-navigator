@@ -2,6 +2,12 @@ import { Link } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertNewsletterSubscriptionSchema } from "@shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { 
   Facebook, 
   Twitter, 
@@ -26,6 +32,41 @@ const navigation = {
 };
 
 export function Footer() {
+  const { toast } = useToast();
+  const form = useForm({
+    resolver: zodResolver(insertNewsletterSubscriptionSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const { mutate: subscribe, isPending } = useMutation({
+    mutationFn: async (data: { email: string }) => {
+      return apiRequest("/api/newsletter", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Success!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
+      form.reset();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to subscribe. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onSubmit = form.handleSubmit((data) => {
+    subscribe(data);
+  });
+
   return (
     <footer className="bg-background mt-auto border-t">
       <div className="container py-8 md:py-12">
@@ -72,14 +113,23 @@ export function Footer() {
               <p className="text-sm text-muted-foreground mb-4">
                 Stay updated with the latest in digital transformation.
               </p>
-              <form className="flex flex-col sm:flex-row gap-3">
+              <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-3">
                 <Input
                   type="email"
                   placeholder="Enter your email"
                   className="min-w-0"
+                  {...form.register("email")}
+                  disabled={isPending}
                 />
-                <Button type="submit">Subscribe</Button>
+                <Button type="submit" disabled={isPending}>
+                  {isPending ? "Subscribing..." : "Subscribe"}
+                </Button>
               </form>
+              {form.formState.errors.email && (
+                <p className="mt-2 text-sm text-destructive">
+                  {form.formState.errors.email.message}
+                </p>
+              )}
             </div>
           </div>
         </div>

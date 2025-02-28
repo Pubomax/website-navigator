@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactMessageSchema } from "@shared/schema";
+import { insertContactMessageSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Blog Categories Routes
@@ -60,6 +60,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(201).json(message);
     } catch (error) {
       res.status(400).json({ message: "Invalid contact form data" });
+    }
+  });
+
+  // Newsletter Subscription Route
+  app.post("/api/newsletter", async (req, res) => {
+    try {
+      const data = insertNewsletterSubscriptionSchema.parse(req.body);
+
+      // Check if email already exists
+      const existing = await storage.getNewsletterSubscription(data.email);
+      if (existing) {
+        res.status(400).json({ message: "Email already subscribed" });
+        return;
+      }
+
+      const subscription = await storage.createNewsletterSubscription(data);
+      res.status(201).json(subscription);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid subscription data" });
     }
   });
 

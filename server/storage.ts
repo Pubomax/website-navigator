@@ -3,10 +3,12 @@ import {
   type BlogPost,
   type CaseStudy,
   type ContactMessage,
+  type NewsletterSubscription,
   type InsertBlogCategory,
   type InsertBlogPost,
   type InsertCaseStudy,
   type InsertContactMessage,
+  type InsertNewsletterSubscription,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -22,11 +24,18 @@ export interface IStorage {
   getBlogPostsByCategory(categoryId: number): Promise<BlogPost[]>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
 
-  // Other existing methods
+  // Case Studies
   getCaseStudies(): Promise<CaseStudy[]>;
   getCaseStudyById(id: number): Promise<CaseStudy | undefined>;
   createCaseStudy(caseStudy: InsertCaseStudy): Promise<CaseStudy>;
+
+  // Contact Messages
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+
+  // Newsletter Subscriptions
+  getNewsletterSubscription(email: string): Promise<NewsletterSubscription | undefined>;
+  createNewsletterSubscription(subscription: InsertNewsletterSubscription): Promise<NewsletterSubscription>;
+  updateNewsletterSubscriptionStatus(email: string, status: string): Promise<NewsletterSubscription>;
 }
 
 export class MemStorage implements IStorage {
@@ -34,6 +43,7 @@ export class MemStorage implements IStorage {
   private blogPosts: Map<number, BlogPost>;
   private caseStudies: Map<number, CaseStudy>;
   private contactMessages: Map<number, ContactMessage>;
+  private newsletterSubscriptions: Map<string, NewsletterSubscription>;
   private currentIds: { [key: string]: number };
 
   constructor() {
@@ -42,11 +52,13 @@ export class MemStorage implements IStorage {
     this.blogPosts = new Map();
     this.caseStudies = new Map();
     this.contactMessages = new Map();
+    this.newsletterSubscriptions = new Map();
     this.currentIds = { 
       blogCategories: 1, 
       blogPosts: 1, 
       caseStudies: 1, 
-      contactMessages: 1 
+      contactMessages: 1,
+      newsletterSubscriptions: 1,
     };
 
     try {
@@ -263,6 +275,38 @@ export class MemStorage implements IStorage {
     const contactMessage = { ...message, id };
     this.contactMessages.set(id, contactMessage);
     return contactMessage;
+  }
+
+  // Newsletter Subscription Methods
+  async getNewsletterSubscription(email: string): Promise<NewsletterSubscription | undefined> {
+    return this.newsletterSubscriptions.get(email);
+  }
+
+  async createNewsletterSubscription(subscription: InsertNewsletterSubscription): Promise<NewsletterSubscription> {
+    const id = this.currentIds.newsletterSubscriptions++;
+    const newSubscription: NewsletterSubscription = {
+      id,
+      email: subscription.email,
+      subscribedAt: new Date(),
+      isVerified: false,
+      status: 'pending'
+    };
+    this.newsletterSubscriptions.set(subscription.email, newSubscription);
+    return newSubscription;
+  }
+
+  async updateNewsletterSubscriptionStatus(email: string, status: string): Promise<NewsletterSubscription> {
+    const subscription = await this.getNewsletterSubscription(email);
+    if (!subscription) {
+      throw new Error(`Subscription not found for email: ${email}`);
+    }
+
+    const updatedSubscription = {
+      ...subscription,
+      status
+    };
+    this.newsletterSubscriptions.set(email, updatedSubscription);
+    return updatedSubscription;
   }
 }
 
