@@ -12,6 +12,16 @@ import {
   type InsertNewsletterSubscription,
   type InsertAdminUser,
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
+import {
+  blogCategories,
+  blogPosts,
+  caseStudies,
+  contactMessages,
+  newsletterSubscriptions,
+  adminUsers,
+} from "@shared/schema";
 
 export interface IStorage {
   // Blog Categories
@@ -46,342 +56,165 @@ export interface IStorage {
   updateAdminUserLastLogin(username: string): Promise<AdminUser>;
 }
 
-export class MemStorage implements IStorage {
-  private blogCategories: Map<number, BlogCategory>;
-  private blogPosts: Map<number, BlogPost>;
-  private caseStudies: Map<number, CaseStudy>;
-  private contactMessages: Map<number, ContactMessage>;
-  private newsletterSubscriptions: Map<string, NewsletterSubscription>;
-  private adminUsers: Map<string, AdminUser>;
-  private currentIds: { [key: string]: number };
-
-  constructor() {
-    console.log('Initializing MemStorage...');
-    this.blogCategories = new Map();
-    this.blogPosts = new Map();
-    this.caseStudies = new Map();
-    this.contactMessages = new Map();
-    this.newsletterSubscriptions = new Map();
-    this.adminUsers = new Map();
-    this.currentIds = {
-      blogCategories: 1,
-      blogPosts: 1,
-      caseStudies: 1,
-      contactMessages: 1,
-      newsletterSubscriptions: 1,
-      adminUsers: 1,
-    };
-
-    try {
-      console.log('Starting blog categories initialization...');
-      this.initializeBlogCategories();
-      console.log('Blog categories initialized successfully');
-
-      console.log('Starting blog posts initialization...');
-      this.initializeBlogPosts();
-      console.log('Blog posts initialized successfully');
-
-      console.log('Starting case studies initialization...');
-      this.initializeCaseStudies();
-      console.log('Case studies initialized successfully');
-
-      console.log('Starting admin users initialization...');
-      this.initializeAdminUsers();
-      console.log('Admin users initialized successfully');
-    } catch (error) {
-      console.error('Error during storage initialization:', error);
-    }
-  }
-
-  private initializeBlogCategories() {
-    const categories: InsertBlogCategory[] = [
-      {
-        name: "Digital Transformation",
-        slug: "digital-transformation",
-        description: "Latest trends and insights in digital transformation",
-      },
-      {
-        name: "Artificial Intelligence",
-        slug: "artificial-intelligence",
-        description: "AI applications and innovations in business",
-      },
-      {
-        name: "Automation",
-        slug: "automation",
-        description: "Process automation and efficiency improvements",
-      },
-    ];
-
-    console.log(`Initializing ${categories.length} blog categories...`);
-    categories.forEach(category => {
-      const categoryWithNullDesc = {
-        ...category,
-        description: category.description || null,
-      };
-      this.createBlogCategory(categoryWithNullDesc);
-    });
-  }
-
-  private validateCategoryExists(categoryId: number): boolean {
-    const exists = this.blogCategories.has(categoryId);
-    if (!exists) {
-      console.error(`Attempted to create post with non-existent category ID: ${categoryId}`);
-    }
-    return exists;
-  }
-
-  private initializeBlogPosts() {
-    const initialPosts: InsertBlogPost[] = [
-      {
-        title: "The Future of AI in Business",
-        content: "Detailed analysis of AI trends...",
-        summary: "Exploring how AI is reshaping business landscape",
-        publishedAt: new Date(),
-        imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-        categoryId: 2, // AI category
-      },
-      {
-        title: "Digital Transformation Strategy Guide",
-        content: "Step by step guide to digital transformation...",
-        summary: "Essential steps for successful digital transformation",
-        publishedAt: new Date(),
-        imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-        categoryId: 1, // Digital Transformation category
-      },
-      {
-        title: "Automation Success Stories",
-        content: "Real-world examples of successful automation...",
-        summary: "Learn from successful automation implementations",
-        publishedAt: new Date(),
-        imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-        categoryId: 3, // Automation category
-      },
-    ];
-
-    console.log(`Initializing ${initialPosts.length} blog posts...`);
-    initialPosts.forEach(post => {
-      if (this.validateCategoryExists(post.categoryId)) {
-        this.createBlogPost(post);
-      }
-    });
-  }
-
-  private initializeCaseStudies() {
-    const initialCaseStudies: InsertCaseStudy[] = [
-      {
-        title: "Digital Transformation for Major Retailer",
-        description: "Implemented AI-driven inventory management system and predictive analytics for a national retail chain, revolutionizing their stock management and customer service.",
-        industry: "Retail",
-        results: "30% reduction in inventory costs, 25% increase in customer satisfaction",
-        imageUrl: "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
-      },
-      {
-        title: "Manufacturing Process Automation",
-        description: "Automated quality control processes using computer vision and machine learning, significantly improving production efficiency and reducing defects.",
-        industry: "Manufacturing",
-        results: "50% improvement in defect detection, 40% faster production time",
-        imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-      },
-      {
-        title: "Healthcare Data Integration",
-        description: "Developed and implemented a comprehensive healthcare data platform that unified patient records and enabled real-time analytics for better patient care.",
-        industry: "Healthcare",
-        results: "60% faster patient data access, 45% reduction in administrative time",
-        imageUrl: "https://images.unsplash.com/photo-1504813184591-01572f98c85f",
-      },
-      {
-        title: "Financial Services Digital Platform",
-        description: "Created a modern digital banking platform with advanced security features and intuitive user interface for a leading financial institution.",
-        industry: "Finance",
-        results: "200% increase in mobile banking adoption, 40% reduction in transaction time",
-        imageUrl: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43",
-      },
-      {
-        title: "Smart City Infrastructure",
-        description: "Implemented IoT sensors and real-time monitoring systems for a major city's infrastructure management, improving urban services and efficiency.",
-        industry: "Government",
-        results: "35% energy savings, 45% improvement in maintenance efficiency",
-        imageUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b",
-      },
-      {
-        title: "E-commerce Platform Modernization",
-        description: "Revamped legacy e-commerce system with modern microservices architecture and AI-powered recommendation engine.",
-        industry: "E-commerce",
-        results: "150% increase in sales conversion, 60% better customer engagement",
-        imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-      }
-    ];
-
-    console.log(`Initializing ${initialCaseStudies.length} case studies...`);
-    initialCaseStudies.forEach(study => this.createCaseStudy(study));
-  }
-
-  private async initializeAdminUsers() {
-    // Create default admin user if not exists
-    const defaultAdmin: InsertAdminUser = {
-      username: 'admin',
-      email: 'admin@example.com',
-      password: 'adminpass123',
-      confirmPassword: 'adminpass123',
-      role: 'admin'
-    };
-
-    if (!(await this.getAdminUserByUsername(defaultAdmin.username))) {
-      await this.createAdminUser(defaultAdmin);
-    }
-  }
-
+export class DatabaseStorage implements IStorage {
   // Blog Category Methods
   async getBlogCategories(): Promise<BlogCategory[]> {
-    return Array.from(this.blogCategories.values());
+    return await db.select().from(blogCategories);
   }
 
   async getBlogCategoryById(id: number): Promise<BlogCategory | undefined> {
-    return this.blogCategories.get(id);
+    const [category] = await db
+      .select()
+      .from(blogCategories)
+      .where(eq(blogCategories.id, id));
+    return category;
   }
 
   async getBlogCategoryBySlug(slug: string): Promise<BlogCategory | undefined> {
-    return Array.from(this.blogCategories.values()).find(
-      category => category.slug === slug
-    );
+    const [category] = await db
+      .select()
+      .from(blogCategories)
+      .where(eq(blogCategories.slug, slug));
+    return category;
   }
 
   async createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory> {
-    const id = this.currentIds.blogCategories++;
-    const newCategory = {
-      ...category,
-      id,
-      description: category.description || null
-    };
-    this.blogCategories.set(id, newCategory);
+    const [newCategory] = await db
+      .insert(blogCategories)
+      .values(category)
+      .returning();
     return newCategory;
   }
 
   // Blog Post Methods
   async getBlogPosts(): Promise<BlogPost[]> {
-    return Array.from(this.blogPosts.values());
+    return await db.select().from(blogPosts);
   }
 
   async getBlogPostById(id: number): Promise<BlogPost | undefined> {
-    return this.blogPosts.get(id);
+    const [post] = await db
+      .select()
+      .from(blogPosts)
+      .where(eq(blogPosts.id, id));
+    return post;
   }
 
   async getBlogPostsByCategory(categoryId: number): Promise<BlogPost[]> {
-    return Array.from(this.blogPosts.values()).filter(
-      post => post.categoryId === categoryId
-    );
+    return await db
+      .select()
+      .from(blogPosts)
+      .where(eq(blogPosts.categoryId, categoryId));
   }
 
   async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
-    if (!this.validateCategoryExists(post.categoryId)) {
-      throw new Error(`Cannot create blog post: Category ID ${post.categoryId} does not exist`);
-    }
-
-    const id = this.currentIds.blogPosts++;
-    const blogPost = { ...post, id };
-    this.blogPosts.set(id, blogPost);
-    return blogPost;
+    const [newPost] = await db
+      .insert(blogPosts)
+      .values(post)
+      .returning();
+    return newPost;
   }
 
   // Case Studies Methods
   async getCaseStudies(): Promise<CaseStudy[]> {
-    return Array.from(this.caseStudies.values());
+    return await db.select().from(caseStudies);
   }
 
   async getCaseStudyById(id: number): Promise<CaseStudy | undefined> {
-    return this.caseStudies.get(id);
+    const [study] = await db
+      .select()
+      .from(caseStudies)
+      .where(eq(caseStudies.id, id));
+    return study;
   }
 
   async createCaseStudy(study: InsertCaseStudy): Promise<CaseStudy> {
-    const id = this.currentIds.caseStudies++;
-    const caseStudy = { ...study, id };
-    this.caseStudies.set(id, caseStudy);
-    return caseStudy;
+    const [newStudy] = await db
+      .insert(caseStudies)
+      .values(study)
+      .returning();
+    return newStudy;
   }
 
   // Contact Message Methods
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
-    const id = this.currentIds.contactMessages++;
-    const contactMessage = { ...message, id };
-    this.contactMessages.set(id, contactMessage);
-    return contactMessage;
+    const [newMessage] = await db
+      .insert(contactMessages)
+      .values(message)
+      .returning();
+    return newMessage;
   }
 
   // Newsletter Subscription Methods
   async getNewsletterSubscription(email: string): Promise<NewsletterSubscription | undefined> {
-    return this.newsletterSubscriptions.get(email);
+    const [subscription] = await db
+      .select()
+      .from(newsletterSubscriptions)
+      .where(eq(newsletterSubscriptions.email, email));
+    return subscription;
   }
 
   async createNewsletterSubscription(subscription: InsertNewsletterSubscription): Promise<NewsletterSubscription> {
-    const id = this.currentIds.newsletterSubscriptions++;
-    const newSubscription: NewsletterSubscription = {
-      id,
-      email: subscription.email,
-      subscribedAt: new Date(),
-      isVerified: false,
-      status: 'pending'
-    };
-    this.newsletterSubscriptions.set(subscription.email, newSubscription);
+    const [newSubscription] = await db
+      .insert(newsletterSubscriptions)
+      .values({
+        ...subscription,
+        subscribedAt: new Date(),
+        isVerified: false,
+        status: 'pending'
+      })
+      .returning();
     return newSubscription;
   }
 
   async updateNewsletterSubscriptionStatus(email: string, status: string): Promise<NewsletterSubscription> {
-    const subscription = await this.getNewsletterSubscription(email);
-    if (!subscription) {
-      throw new Error(`Subscription not found for email: ${email}`);
-    }
-
-    const updatedSubscription = {
-      ...subscription,
-      status
-    };
-    this.newsletterSubscriptions.set(email, updatedSubscription);
+    const [updatedSubscription] = await db
+      .update(newsletterSubscriptions)
+      .set({ status })
+      .where(eq(newsletterSubscriptions.email, email))
+      .returning();
     return updatedSubscription;
   }
 
   // Admin User Methods
   async getAdminUserByUsername(username: string): Promise<AdminUser | undefined> {
-    return Array.from(this.adminUsers.values()).find(
-      user => user.username === username
-    );
+    const [user] = await db
+      .select()
+      .from(adminUsers)
+      .where(eq(adminUsers.username, username));
+    return user;
   }
 
   async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
-    return Array.from(this.adminUsers.values()).find(
-      user => user.email === email
-    );
+    const [user] = await db
+      .select()
+      .from(adminUsers)
+      .where(eq(adminUsers.email, email));
+    return user;
   }
 
   async createAdminUser(user: InsertAdminUser): Promise<AdminUser> {
-    const id = this.currentIds.adminUsers++;
-    const now = new Date();
-    // In a real app, we would hash the password. For demo purposes, we'll store it as is
-    const adminUser: AdminUser = {
-      id,
-      username: user.username,
-      email: user.email,
-      passwordHash: user.password, // In real app, this would be hashed
-      role: user.role || 'editor',
-      createdAt: now,
-      lastLoginAt: null,
-    };
-    this.adminUsers.set(user.username, adminUser);
-    return adminUser;
+    const [newUser] = await db
+      .insert(adminUsers)
+      .values({
+        username: user.username,
+        email: user.email,
+        passwordHash: user.password, // In real app, this would be hashed
+        role: user.role || 'editor',
+        createdAt: new Date(),
+        lastLoginAt: null,
+      })
+      .returning();
+    return newUser;
   }
 
   async updateAdminUserLastLogin(username: string): Promise<AdminUser> {
-    const user = await this.getAdminUserByUsername(username);
-    if (!user) {
-      throw new Error(`Admin user not found: ${username}`);
-    }
-
-    const updatedUser = {
-      ...user,
-      lastLoginAt: new Date(),
-    };
-    this.adminUsers.set(username, updatedUser);
+    const [updatedUser] = await db
+      .update(adminUsers)
+      .set({ lastLoginAt: new Date() })
+      .where(eq(adminUsers.username, username))
+      .returning();
     return updatedUser;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();

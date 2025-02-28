@@ -2,10 +2,31 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
-import { insertContactMessageSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
+import { insertContactMessageSchema, insertNewsletterSubscriptionSchema, insertBlogPostSchema, insertBlogCategorySchema } from "@shared/schema";
 
 // Store connected clients
 const clients = new Set<WebSocket>();
+
+// Basic auth middleware for admin routes
+const adminAuthMiddleware = async (req: any, res: any, next: any) => {
+  const username = req.headers["x-admin-username"];
+  const password = req.headers["x-admin-password"];
+
+  if (!username || !password) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+
+  try {
+    const user = await storage.getAdminUserByUsername(username);
+    if (!user || user.passwordHash !== password) { // In production, use proper password hashing
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    next();
+  } catch (error) {
+    console.error('Auth error:', error);
+    res.status(500).json({ message: "Authentication error" });
+  }
+};
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server first
@@ -16,10 +37,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   wss.on('connection', (ws) => {
     console.log('New client connected');
-    // Add new client to the set
     clients.add(ws);
 
-    // Send welcome message
     ws.send(JSON.stringify({
       type: 'system',
       message: 'Welcome to live chat support! How can we help you today?',
@@ -31,7 +50,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const message = JSON.parse(data.toString());
         console.log('Received message:', message);
 
-        // Broadcast message to all connected clients
         const response = {
           type: message.type || 'user',
           message: message.message,
@@ -54,7 +72,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Blog Categories Routes
+  // Admin Routes
+  app.get("/api/admin/blog-posts", adminAuthMiddleware, async (_req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching blog posts" });
+    }
+  });
+
+  app.post("/api/admin/blog-posts", adminAuthMiddleware, async (req, res) => {
+    try {
+      const data = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(data);
+      res.status(201).json(post);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid blog post data" });
+    }
+  });
+
+  app.get("/api/admin/blog-categories", adminAuthMiddleware, async (_req, res) => {
+    try {
+      const categories = await storage.getBlogCategories();
+      res.json(categories);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching blog categories" });
+    }
+  });
+
+  app.post("/api/admin/blog-categories", adminAuthMiddleware, async (req, res) => {
+    try {
+      const data = insertBlogCategorySchema.parse(req.body);
+      const category = await storage.createBlogCategory(data);
+      res.status(201).json(category);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid category data" });
+    }
+  });
+
+  // Public Routes
   app.get("/api/blog-categories", async (_req, res) => {
     const categories = await storage.getBlogCategories();
     res.json(categories);
@@ -69,7 +126,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(category);
   });
 
-  // Blog Posts Routes
   app.get("/api/blog-posts", async (req, res) => {
     const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
     const posts = categoryId 
@@ -87,7 +143,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(post);
   });
 
-  // Case Studies Routes
   app.get("/api/case-studies", async (_req, res) => {
     const caseStudies = await storage.getCaseStudies();
     res.json(caseStudies);
@@ -102,7 +157,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(caseStudy);
   });
 
-  // Contact Route
   app.post("/api/contact", async (req, res) => {
     try {
       const data = insertContactMessageSchema.parse(req.body);
@@ -113,18 +167,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Newsletter Subscription Route
   app.post("/api/newsletter", async (req, res) => {
     try {
       const data = insertNewsletterSubscriptionSchema.parse(req.body);
-
-      // Check if email already exists
       const existing = await storage.getNewsletterSubscription(data.email);
       if (existing) {
         res.status(400).json({ message: "Email already subscribed" });
         return;
       }
-
       const subscription = await storage.createNewsletterSubscription(data);
       res.status(201).json(subscription);
     } catch (error) {

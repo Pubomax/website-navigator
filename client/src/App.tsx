@@ -16,6 +16,7 @@ import NotFound from "@/pages/not-found";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import FAQ from "@/pages/faq";
+import AdminDashboard from "@/pages/admin";
 
 function Router() {
   return (
@@ -33,6 +34,7 @@ function Router() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/faq" component={FAQ} />
+          <Route path="/admin" component={AdminDashboard} />
           <Route component={NotFound} />
         </Switch>
       </div>
