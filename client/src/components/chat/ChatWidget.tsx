@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { MessageCircle, Send, X } from "lucide-react";
+import { MessageCircle, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Message {
@@ -19,45 +19,76 @@ export function ChatWidget() {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
 
-  useEffect(() => {
-    if (isOpen && !ws) {
+  const connectWebSocket = () => {
+    try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const wsUrl = `${protocol}//${window.location.host}/ws`;
+      console.log('Attempting to connect to:', wsUrl);
+
       const socket = new WebSocket(wsUrl);
 
       socket.onopen = () => {
         console.log('Connected to chat server');
+        toast({
+          title: "Connected",
+          description: "Chat support is now available.",
+        });
       };
 
       socket.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        setMessages((prev) => [...prev, message]);
+        try {
+          const message = JSON.parse(event.data);
+          console.log('Received message:', message);
+          setMessages((prev) => [...prev, message]);
+        } catch (error) {
+          console.error('Error parsing message:', error);
+        }
       };
 
       socket.onclose = () => {
         console.log('Disconnected from chat server');
         setWs(null);
+
+        // Attempt to reconnect after 3 seconds
+        reconnectTimeoutRef.current = setTimeout(() => {
+          if (isOpen) {
+            console.log('Attempting to reconnect...');
+            connectWebSocket();
+          }
+        }, 3000);
       };
 
       socket.onerror = (error) => {
         console.error('WebSocket error:', error);
         toast({
           title: "Connection Error",
-          description: "Failed to connect to chat server. Please try again later.",
+          description: "Failed to connect to chat server. Retrying...",
           variant: "destructive",
         });
       };
 
       setWs(socket);
+    } catch (error) {
+      console.error('Error creating WebSocket:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen && !ws) {
+      connectWebSocket();
     }
 
     return () => {
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
       if (ws) {
         ws.close();
       }
     };
-  }, [isOpen, toast]);
+  }, [isOpen, ws]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -66,13 +97,23 @@ export function ChatWidget() {
   const sendMessage = () => {
     if (!inputMessage.trim() || !ws) return;
 
-    const message = {
-      type: 'user',
-      message: inputMessage,
-    };
+    try {
+      const message = {
+        type: 'user',
+        message: inputMessage,
+      };
 
-    ws.send(JSON.stringify(message));
-    setInputMessage('');
+      console.log('Sending message:', message);
+      ws.send(JSON.stringify(message));
+      setInputMessage('');
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

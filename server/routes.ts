@@ -92,6 +92,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
 
   wss.on('connection', (ws) => {
+    console.log('New client connected');
     // Add new client to the set
     clients.add(ws);
 
@@ -105,6 +106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     ws.on('message', (data) => {
       try {
         const message = JSON.parse(data.toString());
+        console.log('Received message:', message);
 
         // Broadcast message to all connected clients
         const response = {
@@ -124,6 +126,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
 
     ws.on('close', () => {
+      console.log('Client disconnected');
       clients.delete(ws);
     });
   });
