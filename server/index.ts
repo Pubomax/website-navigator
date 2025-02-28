@@ -37,14 +37,15 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Create HTTP server first
   const server = await registerRoutes(app);
 
+  // Error handling middleware
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
+    log(`Error: ${message}`);
     res.status(status).json({ message });
-    throw err;
   });
 
   if (app.get("env") === "development") {
@@ -61,9 +62,9 @@ app.use((req, res, next) => {
           port,
           host: "0.0.0.0",
         }, () => {
-          log(`serving on port ${port}`);
+          log(`Server listening on port ${port}`);
           resolve(undefined);
-        }).on('error', (e: any) => {
+        }).on('error', (e: Error) => {
           if (e.code === 'EADDRINUSE') {
             log(`Port ${port} is in use, trying port ${port + 1}...`);
             reject(e);
@@ -73,7 +74,7 @@ app.use((req, res, next) => {
           }
         });
       });
-    } catch (e) {
+    } catch (e: any) {
       if (e.code === 'EADDRINUSE') {
         await tryPort(port + 1);
       } else {

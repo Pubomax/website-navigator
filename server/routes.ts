@@ -8,6 +8,52 @@ import { insertContactMessageSchema, insertNewsletterSubscriptionSchema } from "
 const clients = new Set<WebSocket>();
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Create HTTP server first
+  const httpServer = createServer(app);
+
+  // Initialize WebSocket server with a unique path
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws/chat' });
+
+  wss.on('connection', (ws) => {
+    console.log('New client connected');
+    // Add new client to the set
+    clients.add(ws);
+
+    // Send welcome message
+    ws.send(JSON.stringify({
+      type: 'system',
+      message: 'Welcome to live chat support! How can we help you today?',
+      timestamp: new Date().toISOString(),
+    }));
+
+    ws.on('message', (data) => {
+      try {
+        const message = JSON.parse(data.toString());
+        console.log('Received message:', message);
+
+        // Broadcast message to all connected clients
+        const response = {
+          type: message.type || 'user',
+          message: message.message,
+          timestamp: new Date().toISOString(),
+        };
+
+        clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(response));
+          }
+        });
+      } catch (error) {
+        console.error('Error processing message:', error);
+      }
+    });
+
+    ws.on('close', () => {
+      console.log('Client disconnected');
+      clients.delete(ws);
+    });
+  });
+
   // Blog Categories Routes
   app.get("/api/blog-categories", async (_req, res) => {
     const categories = await storage.getBlogCategories();
@@ -84,51 +130,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       res.status(400).json({ message: "Invalid subscription data" });
     }
-  });
-
-  const httpServer = createServer(app);
-
-  // Initialize WebSocket server
-  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
-
-  wss.on('connection', (ws) => {
-    console.log('New client connected');
-    // Add new client to the set
-    clients.add(ws);
-
-    // Send welcome message
-    ws.send(JSON.stringify({
-      type: 'system',
-      message: 'Welcome to live chat support! How can we help you today?',
-      timestamp: new Date().toISOString(),
-    }));
-
-    ws.on('message', (data) => {
-      try {
-        const message = JSON.parse(data.toString());
-        console.log('Received message:', message);
-
-        // Broadcast message to all connected clients
-        const response = {
-          type: message.type || 'user',
-          message: message.message,
-          timestamp: new Date().toISOString(),
-        };
-
-        clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(response));
-          }
-        });
-      } catch (error) {
-        console.error('Error processing message:', error);
-      }
-    });
-
-    ws.on('close', () => {
-      console.log('Client disconnected');
-      clients.delete(ws);
-    });
   });
 
   return httpServer;

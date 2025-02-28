@@ -24,7 +24,7 @@ export function ChatWidget() {
   const connectWebSocket = () => {
     try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//${window.location.host}/ws`;
+      const wsUrl = `${protocol}//${window.location.host}/ws/chat`;
       console.log('Attempting to connect to:', wsUrl);
 
       const socket = new WebSocket(wsUrl);
