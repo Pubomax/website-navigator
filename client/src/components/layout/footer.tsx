@@ -42,10 +42,16 @@ export function Footer() {
 
   const { mutate: subscribe, isPending } = useMutation({
     mutationFn: async (data: { email: string }) => {
-      return apiRequest("/api/newsletter", {
+      const response = await apiRequest({
+        url: "/api/newsletter",
         method: "POST",
-        body: JSON.stringify(data),
+        data,
       });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to subscribe");
+      }
+      return response.json();
     },
     onSuccess: () => {
       toast({
