@@ -4,11 +4,13 @@ import {
   type CaseStudy,
   type ContactMessage,
   type NewsletterSubscription,
+  type AdminUser,
   type InsertBlogCategory,
   type InsertBlogPost,
   type InsertCaseStudy,
   type InsertContactMessage,
   type InsertNewsletterSubscription,
+  type InsertAdminUser,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -36,6 +38,12 @@ export interface IStorage {
   getNewsletterSubscription(email: string): Promise<NewsletterSubscription | undefined>;
   createNewsletterSubscription(subscription: InsertNewsletterSubscription): Promise<NewsletterSubscription>;
   updateNewsletterSubscriptionStatus(email: string, status: string): Promise<NewsletterSubscription>;
+
+  // Admin User Methods
+  getAdminUserByUsername(username: string): Promise<AdminUser | undefined>;
+  getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
+  createAdminUser(user: InsertAdminUser): Promise<AdminUser>;
+  updateAdminUserLastLogin(username: string): Promise<AdminUser>;
 }
 
 export class MemStorage implements IStorage {
@@ -44,6 +52,7 @@ export class MemStorage implements IStorage {
   private caseStudies: Map<number, CaseStudy>;
   private contactMessages: Map<number, ContactMessage>;
   private newsletterSubscriptions: Map<string, NewsletterSubscription>;
+  private adminUsers: Map<string, AdminUser>;
   private currentIds: { [key: string]: number };
 
   constructor() {
@@ -53,12 +62,14 @@ export class MemStorage implements IStorage {
     this.caseStudies = new Map();
     this.contactMessages = new Map();
     this.newsletterSubscriptions = new Map();
-    this.currentIds = { 
-      blogCategories: 1, 
-      blogPosts: 1, 
-      caseStudies: 1, 
+    this.adminUsers = new Map();
+    this.currentIds = {
+      blogCategories: 1,
+      blogPosts: 1,
+      caseStudies: 1,
       contactMessages: 1,
       newsletterSubscriptions: 1,
+      adminUsers: 1,
     };
 
     try {
@@ -73,6 +84,10 @@ export class MemStorage implements IStorage {
       console.log('Starting case studies initialization...');
       this.initializeCaseStudies();
       console.log('Case studies initialized successfully');
+
+      console.log('Starting admin users initialization...');
+      this.initializeAdminUsers();
+      console.log('Admin users initialized successfully');
     } catch (error) {
       console.error('Error during storage initialization:', error);
     }
@@ -201,6 +216,21 @@ export class MemStorage implements IStorage {
     initialCaseStudies.forEach(study => this.createCaseStudy(study));
   }
 
+  private async initializeAdminUsers() {
+    // Create default admin user if not exists
+    const defaultAdmin: InsertAdminUser = {
+      username: 'admin',
+      email: 'admin@example.com',
+      password: 'adminpass123',
+      confirmPassword: 'adminpass123',
+      role: 'admin'
+    };
+
+    if (!(await this.getAdminUserByUsername(defaultAdmin.username))) {
+      await this.createAdminUser(defaultAdmin);
+    }
+  }
+
   // Blog Category Methods
   async getBlogCategories(): Promise<BlogCategory[]> {
     return Array.from(this.blogCategories.values());
@@ -218,10 +248,10 @@ export class MemStorage implements IStorage {
 
   async createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory> {
     const id = this.currentIds.blogCategories++;
-    const newCategory = { 
-      ...category, 
+    const newCategory = {
+      ...category,
       id,
-      description: category.description || null 
+      description: category.description || null
     };
     this.blogCategories.set(id, newCategory);
     return newCategory;
@@ -307,6 +337,50 @@ export class MemStorage implements IStorage {
     };
     this.newsletterSubscriptions.set(email, updatedSubscription);
     return updatedSubscription;
+  }
+
+  // Admin User Methods
+  async getAdminUserByUsername(username: string): Promise<AdminUser | undefined> {
+    return Array.from(this.adminUsers.values()).find(
+      user => user.username === username
+    );
+  }
+
+  async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
+    return Array.from(this.adminUsers.values()).find(
+      user => user.email === email
+    );
+  }
+
+  async createAdminUser(user: InsertAdminUser): Promise<AdminUser> {
+    const id = this.currentIds.adminUsers++;
+    const now = new Date();
+    // In a real app, we would hash the password. For demo purposes, we'll store it as is
+    const adminUser: AdminUser = {
+      id,
+      username: user.username,
+      email: user.email,
+      passwordHash: user.password, // In real app, this would be hashed
+      role: user.role || 'editor',
+      createdAt: now,
+      lastLoginAt: null,
+    };
+    this.adminUsers.set(user.username, adminUser);
+    return adminUser;
+  }
+
+  async updateAdminUserLastLogin(username: string): Promise<AdminUser> {
+    const user = await this.getAdminUserByUsername(username);
+    if (!user) {
+      throw new Error(`Admin user not found: ${username}`);
+    }
+
+    const updatedUser = {
+      ...user,
+      lastLoginAt: new Date(),
+    };
+    this.adminUsers.set(username, updatedUser);
+    return updatedUser;
   }
 }
 

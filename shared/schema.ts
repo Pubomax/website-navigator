@@ -44,6 +44,16 @@ export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
   status: varchar("status", { length: 20 }).notNull().default('pending'),
 });
 
+export const adminUsers = pgTable("admin_users", {
+  id: serial("id").primaryKey(),
+  username: varchar("username", { length: 100 }).notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  email: text("email").notNull().unique(),
+  role: varchar("role", { length: 20 }).notNull().default('editor'),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  lastLoginAt: timestamp("last_login_at"),
+});
+
 export const insertBlogCategorySchema = createInsertSchema(blogCategories).omit({ id: true });
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({ id: true });
 export const insertCaseStudySchema = createInsertSchema(caseStudies).omit({ id: true });
@@ -56,15 +66,29 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
 }).extend({
   email: z.string().email("Please enter a valid email address"),
 });
+export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({ 
+  id: true,
+  passwordHash: true,
+  createdAt: true,
+  lastLoginAt: true,
+}).extend({
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
 
 export type BlogCategory = typeof blogCategories.$inferSelect;
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type CaseStudy = typeof caseStudies.$inferSelect;
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
+export type AdminUser = typeof adminUsers.$inferSelect;
 
 export type InsertBlogCategory = z.infer<typeof insertBlogCategorySchema>;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type InsertCaseStudy = z.infer<typeof insertCaseStudySchema>;
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
+export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
