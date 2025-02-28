@@ -28,7 +28,7 @@ export class MemStorage implements IStorage {
     this.blogPosts = new Map();
     this.contactMessages = new Map();
     this.currentIds = { caseStudies: 1, blogPosts: 1, contactMessages: 1 };
-    
+
     // Add some initial case studies
     this.initializeCaseStudies();
     this.initializeBlogPosts();
@@ -38,17 +38,45 @@ export class MemStorage implements IStorage {
     const initialCaseStudies: InsertCaseStudy[] = [
       {
         title: "Digital Transformation for Major Retailer",
-        description: "Implemented AI-driven inventory management system",
+        description: "Implemented AI-driven inventory management system and predictive analytics for a national retail chain, revolutionizing their stock management and customer service.",
         industry: "Retail",
-        results: "30% reduction in inventory costs",
+        results: "30% reduction in inventory costs, 25% increase in customer satisfaction",
         imageUrl: "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
       },
       {
         title: "Manufacturing Process Automation",
-        description: "Automated quality control using computer vision",
+        description: "Automated quality control processes using computer vision and machine learning, significantly improving production efficiency and reducing defects.",
         industry: "Manufacturing",
-        results: "50% improvement in defect detection",
+        results: "50% improvement in defect detection, 40% faster production time",
         imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+      },
+      {
+        title: "Healthcare Data Integration",
+        description: "Developed and implemented a comprehensive healthcare data platform that unified patient records and enabled real-time analytics for better patient care.",
+        industry: "Healthcare",
+        results: "60% faster patient data access, 45% reduction in administrative time",
+        imageUrl: "https://images.unsplash.com/photo-1504813184591-01572f98c85f",
+      },
+      {
+        title: "Financial Services Digital Platform",
+        description: "Created a modern digital banking platform with advanced security features and intuitive user interface for a leading financial institution.",
+        industry: "Finance",
+        results: "200% increase in mobile banking adoption, 40% reduction in transaction time",
+        imageUrl: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43",
+      },
+      {
+        title: "Smart City Infrastructure",
+        description: "Implemented IoT sensors and real-time monitoring systems for a major city's infrastructure management, improving urban services and efficiency.",
+        industry: "Government",
+        results: "35% energy savings, 45% improvement in maintenance efficiency",
+        imageUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b",
+      },
+      {
+        title: "E-commerce Platform Modernization",
+        description: "Revamped legacy e-commerce system with modern microservices architecture and AI-powered recommendation engine.",
+        industry: "E-commerce",
+        results: "150% increase in sales conversion, 60% better customer engagement",
+        imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
       }
     ];
 
