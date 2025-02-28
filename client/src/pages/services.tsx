@@ -8,65 +8,36 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Brain,
-  Bot,
-  Code,
-  Building2,
-  Phone,
-  BarChart,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { businessSizes, sectors, needs, industries } from "@/data/services";
 
-const services = {
-  micro: [
-    {
-      name: "Digital Foundation Starter",
-      description: "Essential digital infrastructure for small businesses",
-      icon: Building2,
-      price: "Starting at $2,500",
-    },
-    {
-      name: "AI Automation Basics",
-      description: "Entry-level automation solutions for common tasks",
-      icon: Bot,
-      price: "Starting at $1,500",
-    },
-  ],
-  mid: [
-    {
-      name: "Complete Digital Transformation",
-      description: "Comprehensive digital solutions for growing businesses",
-      icon: Brain,
-      price: "Custom pricing",
-    },
-    {
-      name: "Advanced Automation Suite",
-      description: "Sophisticated automation for complex workflows",
-      icon: Code,
-      price: "Custom pricing",
-    },
-  ],
-  enterprise: [
-    {
-      name: "Enterprise AI Solutions",
-      description: "Large-scale AI implementation and integration",
-      icon: BarChart,
-      price: "Contact for pricing",
-    },
-    {
-      name: "Custom Platform Development",
-      description: "Tailor-made enterprise software solutions",
-      icon: Phone,
-      price: "Contact for pricing",
-    },
-  ],
+const categoryData = {
+  size: {
+    title: "By Business Size",
+    description: "Solutions tailored to your organization's scale",
+    data: businessSizes,
+  },
+  sector: {
+    title: "By Sector",
+    description: "Specialized solutions for your industry sector",
+    data: sectors,
+  },
+  need: {
+    title: "By Need",
+    description: "Solutions designed for your specific requirements",
+    data: needs,
+  },
+  industry: {
+    title: "By Industry",
+    description: "Industry-specific digital transformation solutions",
+    data: industries,
+  },
 };
 
 export default function Services() {
   return (
     <main className="py-24">
-      <div className="container">
+      <div className="container px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,47 +48,66 @@ export default function Services() {
             Our Services
           </h1>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Tailored digital transformation solutions for businesses of all sizes
+            Comprehensive digital transformation solutions tailored to your business
           </p>
         </motion.div>
 
         <div className="mt-16">
-          <Tabs defaultValue="micro" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="micro">Micro Business</TabsTrigger>
-              <TabsTrigger value="mid">Mid-sized Business</TabsTrigger>
-              <TabsTrigger value="enterprise">Enterprise</TabsTrigger>
+          <Tabs defaultValue="size" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
+              <TabsTrigger value="size">By Size</TabsTrigger>
+              <TabsTrigger value="sector">By Sector</TabsTrigger>
+              <TabsTrigger value="need">By Need</TabsTrigger>
+              <TabsTrigger value="industry">By Industry</TabsTrigger>
             </TabsList>
 
-            {Object.entries(services).map(([size, serviceList]) => (
-              <TabsContent key={size} value={size}>
-                <div className="grid gap-8 md:grid-cols-2">
-                  {serviceList.map((service, index) => (
-                    <motion.div
-                      key={service.name}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                      <Card className="h-full">
-                        <CardHeader>
-                          <div className="mb-4 inline-block rounded-lg bg-primary/10 p-3">
-                            <service.icon className="h-6 w-6 text-primary" />
-                          </div>
-                          <CardTitle>{service.name}</CardTitle>
-                          <CardDescription>{service.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm font-medium text-muted-foreground">
-                            {service.price}
-                          </p>
-                          <Button className="mt-4" variant="outline">
-                            Learn More
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+            {Object.entries(categoryData).map(([key, category]) => (
+              <TabsContent key={key} value={key}>
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold mb-2">{category.title}</h2>
+                  <p className="text-muted-foreground">{category.description}</p>
+                </div>
+
+                <div className="grid gap-8">
+                  {Object.entries(category.data).map(([id, section]) => (
+                    <div key={id}>
+                      <div className="mb-6">
+                        <h3 className="text-xl font-semibold">{section.title}</h3>
+                        <p className="text-muted-foreground mt-1">
+                          {section.description}
+                        </p>
+                      </div>
+
+                      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {section.services.map((service, index) => (
+                          <motion.div
+                            key={service.name}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                          >
+                            <Card className="h-full">
+                              <CardHeader>
+                                <div className="mb-4 inline-block rounded-lg bg-primary/10 p-3">
+                                  <service.icon className="h-6 w-6 text-primary" />
+                                </div>
+                                <CardTitle>{service.name}</CardTitle>
+                                <CardDescription>{service.description}</CardDescription>
+                              </CardHeader>
+                              <CardContent>
+                                <p className="text-sm font-medium text-muted-foreground">
+                                  {service.price}
+                                </p>
+                                <Button className="mt-4" variant="outline">
+                                  Learn More
+                                  <ArrowRight className="ml-2 h-4 w-4" />
+                                </Button>
+                              </CardContent>
+                            </Card>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </TabsContent>
