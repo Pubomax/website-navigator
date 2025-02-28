@@ -6,7 +6,7 @@ import { Link } from "wouter";
 export function Hero() {
   return (
     <div className="relative overflow-hidden bg-background">
-      <div className="container relative z-10 mx-auto px-4 py-24 sm:px-6 lg:px-8">
+      <div className="container px-4 sm:px-6 py-16 sm:py-24 lg:py-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -17,7 +17,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl font-bold tracking-tight sm:text-6xl"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
           >
             Empowering Digital Transformation
           </motion.h1>
@@ -25,7 +25,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-6 text-lg leading-8 text-muted-foreground"
+            className="mt-6 text-base sm:text-lg leading-8 text-muted-foreground px-4"
           >
             We help businesses of all sizes embrace the digital future through
             innovative AI solutions, automation, and strategic consulting.
@@ -34,15 +34,15 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-10 flex items-center justify-center gap-x-6"
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4"
           >
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link href="/services">
                 Explore Our Services
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
               <Link href="/contact">Schedule a Consultation</Link>
             </Button>
           </motion.div>
