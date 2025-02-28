@@ -1,7 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { insertContactMessageSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
+
+// Store connected clients
+const clients = new Set<WebSocket>();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Blog Categories Routes
@@ -83,5 +87,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+
+  // Initialize WebSocket server
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+
+  wss.on('connection', (ws) => {
+    // Add new client to the set
+    clients.add(ws);
+
+    // Send welcome message
+    ws.send(JSON.stringify({
+      type: 'system',
+      message: 'Welcome to live chat support! How can we help you today?',
+      timestamp: new Date().toISOString(),
+    }));
+
+    ws.on('message', (data) => {
+      try {
+        const message = JSON.parse(data.toString());
+
+        // Broadcast message to all connected clients
+        const response = {
+          type: message.type || 'user',
+          message: message.message,
+          timestamp: new Date().toISOString(),
+        };
+
+        clients.forEach((client) => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(response));
+          }
+        });
+      } catch (error) {
+        console.error('Error processing message:', error);
+      }
+    });
+
+    ws.on('close', () => {
+      clients.delete(ws);
+    });
+  });
+
   return httpServer;
 }
