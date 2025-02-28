@@ -37,6 +37,7 @@ export class MemStorage implements IStorage {
   private currentIds: { [key: string]: number };
 
   constructor() {
+    console.log('Initializing MemStorage...');
     this.blogCategories = new Map();
     this.blogPosts = new Map();
     this.caseStudies = new Map();
@@ -48,10 +49,21 @@ export class MemStorage implements IStorage {
       contactMessages: 1 
     };
 
-    // Initialize with sample data
-    this.initializeBlogCategories();
-    this.initializeBlogPosts();
-    this.initializeCaseStudies();
+    try {
+      console.log('Starting blog categories initialization...');
+      this.initializeBlogCategories();
+      console.log('Blog categories initialized successfully');
+
+      console.log('Starting blog posts initialization...');
+      this.initializeBlogPosts();
+      console.log('Blog posts initialized successfully');
+
+      console.log('Starting case studies initialization...');
+      this.initializeCaseStudies();
+      console.log('Case studies initialized successfully');
+    } catch (error) {
+      console.error('Error during storage initialization:', error);
+    }
   }
 
   private initializeBlogCategories() {
@@ -73,7 +85,22 @@ export class MemStorage implements IStorage {
       },
     ];
 
-    categories.forEach(category => this.createBlogCategory(category));
+    console.log(`Initializing ${categories.length} blog categories...`);
+    categories.forEach(category => {
+      const categoryWithNullDesc = {
+        ...category,
+        description: category.description || null,
+      };
+      this.createBlogCategory(categoryWithNullDesc);
+    });
+  }
+
+  private validateCategoryExists(categoryId: number): boolean {
+    const exists = this.blogCategories.has(categoryId);
+    if (!exists) {
+      console.error(`Attempted to create post with non-existent category ID: ${categoryId}`);
+    }
+    return exists;
   }
 
   private initializeBlogPosts() {
@@ -104,7 +131,12 @@ export class MemStorage implements IStorage {
       },
     ];
 
-    initialPosts.forEach(post => this.createBlogPost(post));
+    console.log(`Initializing ${initialPosts.length} blog posts...`);
+    initialPosts.forEach(post => {
+      if (this.validateCategoryExists(post.categoryId)) {
+        this.createBlogPost(post);
+      }
+    });
   }
 
   private initializeCaseStudies() {
@@ -153,6 +185,7 @@ export class MemStorage implements IStorage {
       }
     ];
 
+    console.log(`Initializing ${initialCaseStudies.length} case studies...`);
     initialCaseStudies.forEach(study => this.createCaseStudy(study));
   }
 
@@ -173,7 +206,11 @@ export class MemStorage implements IStorage {
 
   async createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory> {
     const id = this.currentIds.blogCategories++;
-    const newCategory = { ...category, id };
+    const newCategory = { 
+      ...category, 
+      id,
+      description: category.description || null 
+    };
     this.blogCategories.set(id, newCategory);
     return newCategory;
   }
@@ -194,6 +231,10 @@ export class MemStorage implements IStorage {
   }
 
   async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
+    if (!this.validateCategoryExists(post.categoryId)) {
+      throw new Error(`Cannot create blog post: Category ID ${post.categoryId} does not exist`);
+    }
+
     const id = this.currentIds.blogPosts++;
     const blogPost = { ...post, id };
     this.blogPosts.set(id, blogPost);
