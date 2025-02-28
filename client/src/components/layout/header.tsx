@@ -59,7 +59,7 @@ export function Header() {
                           <li key={subItem.name}>
                             <Link 
                               href={subItem.href}
-                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              className="block select-none space-y-1 rounded-md px-4 py-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                             >
                               {subItem.name}
                             </Link>
@@ -74,7 +74,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-semibold leading-6 ${
+                className={`px-4 py-2 inline-block text-sm font-semibold leading-6 ${
                   location === item.href
                     ? "text-primary"
                     : "text-muted-foreground hover:text-primary"
@@ -105,7 +105,7 @@ export function Header() {
                           <Link
                             key={subItem.name}
                             href={subItem.href}
-                            className="block text-muted-foreground hover:text-primary"
+                            className="block px-4 py-2 text-muted-foreground hover:text-primary"
                             onClick={() => setIsOpen(false)}
                           >
                             {subItem.name}
