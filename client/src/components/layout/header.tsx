@@ -11,7 +11,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -36,30 +35,32 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="container flex h-16 items-center">
-        <div className="flex lg:flex-1">
+      <nav className="container flex h-16 items-center justify-between">
+        <div className="flex items-center">
           <Link href="/" className="font-bold text-xl">
             Minecore Group
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:gap-x-8">
+        <div className="hidden lg:flex items-center space-x-8">
           {navigation.map((item) => (
             item.items ? (
               <NavigationMenu key={item.name}>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-9">
+                    <NavigationMenuTrigger 
+                      className="h-9 px-4 hover:bg-accent"
+                    >
                       {item.name}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="grid w-[200px] p-2 gap-2">
+                      <ul className="grid w-[200px] gap-2 p-4">
                         {item.items.map((subItem) => (
                           <li key={subItem.name}>
                             <Link 
                               href={subItem.href}
-                              className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                             >
                               {subItem.name}
                             </Link>
@@ -74,10 +75,10 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-semibold leading-6 ${
+                className={`text-sm font-semibold px-4 py-2 rounded-md transition-colors ${
                   location === item.href
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-primary hover:bg-accent"
                 }`}
               >
                 {item.name}
@@ -87,20 +88,20 @@ export function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex lg:hidden">
+        <div className="lg:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="lg:hidden">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-4">
+              <nav className="flex flex-col gap-6 pt-6">
                 {navigation.map((item) => (
                   item.items ? (
-                    <div key={item.name} className="space-y-3">
-                      <div className="font-semibold text-foreground">{item.name}</div>
-                      <div className="pl-4 space-y-2">
+                    <div key={item.name} className="space-y-4">
+                      <div className="font-semibold text-lg text-foreground">{item.name}</div>
+                      <div className="pl-4 space-y-3">
                         {item.items.map((subItem) => (
                           <Link
                             key={subItem.name}
@@ -120,7 +121,7 @@ export function Header() {
                       className={`text-lg font-semibold ${
                         location === item.href
                           ? "text-primary"
-                          : "text-muted-foreground"
+                          : "text-muted-foreground hover:text-primary"
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
@@ -133,7 +134,7 @@ export function Header() {
           </Sheet>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex items-center">
           <Button asChild>
             <Link href="/contact">Get Started</Link>
           </Button>
