@@ -1,37 +1,110 @@
 import {
-  type CaseStudy,
+  type BlogCategory,
   type BlogPost,
+  type CaseStudy,
   type ContactMessage,
-  type InsertCaseStudy,
+  type InsertBlogCategory,
   type InsertBlogPost,
+  type InsertCaseStudy,
   type InsertContactMessage,
 } from "@shared/schema";
 
 export interface IStorage {
+  // Blog Categories
+  getBlogCategories(): Promise<BlogCategory[]>;
+  getBlogCategoryById(id: number): Promise<BlogCategory | undefined>;
+  getBlogCategoryBySlug(slug: string): Promise<BlogCategory | undefined>;
+  createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory>;
+
+  // Blog Posts
+  getBlogPosts(): Promise<BlogPost[]>;
+  getBlogPostById(id: number): Promise<BlogPost | undefined>;
+  getBlogPostsByCategory(categoryId: number): Promise<BlogPost[]>;
+  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+
+  // Other existing methods
   getCaseStudies(): Promise<CaseStudy[]>;
   getCaseStudyById(id: number): Promise<CaseStudy | undefined>;
   createCaseStudy(caseStudy: InsertCaseStudy): Promise<CaseStudy>;
-  getBlogPosts(): Promise<BlogPost[]>;
-  getBlogPostById(id: number): Promise<BlogPost | undefined>;
-  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
 }
 
 export class MemStorage implements IStorage {
-  private caseStudies: Map<number, CaseStudy>;
+  private blogCategories: Map<number, BlogCategory>;
   private blogPosts: Map<number, BlogPost>;
+  private caseStudies: Map<number, CaseStudy>;
   private contactMessages: Map<number, ContactMessage>;
   private currentIds: { [key: string]: number };
 
   constructor() {
-    this.caseStudies = new Map();
+    this.blogCategories = new Map();
     this.blogPosts = new Map();
+    this.caseStudies = new Map();
     this.contactMessages = new Map();
-    this.currentIds = { caseStudies: 1, blogPosts: 1, contactMessages: 1 };
+    this.currentIds = { 
+      blogCategories: 1, 
+      blogPosts: 1, 
+      caseStudies: 1, 
+      contactMessages: 1 
+    };
 
-    // Add some initial case studies
-    this.initializeCaseStudies();
+    // Initialize with sample data
+    this.initializeBlogCategories();
     this.initializeBlogPosts();
+    this.initializeCaseStudies();
+  }
+
+  private initializeBlogCategories() {
+    const categories: InsertBlogCategory[] = [
+      {
+        name: "Digital Transformation",
+        slug: "digital-transformation",
+        description: "Latest trends and insights in digital transformation",
+      },
+      {
+        name: "Artificial Intelligence",
+        slug: "artificial-intelligence",
+        description: "AI applications and innovations in business",
+      },
+      {
+        name: "Automation",
+        slug: "automation",
+        description: "Process automation and efficiency improvements",
+      },
+    ];
+
+    categories.forEach(category => this.createBlogCategory(category));
+  }
+
+  private initializeBlogPosts() {
+    const initialPosts: InsertBlogPost[] = [
+      {
+        title: "The Future of AI in Business",
+        content: "Detailed analysis of AI trends...",
+        summary: "Exploring how AI is reshaping business landscape",
+        publishedAt: new Date(),
+        imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
+        categoryId: 2, // AI category
+      },
+      {
+        title: "Digital Transformation Strategy Guide",
+        content: "Step by step guide to digital transformation...",
+        summary: "Essential steps for successful digital transformation",
+        publishedAt: new Date(),
+        imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
+        categoryId: 1, // Digital Transformation category
+      },
+      {
+        title: "Automation Success Stories",
+        content: "Real-world examples of successful automation...",
+        summary: "Learn from successful automation implementations",
+        publishedAt: new Date(),
+        imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
+        categoryId: 3, // Automation category
+      },
+    ];
+
+    initialPosts.forEach(post => this.createBlogPost(post));
   }
 
   private initializeCaseStudies() {
@@ -83,27 +156,51 @@ export class MemStorage implements IStorage {
     initialCaseStudies.forEach(study => this.createCaseStudy(study));
   }
 
-  private initializeBlogPosts() {
-    const initialPosts: InsertBlogPost[] = [
-      {
-        title: "The Future of AI in Business",
-        content: "Detailed analysis of AI trends...",
-        summary: "Exploring how AI is reshaping business landscape",
-        publishedAt: new Date(),
-        imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-      },
-      {
-        title: "Digital Transformation Strategy Guide",
-        content: "Step by step guide to digital transformation...",
-        summary: "Essential steps for successful digital transformation",
-        publishedAt: new Date(),
-        imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-      }
-    ];
-
-    initialPosts.forEach(post => this.createBlogPost(post));
+  // Blog Category Methods
+  async getBlogCategories(): Promise<BlogCategory[]> {
+    return Array.from(this.blogCategories.values());
   }
 
+  async getBlogCategoryById(id: number): Promise<BlogCategory | undefined> {
+    return this.blogCategories.get(id);
+  }
+
+  async getBlogCategoryBySlug(slug: string): Promise<BlogCategory | undefined> {
+    return Array.from(this.blogCategories.values()).find(
+      category => category.slug === slug
+    );
+  }
+
+  async createBlogCategory(category: InsertBlogCategory): Promise<BlogCategory> {
+    const id = this.currentIds.blogCategories++;
+    const newCategory = { ...category, id };
+    this.blogCategories.set(id, newCategory);
+    return newCategory;
+  }
+
+  // Blog Post Methods
+  async getBlogPosts(): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values());
+  }
+
+  async getBlogPostById(id: number): Promise<BlogPost | undefined> {
+    return this.blogPosts.get(id);
+  }
+
+  async getBlogPostsByCategory(categoryId: number): Promise<BlogPost[]> {
+    return Array.from(this.blogPosts.values()).filter(
+      post => post.categoryId === categoryId
+    );
+  }
+
+  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
+    const id = this.currentIds.blogPosts++;
+    const blogPost = { ...post, id };
+    this.blogPosts.set(id, blogPost);
+    return blogPost;
+  }
+
+  // Case Studies Methods
   async getCaseStudies(): Promise<CaseStudy[]> {
     return Array.from(this.caseStudies.values());
   }
@@ -119,21 +216,7 @@ export class MemStorage implements IStorage {
     return caseStudy;
   }
 
-  async getBlogPosts(): Promise<BlogPost[]> {
-    return Array.from(this.blogPosts.values());
-  }
-
-  async getBlogPostById(id: number): Promise<BlogPost | undefined> {
-    return this.blogPosts.get(id);
-  }
-
-  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
-    const id = this.currentIds.blogPosts++;
-    const blogPost = { ...post, id };
-    this.blogPosts.set(id, blogPost);
-    return blogPost;
-  }
-
+  // Contact Message Methods
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const id = this.currentIds.contactMessages++;
     const contactMessage = { ...message, id };
