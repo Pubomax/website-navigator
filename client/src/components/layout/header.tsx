@@ -16,19 +16,23 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
   {
     name: "Solutions",
     items: [
       { name: "Enterprise", href: "/solutions#enterprise" },
       { name: "Business", href: "/solutions#business" },
       { name: "Integration", href: "/solutions#integration" },
+      { name: "Case Studies", href: "/case-studies" },
     ],
   },
-  { name: "Case Studies", href: "/case-studies" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
+  {
+    name: "Company",
+    items: [
+      { name: "About", href: "/about" },
+      { name: "Blog", href: "/blog" },
+      { name: "Contact", href: "/contact" },
+    ],
+  },
 ];
 
 const regions = [
@@ -67,43 +71,29 @@ export function Header() {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-8">
           {navigation.map((item) => (
-            item.items ? (
-              <NavigationMenu key={item.name}>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
-                      {item.name}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid w-[200px] gap-2 p-4">
-                        {item.items.map((subItem) => (
-                          <li key={subItem.name}>
-                            <Link 
-                              href={getLocalizedPath(subItem.href)}
-                              className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                            >
-                              {subItem.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            ) : (
-              <Link
-                key={item.name}
-                href={getLocalizedPath(item.href)}
-                className={`text-sm font-medium px-4 py-2 rounded-md transition-colors duration-200 ${
-                  location === item.href
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-primary hover:bg-accent/50"
-                }`}
-              >
-                {item.name}
-              </Link>
-            )
+            <NavigationMenu key={item.name}>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
+                    {item.name}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-2 p-4">
+                      {item.items.map((subItem) => (
+                        <li key={subItem.name}>
+                          <Link 
+                            href={getLocalizedPath(subItem.href)}
+                            className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            {subItem.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           ))}
 
           {/* Region Selector */}
@@ -170,36 +160,21 @@ export function Header() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col gap-6 pt-6">
                 {navigation.map((item) => (
-                  item.items ? (
-                    <div key={item.name} className="space-y-4">
-                      <div className="font-medium text-lg text-foreground">{item.name}</div>
-                      <div className="pl-4 space-y-3">
-                        {item.items.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            href={getLocalizedPath(subItem.href)}
-                            className="block text-muted-foreground hover:text-primary transition-colors"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
+                  <div key={item.name} className="space-y-4">
+                    <div className="font-medium text-lg text-foreground">{item.name}</div>
+                    <div className="pl-4 space-y-3">
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          href={getLocalizedPath(subItem.href)}
+                          className="block text-muted-foreground hover:text-primary transition-colors"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
                     </div>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      href={getLocalizedPath(item.href)}
-                      className={`text-lg font-medium transition-colors ${
-                        location === item.href
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-primary"
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  )
+                  </div>
                 ))}
 
                 {/* Mobile Region Selection */}
