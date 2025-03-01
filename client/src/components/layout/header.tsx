@@ -16,15 +16,24 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const navigation = [
+  { name: "Home", href: "/" },
+  {
+    name: "About Us",
+    items: [
+      { name: "Company Story", href: "/about/story" },
+      { name: "Team Bios", href: "/about/team" },
+      { name: "Mission & Values", href: "/about/mission" },
+    ],
+  },
   {
     name: "Services",
     items: [
-      { name: "Digital Foundation", href: "/services/digital-foundation" },
-      { name: "Digital Transformation Consulting", href: "/services/transformation-consulting" },
-      { name: "AI & Automation Starter", href: "/services/ai-automation-starter" },
-      { name: "Custom AI & Automation", href: "/services/custom-ai-automation" },
-      { name: "Custom Software & Platform Development", href: "/services/custom-software" },
-      { name: "Intelligent Support & Contact Center", href: "/services/intelligent-support" },
+      { name: "Digital Foundation Package", href: "/services/digital-foundation" },
+      { name: "Digital Transformation Consulting Package", href: "/services/transformation-consulting" },
+      { name: "AI & Automation Starter Package", href: "/services/ai-automation-starter" },
+      { name: "Custom AI & Automation Package", href: "/services/custom-ai-automation" },
+      { name: "Custom Software & Platform Development Package", href: "/services/custom-software" },
+      { name: "Intelligent Support & Contact Center Package", href: "/services/intelligent-support" },
     ],
   },
   {
@@ -36,23 +45,13 @@ const navigation = [
       { name: "Healthcare", href: "/sectors/healthcare" },
       { name: "Public Sector", href: "/sectors/public-sector" },
       { name: "Micro Enterprises", href: "/business-types/micro" },
-      { name: "Mid-sized Companies", href: "/business-types/mid-sized" },
-      { name: "Large Organizations", href: "/business-types/large" },
+      { name: "Mid-Sized Enterprises", href: "/business-types/mid-sized" },
+      { name: "Large Enterprises", href: "/business-types/large" },
     ],
   },
-  {
-    name: "Portfolio",
-    href: "/portfolio",
-  },
-  {
-    name: "Company",
-    items: [
-      { name: "About Us", href: "/about" },
-      { name: "Case Studies", href: "/case-studies" },
-      { name: "Blog", href: "/blog" },
-      { name: "Contact Us", href: "/contact" },
-    ],
-  },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const languages = [
