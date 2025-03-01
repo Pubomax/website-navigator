@@ -54,6 +54,26 @@ const translations: Translations = {
     "Business Size": "Business Size",
     "About Us": "About Us",
     "Resources": "Resources",
+
+    // Common actions
+    startProject: "Start Your Project",
+    scheduleConsultation: "Schedule a Consultation",
+    discussProject: "Discuss Your Project",
+    transformService: "Transform Your Service",
+    viewSuccessStories: "View Success Stories",
+    getStartedNow: "Get Started Now",
+    contactSales: "Contact Sales",
+
+    // Section headers
+    overview: "Overview",
+    keyFeatures: "Key Features",
+    benefits: "Benefits",
+    solutions: "Solutions",
+    process: "Process",
+    implementation: "Implementation",
+    outcomes: "Outcomes",
+    metrics: "Metrics",
+    advantages: "Advantages",
   },
   fr: {
     // Navigation
@@ -102,6 +122,26 @@ const translations: Translations = {
     "Business Size": "Taille d'Entreprise",
     "About Us": "À Propos",
     "Resources": "Ressources",
+
+    // Common actions
+    startProject: "Démarrer Votre Projet",
+    scheduleConsultation: "Planifier une Consultation",
+    discussProject: "Discuter de Votre Projet",
+    transformService: "Transformer Votre Service",
+    viewSuccessStories: "Voir les Histoires de Réussite",
+    getStartedNow: "Commencer Maintenant",
+    contactSales: "Contacter les Ventes",
+
+    // Section headers
+    overview: "Aperçu",
+    keyFeatures: "Fonctionnalités Clés",
+    benefits: "Avantages",
+    solutions: "Solutions",
+    process: "Processus",
+    implementation: "Mise en Œuvre",
+    outcomes: "Résultats",
+    metrics: "Indicateurs",
+    advantages: "Avantages",
   },
 };
 
