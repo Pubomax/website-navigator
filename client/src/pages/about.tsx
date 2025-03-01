@@ -1,49 +1,104 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Target, Lightbulb, Users } from "lucide-react";
+import { useLocation } from "wouter";
 
-const values = [
-  {
-    name: "Innovation",
-    description: "Pushing boundaries in digital transformation and AI solutions",
-    icon: Lightbulb,
-  },
-  {
-    name: "Integrity",
-    description: "Building trust through transparent and ethical practices",
-    icon: Shield,
-  },
-  {
-    name: "Excellence",
-    description: "Delivering exceptional results that exceed expectations",
-    icon: Target,
-  },
-  {
-    name: "Collaboration",
-    description: "Working together to achieve transformative outcomes",
-    icon: Users,
-  },
-];
-
-const team = [
-  {
-    name: "Sarah Johnson",
-    role: "CEO & Founder",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-  },
-  {
-    name: "Michael Chen",
-    role: "Chief Technology Officer",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
-  },
-  {
-    name: "Emily Rodriguez",
-    role: "Head of AI Solutions",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e",
-  },
-];
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench ? "À Propos de Minecore Group" : "About Minecore Group",
+  subtitle: isPathFrench 
+    ? "Un leader canadien de la transformation numérique, aidant les entreprises à embrasser l'avenir grâce à des solutions technologiques innovantes."
+    : "A Canadian leader in digital transformation, helping businesses embrace the future through innovative technology solutions.",
+  sections: {
+    values: {
+      title: isPathFrench ? "Nos Valeurs" : "Our Values",
+      items: isPathFrench ? [
+        {
+          name: "Innovation",
+          description: "Repousser les limites de la transformation numérique et des solutions d'IA",
+          icon: Lightbulb,
+        },
+        {
+          name: "Intégrité",
+          description: "Bâtir la confiance grâce à des pratiques transparentes et éthiques",
+          icon: Shield,
+        },
+        {
+          name: "Excellence",
+          description: "Fournir des résultats exceptionnels qui dépassent les attentes",
+          icon: Target,
+        },
+        {
+          name: "Collaboration",
+          description: "Travailler ensemble pour obtenir des résultats transformateurs",
+          icon: Users,
+        },
+      ] : [
+        {
+          name: "Innovation",
+          description: "Pushing boundaries in digital transformation and AI solutions",
+          icon: Lightbulb,
+        },
+        {
+          name: "Integrity",
+          description: "Building trust through transparent and ethical practices",
+          icon: Shield,
+        },
+        {
+          name: "Excellence",
+          description: "Delivering exceptional results that exceed expectations",
+          icon: Target,
+        },
+        {
+          name: "Collaboration",
+          description: "Working together to achieve transformative outcomes",
+          icon: Users,
+        },
+      ]
+    },
+    team: {
+      title: isPathFrench ? "Équipe de Direction" : "Leadership Team",
+      members: isPathFrench ? [
+        {
+          name: "Sarah Johnson",
+          role: "PDG & Fondatrice",
+          image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+        },
+        {
+          name: "Michael Chen",
+          role: "Directeur Technique",
+          image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+        },
+        {
+          name: "Emily Rodriguez",
+          role: "Directrice des Solutions IA",
+          image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e",
+        },
+      ] : [
+        {
+          name: "Sarah Johnson",
+          role: "CEO & Founder",
+          image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+        },
+        {
+          name: "Michael Chen",
+          role: "Chief Technology Officer",
+          image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+        },
+        {
+          name: "Emily Rodriguez",
+          role: "Head of AI Solutions",
+          image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e",
+        },
+      ]
+    }
+  }
+});
 
 export default function About() {
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  const content = getContent(isPathFrench);
+
   return (
     <main className="py-24">
       <div className="container">
@@ -54,18 +109,17 @@ export default function About() {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            About Minecore Group
+            {content.title}
           </h1>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            A Canadian leader in digital transformation, helping businesses embrace
-            the future through innovative technology solutions.
+            {content.subtitle}
           </p>
         </motion.div>
 
         <div className="mt-24">
-          <h2 className="text-3xl font-bold text-center mb-16">Our Values</h2>
+          <h2 className="text-3xl font-bold text-center mb-16">{content.sections.values.title}</h2>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-            {values.map((value, index) => (
+            {content.sections.values.items.map((value, index) => (
               <motion.div
                 key={value.name}
                 initial={{ opacity: 0, y: 20 }}
@@ -85,9 +139,9 @@ export default function About() {
         </div>
 
         <div className="mt-24">
-          <h2 className="text-3xl font-bold text-center mb-16">Leadership Team</h2>
+          <h2 className="text-3xl font-bold text-center mb-16">{content.sections.team.title}</h2>
           <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {team.map((member, index) => (
+            {content.sections.team.members.map((member, index) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 20 }}

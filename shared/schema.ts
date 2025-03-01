@@ -27,9 +27,13 @@ export const blogPosts = pgTable("blog_posts", {
 export const caseStudies = pgTable("case_studies", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
+  frenchTitle: text("french_title"),
   description: text("description").notNull(),
+  frenchDescription: text("french_description"),
   industry: varchar("industry", { length: 100 }).notNull(),
+  frenchIndustry: varchar("french_industry", { length: 100 }),
   results: text("results").notNull(),
+  frenchResults: text("french_results"),
   imageUrl: text("image_url").notNull(),
 });
 
@@ -63,7 +67,7 @@ export const insertBlogCategorySchema = createInsertSchema(blogCategories).omit(
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({ id: true });
 export const insertCaseStudySchema = createInsertSchema(caseStudies).omit({ id: true });
 export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({ id: true });
-export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterSubscriptions).omit({ 
+export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterSubscriptions).omit({
   id: true,
   subscribedAt: true,
   isVerified: true,
@@ -71,7 +75,7 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
 }).extend({
   email: z.string().email("Please enter a valid email address"),
 });
-export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({ 
+export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({
   id: true,
   passwordHash: true,
   createdAt: true,

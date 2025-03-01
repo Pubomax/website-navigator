@@ -9,8 +9,21 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { CaseStudy } from "@shared/schema";
+import { useLocation } from "wouter";
+
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench ? "Études de Cas" : "Case Studies",
+  subtitle: isPathFrench
+    ? "Découvrez comment nous avons aidé les entreprises à atteindre leurs objectifs de transformation numérique"
+    : "Explore how we've helped businesses achieve their digital transformation goals",
+  results: isPathFrench ? "Résultats" : "Results"
+});
 
 export default function CaseStudies() {
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  const content = getContent(isPathFrench);
+
   const { data: caseStudies, isLoading } = useQuery<CaseStudy[]>({
     queryKey: ["/api/case-studies"],
   });
@@ -39,10 +52,10 @@ export default function CaseStudies() {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Case Studies
+            {content.title}
           </h1>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Explore how we've helped businesses achieve their digital transformation goals
+            {content.subtitle}
           </p>
         </motion.div>
 
@@ -58,18 +71,24 @@ export default function CaseStudies() {
                 <CardHeader className="relative h-48 overflow-hidden">
                   <img
                     src={study.imageUrl}
-                    alt={study.title}
+                    alt={isPathFrench ? study.frenchTitle || study.title : study.title}
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </CardHeader>
                 <CardContent className="p-6">
-                  <Badge className="mb-4">{study.industry}</Badge>
-                  <CardTitle className="mb-2">{study.title}</CardTitle>
-                  <CardDescription>{study.description}</CardDescription>
+                  <Badge className="mb-4">
+                    {isPathFrench ? study.frenchIndustry || study.industry : study.industry}
+                  </Badge>
+                  <CardTitle className="mb-2">
+                    {isPathFrench ? study.frenchTitle || study.title : study.title}
+                  </CardTitle>
+                  <CardDescription>
+                    {isPathFrench ? study.frenchDescription || study.description : study.description}
+                  </CardDescription>
                   <div className="mt-4">
-                    <h4 className="font-semibold text-sm mb-2">Results:</h4>
+                    <h4 className="font-semibold text-sm mb-2">{content.results}:</h4>
                     <p className="text-sm text-muted-foreground">
-                      {study.results}
+                      {isPathFrench ? study.frenchResults || study.results : study.results}
                     </p>
                   </div>
                 </CardContent>
