@@ -1,33 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://minecoregroup.com/</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://minecoregroup.com/about</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr/about"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com/about"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://minecoregroup.com/solutions</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr/solutions"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com/solutions"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://minecoregroup.com/case-studies</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr/case-studies"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com/case-studies"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://minecoregroup.com/blog</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr/blog"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com/blog"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://minecoregroup.com/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com/contact"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Canadian Regional Pages -->
+  <url>
+    <loc>https://minecoregroup.com/regions/ontario</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://minecoregroup.com/regions/british-columbia</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://minecoregroup.com/regions/quebec</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://minecoregroup.com/regions/alberta</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
