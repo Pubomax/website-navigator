@@ -16,15 +16,6 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  {
-    name: "About Us",
-    items: [
-      { name: "Company Story", href: "/about/story" },
-      { name: "Team Bios", href: "/about/team" },
-      { name: "Mission & Values", href: "/about/mission" },
-    ],
-  },
   {
     name: "Services",
     items: [
@@ -37,20 +28,29 @@ const navigation = [
     ],
   },
   {
-    name: "Sectors & Business Types",
+    name: "Solutions",
     items: [
-      { name: "Manufacturing", href: "/sectors/manufacturing" },
-      { name: "Finance", href: "/sectors/finance" },
-      { name: "Retail", href: "/sectors/retail" },
-      { name: "Healthcare", href: "/sectors/healthcare" },
-      { name: "Public Sector", href: "/sectors/public-sector" },
-      { name: "Micro Enterprises", href: "/business-types/micro" },
-      { name: "Mid-Sized Enterprises", href: "/business-types/mid-sized" },
-      { name: "Large Enterprises", href: "/business-types/large" },
+      { name: "Manufacturing", group: "Industries", href: "/sectors/manufacturing" },
+      { name: "Finance", group: "Industries", href: "/sectors/finance" },
+      { name: "Retail", group: "Industries", href: "/sectors/retail" },
+      { name: "Healthcare", group: "Industries", href: "/sectors/healthcare" },
+      { name: "Public Sector", group: "Industries", href: "/sectors/public-sector" },
+      { name: "Micro Enterprises", group: "Business Size", href: "/business-types/micro" },
+      { name: "Mid-Sized Enterprises", group: "Business Size", href: "/business-types/mid-sized" },
+      { name: "Large Enterprises", group: "Business Size", href: "/business-types/large" },
     ],
   },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Blog", href: "/blog" },
+  {
+    name: "Company",
+    items: [
+      { name: "Company Story", group: "About Us", href: "/about/story" },
+      { name: "Team Bios", group: "About Us", href: "/about/team" },
+      { name: "Mission & Values", group: "About Us", href: "/about/mission" },
+      { name: "Portfolio", group: "Resources", href: "/portfolio" },
+      { name: "Case Studies", group: "Resources", href: "/case-studies" },
+      { name: "Blog", group: "Resources", href: "/blog" },
+    ],
+  },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -69,6 +69,43 @@ export function Header() {
       return path.startsWith("/fr") ? path : `/fr${path}`;
     }
     return path.startsWith("/fr") ? path.substring(3) : path;
+  };
+
+  const renderDropdownContent = (items: any[]) => {
+    // Group items if they have group property
+    const groupedItems = items.reduce((acc: any, item) => {
+      if (item.group) {
+        if (!acc[item.group]) acc[item.group] = [];
+        acc[item.group].push(item);
+      } else {
+        if (!acc['Other']) acc['Other'] = [];
+        acc['Other'].push(item);
+      }
+      return acc;
+    }, {});
+
+    return (
+      <ul className="grid w-[400px] gap-4 p-4">
+        {Object.entries(groupedItems).map(([group, groupItems]: [string, any]) => (
+          <li key={group}>
+            {group !== 'Other' && (
+              <div className="mb-2 text-sm font-medium text-muted-foreground">{group}</div>
+            )}
+            <div className="grid gap-2">
+              {groupItems.map((item: any) => (
+                <Link
+                  key={item.href}
+                  href={getLocalizedPath(item.href)}
+                  className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -91,18 +128,7 @@ export function Header() {
                       {item.name}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-2 p-4">
-                        {item.items.map((subItem) => (
-                          <li key={subItem.name}>
-                            <Link 
-                              href={getLocalizedPath(subItem.href)}
-                              className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
-                            >
-                              {subItem.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                      {renderDropdownContent(item.items)}
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
@@ -123,9 +149,6 @@ export function Header() {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v3.75m-9 3.75v-3.75m18 0v3.75m-18 0h18" />
-                  </svg>
                   {isPathFrench ? "FR" : "EN"}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -161,18 +184,32 @@ export function Header() {
                   item.items ? (
                     <div key={item.name} className="space-y-4">
                       <div className="font-medium text-lg text-foreground">{item.name}</div>
-                      <div className="pl-4 space-y-3">
-                        {item.items.map((subItem) => (
-                          <Link
-                            key={subItem.name}
-                            href={getLocalizedPath(subItem.href)}
-                            className="block text-muted-foreground hover:text-primary transition-colors"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
+                      {Object.entries(
+                        item.items.reduce((acc: any, curr) => {
+                          const group = curr.group || 'Other';
+                          if (!acc[group]) acc[group] = [];
+                          acc[group].push(curr);
+                          return acc;
+                        }, {})
+                      ).map(([group, items]: [string, any]) => (
+                        <div key={group} className="space-y-3">
+                          {group !== 'Other' && (
+                            <div className="text-sm font-medium text-muted-foreground pl-4">{group}</div>
+                          )}
+                          <div className="pl-4 space-y-3">
+                            {items.map((subItem: any) => (
+                              <Link
+                                key={subItem.href}
+                                href={getLocalizedPath(subItem.href)}
+                                className="block text-muted-foreground hover:text-primary transition-colors"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                {subItem.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ) : (
                     <Link
