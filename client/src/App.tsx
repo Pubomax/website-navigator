@@ -8,23 +8,39 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 
 // Main pages
 import Home from "@/pages/home";
-import About from "@/pages/about";
-import Services from "@/pages/services";
-import Solutions from "@/pages/solutions";
-import CaseStudies from "@/pages/case-studies";
-import Blog from "@/pages/blog";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import FAQ from "@/pages/faq";
 import AdminDashboard from "@/pages/admin";
+import Blog from "@/pages/blog";
+import CaseStudies from "@/pages/case-studies";
 
-// Regional pages
-import Ontario from "@/pages/regions/ontario";
-import BritishColumbia from "@/pages/regions/british-columbia";
-import Quebec from "@/pages/regions/quebec";
-import Alberta from "@/pages/regions/alberta";
+// Service pages
+import DigitalFoundation from "@/pages/services/digital-foundation";
+import TransformationConsulting from "@/pages/services/transformation-consulting";
+import AIAutomationStarter from "@/pages/services/ai-automation-starter";
+import CustomAIAutomation from "@/pages/services/custom-ai-automation";
+import CustomSoftware from "@/pages/services/custom-software";
+import IntelligentSupport from "@/pages/services/intelligent-support";
+
+// Sector pages
+import Manufacturing from "@/pages/sectors/manufacturing";
+import Finance from "@/pages/sectors/finance";
+import Retail from "@/pages/sectors/retail";
+import Healthcare from "@/pages/sectors/healthcare";
+import PublicSector from "@/pages/sectors/public-sector";
+
+// Business Type pages
+import MicroEnterprises from "@/pages/business-types/micro";
+import MidSizedEnterprises from "@/pages/business-types/mid-sized";
+import LargeEnterprises from "@/pages/business-types/large";
+
+// Company pages
+import Story from "@/pages/about/story";
+import Team from "@/pages/about/team";
+import Mission from "@/pages/about/mission";
 
 function Router() {
   return (
@@ -34,41 +50,46 @@ function Router() {
         <Switch>
           {/* Main Routes */}
           <Route path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/services" component={Services} />
-          <Route path="/solutions" component={Solutions} />
-          <Route path="/case-studies" component={CaseStudies} />
-          <Route path="/blog" component={Blog} />
           <Route path="/contact" component={Contact} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/faq" component={FAQ} />
           <Route path="/admin" component={AdminDashboard} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/case-studies" component={CaseStudies} />
 
-          {/* Regional Routes */}
-          <Route path="/regions/ontario" component={Ontario} />
-          <Route path="/regions/british-columbia" component={BritishColumbia} />
-          <Route path="/regions/quebec" component={Quebec} />
-          <Route path="/regions/alberta" component={Alberta} />
+          {/* Service Routes */}
+          <Route path="/services/digital-foundation" component={DigitalFoundation} />
+          <Route path="/services/transformation-consulting" component={TransformationConsulting} />
+          <Route path="/services/ai-automation-starter" component={AIAutomationStarter} />
+          <Route path="/services/custom-ai-automation" component={CustomAIAutomation} />
+          <Route path="/services/custom-software" component={CustomSoftware} />
+          <Route path="/services/intelligent-support" component={IntelligentSupport} />
 
-          {/* French Routes - main paths */}
+          {/* Sector Routes */}
+          <Route path="/sectors/manufacturing" component={Manufacturing} />
+          <Route path="/sectors/finance" component={Finance} />
+          <Route path="/sectors/retail" component={Retail} />
+          <Route path="/sectors/healthcare" component={Healthcare} />
+          <Route path="/sectors/public-sector" component={PublicSector} />
+
+          {/* Business Type Routes */}
+          <Route path="/business-types/micro" component={MicroEnterprises} />
+          <Route path="/business-types/mid-sized" component={MidSizedEnterprises} />
+          <Route path="/business-types/large" component={LargeEnterprises} />
+
+          {/* Company Routes */}
+          <Route path="/about/story" component={Story} />
+          <Route path="/about/team" component={Team} />
+          <Route path="/about/mission" component={Mission} />
+
+          {/* French Routes */}
           <Route path="/fr" component={Home} />
-          <Route path="/fr/about" component={About} />
-          <Route path="/fr/services" component={Services} />
-          <Route path="/fr/solutions" component={Solutions} />
-          <Route path="/fr/case-studies" component={CaseStudies} />
-          <Route path="/fr/blog" component={Blog} />
           <Route path="/fr/contact" component={Contact} />
-          <Route path="/fr/privacy" component={Privacy} />
-          <Route path="/fr/terms" component={Terms} />
-          <Route path="/fr/faq" component={FAQ} />
+          <Route path="/fr/blog" component={Blog} />
+          <Route path="/fr/case-studies" component={CaseStudies} />
 
-          {/* French Routes - regional paths */}
-          <Route path="/fr/regions/ontario" component={Ontario} />
-          <Route path="/fr/regions/colombie-britannique" component={BritishColumbia} />
-          <Route path="/fr/regions/quebec" component={Quebec} />
-          <Route path="/fr/regions/alberta" component={Alberta} />
-
+          {/* Catch all for 404 */}
           <Route component={NotFound} />
         </Switch>
       </div>
