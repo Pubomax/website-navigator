@@ -44,6 +44,15 @@ const navigation = [
     name: "Portfolio",
     href: "/portfolio",
   },
+  {
+    name: "Company",
+    items: [
+      { name: "About Us", href: "/about" },
+      { name: "Case Studies", href: "/case-studies" },
+      { name: "Blog", href: "/blog" },
+      { name: "Contact Us", href: "/contact" },
+    ],
+  },
 ];
 
 const regions = [
@@ -94,7 +103,7 @@ export function Header() {
                         {item.items.map((subItem) => (
                           <li key={subItem.name}>
                             <Link 
-                              href={subItem.href}
+                              href={getLocalizedPath(subItem.href)}
                               className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
                             >
                               {subItem.name}
@@ -109,7 +118,7 @@ export function Header() {
             ) : (
               <Link
                 key={item.name}
-                href={item.href}
+                href={getLocalizedPath(item.href)}
                 className="text-sm font-medium px-4 py-2 rounded-md transition-colors hover:text-primary hover:bg-accent/50"
               >
                 {item.name}
@@ -134,7 +143,7 @@ export function Header() {
                       <li key={region.href}>
                         <Link
                           href={getLocalizedPath(region.href)}
-                          className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
                         >
                           {isPathFrench ? region.nameFr : region.name}
                         </Link>
@@ -162,7 +171,7 @@ export function Header() {
                       <li key={lang.code}>
                         <Link
                           href={lang.href + location.replace("/fr", "")}
-                          className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
                         >
                           {lang.name}
                         </Link>
@@ -193,7 +202,7 @@ export function Header() {
                         {item.items.map((subItem) => (
                           <Link
                             key={subItem.name}
-                            href={subItem.href}
+                            href={getLocalizedPath(subItem.href)}
                             className="block text-muted-foreground hover:text-primary transition-colors"
                             onClick={() => setIsOpen(false)}
                           >
@@ -205,7 +214,7 @@ export function Header() {
                   ) : (
                     <Link
                       key={item.name}
-                      href={item.href}
+                      href={getLocalizedPath(item.href)}
                       className="text-lg font-medium transition-colors text-muted-foreground hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >
@@ -213,6 +222,7 @@ export function Header() {
                     </Link>
                   )
                 ))}
+
                 {/* Mobile Region Selection */}
                 <div className="space-y-4">
                   <div className="font-medium text-lg text-foreground">Regions</div>
@@ -253,7 +263,7 @@ export function Header() {
 
         <div className="hidden lg:flex items-center">
           <Button asChild className="bg-primary/90 hover:bg-primary transition-colors">
-            <Link href="/contact">Get Started</Link>
+            <Link href={getLocalizedPath("/contact")}>Get Started</Link>
           </Button>
         </div>
       </nav>
