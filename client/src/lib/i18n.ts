@@ -14,12 +14,15 @@ const translations: Translations = {
     company: "Company",
     contact: "Contact",
     getStarted: "Get Started",
+    language: "Language",
 
     // Common sections
     readMore: "Read More",
     learnMore: "Learn More",
     contactUs: "Contact Us",
     viewCaseStudies: "View Case Studies",
+    partnerWithUs: "Partner with Us",
+    seeOurImpact: "See Our Impact",
 
     // Service names
     digitalFoundation: "Digital Foundation Package",
@@ -45,6 +48,12 @@ const translations: Translations = {
     companyStory: "Company Story",
     teamBios: "Team Bios",
     missionValues: "Mission & Values",
+
+    // Groups
+    "Industries": "Industries",
+    "Business Size": "Business Size",
+    "About Us": "About Us",
+    "Resources": "Resources",
   },
   fr: {
     // Navigation
@@ -53,12 +62,15 @@ const translations: Translations = {
     company: "Entreprise",
     contact: "Contact",
     getStarted: "Commencer",
+    language: "Langue",
 
     // Common sections
     readMore: "En savoir plus",
     learnMore: "En apprendre davantage",
     contactUs: "Contactez-nous",
     viewCaseStudies: "Voir les études de cas",
+    partnerWithUs: "Devenir partenaire",
+    seeOurImpact: "Voir notre impact",
 
     // Service names
     digitalFoundation: "Pack Fondation Numérique",
@@ -84,6 +96,12 @@ const translations: Translations = {
     companyStory: "Notre Histoire",
     teamBios: "Notre Équipe",
     missionValues: "Mission et Valeurs",
+
+    // Groups
+    "Industries": "Industries",
+    "Business Size": "Taille d'Entreprise",
+    "About Us": "À Propos",
+    "Resources": "Ressources",
   },
 };
 
