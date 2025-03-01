@@ -46,7 +46,7 @@ const navigation = [
       { name: "Company Story", group: "About Us", href: "/about/story" },
       { name: "Team Bios", group: "About Us", href: "/about/team" },
       { name: "Mission & Values", group: "About Us", href: "/about/mission" },
-      { name: "Portfolio", group: "Resources", href: "/portfolio" },
+      { name: "FAQ", group: "Resources", href: "/faq" },
       { name: "Case Studies", group: "Resources", href: "/case-studies" },
       { name: "Blog", group: "Resources", href: "/blog" },
     ],
