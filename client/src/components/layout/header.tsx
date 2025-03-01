@@ -55,13 +55,6 @@ const navigation = [
   },
 ];
 
-const regions = [
-  { name: "Ontario", href: "/regions/ontario", nameFr: "Ontario" },
-  { name: "British Columbia", href: "/regions/british-columbia", nameFr: "Colombie-Britannique" },
-  { name: "Quebec", href: "/regions/quebec", nameFr: "Québec" },
-  { name: "Alberta", href: "/regions/alberta", nameFr: "Alberta" },
-];
-
 const languages = [
   { code: "en", name: "English", href: "" },
   { code: "fr", name: "Français", href: "/fr" },
@@ -125,35 +118,6 @@ export function Header() {
               </Link>
             )
           ))}
-
-          {/* Region Selector */}
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                  </svg>
-                  Regions
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[200px] gap-2 p-4">
-                    {regions.map((region) => (
-                      <li key={region.href}>
-                        <Link
-                          href={getLocalizedPath(region.href)}
-                          className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
-                        >
-                          {isPathFrench ? region.nameFr : region.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
 
           {/* Language Selector */}
           <NavigationMenu>
@@ -222,23 +186,6 @@ export function Header() {
                     </Link>
                   )
                 ))}
-
-                {/* Mobile Region Selection */}
-                <div className="space-y-4">
-                  <div className="font-medium text-lg text-foreground">Regions</div>
-                  <div className="pl-4 space-y-3">
-                    {regions.map((region) => (
-                      <Link
-                        key={region.href}
-                        href={getLocalizedPath(region.href)}
-                        className="block text-muted-foreground hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {isPathFrench ? region.nameFr : region.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Mobile Language Selection */}
                 <div className="space-y-4">
