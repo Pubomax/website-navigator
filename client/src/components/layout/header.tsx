@@ -14,44 +14,45 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useTranslation } from "@/lib/i18n";
 
 const navigation = [
   {
-    name: "Services",
+    name: "services",
     items: [
-      { name: "Digital Foundation Package", href: "/services/digital-foundation" },
-      { name: "Digital Transformation Consulting Package", href: "/services/transformation-consulting" },
-      { name: "AI & Automation Starter Package", href: "/services/ai-automation-starter" },
-      { name: "Custom AI & Automation Package", href: "/services/custom-ai-automation" },
-      { name: "Custom Software & Platform Development Package", href: "/services/custom-software" },
-      { name: "Intelligent Support & Contact Center Package", href: "/services/intelligent-support" },
+      { name: "digitalFoundation", href: "/services/digital-foundation" },
+      { name: "transformationConsulting", href: "/services/transformation-consulting" },
+      { name: "aiAutomationStarter", href: "/services/ai-automation-starter" },
+      { name: "customAiAutomation", href: "/services/custom-ai-automation" },
+      { name: "customSoftware", href: "/services/custom-software" },
+      { name: "intelligentSupport", href: "/services/intelligent-support" },
     ],
   },
   {
-    name: "Solutions",
+    name: "solutions",
     items: [
-      { name: "Manufacturing", group: "Industries", href: "/sectors/manufacturing" },
-      { name: "Finance", group: "Industries", href: "/sectors/finance" },
-      { name: "Retail", group: "Industries", href: "/sectors/retail" },
-      { name: "Healthcare", group: "Industries", href: "/sectors/healthcare" },
-      { name: "Public Sector", group: "Industries", href: "/sectors/public-sector" },
-      { name: "Micro Enterprises", group: "Business Size", href: "/business-types/micro" },
-      { name: "Mid-Sized Enterprises", group: "Business Size", href: "/business-types/mid-sized" },
-      { name: "Large Enterprises", group: "Business Size", href: "/business-types/large" },
+      { name: "manufacturing", group: "Industries", href: "/sectors/manufacturing" },
+      { name: "finance", group: "Industries", href: "/sectors/finance" },
+      { name: "retail", group: "Industries", href: "/sectors/retail" },
+      { name: "healthcare", group: "Industries", href: "/sectors/healthcare" },
+      { name: "publicSector", group: "Industries", href: "/sectors/public-sector" },
+      { name: "microEnterprises", group: "Business Size", href: "/business-types/micro" },
+      { name: "midSizedEnterprises", group: "Business Size", href: "/business-types/mid-sized" },
+      { name: "largeEnterprises", group: "Business Size", href: "/business-types/large" },
     ],
   },
   {
-    name: "Company",
+    name: "company",
     items: [
-      { name: "Company Story", group: "About Us", href: "/about/story" },
-      { name: "Team Bios", group: "About Us", href: "/about/team" },
-      { name: "Mission & Values", group: "About Us", href: "/about/mission" },
+      { name: "companyStory", group: "About Us", href: "/about/story" },
+      { name: "teamBios", group: "About Us", href: "/about/team" },
+      { name: "missionValues", group: "About Us", href: "/about/mission" },
       { name: "FAQ", group: "Resources", href: "/faq" },
-      { name: "Case Studies", group: "Resources", href: "/case-studies" },
-      { name: "Blog", group: "Resources", href: "/blog" },
+      { name: "caseStudies", group: "Resources", href: "/case-studies" },
+      { name: "blog", group: "Resources", href: "/blog" },
     ],
   },
-  { name: "Contact", href: "/contact" },
+  { name: "contact", href: "/contact" },
 ];
 
 const languages = [
@@ -63,6 +64,7 @@ export function Header() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const isPathFrench = location.startsWith("/fr");
+  const { t } = useTranslation(isPathFrench ? 'fr' : 'en');
 
   const getLocalizedPath = (path: string) => {
     if (isPathFrench) {
@@ -72,7 +74,6 @@ export function Header() {
   };
 
   const renderDropdownContent = (items: any[]) => {
-    // Group items if they have group property
     const groupedItems = items.reduce((acc: any, item) => {
       if (item.group) {
         if (!acc[item.group]) acc[item.group] = [];
@@ -89,7 +90,9 @@ export function Header() {
         {Object.entries(groupedItems).map(([group, groupItems]: [string, any]) => (
           <li key={group}>
             {group !== 'Other' && (
-              <div className="mb-2 text-sm font-medium text-muted-foreground">{group}</div>
+              <div className="mb-2 text-sm font-medium text-muted-foreground">
+                {t(group)}
+              </div>
             )}
             <div className="grid gap-2">
               {groupItems.map((item: any) => (
@@ -98,7 +101,7 @@ export function Header() {
                   href={getLocalizedPath(item.href)}
                   className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
                 >
-                  {item.name}
+                  {t(item.name)}
                 </Link>
               ))}
             </div>
@@ -112,7 +115,7 @@ export function Header() {
     <header className="fixed top-0 z-50 w-full border-b bg-background/60 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
       <nav className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
-          <Link href="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+          <Link href={getLocalizedPath("/")} className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
             Minecore Group
           </Link>
         </div>
@@ -125,7 +128,7 @@ export function Header() {
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
-                      {item.name}
+                      {t(item.name)}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       {renderDropdownContent(item.items)}
@@ -139,7 +142,7 @@ export function Header() {
                 href={getLocalizedPath(item.href)}
                 className="text-sm font-medium px-4 py-2 rounded-md transition-colors hover:text-primary hover:bg-accent/50"
               >
-                {item.name}
+                {t(item.name)}
               </Link>
             )
           ))}
@@ -183,7 +186,7 @@ export function Header() {
                 {navigation.map((item) => (
                   item.items ? (
                     <div key={item.name} className="space-y-4">
-                      <div className="font-medium text-lg text-foreground">{item.name}</div>
+                      <div className="font-medium text-lg text-foreground">{t(item.name)}</div>
                       {Object.entries(
                         item.items.reduce((acc: any, curr) => {
                           const group = curr.group || 'Other';
@@ -194,7 +197,9 @@ export function Header() {
                       ).map(([group, items]: [string, any]) => (
                         <div key={group} className="space-y-3">
                           {group !== 'Other' && (
-                            <div className="text-sm font-medium text-muted-foreground pl-4">{group}</div>
+                            <div className="text-sm font-medium text-muted-foreground pl-4">
+                              {t(group)}
+                            </div>
                           )}
                           <div className="pl-4 space-y-3">
                             {items.map((subItem: any) => (
@@ -204,7 +209,7 @@ export function Header() {
                                 className="block text-muted-foreground hover:text-primary transition-colors"
                                 onClick={() => setIsOpen(false)}
                               >
-                                {subItem.name}
+                                {t(subItem.name)}
                               </Link>
                             ))}
                           </div>
@@ -218,14 +223,14 @@ export function Header() {
                       className="text-lg font-medium transition-colors text-muted-foreground hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >
-                      {item.name}
+                      {t(item.name)}
                     </Link>
                   )
                 ))}
 
                 {/* Mobile Language Selection */}
                 <div className="space-y-4">
-                  <div className="font-medium text-lg text-foreground">Language</div>
+                  <div className="font-medium text-lg text-foreground">{t('language')}</div>
                   <div className="pl-4 space-y-3">
                     {languages.map((lang) => (
                       <Link
@@ -246,7 +251,7 @@ export function Header() {
 
         <div className="hidden lg:flex items-center">
           <Button asChild className="bg-primary/90 hover:bg-primary transition-colors">
-            <Link href={getLocalizedPath("/contact")}>Get Started</Link>
+            <Link href={getLocalizedPath("/contact")}>{t("getStarted")}</Link>
           </Button>
         </div>
       </nav>

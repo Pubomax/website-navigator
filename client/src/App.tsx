@@ -86,8 +86,36 @@ function Router() {
           {/* French Routes */}
           <Route path="/fr" component={Home} />
           <Route path="/fr/contact" component={Contact} />
+          <Route path="/fr/privacy" component={Privacy} />
+          <Route path="/fr/terms" component={Terms} />
+          <Route path="/fr/faq" component={FAQ} />
           <Route path="/fr/blog" component={Blog} />
           <Route path="/fr/case-studies" component={CaseStudies} />
+
+          {/* French Service Routes */}
+          <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
+          <Route path="/fr/services/transformation-consulting" component={TransformationConsulting} />
+          <Route path="/fr/services/ai-automation-starter" component={AIAutomationStarter} />
+          <Route path="/fr/services/custom-ai-automation" component={CustomAIAutomation} />
+          <Route path="/fr/services/custom-software" component={CustomSoftware} />
+          <Route path="/fr/services/intelligent-support" component={IntelligentSupport} />
+
+          {/* French Sector Routes */}
+          <Route path="/fr/sectors/manufacturing" component={Manufacturing} />
+          <Route path="/fr/sectors/finance" component={Finance} />
+          <Route path="/fr/sectors/retail" component={Retail} />
+          <Route path="/fr/sectors/healthcare" component={Healthcare} />
+          <Route path="/fr/sectors/public-sector" component={PublicSector} />
+
+          {/* French Business Type Routes */}
+          <Route path="/fr/business-types/micro" component={MicroEnterprises} />
+          <Route path="/fr/business-types/mid-sized" component={MidSizedEnterprises} />
+          <Route path="/fr/business-types/large" component={LargeEnterprises} />
+
+          {/* French Company Routes */}
+          <Route path="/fr/about/story" component={Story} />
+          <Route path="/fr/about/team" component={Team} />
+          <Route path="/fr/about/mission" component={Mission} />
 
           {/* Catch all for 404 */}
           <Route component={NotFound} />
