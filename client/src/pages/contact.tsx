@@ -19,27 +19,68 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Send, Mail, Phone, MapPin } from "lucide-react";
 import { insertContactMessageSchema, type InsertContactMessage } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
 
-const contactInfo = [
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+1 (555) 123-4567",
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench ? "Contactez-nous" : "Contact Us",
+  subtitle: isPathFrench 
+    ? "Entrez en contact pour commencer votre parcours de transformation numérique"
+    : "Get in touch to start your digital transformation journey",
+  form: {
+    labels: {
+      name: isPathFrench ? "Nom" : "Name",
+      email: isPathFrench ? "Email" : "Email",
+      company: isPathFrench ? "Entreprise" : "Company",
+      message: isPathFrench ? "Message" : "Message"
+    },
+    placeholders: {
+      name: isPathFrench ? "Votre nom" : "Your name",
+      email: isPathFrench ? "votre@email.com" : "your@email.com",
+      company: isPathFrench ? "Votre entreprise" : "Your company",
+      message: isPathFrench ? "Comment pouvons-nous vous aider?" : "How can we help you?"
+    },
+    submit: {
+      idle: isPathFrench ? "Envoyer le Message" : "Send Message",
+      sending: isPathFrench ? "Envoi en cours..." : "Sending..."
+    }
   },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "contact@minecoregroup.com",
+  toast: {
+    success: {
+      title: isPathFrench ? "Message envoyé" : "Message sent",
+      description: isPathFrench ? "Nous vous répondrons dans les plus brefs délais." : "We'll get back to you as soon as possible."
+    },
+    error: {
+      title: isPathFrench ? "Erreur" : "Error",
+      description: isPathFrench ? "Une erreur s'est produite. Veuillez réessayer plus tard." : "Something went wrong. Please try again later."
+    }
   },
-  {
-    icon: MapPin,
-    label: "Address",
-    value: "123 Innovation Drive, Toronto, ON M5V 2T6",
-  },
-];
+  contactInfo: [
+    {
+      icon: Phone,
+      label: isPathFrench ? "Téléphone" : "Phone",
+      value: "+1 (555) 123-4567",
+    },
+    {
+      icon: Mail,
+      label: isPathFrench ? "Email" : "Email",
+      value: "contact@minecoregroup.com",
+    },
+    {
+      icon: MapPin,
+      label: isPathFrench ? "Adresse" : "Address",
+      value: isPathFrench 
+        ? "123 Innovation Drive, Toronto, ON M5V 2T6"
+        : "123 Innovation Drive, Toronto, ON M5V 2T6",
+    },
+  ]
+});
 
 export default function Contact() {
   const { toast } = useToast();
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  const content = getContent(isPathFrench);
+
   const form = useForm<InsertContactMessage>({
     resolver: zodResolver(insertContactMessageSchema),
     defaultValues: {
@@ -56,15 +97,15 @@ export default function Contact() {
     },
     onSuccess: () => {
       toast({
-        title: "Message sent",
-        description: "We'll get back to you as soon as possible.",
+        title: content.toast.success.title,
+        description: content.toast.success.description,
       });
       form.reset();
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again later.",
+        title: content.toast.error.title,
+        description: content.toast.error.description,
         variant: "destructive",
       });
     },
@@ -84,10 +125,10 @@ export default function Contact() {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Contact Us
+            {content.title}
           </h1>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Get in touch to start your digital transformation journey
+            {content.subtitle}
           </p>
         </motion.div>
 
@@ -97,9 +138,9 @@ export default function Contact() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
+            <h2 className="text-2xl font-bold mb-6">{isPathFrench ? "Entrez en Contact" : "Get in Touch"}</h2>
             <div className="space-y-6">
-              {contactInfo.map((info) => (
+              {content.contactInfo.map((info) => (
                 <Card key={info.label}>
                   <CardContent className="flex items-center p-6">
                     <info.icon className="h-6 w-6 text-primary mr-4" />
@@ -127,9 +168,9 @@ export default function Contact() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>{content.form.labels.name}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" {...field} />
+                        <Input placeholder={content.form.placeholders.name} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -141,9 +182,9 @@ export default function Contact() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{content.form.labels.email}</FormLabel>
                       <FormControl>
-                        <Input placeholder="your@email.com" {...field} />
+                        <Input placeholder={content.form.placeholders.email} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -155,9 +196,9 @@ export default function Contact() {
                   name="company"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company</FormLabel>
+                      <FormLabel>{content.form.labels.company}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company" {...field} />
+                        <Input placeholder={content.form.placeholders.company} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -169,10 +210,10 @@ export default function Contact() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Message</FormLabel>
+                      <FormLabel>{content.form.labels.message}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="How can we help you?"
+                          placeholder={content.form.placeholders.message}
                           className="min-h-[120px]"
                           {...field}
                         />
@@ -188,10 +229,10 @@ export default function Contact() {
                   disabled={mutation.isPending}
                 >
                   {mutation.isPending ? (
-                    "Sending..."
+                    content.form.submit.sending
                   ) : (
                     <>
-                      Send Message
+                      {content.form.submit.idle}
                       <Send className="ml-2 h-4 w-4" />
                     </>
                   )}

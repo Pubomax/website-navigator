@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import {
   Card,
   CardContent,
@@ -11,8 +12,23 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import type { BlogPost, BlogCategory } from "@shared/schema";
+import { useLocation } from "wouter";
+
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench ? "Derniers Articles" : "Latest Insights",
+  subtitle: isPathFrench
+    ? "Perspectives d'experts sur la transformation numérique et les tendances technologiques"
+    : "Expert perspectives on digital transformation and technology trends",
+  tabs: {
+    all: isPathFrench ? "Tous les Articles" : "All Posts"
+  }
+});
 
 export default function Blog() {
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  const content = getContent(isPathFrench);
+
   const { data: categories, isLoading: categoriesLoading } = useQuery<BlogCategory[]>({
     queryKey: ["/api/blog-categories"],
   });
@@ -45,20 +61,20 @@ export default function Blog() {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Latest Insights
+            {content.title}
           </h1>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Expert perspectives on digital transformation and technology trends
+            {content.subtitle}
           </p>
         </motion.div>
 
         <div className="mt-16">
           <Tabs defaultValue="all" className="w-full">
             <TabsList className="mb-8">
-              <TabsTrigger value="all">All Posts</TabsTrigger>
+              <TabsTrigger value="all">{content.tabs.all}</TabsTrigger>
               {categories?.map((category) => (
                 <TabsTrigger key={category.id} value={category.slug}>
-                  {category.name}
+                  {isPathFrench ? category.frenchName || category.name : category.name}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -66,7 +82,13 @@ export default function Blog() {
             <TabsContent value="all">
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {posts?.map((post, index) => (
-                  <BlogPostCard key={post.id} post={post} index={index} category={categories?.find(c => c.id === post.categoryId)} />
+                  <BlogPostCard 
+                    key={post.id} 
+                    post={post} 
+                    index={index} 
+                    category={categories?.find(c => c.id === post.categoryId)}
+                    isPathFrench={isPathFrench}
+                  />
                 ))}
               </div>
             </TabsContent>
@@ -77,7 +99,13 @@ export default function Blog() {
                   {posts
                     ?.filter((post) => post.categoryId === category.id)
                     .map((post, index) => (
-                      <BlogPostCard key={post.id} post={post} index={index} category={category} />
+                      <BlogPostCard 
+                        key={post.id} 
+                        post={post} 
+                        index={index} 
+                        category={category}
+                        isPathFrench={isPathFrench}
+                      />
                     ))}
                 </div>
               </TabsContent>
@@ -92,11 +120,13 @@ export default function Blog() {
 function BlogPostCard({ 
   post, 
   index, 
-  category 
+  category,
+  isPathFrench 
 }: { 
   post: BlogPost; 
   index: number;
   category?: BlogCategory;
+  isPathFrench: boolean;
 }) {
   return (
     <motion.div
@@ -108,21 +138,27 @@ function BlogPostCard({
         <CardHeader className="relative h-48 overflow-hidden">
           <img
             src={post.imageUrl}
-            alt={post.title}
+            alt={isPathFrench ? post.frenchTitle || post.title : post.title}
             className="absolute inset-0 h-full w-full object-cover"
           />
         </CardHeader>
         <CardContent className="p-6">
           {category && (
             <Badge variant="secondary" className="mb-4">
-              {category.name}
+              {isPathFrench ? category.frenchName || category.name : category.name}
             </Badge>
           )}
           <div className="mb-4 text-sm text-muted-foreground">
-            {format(new Date(post.publishedAt), "MMMM d, yyyy")}
+            {format(new Date(post.publishedAt), "MMMM d, yyyy", {
+              locale: isPathFrench ? fr : undefined
+            })}
           </div>
-          <CardTitle className="mb-2">{post.title}</CardTitle>
-          <CardDescription>{post.summary}</CardDescription>
+          <CardTitle className="mb-2">
+            {isPathFrench ? post.frenchTitle || post.title : post.title}
+          </CardTitle>
+          <CardDescription>
+            {isPathFrench ? post.frenchSummary || post.summary : post.summary}
+          </CardDescription>
         </CardContent>
       </Card>
     </motion.div>

@@ -1,9 +1,27 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
+import { useTranslation } from "@/lib/i18n";
+
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench 
+    ? "Propulser la Transformation Numérique" 
+    : "Empowering Digital Transformation",
+  subtitle: isPathFrench
+    ? "Nous aidons les entreprises de toutes tailles à embrasser l'avenir numérique grâce à des solutions innovantes d'IA, d'automatisation et de conseil stratégique."
+    : "We help businesses of all sizes embrace the digital future through innovative AI solutions, automation, and strategic consulting.",
+  cta: {
+    primary: isPathFrench ? "Explorer Nos Services" : "Explore Our Services",
+    secondary: isPathFrench ? "Planifier une Consultation" : "Schedule a Consultation"
+  }
+});
 
 export function Hero() {
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  const content = getContent(isPathFrench);
+
   return (
     <div className="relative overflow-hidden bg-background">
       <div className="container px-4 sm:px-6 py-16 sm:py-24 lg:py-32">
@@ -19,7 +37,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
           >
-            Empowering Digital Transformation
+            {content.title}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -27,8 +45,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-6 text-base sm:text-lg leading-8 text-muted-foreground px-4"
           >
-            We help businesses of all sizes embrace the digital future through
-            innovative AI solutions, automation, and strategic consulting.
+            {content.subtitle}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -37,13 +54,15 @@ export function Hero() {
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4"
           >
             <Button asChild size="lg" className="w-full sm:w-auto">
-              <Link href="/services">
-                Explore Our Services
+              <Link href={isPathFrench ? "/fr/services" : "/services"}>
+                {content.cta.primary}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
-              <Link href="/contact">Schedule a Consultation</Link>
+              <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
+                {content.cta.secondary}
+              </Link>
             </Button>
           </motion.div>
         </motion.div>

@@ -7,8 +7,20 @@ import {
 } from "@/components/ui/accordion";
 import { faqCategories } from "@/data/faq";
 import { cn } from "@/lib/utils";
+import { useLocation } from "wouter";
+
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench ? "Questions Fréquemment Posées" : "Frequently Asked Questions",
+  subtitle: isPathFrench
+    ? "Trouvez des réponses aux questions courantes sur nos services, processus et solutions."
+    : "Find answers to common questions about our services, processes, and solutions."
+});
 
 export default function FAQ() {
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  const content = getContent(isPathFrench);
+
   return (
     <main className="py-24">
       <div className="container">
@@ -19,10 +31,10 @@ export default function FAQ() {
         >
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold tracking-tight mb-4">
-              Frequently Asked Questions
+              {content.title}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Find answers to common questions about our services, processes, and solutions.
+              {content.subtitle}
             </p>
           </div>
 
@@ -34,16 +46,16 @@ export default function FAQ() {
               >
                 <div className="flex items-center gap-2 mb-4">
                   <category.icon className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">{category.title}</h2>
+                  <h2 className="text-xl font-semibold">{isPathFrench ? category.frenchTitle || category.title : category.title}</h2>
                 </div>
                 <Accordion type="single" collapsible className="w-full">
                   {category.questions.map((faq, index) => (
                     <AccordionItem key={index} value={`${key}-${index}`}>
                       <AccordionTrigger className="text-left">
-                        {faq.question}
+                        {isPathFrench ? faq.frenchQuestion || faq.question : faq.question}
                       </AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
-                        {faq.answer}
+                        {isPathFrench ? faq.frenchAnswer || faq.answer : faq.answer}
                       </AccordionContent>
                     </AccordionItem>
                   ))}

@@ -5,15 +5,20 @@ import { z } from "zod";
 export const blogCategories = pgTable("blog_categories", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
+  frenchName: varchar("french_name", { length: 100 }),
   slug: varchar("slug", { length: 100 }).notNull().unique(),
   description: text("description"),
+  frenchDescription: text("french_description"),
 });
 
 export const blogPosts = pgTable("blog_posts", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
+  frenchTitle: text("french_title"),
   content: text("content").notNull(),
+  frenchContent: text("french_content"),
   summary: text("summary").notNull(),
+  frenchSummary: text("french_summary"),
   publishedAt: timestamp("published_at").notNull(),
   imageUrl: text("image_url").notNull(),
   categoryId: integer("category_id").notNull().references(() => blogCategories.id),
