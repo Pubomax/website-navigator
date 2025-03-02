@@ -41,6 +41,8 @@ import LargeEnterprises from "@/pages/business-types/large";
 import Story from "@/pages/about/story";
 import Team from "@/pages/about/team";
 import Mission from "@/pages/about/mission";
+import AdminLogin from "@/pages/admin/login"; // Added import
+
 
 function Router() {
   return (
@@ -54,6 +56,7 @@ function Router() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/faq" component={FAQ} />
+          <Route path="/admin/login" component={AdminLogin} /> {/* Added route */}
           <Route path="/admin" component={AdminDashboard} />
           <Route path="/blog" component={Blog} />
           <Route path="/case-studies" component={CaseStudies} />

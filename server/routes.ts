@@ -3,34 +3,34 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { insertContactMessageSchema, insertNewsletterSubscriptionSchema, insertBlogPostSchema, insertBlogCategorySchema } from "@shared/schema";
+import session from 'express-session';
+import MemoryStore from 'memorystore';
 
 // Store connected clients
 const clients = new Set<WebSocket>();
 
 // Basic auth middleware for admin routes
 const adminAuthMiddleware = async (req: any, res: any, next: any) => {
-  const username = req.headers["x-admin-username"];
-  const password = req.headers["x-admin-password"];
-
-  if (!username || !password) {
+  if (!req.session.isAuthenticated) {
     return res.status(401).json({ message: "Authentication required" });
   }
-
-  try {
-    const user = await storage.getAdminUserByUsername(username);
-    if (!user || user.passwordHash !== password) { // In production, use proper password hashing
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-    next();
-  } catch (error) {
-    console.error('Auth error:', error);
-    res.status(500).json({ message: "Authentication error" });
-  }
+  next();
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server first
   const httpServer = createServer(app);
+
+  const SessionStore = MemoryStore(session);
+  app.use(session({
+    store: new SessionStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // set to true if using HTTPS
+  }));
 
   // Initialize WebSocket server with a unique path
   const wss = new WebSocketServer({ server: httpServer, path: '/ws/chat' });
@@ -73,6 +73,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin Routes
+  app.post("/api/admin/login", async (req, res) => {
+    const { username, password } = req.body;
+
+    // For development, use hardcoded credentials
+    if (username === "admin" && password === "adminpass123") {
+      req.session.isAuthenticated = true;
+      res.json({ success: true });
+    } else {
+      res.status(401).json({ message: "Invalid credentials" });
+    }
+  });
+
   app.get("/api/admin/blog-posts", adminAuthMiddleware, async (_req, res) => {
     try {
       const posts = await storage.getBlogPosts();
@@ -128,7 +140,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/blog-posts", async (req, res) => {
     const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
-    const posts = categoryId 
+    const posts = categoryId
       ? await storage.getBlogPostsByCategory(categoryId)
       : await storage.getBlogPosts();
     res.json(posts);
