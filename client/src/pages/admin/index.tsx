@@ -23,6 +23,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import type { InsertBlogPost, InsertBlogCategory } from "@shared/schema";
+import { insertBlogCategorySchema } from "@/schemas/blog-category"; // Assuming this schema is defined elsewhere
 
 const headers = {
   "Content-Type": "application/json",
@@ -82,10 +83,13 @@ export default function AdminDashboard() {
 
   // Blog Categories Management
   const categoryForm = useForm<InsertBlogCategory>({
+    resolver: zodResolver(insertBlogCategorySchema),
     defaultValues: {
       name: "",
       slug: "",
       description: "",
+      frenchName: "",
+      frenchDescription: "",
     },
   });
 
@@ -127,7 +131,7 @@ export default function AdminDashboard() {
   return (
     <main className="container py-10">
       <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
-      
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
           <TabsTrigger value="posts">Blog Posts</TabsTrigger>
@@ -241,9 +245,22 @@ export default function AdminDashboard() {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name</FormLabel>
+                          <FormLabel>Name (English)</FormLabel>
                           <FormControl>
                             <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={categoryForm.control}
+                      name="frenchName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name (French)</FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value || ''} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -256,7 +273,7 @@ export default function AdminDashboard() {
                         <FormItem>
                           <FormLabel>Slug</FormLabel>
                           <FormControl>
-                            <Input {...field} />
+                            <Input {...field} placeholder="unique-category-identifier" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -267,9 +284,22 @@ export default function AdminDashboard() {
                       name="description"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Description</FormLabel>
+                          <FormLabel>Description (English)</FormLabel>
                           <FormControl>
-                            <Textarea {...field} />
+                            <Textarea {...field} value={field.value || ''} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={categoryForm.control}
+                      name="frenchDescription"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description (French)</FormLabel>
+                          <FormControl>
+                            <Textarea {...field} value={field.value || ''} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
