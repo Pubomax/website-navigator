@@ -26,7 +26,7 @@ import { insertBlogCategorySchema } from "@/schemas/blog-category";
 import type { InsertBlogPost, InsertBlogCategory } from "@shared/schema";
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState("categories"); 
+  const [activeTab, setActiveTab] = useState("categories");
 
   // Blog Categories Management
   const categoryForm = useForm<InsertBlogCategory>({
@@ -40,20 +40,9 @@ export default function AdminDashboard() {
     },
   });
 
-  const { data: categories, isLoading: isLoadingCategories } = useQuery({
-    queryKey: ["/api/admin/blog-categories"],
-    queryFn: async () => {
-      const response = await fetch("/api/admin/blog-categories");
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to fetch categories");
-      }
-      return response.json();
-    },
-  });
-
   const createCategory = useMutation({
     mutationFn: async (data: InsertBlogCategory) => {
+      console.log('Submitting category data:', data);
       const response = await fetch("/api/admin/blog-categories", {
         method: "POST",
         headers: {
@@ -64,6 +53,7 @@ export default function AdminDashboard() {
 
       if (!response.ok) {
         const error = await response.json();
+        console.error('Category creation error:', error);
         throw new Error(error.message || "Failed to create category");
       }
 
@@ -77,6 +67,7 @@ export default function AdminDashboard() {
       categoryForm.reset();
     },
     onError: (error: Error) => {
+      console.error('Category creation error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to create category",
@@ -142,6 +133,18 @@ export default function AdminDashboard() {
     },
   });
 
+  const { data: categories, isLoading: isLoadingCategories } = useQuery({
+    queryKey: ["/api/admin/blog-categories"],
+    queryFn: async () => {
+      const response = await fetch("/api/admin/blog-categories");
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to fetch categories");
+      }
+      return response.json();
+    },
+  });
+
   return (
     <main className="container py-10">
       <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
@@ -153,109 +156,113 @@ export default function AdminDashboard() {
         </TabsList>
 
         <TabsContent value="categories">
-          <div className="grid gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Create Category</CardTitle>
-                <CardDescription>Add a new blog category</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Form {...categoryForm}>
-                  <form onSubmit={categoryForm.handleSubmit((data) => createCategory.mutate(data))} className="space-y-4">
-                    <FormField
-                      control={categoryForm.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name (English)</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={categoryForm.control}
-                      name="slug"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Slug</FormLabel>
-                          <FormControl>
-                            <Input {...field} placeholder="unique-category-identifier" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={categoryForm.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description (English)</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={categoryForm.control}
-                      name="frenchName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name (French)</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={categoryForm.control}
-                      name="frenchDescription"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description (French)</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" disabled={createCategory.isPending}>
-                      {createCategory.isPending ? "Creating..." : "Create Category"}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Existing Categories</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {isLoadingCategories ? (
-                  <p>Loading categories...</p>
-                ) : (
-                  <div className="space-y-4">
-                    {categories?.map((category: any) => (
-                      <div key={category.id} className="p-4 border rounded">
-                        <h3 className="font-semibold">{category.name}</h3>
-                        <p className="text-sm text-muted-foreground">{category.description}</p>
-                        <p className="text-sm text-muted-foreground">Slug: {category.slug}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Create Category</CardTitle>
+              <CardDescription>Add a new blog category</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...categoryForm}>
+                <form onSubmit={categoryForm.handleSubmit((data) => createCategory.mutate(data))} className="space-y-4">
+                  <FormField
+                    control={categoryForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name (English)*</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={categoryForm.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug*</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="my-category-slug" />
+                        </FormControl>
+                        <FormMessage />
+                        <p className="text-xs text-muted-foreground">
+                          Only lowercase letters, numbers, and hyphens are allowed
+                        </p>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={categoryForm.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description (English)</FormLabel>
+                        <FormControl>
+                          <Textarea {...field} value={field.value || ''} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={categoryForm.control}
+                    name="frenchName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name (French)</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value || ''} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={categoryForm.control}
+                    name="frenchDescription"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description (French)</FormLabel>
+                        <FormControl>
+                          <Textarea {...field} value={field.value || ''} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button 
+                    type="submit" 
+                    disabled={createCategory.isPending}
+                    className="w-full"
+                  >
+                    {createCategory.isPending ? "Creating..." : "Create Category"}
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Existing Categories</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoadingCategories ? (
+                <p>Loading categories...</p>
+              ) : (
+                <div className="space-y-4">
+                  {categories?.map((category: any) => (
+                    <div key={category.id} className="p-4 border rounded">
+                      <h3 className="font-semibold">{category.name}</h3>
+                      <p className="text-sm text-muted-foreground">{category.description}</p>
+                      <p className="text-sm text-muted-foreground">Slug: {category.slug}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="posts">
