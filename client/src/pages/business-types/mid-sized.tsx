@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Building2, CheckCircle2, ArrowRight } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Solutions pour les Entreprises de Taille Moyenne" : "Solutions for Mid-Sized Enterprises",
