@@ -4,7 +4,7 @@ import { CaseStudies } from "@/components/sections/case-studies";
 
 export default function Home() {
   return (
-    <main>
+    <main className="w-full">
       <Hero />
       <ServicesGrid />
       <CaseStudies />

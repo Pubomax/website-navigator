@@ -75,7 +75,7 @@ export function Footer() {
 
   return (
     <footer className="bg-background mt-auto border-t">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="py-8 md:py-12">
           <div className="grid gap-8 xl:grid-cols-3 xl:gap-12">
             <div className="space-y-4">

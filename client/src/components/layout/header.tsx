@@ -124,7 +124,7 @@ export function Header() {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b bg-background/60 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
-      <nav className="container flex h-16 items-center justify-between">
+      <nav className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
         <div className="flex items-center">
           <Link href={getLocalizedPath("/")} className="flex items-center">
             <img
