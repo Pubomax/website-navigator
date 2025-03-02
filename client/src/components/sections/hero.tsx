@@ -54,7 +54,7 @@ export function Hero() {
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4"
           >
             <Button asChild size="lg" className="w-full sm:w-auto">
-              <Link href={isPathFrench ? "/fr/services" : "/services"}>
+              <Link href={isPathFrench ? "/fr/services/digital-foundation" : "/services/digital-foundation"}>
                 {content.cta.primary}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
