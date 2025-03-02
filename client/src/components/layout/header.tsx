@@ -16,7 +16,18 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useTranslation } from "@/lib/i18n";
 
-const navigation = [
+// Type definition for navigation items
+interface NavigationItem {
+  name: string;
+  href?: string;
+  items?: Array<{
+    name: string;
+    href: string;
+    group?: string;
+  }>;
+}
+
+const navigation: NavigationItem[] = [
   {
     name: "services",
     items: [
@@ -139,7 +150,7 @@ export function Header() {
             ) : (
               <Link
                 key={item.name}
-                href={getLocalizedPath(item.href)}
+                href={getLocalizedPath(item.href!)}
                 className="text-sm font-medium px-4 py-2 rounded-md transition-colors hover:text-primary hover:bg-accent/50"
               >
                 {t(item.name)}
@@ -219,7 +230,7 @@ export function Header() {
                   ) : (
                     <Link
                       key={item.name}
-                      href={getLocalizedPath(item.href)}
+                      href={getLocalizedPath(item.href!)}
                       className="text-lg font-medium transition-colors text-muted-foreground hover:text-primary"
                       onClick={() => setIsOpen(false)}
                     >

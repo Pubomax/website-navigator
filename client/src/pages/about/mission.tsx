@@ -9,9 +9,9 @@ import {
   Shield,
   Fuel,
 } from "lucide-react";
-import { useTranslation } from "@/lib/i18n";
 
-const getValues = (isPathFrench: boolean) => ({
+const getContent = (isPathFrench: boolean) => ({
+  title: isPathFrench ? "Mission & Valeurs" : "Mission & Values",
   values: [
     {
       icon: Heart,
@@ -49,7 +49,7 @@ const getValues = (isPathFrench: boolean) => ({
         : "We strive for excellence in every solution we deliver and service we provide.",
     },
   ],
-  translations: {
+  sections: {
     mission: {
       title: isPathFrench ? "Notre Mission" : "Our Mission",
       content: isPathFrench
@@ -82,13 +82,16 @@ const getValues = (isPathFrench: boolean) => ({
       ],
     },
   },
+  cta: {
+    partner: isPathFrench ? "Devenir Partenaire" : "Partner With Us",
+    impact: isPathFrench ? "Voir Notre Impact" : "See Our Impact"
+  }
 });
 
 export default function Mission() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
-  const { t } = useTranslation(isPathFrench ? 'fr' : 'en');
-  const { values, translations } = getValues(isPathFrench);
+  const content = getContent(isPathFrench);
 
   return (
     <main className="py-24">
@@ -104,28 +107,28 @@ export default function Mission() {
               <Target className="h-8 w-8 text-primary" />
             </div>
             <h1 className="text-4xl font-bold tracking-tight">
-              {isPathFrench ? "Mission & Valeurs" : "Mission & Values"}
+              {content.title}
             </h1>
           </div>
 
           <div className="prose prose-gray dark:prose-invert max-w-none">
             <div className="bg-card rounded-lg p-8 border mb-12">
-              <h2 className="text-2xl font-bold mb-4">{translations.mission.title}</h2>
+              <h2 className="text-2xl font-bold mb-4">{content.sections.mission.title}</h2>
               <p className="text-xl text-muted-foreground">
-                {translations.mission.content}
+                {content.sections.mission.content}
               </p>
             </div>
 
             <div className="bg-card rounded-lg p-8 border mb-12">
-              <h2 className="text-2xl font-bold mb-4">{translations.vision.title}</h2>
+              <h2 className="text-2xl font-bold mb-4">{content.sections.vision.title}</h2>
               <p className="text-xl text-muted-foreground">
-                {translations.vision.content}
+                {content.sections.vision.content}
               </p>
             </div>
 
-            <h2 className="text-2xl font-bold mb-8">{translations.values.title}</h2>
+            <h2 className="text-2xl font-bold mb-8">{content.sections.values.title}</h2>
             <div className="grid gap-6">
-              {values.map((value) => (
+              {content.values.map((value) => (
                 <motion.div
                   key={value.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -144,9 +147,9 @@ export default function Mission() {
               ))}
             </div>
 
-            <h2 className="text-2xl font-bold mt-12 mb-6">{translations.commitments.title}</h2>
+            <h2 className="text-2xl font-bold mt-12 mb-6">{content.sections.commitments.title}</h2>
             <ul className="space-y-4">
-              {translations.commitments.items.map((item, index) => (
+              {content.sections.commitments.items.map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
@@ -154,12 +157,12 @@ export default function Mission() {
             <div className="mt-12 flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg">
                 <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
-                  {t("partnerWithUs")}
+                  {content.cta.partner}
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <Link href={isPathFrench ? "/fr/case-studies" : "/case-studies"}>
-                  {t("seeOurImpact")}
+                  {content.cta.impact}
                 </Link>
               </Button>
             </div>
