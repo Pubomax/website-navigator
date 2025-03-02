@@ -126,8 +126,12 @@ export function Header() {
     <header className="fixed top-0 z-50 w-full border-b bg-background/60 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
       <nav className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
-          <Link href={getLocalizedPath("/")} className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-            Minecore Group
+          <Link href={getLocalizedPath("/")} className="flex items-center">
+            <img 
+              src="/attached_assets/minecore group.png" 
+              alt="Minecore Group" 
+              className="h-8 w-auto"
+            />
           </Link>
         </div>
 
