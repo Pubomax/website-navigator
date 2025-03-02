@@ -6,6 +6,18 @@ import { insertContactMessageSchema, insertNewsletterSubscriptionSchema, insertB
 import session from 'express-session';
 import MemoryStore from 'memorystore';
 
+// Add this near the top of the file, after imports
+const logError = (error: unknown, context: string) => {
+  console.error(`Error in ${context}:`, error);
+  if (error instanceof Error) {
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+  }
+};
+
 // Store connected clients
 const clients = new Set<WebSocket>();
 
@@ -68,20 +80,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const categories = await storage.getBlogCategories();
       res.json(categories);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      logError(error, 'fetching categories');
       res.status(500).json({ message: "Error fetching blog categories" });
     }
   });
 
+  // Update the blog categories POST endpoint
   app.post("/api/admin/blog-categories", adminAuthMiddleware, async (req, res) => {
     try {
+      console.log('Received category data:', req.body);
       const data = insertBlogCategorySchema.parse(req.body);
+      console.log('Validated category data:', data);
+
       const category = await storage.createBlogCategory(data);
+      console.log('Created category:', category);
+
       res.status(201).json(category);
     } catch (error) {
-      console.error('Error creating category:', error);
-      res.status(400).json({ 
-        message: "Invalid category data",
+      logError(error, 'creating blog category');
+
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          message: "Invalid category data",
+          errors: error.errors 
+        });
+      }
+
+      res.status(500).json({ 
+        message: "Failed to create category",
         error: error instanceof Error ? error.message : "Unknown error"
       });
     }
@@ -93,7 +119,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const posts = await storage.getBlogPosts();
       res.json(posts);
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      logError(error, 'fetching posts');
       res.status(500).json({ message: "Error fetching blog posts" });
     }
   });
@@ -104,7 +130,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const post = await storage.createBlogPost(data);
       res.status(201).json(post);
     } catch (error) {
-      console.error('Error creating post:', error);
+      logError(error, 'creating post');
       res.status(400).json({ 
         message: "Invalid blog post data",
         error: error instanceof Error ? error.message : "Unknown error"
@@ -164,6 +190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const message = await storage.createContactMessage(data);
       res.status(201).json(message);
     } catch (error) {
+      logError(error, 'creating contact message');
       res.status(400).json({ message: "Invalid contact form data" });
     }
   });
@@ -179,6 +206,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const subscription = await storage.createNewsletterSubscription(data);
       res.status(201).json(subscription);
     } catch (error) {
+      logError(error, 'creating newsletter subscription');
       res.status(400).json({ message: "Invalid subscription data" });
     }
   });
