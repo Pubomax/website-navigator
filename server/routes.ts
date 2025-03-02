@@ -11,7 +11,7 @@ const clients = new Set<WebSocket>();
 
 // Basic auth middleware for admin routes
 const adminAuthMiddleware = async (req: any, res: any, next: any) => {
-  if (!req.session.isAuthenticated) {
+  if (!req.session?.isAuthenticated) {
     return res.status(401).json({ message: "Authentication required" });
   }
   next();
@@ -29,47 +29,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } // set to true if using HTTPS
+    cookie: { 
+      secure: false, // set to true if using HTTPS
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
   }));
 
-  // Initialize WebSocket server with a unique path
+  // Initialize WebSocket server
   const wss = new WebSocketServer({ server: httpServer, path: '/ws/chat' });
 
   wss.on('connection', (ws) => {
-    console.log('New client connected');
     clients.add(ws);
-
-    ws.send(JSON.stringify({
-      type: 'system',
-      message: 'Welcome to live chat support! How can we help you today?',
-      timestamp: new Date().toISOString(),
-    }));
-
-    ws.on('message', (data) => {
-      try {
-        const message = JSON.parse(data.toString());
-        console.log('Received message:', message);
-
-        const response = {
-          type: message.type || 'user',
-          message: message.message,
-          timestamp: new Date().toISOString(),
-        };
-
-        clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(response));
-          }
-        });
-      } catch (error) {
-        console.error('Error processing message:', error);
-      }
-    });
-
-    ws.on('close', () => {
-      console.log('Client disconnected');
-      clients.delete(ws);
-    });
+    ws.on('close', () => clients.delete(ws));
   });
 
   // Admin Routes
@@ -79,29 +50,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // For development, use hardcoded credentials
     if (username === "admin" && password === "adminpass123") {
       req.session.isAuthenticated = true;
+      await req.session.save();
       res.json({ success: true });
     } else {
       res.status(401).json({ message: "Invalid credentials" });
     }
   });
 
-  app.get("/api/admin/blog-posts", adminAuthMiddleware, async (_req, res) => {
-    try {
-      const posts = await storage.getBlogPosts();
-      res.json(posts);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching blog posts" });
-    }
-  });
-
-  app.post("/api/admin/blog-posts", adminAuthMiddleware, async (req, res) => {
-    try {
-      const data = insertBlogPostSchema.parse(req.body);
-      const post = await storage.createBlogPost(data);
-      res.status(201).json(post);
-    } catch (error) {
-      res.status(400).json({ message: "Invalid blog post data" });
-    }
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy(() => {
+      res.json({ success: true });
+    });
   });
 
   app.get("/api/admin/blog-categories", adminAuthMiddleware, async (_req, res) => {
@@ -109,6 +68,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const categories = await storage.getBlogCategories();
       res.json(categories);
     } catch (error) {
+      console.error('Error fetching categories:', error);
       res.status(500).json({ message: "Error fetching blog categories" });
     }
   });
@@ -119,7 +79,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const category = await storage.createBlogCategory(data);
       res.status(201).json(category);
     } catch (error) {
-      res.status(400).json({ message: "Invalid category data" });
+      console.error('Error creating category:', error);
+      res.status(400).json({ 
+        message: "Invalid category data",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Blog Posts endpoints
+  app.get("/api/admin/blog-posts", adminAuthMiddleware, async (_req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).json({ message: "Error fetching blog posts" });
+    }
+  });
+
+  app.post("/api/admin/blog-posts", adminAuthMiddleware, async (req, res) => {
+    try {
+      const data = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(data);
+      res.status(201).json(post);
+    } catch (error) {
+      console.error('Error creating post:', error);
+      res.status(400).json({ 
+        message: "Invalid blog post data",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
     }
   });
 
