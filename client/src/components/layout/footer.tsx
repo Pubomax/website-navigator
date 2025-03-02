@@ -83,7 +83,7 @@ export function Footer() {
                 <img 
                   src="/images/logo.png" 
                   alt="Minecore Group" 
-                  className="h-14 w-auto"
+                  className="h-16 w-auto"
                 />
               </Link>
               <p className="text-sm text-muted-foreground max-w-xs">
