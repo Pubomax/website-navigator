@@ -127,9 +127,9 @@ export function Header() {
       <nav className="container flex h-16 items-center justify-between">
         <div className="flex items-center">
           <Link href={getLocalizedPath("/")} className="flex items-center">
-            <img 
-              src="/attached_assets/minecore group.png" 
-              alt="Minecore Group" 
+            <img
+              src="/images/logo.png"
+              alt="Minecore Group"
               className="h-8 w-auto"
             />
           </Link>

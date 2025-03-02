@@ -81,7 +81,7 @@ export function Footer() {
             <div className="space-y-4">
               <Link href="/" className="block">
                 <img 
-                  src="/attached_assets/minecore group.png" 
+                  src="/images/logo.png" 
                   alt="Minecore Group" 
                   className="h-12 w-auto"
                 />
