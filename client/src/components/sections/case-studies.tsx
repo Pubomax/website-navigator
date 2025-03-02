@@ -46,17 +46,17 @@ export function CaseStudies() {
 
   return (
     <section className="py-16 sm:py-24 lg:py-32 bg-muted/50">
-      <div className="container px-4 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight lg:text-4xl">
             {content.title}
           </h2>
-          <p className="mt-6 text-base sm:text-lg leading-8 text-muted-foreground">
+          <p className="mt-6 text-lg sm:text-xl leading-8 text-muted-foreground">
             {content.subtitle}
           </p>
         </div>
 
-        <div className="mx-auto mt-12 sm:mt-16 grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {caseStudies?.map((study, index) => (
             <motion.div
               key={study.id}

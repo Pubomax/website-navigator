@@ -23,49 +23,51 @@ export function Hero() {
   const content = getContent(isPathFrench);
 
   return (
-    <div className="relative overflow-hidden bg-background">
-      <div className="container px-4 sm:px-6 py-16 sm:py-24 lg:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mx-auto max-w-4xl text-center"
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
-          >
-            {content.title}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-6 text-base sm:text-lg leading-8 text-muted-foreground px-4"
-          >
-            {content.subtitle}
-          </motion.p>
+    <div className="relative overflow-hidden bg-background mt-16 md:mt-20">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="py-16 sm:py-24 lg:py-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4"
+            transition={{ duration: 0.8 }}
+            className="mx-auto max-w-3xl text-center"
           >
-            <Button asChild size="lg" className="w-full sm:w-auto">
-              <Link href={isPathFrench ? "/fr/services/digital-foundation" : "/services/digital-foundation"}>
-                {content.cta.primary}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
-              <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
-                {content.cta.secondary}
-              </Link>
-            </Button>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight"
+            >
+              {content.title}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-6 text-lg sm:text-xl leading-8 text-muted-foreground"
+            >
+              {content.subtitle}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6"
+            >
+              <Button asChild size="lg" className="w-full sm:w-auto">
+                <Link href={isPathFrench ? "/fr/services/digital-foundation" : "/services/digital-foundation"}>
+                  {content.cta.primary}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
+                <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
+                  {content.cta.secondary}
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Abstract background pattern */}
