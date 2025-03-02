@@ -13,36 +13,12 @@ import NotFound from "@/pages/not-found";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import FAQ from "@/pages/faq";
-import AdminDashboard from "@/pages/admin";
 import Blog from "@/pages/blog";
 import CaseStudies from "@/pages/case-studies";
 
-// Service pages
-import DigitalFoundation from "@/pages/services/digital-foundation";
-import TransformationConsulting from "@/pages/services/transformation-consulting";
-import AIAutomationStarter from "@/pages/services/ai-automation-starter";
-import CustomAIAutomation from "@/pages/services/custom-ai-automation";
-import CustomSoftware from "@/pages/services/custom-software";
-import IntelligentSupport from "@/pages/services/intelligent-support";
-
-// Sector pages
-import Manufacturing from "@/pages/sectors/manufacturing";
-import Finance from "@/pages/sectors/finance";
-import Retail from "@/pages/sectors/retail";
-import Healthcare from "@/pages/sectors/healthcare";
-import PublicSector from "@/pages/sectors/public-sector";
-
-// Business Type pages
-import MicroEnterprises from "@/pages/business-types/micro";
-import MidSizedEnterprises from "@/pages/business-types/mid-sized";
-import LargeEnterprises from "@/pages/business-types/large";
-
-// Company pages
-import Story from "@/pages/about/story";
-import Team from "@/pages/about/team";
-import Mission from "@/pages/about/mission";
-import AdminLogin from "@/pages/admin/login"; // Added import
-
+// Admin pages
+import AdminLogin from "@/pages/admin/login";
+import AdminDashboard from "@/pages/admin";
 
 function Router() {
   return (
@@ -50,75 +26,18 @@ function Router() {
       <Header />
       <div className="flex-1">
         <Switch>
+          {/* Admin Routes - Place these before other routes */}
+          <Route path="/admin/login" component={AdminLogin} />
+          <Route path="/admin" component={AdminDashboard} />
+
           {/* Main Routes */}
           <Route path="/" component={Home} />
           <Route path="/contact" component={Contact} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/faq" component={FAQ} />
-          <Route path="/admin/login" component={AdminLogin} /> {/* Added route */}
-          <Route path="/admin" component={AdminDashboard} />
           <Route path="/blog" component={Blog} />
           <Route path="/case-studies" component={CaseStudies} />
-
-          {/* Service Routes */}
-          <Route path="/services/digital-foundation" component={DigitalFoundation} />
-          <Route path="/services/transformation-consulting" component={TransformationConsulting} />
-          <Route path="/services/ai-automation-starter" component={AIAutomationStarter} />
-          <Route path="/services/custom-ai-automation" component={CustomAIAutomation} />
-          <Route path="/services/custom-software" component={CustomSoftware} />
-          <Route path="/services/intelligent-support" component={IntelligentSupport} />
-
-          {/* Sector Routes */}
-          <Route path="/sectors/manufacturing" component={Manufacturing} />
-          <Route path="/sectors/finance" component={Finance} />
-          <Route path="/sectors/retail" component={Retail} />
-          <Route path="/sectors/healthcare" component={Healthcare} />
-          <Route path="/sectors/public-sector" component={PublicSector} />
-
-          {/* Business Type Routes */}
-          <Route path="/business-types/micro" component={MicroEnterprises} />
-          <Route path="/business-types/mid-sized" component={MidSizedEnterprises} />
-          <Route path="/business-types/large" component={LargeEnterprises} />
-
-          {/* Company Routes */}
-          <Route path="/about/story" component={Story} />
-          <Route path="/about/team" component={Team} />
-          <Route path="/about/mission" component={Mission} />
-
-          {/* French Routes */}
-          <Route path="/fr" component={Home} />
-          <Route path="/fr/contact" component={Contact} />
-          <Route path="/fr/privacy" component={Privacy} />
-          <Route path="/fr/terms" component={Terms} />
-          <Route path="/fr/faq" component={FAQ} />
-          <Route path="/fr/blog" component={Blog} />
-          <Route path="/fr/case-studies" component={CaseStudies} />
-
-          {/* French Service Routes */}
-          <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
-          <Route path="/fr/services/transformation-consulting" component={TransformationConsulting} />
-          <Route path="/fr/services/ai-automation-starter" component={AIAutomationStarter} />
-          <Route path="/fr/services/custom-ai-automation" component={CustomAIAutomation} />
-          <Route path="/fr/services/custom-software" component={CustomSoftware} />
-          <Route path="/fr/services/intelligent-support" component={IntelligentSupport} />
-
-          {/* French Sector Routes */}
-          <Route path="/fr/sectors/manufacturing" component={Manufacturing} />
-          <Route path="/fr/sectors/finance" component={Finance} />
-          <Route path="/fr/sectors/retail" component={Retail} />
-          <Route path="/fr/sectors/healthcare" component={Healthcare} />
-          <Route path="/fr/sectors/public-sector" component={PublicSector} />
-
-          {/* French Business Type Routes */}
-          <Route path="/fr/business-types/micro" component={MicroEnterprises} />
-          <Route path="/fr/business-types/mid-sized" component={MidSizedEnterprises} />
-          <Route path="/fr/business-types/large" component={LargeEnterprises} />
-
-          {/* French Company Routes */}
-          <Route path="/fr/about/story" component={Story} />
-          <Route path="/fr/about/team" component={Team} />
-          <Route path="/fr/about/mission" component={Mission} />
 
           {/* Catch all for 404 */}
           <Route component={NotFound} />
