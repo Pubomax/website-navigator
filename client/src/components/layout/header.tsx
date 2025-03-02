@@ -130,7 +130,7 @@ export function Header() {
             <img
               src="/images/logo.png"
               alt="Minecore Group"
-              className="h-8 w-auto"
+              className="h-10 w-auto" // Increased from h-8 to h-10
             />
           </Link>
         </div>
