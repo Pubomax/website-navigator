@@ -79,8 +79,12 @@ export function Footer() {
         <div className="py-8 md:py-12">
           <div className="grid gap-8 xl:grid-cols-3 xl:gap-12">
             <div className="space-y-4">
-              <Link href="/" className="text-xl font-bold">
-                Minecore Group
+              <Link href="/" className="block">
+                <img 
+                  src="/attached_assets/minecore group.png" 
+                  alt="Minecore Group" 
+                  className="h-12 w-auto"
+                />
               </Link>
               <p className="text-sm text-muted-foreground max-w-xs">
                 Canadian leader in digital transformation, AI, and automation solutions
