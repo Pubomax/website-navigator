@@ -16,6 +16,37 @@ import FAQ from "@/pages/faq";
 import Blog from "@/pages/blog";
 import CaseStudies from "@/pages/case-studies";
 
+// Service pages
+import DigitalFoundation from "@/pages/services/digital-foundation";
+import TransformationConsulting from "@/pages/services/transformation-consulting";
+import AIAutomationStarter from "@/pages/services/ai-automation-starter";
+import CustomAIAutomation from "@/pages/services/custom-ai-automation";
+import CustomSoftware from "@/pages/services/custom-software";
+import IntelligentSupport from "@/pages/services/intelligent-support";
+
+// Sector pages
+import Manufacturing from "@/pages/sectors/manufacturing";
+import Finance from "@/pages/sectors/finance";
+import Retail from "@/pages/sectors/retail";
+import Healthcare from "@/pages/sectors/healthcare";
+import PublicSector from "@/pages/sectors/public-sector";
+
+// Business Type pages
+import MicroEnterprises from "@/pages/business-types/micro";
+import MidSizedEnterprises from "@/pages/business-types/mid-sized";
+import LargeEnterprises from "@/pages/business-types/large";
+
+// Region pages
+import Ontario from "@/pages/regions/ontario";
+import BritishColumbia from "@/pages/regions/british-columbia";
+import Alberta from "@/pages/regions/alberta";
+import Quebec from "@/pages/regions/quebec";
+
+// Company pages
+import Story from "@/pages/about/story";
+import Team from "@/pages/about/team";
+import Mission from "@/pages/about/mission";
+
 // Admin pages
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin";
@@ -38,6 +69,77 @@ function Router() {
           <Route path="/faq" component={FAQ} />
           <Route path="/blog" component={Blog} />
           <Route path="/case-studies" component={CaseStudies} />
+
+          {/* Service Routes */}
+          <Route path="/services/digital-foundation" component={DigitalFoundation} />
+          <Route path="/services/transformation-consulting" component={TransformationConsulting} />
+          <Route path="/services/ai-automation-starter" component={AIAutomationStarter} />
+          <Route path="/services/custom-ai-automation" component={CustomAIAutomation} />
+          <Route path="/services/custom-software" component={CustomSoftware} />
+          <Route path="/services/intelligent-support" component={IntelligentSupport} />
+
+          {/* Sector Routes */}
+          <Route path="/sectors/manufacturing" component={Manufacturing} />
+          <Route path="/sectors/finance" component={Finance} />
+          <Route path="/sectors/retail" component={Retail} />
+          <Route path="/sectors/healthcare" component={Healthcare} />
+          <Route path="/sectors/public-sector" component={PublicSector} />
+
+          {/* Business Type Routes */}
+          <Route path="/business-types/micro" component={MicroEnterprises} />
+          <Route path="/business-types/mid-sized" component={MidSizedEnterprises} />
+          <Route path="/business-types/large" component={LargeEnterprises} />
+
+          {/* Region Routes */}
+          <Route path="/regions/ontario" component={Ontario} />
+          <Route path="/regions/british-columbia" component={BritishColumbia} />
+          <Route path="/regions/alberta" component={Alberta} />
+          <Route path="/regions/quebec" component={Quebec} />
+
+          {/* Company Routes */}
+          <Route path="/about/story" component={Story} />
+          <Route path="/about/team" component={Team} />
+          <Route path="/about/mission" component={Mission} />
+
+          {/* French Routes */}
+          <Route path="/fr" component={Home} />
+          <Route path="/fr/contact" component={Contact} />
+          <Route path="/fr/privacy" component={Privacy} />
+          <Route path="/fr/terms" component={Terms} />
+          <Route path="/fr/faq" component={FAQ} />
+          <Route path="/fr/blog" component={Blog} />
+          <Route path="/fr/case-studies" component={CaseStudies} />
+
+          {/* French Service Routes */}
+          <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
+          <Route path="/fr/services/transformation-consulting" component={TransformationConsulting} />
+          <Route path="/fr/services/ai-automation-starter" component={AIAutomationStarter} />
+          <Route path="/fr/services/custom-ai-automation" component={CustomAIAutomation} />
+          <Route path="/fr/services/custom-software" component={CustomSoftware} />
+          <Route path="/fr/services/intelligent-support" component={IntelligentSupport} />
+
+          {/* French Sector Routes */}
+          <Route path="/fr/sectors/manufacturing" component={Manufacturing} />
+          <Route path="/fr/sectors/finance" component={Finance} />
+          <Route path="/fr/sectors/retail" component={Retail} />
+          <Route path="/fr/sectors/healthcare" component={Healthcare} />
+          <Route path="/fr/sectors/public-sector" component={PublicSector} />
+
+          {/* French Business Type Routes */}
+          <Route path="/fr/business-types/micro" component={MicroEnterprises} />
+          <Route path="/fr/business-types/mid-sized" component={MidSizedEnterprises} />
+          <Route path="/fr/business-types/large" component={LargeEnterprises} />
+
+          {/* French Region Routes */}
+          <Route path="/fr/regions/ontario" component={Ontario} />
+          <Route path="/fr/regions/british-columbia" component={BritishColumbia} />
+          <Route path="/fr/regions/alberta" component={Alberta} />
+          <Route path="/fr/regions/quebec" component={Quebec} />
+
+          {/* French Company Routes */}
+          <Route path="/fr/about/story" component={Story} />
+          <Route path="/fr/about/team" component={Team} />
+          <Route path="/fr/about/mission" component={Mission} />
 
           {/* Catch all for 404 */}
           <Route component={NotFound} />
