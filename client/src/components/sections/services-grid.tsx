@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import {
-  Brain,
-  Bot,
-  Code,
-  Building2,
-  Phone,
+  DollarSign,
+  Users,
+  Zap,
   BarChart,
+  MessageSquare,
+  Target
 } from "lucide-react";
 import {
   Card,
@@ -17,71 +17,71 @@ import { useLocation } from "wouter";
 import { useTranslation } from "@/lib/i18n";
 
 const getContent = (isPathFrench: boolean) => ({
-  title: isPathFrench ? "Nos Services" : "Our Services",
+  title: isPathFrench ? "Nos Solutions" : "Our Solutions",
   subtitle: isPathFrench
-    ? "Solutions numériques complètes pour entreprises de toutes tailles"
-    : "Comprehensive digital solutions for businesses of all sizes",
+    ? "Solutions complètes pour maximiser vos revenus avec un minimum d'effort"
+    : "Comprehensive solutions to maximize your revenue with minimal effort",
   services: isPathFrench ? [
     {
-      name: "Base Numérique",
-      description: "Construisez une infrastructure numérique solide pour soutenir la croissance de votre entreprise",
-      icon: Building2,
+      name: "Génération de Leads Automatique",
+      description: "Attirez un flux constant de prospects qualifiés sans effort manuel",
+      icon: Target,
     },
     {
-      name: "Démarrage IA & Automatisation",
-      description: "Commencez votre parcours avec des solutions d'IA et d'automatisation adaptées à vos besoins",
-      icon: Bot,
+      name: "Nurturing Intelligent",
+      description: "Convertissez plus de prospects en clients grâce à des séquences de nurturing personnalisées",
+      icon: Users,
     },
     {
-      name: "Conseil en Transformation Numérique",
-      description: "Conseils d'experts pour guider votre parcours de transformation numérique",
-      icon: Brain,
+      name: "Automatisation des Ventes",
+      description: "Augmentez vos revenus grâce à des processus de vente automatisés et optimisés",
+      icon: DollarSign,
     },
     {
-      name: "Développement de Logiciels Sur Mesure",
-      description: "Solutions logicielles sur mesure pour répondre à vos besoins spécifiques",
-      icon: Code,
+      name: "Engagement Client Instantané",
+      description: "Répondez instantanément aux prospects et augmentez vos taux de conversion",
+      icon: MessageSquare,
     },
     {
-      name: "Support Intelligent",
-      description: "Solutions de support alimentées par l'IA 24/7 pour améliorer l'expérience client",
-      icon: Phone,
-    },
-    {
-      name: "Intelligence d'Affaires",
-      description: "Insights basés sur les données pour des décisions d'affaires éclairées",
+      name: "Optimisation des Conversions",
+      description: "Maximisez votre ROI avec des stratégies de conversion éprouvées",
       icon: BarChart,
+    },
+    {
+      name: "Acquisition Rapide",
+      description: "Accélérez votre croissance avec des campagnes d'acquisition optimisées",
+      icon: Zap,
     },
   ] : [
     {
-      name: "Digital Foundation",
-      description: "Build a strong digital infrastructure to support your business growth",
-      icon: Building2,
+      name: "Automated Lead Generation",
+      description: "Attract a steady stream of qualified prospects without manual effort",
+      icon: Target,
     },
     {
-      name: "AI & Automation Starter",
-      description: "Begin your journey with AI and automation solutions tailored for your needs",
-      icon: Bot,
+      name: "Smart Nurturing",
+      description: "Convert more prospects into customers with personalized nurturing sequences",
+      icon: Users,
     },
     {
-      name: "Digital Transformation Consulting",
-      description: "Expert guidance to navigate your digital transformation journey",
-      icon: Brain,
+      name: "Sales Automation",
+      description: "Increase your revenue through automated and optimized sales processes",
+      icon: DollarSign,
     },
     {
-      name: "Custom Software Development",
-      description: "Tailored software solutions to meet your specific business requirements",
-      icon: Code,
+      name: "Instant Customer Engagement",
+      description: "Respond to prospects instantly and increase your conversion rates",
+      icon: MessageSquare,
     },
     {
-      name: "Intelligent Support",
-      description: "24/7 AI-powered support solutions to enhance customer experience",
-      icon: Phone,
-    },
-    {
-      name: "Business Intelligence",
-      description: "Data-driven insights to make informed business decisions",
+      name: "Conversion Optimization",
+      description: "Maximize your ROI with proven conversion strategies",
       icon: BarChart,
+    },
+    {
+      name: "Quick Acquisition",
+      description: "Accelerate your growth with optimized acquisition campaigns",
+      icon: Zap,
     },
   ]
 });

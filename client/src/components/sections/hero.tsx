@@ -6,14 +6,14 @@ import { useTranslation } from "@/lib/i18n";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
-    ? "Propulser la Transformation Numérique" 
-    : "Empowering Digital Transformation",
+    ? "Gagnez Plus, Travaillez Moins" 
+    : "Make More Money, Work Less",
   subtitle: isPathFrench
-    ? "Nous aidons les entreprises de toutes tailles à embrasser l'avenir numérique grâce à des solutions innovantes d'IA, d'automatisation et de conseil stratégique."
-    : "We help businesses of all sizes embrace the digital future through innovative AI solutions, automation, and strategic consulting.",
+    ? "Transformez vos prospects en clients fidèles automatiquement. Notre solution de nurturing de leads vous fait gagner du temps et augmente vos revenus sans effort."
+    : "Turn prospects into loyal customers automatically. Our lead nurturing solution saves you time and increases revenue effortlessly.",
   cta: {
-    primary: isPathFrench ? "Explorer Nos Services" : "Explore Our Services",
-    secondary: isPathFrench ? "Planifier une Consultation" : "Schedule a Consultation"
+    primary: isPathFrench ? "Commencer à Gagner Plus" : "Start Making Money",
+    secondary: isPathFrench ? "Voir les Résultats" : "See Results"
   }
 });
 
@@ -55,13 +55,13 @@ export function Hero() {
               className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6"
             >
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link href={isPathFrench ? "/fr/services/digital-foundation" : "/services/digital-foundation"}>
+                <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
                   {content.cta.primary}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
-                <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
+                <Link href={isPathFrench ? "/fr/case-studies" : "/case-studies"}>
                   {content.cta.secondary}
                 </Link>
               </Button>
