@@ -24,6 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { insertBlogCategorySchema } from "@/schemas/blog-category";
 import type { InsertBlogPost, InsertBlogCategory } from "@shared/schema";
+import { LeadScoreDemo } from "@/components/lead-score-demo"; // Added import
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("categories");
@@ -153,6 +154,7 @@ export default function AdminDashboard() {
         <TabsList>
           <TabsTrigger value="categories">Categories</TabsTrigger>
           <TabsTrigger value="posts">Blog Posts</TabsTrigger>
+          <TabsTrigger value="scoring">Lead Scoring</TabsTrigger> {/* Added Lead Scoring tab */}
         </TabsList>
 
         <TabsContent value="categories">
@@ -355,6 +357,19 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+        <TabsContent value="scoring"> {/* Added Lead Scoring Tab Content */}
+          <Card>
+            <CardHeader>
+              <CardTitle>AI Lead Scoring</CardTitle>
+              <CardDescription>
+                See how our AI system scores and analyzes leads based on various factors
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LeadScoreDemo />
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </main>
