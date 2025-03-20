@@ -8,9 +8,9 @@ const teamMembersData = {
   en: [
     {
       name: "Sarah Chen",
-      role: "Chief Executive Officer",
+      role: "Lead Generation Expert",
       image: "/team/sarah-chen.jpg",
-      bio: "With over 20 years of experience in technology and digital transformation, Sarah leads our company's vision and strategy.",
+      bio: "With over 20 years of experience in lead generation and sales automation, Sarah helps businesses maximize their revenue potential.",
       social: {
         linkedin: "https://linkedin.com/in/sarahchen",
         twitter: "https://twitter.com/sarahchen",
@@ -18,9 +18,9 @@ const teamMembersData = {
     },
     {
       name: "Michael Rodriguez",
-      role: "Chief Technology Officer",
+      role: "Revenue Growth Specialist",
       image: "/team/michael-rodriguez.jpg",
-      bio: "A pioneer in AI and automation, Michael oversees our technical strategy and innovation initiatives.",
+      bio: "A pioneer in sales automation, Michael has helped hundreds of businesses double their revenue through smart lead nurturing.",
       social: {
         linkedin: "https://linkedin.com/in/michaelrodriguez",
         twitter: "https://twitter.com/mrodriguez",
@@ -28,9 +28,9 @@ const teamMembersData = {
     },
     {
       name: "Emily Watson",
-      role: "Head of Digital Transformation",
+      role: "Customer Success Director",
       image: "/team/emily-watson.jpg",
-      bio: "Emily brings 15 years of consulting experience, helping organizations navigate their digital journey.",
+      bio: "Emily specializes in creating automated lead nurturing systems that convert prospects into loyal customers.",
       social: {
         linkedin: "https://linkedin.com/in/emilywatson",
         twitter: "https://twitter.com/emilywatson",
@@ -38,9 +38,9 @@ const teamMembersData = {
     },
     {
       name: "David Kim",
-      role: "Chief Innovation Officer",
+      role: "Conversion Optimization Expert",
       image: "/team/david-kim.jpg",
-      bio: "David leads our innovation lab, focusing on emerging technologies and future trends.",
+      bio: "David helps businesses optimize their lead generation and nurturing processes to maximize revenue with minimal effort.",
       social: {
         linkedin: "https://linkedin.com/in/davidkim",
         twitter: "https://twitter.com/davidkim",
@@ -50,9 +50,9 @@ const teamMembersData = {
   fr: [
     {
       name: "Sarah Chen",
-      role: "Directrice Générale",
+      role: "Experte en Génération de Leads",
       image: "/team/sarah-chen.jpg",
-      bio: "Avec plus de 20 ans d'expérience en technologie et transformation numérique, Sarah dirige la vision et la stratégie de notre entreprise.",
+      bio: "Avec plus de 20 ans d'expérience en génération de leads et automatisation des ventes, Sarah aide les entreprises à maximiser leur potentiel de revenus.",
       social: {
         linkedin: "https://linkedin.com/in/sarahchen",
         twitter: "https://twitter.com/sarahchen",
@@ -60,9 +60,9 @@ const teamMembersData = {
     },
     {
       name: "Michael Rodriguez",
-      role: "Directeur Technique",
+      role: "Spécialiste en Croissance des Revenus",
       image: "/team/michael-rodriguez.jpg",
-      bio: "Pionnier en IA et automatisation, Michael supervise notre stratégie technique et nos initiatives d'innovation.",
+      bio: "Pionnier en automatisation des ventes, Michael a aidé des centaines d'entreprises à doubler leurs revenus grâce au nurturing intelligent des leads.",
       social: {
         linkedin: "https://linkedin.com/in/michaelrodriguez",
         twitter: "https://twitter.com/mrodriguez",
@@ -70,9 +70,9 @@ const teamMembersData = {
     },
     {
       name: "Emily Watson",
-      role: "Directrice de la Transformation Numérique",
+      role: "Directrice du Succès Client",
       image: "/team/emily-watson.jpg",
-      bio: "Emily apporte 15 ans d'expérience en conseil, aidant les organisations à naviguer dans leur parcours numérique.",
+      bio: "Emily est spécialisée dans la création de systèmes automatisés de nurturing qui convertissent les prospects en clients fidèles.",
       social: {
         linkedin: "https://linkedin.com/in/emilywatson",
         twitter: "https://twitter.com/emilywatson",
@@ -80,9 +80,9 @@ const teamMembersData = {
     },
     {
       name: "David Kim",
-      role: "Directeur de l'Innovation",
+      role: "Expert en Optimisation des Conversions",
       image: "/team/david-kim.jpg",
-      bio: "David dirige notre laboratoire d'innovation, se concentrant sur les technologies émergentes et les tendances futures.",
+      bio: "David aide les entreprises à optimiser leurs processus de génération et de nurturing de leads pour maximiser les revenus avec un minimum d'effort.",
       social: {
         linkedin: "https://linkedin.com/in/davidkim",
         twitter: "https://twitter.com/davidkim",
@@ -91,30 +91,28 @@ const teamMembersData = {
   ]
 };
 
+const translations = {
+  en: {
+    title: "Meet the Revenue Growth Experts",
+    subtitle: "Our team of lead generation and revenue growth specialists is here to help you maximize your business potential with minimal effort.",
+    joinTeam: "Join Our Team",
+    joinDescription: "We're always looking for talented individuals who are passionate about helping businesses grow their revenue through automated lead generation and nurturing.",
+    viewCareers: "View Career Opportunities"
+  },
+  fr: {
+    title: "Rencontrez les Experts en Croissance des Revenus",
+    subtitle: "Notre équipe de spécialistes en génération de leads et en croissance des revenus est là pour vous aider à maximiser votre potentiel commercial avec un minimum d'effort.",
+    joinTeam: "Rejoignez Notre Équipe",
+    joinDescription: "Nous recherchons toujours des personnes talentueuses et passionnées par l'aide aux entreprises à développer leurs revenus grâce à la génération et au nurturing automatisés des leads.",
+    viewCareers: "Voir les Opportunités de Carrière"
+  }
+};
+
 export default function Team() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
-  const { t } = useTranslation(isPathFrench ? 'fr' : 'en');
-  const teamMembers = isPathFrench ? teamMembersData.fr : teamMembersData.en;
-
-  const translations = {
-    en: {
-      title: "Our Leadership Team",
-      subtitle: "Meet the visionaries and experts leading our mission to transform businesses through innovative digital solutions.",
-      joinTeam: "Join Our Team",
-      joinDescription: "We're always looking for talented individuals who are passionate about digital transformation and innovation. Check out our current openings.",
-      viewCareers: "View Career Opportunities"
-    },
-    fr: {
-      title: "Notre Équipe de Direction",
-      subtitle: "Rencontrez les visionnaires et les experts qui dirigent notre mission de transformer les entreprises grâce à des solutions numériques innovantes.",
-      joinTeam: "Rejoignez Notre Équipe",
-      joinDescription: "Nous recherchons toujours des personnes talentueuses et passionnées par la transformation numérique et l'innovation. Découvrez nos offres actuelles.",
-      viewCareers: "Voir les Opportunités de Carrière"
-    }
-  };
-
   const content = isPathFrench ? translations.fr : translations.en;
+  const teamMembers = isPathFrench ? teamMembersData.fr : teamMembersData.en;
 
   return (
     <main className="py-24">
@@ -125,7 +123,9 @@ export default function Team() {
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-6xl"
         >
-          <h1 className="text-4xl font-bold tracking-tight mb-8 text-center">{content.title}</h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-8 text-center">
+            {content.title}
+          </h1>
 
           <p className="text-xl text-muted-foreground text-center max-w-3xl mx-auto mb-16">
             {content.subtitle}
@@ -176,7 +176,9 @@ export default function Team() {
               {content.joinDescription}
             </p>
             <Button asChild size="lg">
-              <Link href={isPathFrench ? "/fr/careers" : "/careers"}>{content.viewCareers}</Link>
+              <Link href={isPathFrench ? "/fr/careers" : "/careers"}>
+                {content.viewCareers}
+              </Link>
             </Button>
           </div>
         </motion.div>

@@ -9,29 +9,123 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowRight } from "lucide-react";
-import { businessSizes, sectors, needs, industries } from "@/data/services";
+import { Link } from "wouter";
 
 const categoryData = {
-  size: {
+  target: {
     title: "By Business Size",
-    description: "Solutions tailored to your organization's scale",
-    data: businessSizes,
-  },
-  sector: {
-    title: "By Sector",
-    description: "Specialized solutions for your industry sector",
-    data: sectors,
-  },
-  need: {
-    title: "By Need",
-    description: "Solutions designed for your specific requirements",
-    data: needs,
+    description: "Solutions tailored to your revenue goals",
+    data: {
+      small: {
+        title: "Small Business Solutions",
+        description: "Perfect for businesses looking to scale their revenue quickly",
+        services: [
+          {
+            name: "Basic Lead Generator",
+            description: "Start generating qualified leads automatically",
+            price: "Starting at $199/month",
+          },
+          {
+            name: "Growth Accelerator",
+            description: "Convert more leads with smart nurturing sequences",
+            price: "Starting at $399/month",
+          }
+        ]
+      },
+      enterprise: {
+        title: "Enterprise Solutions",
+        description: "Advanced lead generation for larger organizations",
+        services: [
+          {
+            name: "Enterprise Lead Machine",
+            description: "Full-scale lead generation and nurturing system",
+            price: "Custom pricing",
+          },
+          {
+            name: "Revenue Maximizer",
+            description: "AI-powered sales automation and optimization",
+            price: "Custom pricing",
+          }
+        ]
+      }
+    }
   },
   industry: {
     title: "By Industry",
-    description: "Industry-specific digital transformation solutions",
-    data: industries,
+    description: "Industry-specific lead generation solutions",
+    data: {
+      retail: {
+        title: "Retail & E-commerce",
+        description: "Turn browsers into buyers automatically",
+        services: [
+          {
+            name: "Shopping Cart Recovery",
+            description: "Recover abandoned carts and boost sales",
+            price: "Starting at $299/month",
+          },
+          {
+            name: "Customer Loyalty Builder",
+            description: "Increase repeat purchases automatically",
+            price: "Starting at $399/month",
+          }
+        ]
+      },
+      services: {
+        title: "Professional Services",
+        description: "Generate high-value client appointments",
+        services: [
+          {
+            name: "Appointment Scheduler",
+            description: "Automated booking and follow-up system",
+            price: "Starting at $249/month",
+          },
+          {
+            name: "Client Nurturing Suite",
+            description: "Convert prospects into long-term clients",
+            price: "Starting at $449/month",
+          }
+        ]
+      }
+    }
   },
+  need: {
+    title: "By Need",
+    description: "Solutions for specific revenue goals",
+    data: {
+      acquisition: {
+        title: "Lead Acquisition",
+        description: "Get more qualified leads consistently",
+        services: [
+          {
+            name: "Lead Magnet Creator",
+            description: "Create and distribute compelling lead magnets",
+            price: "Starting at $199/month",
+          },
+          {
+            name: "Social Lead Generator",
+            description: "Convert social media followers into leads",
+            price: "Starting at $299/month",
+          }
+        ]
+      },
+      conversion: {
+        title: "Lead Conversion",
+        description: "Turn more leads into paying customers",
+        services: [
+          {
+            name: "Conversion Optimizer",
+            description: "Improve conversion rates with AI-powered insights",
+            price: "Starting at $399/month",
+          },
+          {
+            name: "Sales Automation Suite",
+            description: "Automate your entire sales process",
+            price: "Starting at $599/month",
+          }
+        ]
+      }
+    }
+  }
 };
 
 export default function Services() {
@@ -45,20 +139,19 @@ export default function Services() {
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Our Services
+            Choose Your Path to More Revenue
           </h1>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Comprehensive digital transformation solutions tailored to your business
+            Select the solution that best fits your business and start generating more leads and revenue today
           </p>
         </motion.div>
 
         <div className="mt-16">
-          <Tabs defaultValue="size" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
-              <TabsTrigger value="size">By Size</TabsTrigger>
-              <TabsTrigger value="sector">By Sector</TabsTrigger>
-              <TabsTrigger value="need">By Need</TabsTrigger>
+          <Tabs defaultValue="target" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="target">By Size</TabsTrigger>
               <TabsTrigger value="industry">By Industry</TabsTrigger>
+              <TabsTrigger value="need">By Need</TabsTrigger>
             </TabsList>
 
             {Object.entries(categoryData).map(([key, category]) => (
@@ -78,7 +171,7 @@ export default function Services() {
                         </p>
                       </div>
 
-                      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid gap-4 md:grid-cols-2">
                         {section.services.map((service, index) => (
                           <motion.div
                             key={service.name}
@@ -88,19 +181,18 @@ export default function Services() {
                           >
                             <Card className="h-full">
                               <CardHeader>
-                                <div className="mb-4 inline-block rounded-lg bg-primary/10 p-3">
-                                  <service.icon className="h-6 w-6 text-primary" />
-                                </div>
                                 <CardTitle>{service.name}</CardTitle>
                                 <CardDescription>{service.description}</CardDescription>
                               </CardHeader>
                               <CardContent>
-                                <p className="text-sm font-medium text-muted-foreground">
+                                <p className="text-sm font-medium text-muted-foreground mb-4">
                                   {service.price}
                                 </p>
-                                <Button className="mt-4" variant="outline">
-                                  Learn More
-                                  <ArrowRight className="ml-2 h-4 w-4" />
+                                <Button className="w-full" asChild>
+                                  <Link href="/contact">
+                                    Get Started
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                  </Link>
                                 </Button>
                               </CardContent>
                             </Card>
