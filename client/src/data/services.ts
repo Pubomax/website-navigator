@@ -19,8 +19,9 @@ import {
 
 export const businessSizes = {
   small: {
-    title: "Small Business",
+    title: { en: "Small Business", fr: "Petite Entreprise" },
     description: "Solutions for businesses with up to 50 employees",
+    weight: 2,
     services: [
       {
         name: "Digital Starter Pack",
@@ -36,9 +37,10 @@ export const businessSizes = {
       },
     ],
   },
-  medium: {
-    title: "Mid-Market",
+  mid_market: {
+    title: { en: "Mid-Market", fr: "Marché Intermédiaire" },
     description: "Solutions for businesses with 51-500 employees",
+    weight: 3,
     services: [
       {
         name: "Enterprise Integration",
@@ -55,8 +57,9 @@ export const businessSizes = {
     ],
   },
   enterprise: {
-    title: "Enterprise",
+    title: { en: "Enterprise", fr: "Grande Entreprise" },
     description: "Solutions for businesses with 500+ employees",
+    weight: 5,
     services: [
       {
         name: "Global Digital Infrastructure",
@@ -214,8 +217,9 @@ export const needs = {
 
 export const industries = {
   manufacturing: {
-    title: "Manufacturing",
+    title: { en: "Manufacturing", fr: "Fabrication" },
     description: "Industrial digital solutions",
+    weight: 4,
     services: [
       {
         name: "Industrial Automation",
@@ -232,8 +236,9 @@ export const industries = {
     ],
   },
   professional: {
-    title: "Professional Services",
+    title: { en: "Professional Services", fr: "Services Professionnels" },
     description: "Solutions for service businesses",
+    weight: 3,
     services: [
       {
         name: "Service Automation",
@@ -250,8 +255,9 @@ export const industries = {
     ],
   },
   technology: {
-    title: "Technology",
+    title: { en: "Technology", fr: "Technologie" },
     description: "Solutions for tech companies",
+    weight: 5,
     services: [
       {
         name: "Tech Integration",
@@ -263,6 +269,45 @@ export const industries = {
         name: "DevOps Automation",
         description: "Automated development operations",
         icon: Settings,
+        price: "Custom pricing",
+      },
+    ],
+  },
+  retail: {
+    title: { en: "Retail & E-commerce", fr: "Commerce de Détail" },
+    description: "Digital retail solutions",
+    weight: 3,
+    services: [
+      {
+        name: "Retail Automation",
+        description: "Automated retail management systems",
+        icon: ShoppingCart,
+        price: "Custom pricing",
+      },
+    ],
+  },
+  healthcare: {
+    title: { en: "Healthcare", fr: "Santé" },
+    description: "Digital healthcare solutions",
+    weight: 4,
+    services: [
+      {
+        name: "Healthcare Systems",
+        description: "Digital health management solutions",
+        icon: Stethoscope,
+        price: "Custom pricing",
+      },
+    ],
+  },
+  finance: {
+    title: { en: "Financial Services", fr: "Services Financiers" },
+    description: "Digital solutions for banking and finance",
+    weight: 5,
+    services: [
+      {
+        name: "FinTech Integration",
+        description: "Modern financial technology solutions",
+        icon: Landmark,
         price: "Custom pricing",
       },
     ],

@@ -1,7 +1,7 @@
 import { useLeadScore } from "@/hooks/use-lead-score";
 import { LeadScoreTooltip } from "@/components/ui/lead-score-tooltip";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Info, Zap, User, Building, Briefcase, Clock, FileText, Mail, PieChart, AlertTriangle, ArrowRight } from "lucide-react";
+import { Info, Zap, User, Building, Briefcase, Clock, FileText, Mail, PieChart, AlertTriangle, ArrowRight, AlertCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
