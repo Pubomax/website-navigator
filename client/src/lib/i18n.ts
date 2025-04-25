@@ -25,7 +25,9 @@ const translations: Translations = {
     seeOurImpact: "See Our Impact",
 
     // Service names
-    digitalFoundation: "Digital Foundation Package",
+    digitalFoundation: "Digital Foundation",
+    aiAutomation: "AI Automation",
+    customDevelopment: "Custom Development",
     transformationConsulting: "Digital Transformation Consulting",
     aiAutomationStarter: "AI & Automation Starter Package",
     customAiAutomation: "Custom AI & Automation Package",
@@ -57,6 +59,8 @@ const translations: Translations = {
     quickAcquisition: "Quick Acquisition",
     
     // Groups
+    "Core Services": "Core Services",
+    "Additional Services": "Additional Services",
     "Solutions": "Solutions",
     "Industries": "Industries",
     "Business Size": "Business Size",
@@ -101,7 +105,9 @@ const translations: Translations = {
     seeOurImpact: "Voir notre impact",
 
     // Service names
-    digitalFoundation: "Pack Fondation Numérique",
+    digitalFoundation: "Fondation Numérique",
+    aiAutomation: "Automatisation IA",
+    customDevelopment: "Développement Sur Mesure",
     transformationConsulting: "Conseil en Transformation Numérique",
     aiAutomationStarter: "Pack Démarrage IA & Automatisation",
     customAiAutomation: "Pack IA & Automatisation Personnalisé",
@@ -133,6 +139,8 @@ const translations: Translations = {
     quickAcquisition: "Acquisition Rapide",
 
     // Groups
+    "Core Services": "Services Principaux",
+    "Additional Services": "Services Additionnels",
     "Solutions": "Solutions",
     "Industries": "Industries",
     "Business Size": "Taille d'Entreprise",

@@ -31,12 +31,12 @@ const navigation: NavigationItem[] = [
   {
     name: "services",
     items: [
-      { name: "digitalFoundation", href: "/services/digital-foundation" },
-      { name: "transformationConsulting", href: "/services/transformation-consulting" },
-      { name: "aiAutomationStarter", href: "/services/ai-automation-starter" },
-      { name: "customAiAutomation", href: "/services/custom-ai-automation" },
-      { name: "customSoftware", href: "/services/custom-software" },
-      { name: "intelligentSupport", href: "/services/intelligent-support" },
+      { name: "digitalFoundation", group: "Core Services", href: "/services/digital-foundation" },
+      { name: "aiAutomation", group: "Core Services", href: "/services/ai-automation-starter" },
+      { name: "customDevelopment", group: "Core Services", href: "/services/custom-software" },
+      { name: "transformationConsulting", group: "Additional Services", href: "/services/transformation-consulting" },
+      { name: "customAiAutomation", group: "Additional Services", href: "/services/custom-ai-automation" },
+      { name: "intelligentSupport", group: "Additional Services", href: "/services/intelligent-support" },
     ],
   },
   {
