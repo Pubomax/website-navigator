@@ -23,6 +23,8 @@ import AIAutomationStarter from "@/pages/services/ai-automation-starter";
 import CustomAIAutomation from "@/pages/services/custom-ai-automation";
 import CustomSoftware from "@/pages/services/custom-software";
 import IntelligentSupport from "@/pages/services/intelligent-support";
+import SalesAutomation from "@/pages/services/sales-automation";
+import MarketingAutomation from "@/pages/services/marketing-automation";
 
 // Solution pages
 import AutomatedLeadGeneration from "@/pages/solutions/automated-lead-generation";
@@ -83,6 +85,8 @@ function Router() {
           <Route path="/services/custom-ai-automation" component={CustomAIAutomation} />
           <Route path="/services/custom-software" component={CustomSoftware} />
           <Route path="/services/intelligent-support" component={IntelligentSupport} />
+          <Route path="/services/sales-automation" component={SalesAutomation} />
+          <Route path="/services/marketing-automation" component={MarketingAutomation} />
 
           {/* Sector Routes */}
           <Route path="/sectors/manufacturing" component={Manufacturing} />
@@ -126,6 +130,8 @@ function Router() {
           <Route path="/fr/services/custom-ai-automation" component={CustomAIAutomation} />
           <Route path="/fr/services/custom-software" component={CustomSoftware} />
           <Route path="/fr/services/intelligent-support" component={IntelligentSupport} />
+          <Route path="/fr/services/sales-automation" component={SalesAutomation} />
+          <Route path="/fr/services/marketing-automation" component={MarketingAutomation} />
 
           {/* French Sector Routes */}
           <Route path="/fr/sectors/manufacturing" component={Manufacturing} />
