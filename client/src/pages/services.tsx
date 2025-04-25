@@ -23,6 +23,7 @@ import {
   Zap
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { PageTitle } from "@/components/page-title";
 
 interface ServiceType {
   id: string;
@@ -245,6 +246,7 @@ export default function Services() {
 
   return (
     <main className="py-24">
+      <PageTitle pageKey="services" />
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
