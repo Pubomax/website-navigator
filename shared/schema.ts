@@ -47,7 +47,7 @@ export const contactMessages = pgTable("contact_messages", {
   websiteUrl: text("website_url"),
   
   // Business Issues (Step 2)
-  businessChallenges: text("business_challenges").notNull(),
+  businessChallenges: text("business_challenges").array().notNull(),
   currentSolutions: text("current_solutions"),
   desiredOutcomes: text("desired_outcomes").notNull(),
   timeline: text("timeline"),

@@ -122,7 +122,20 @@ const getContent = (isPathFrench: boolean) => ({
     // Step 2: Business Challenges
     businessChallenges: {
       label: isPathFrench ? "Défis commerciaux" : "Business Challenges",
-      placeholder: isPathFrench ? "Décrivez les principaux défis que votre entreprise rencontre actuellement" : "Describe the main challenges your business is currently facing"
+      description: isPathFrench ? "Sélectionnez tous les défis pertinents pour votre entreprise" : "Select all challenges relevant to your business",
+      options: [
+        { value: "lead-generation", label: isPathFrench ? "Génération de leads insuffisante" : "Insufficient lead generation" },
+        { value: "lead-conversion", label: isPathFrench ? "Faible taux de conversion des leads" : "Low lead conversion rates" },
+        { value: "manual-processes", label: isPathFrench ? "Processus manuels chronophages" : "Time-consuming manual processes" },
+        { value: "data-management", label: isPathFrench ? "Difficultés de gestion des données" : "Data management challenges" },
+        { value: "customer-retention", label: isPathFrench ? "Rétention client insuffisante" : "Poor customer retention" },
+        { value: "sales-pipeline", label: isPathFrench ? "Pipeline de vente inefficace" : "Inefficient sales pipeline" },
+        { value: "marketing-roi", label: isPathFrench ? "ROI marketing difficile à mesurer" : "Hard to measure marketing ROI" },
+        { value: "team-coordination", label: isPathFrench ? "Problèmes de coordination d'équipe" : "Team coordination issues" },
+        { value: "customer-insights", label: isPathFrench ? "Manque d'insights clients" : "Lack of customer insights" },
+        { value: "scalability", label: isPathFrench ? "Difficultés à évoluer" : "Scalability challenges" },
+        { value: "other", label: isPathFrench ? "Autre" : "Other" }
+      ]
     },
     currentSolutions: {
       label: isPathFrench ? "Solutions actuelles (optionnel)" : "Current Solutions (optional)",
@@ -247,7 +260,7 @@ export default function Contact() {
       websiteUrl: "",
       
       // Step 2: Business Challenges
-      businessChallenges: "",
+      businessChallenges: [],
       currentSolutions: "",
       desiredOutcomes: "",
       timeline: "",
@@ -550,13 +563,38 @@ export default function Contact() {
                               render={({ field }) => (
                                 <FormItem>
                                   <FormLabel>{content.form.businessChallenges.label}</FormLabel>
-                                  <FormControl>
-                                    <Textarea 
-                                      placeholder={content.form.businessChallenges.placeholder} 
-                                      className="min-h-[100px]"
-                                      {...field} 
-                                    />
-                                  </FormControl>
+                                  <FormDescription>
+                                    {content.form.businessChallenges.description}
+                                  </FormDescription>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                                    {content.form.businessChallenges.options.map((option) => {
+                                      const isSelected = field.value?.includes(option.value);
+                                      return (
+                                        <Button
+                                          key={option.value}
+                                          type="button"
+                                          variant={isSelected ? "default" : "outline"}
+                                          className={`justify-start text-left ${isSelected ? "border-primary" : ""}`}
+                                          onClick={() => {
+                                            const currentValue = field.value || [];
+                                            const newValue = isSelected
+                                              ? currentValue.filter(value => value !== option.value)
+                                              : [...currentValue, option.value];
+                                            field.onChange(newValue);
+                                          }}
+                                        >
+                                          <div className="flex items-center gap-2">
+                                            {isSelected ? (
+                                              <CheckCircle2 className="h-4 w-4 text-white" />
+                                            ) : (
+                                              <div className="h-4 w-4 rounded-full border border-foreground/20" />
+                                            )}
+                                            <span>{option.label}</span>
+                                          </div>
+                                        </Button>
+                                      );
+                                    })}
+                                  </div>
                                   <FormMessage />
                                 </FormItem>
                               )}
