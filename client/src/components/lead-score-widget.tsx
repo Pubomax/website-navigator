@@ -92,6 +92,12 @@ export function LeadScoreWidget() {
                   : "Try our demo to see how our AI system would score your leads in a real implementation."
                 }
               </p>
+              <p className="text-xs text-amber-700 mt-1 border-t border-amber-200 pt-1">
+                <strong>{isPathFrench ? "Confidentialité" : "Privacy Note"}:</strong> {isPathFrench 
+                  ? "Les informations saisies ne sont pas collectées ou stockées et restent uniquement dans votre navigateur."
+                  : "Information entered here is not collected or stored and remains only in your browser."
+                }
+              </p>
             </div>
           </div>
         </div>
