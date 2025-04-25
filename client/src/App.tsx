@@ -10,6 +10,7 @@ import { ProtectedRoute } from "./lib/protected-route";
 // Main pages
 import Home from "@/pages/home";
 import Contact from "@/pages/contact";
+import Consultation from "@/pages/consultation";
 import NotFound from "@/pages/not-found";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
@@ -77,6 +78,7 @@ function Router() {
           {/* Main Routes */}
           <Route path="/" component={Home} />
           <Route path="/contact" component={Contact} />
+          <Route path="/consultation" component={Consultation} />
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/faq" component={FAQ} />
@@ -129,6 +131,7 @@ function Router() {
           {/* French Routes */}
           <Route path="/fr" component={Home} />
           <Route path="/fr/contact" component={Contact} />
+          <Route path="/fr/consultation" component={Consultation} />
           <Route path="/fr/privacy" component={Privacy} />
           <Route path="/fr/terms" component={Terms} />
           <Route path="/fr/faq" component={FAQ} />
