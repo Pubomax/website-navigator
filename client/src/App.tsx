@@ -187,7 +187,8 @@ function Router() {
         </Switch>
       </div>
       <Footer />
-      <ChatWidget />
+      {/* ChatWidget disabled temporarily while developing a better version */}
+      {/* <ChatWidget /> */}
     </div>
   );
 }
