@@ -100,50 +100,50 @@ export function LeadScoreDemo() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <User className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <Building className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Contact</p>
-                <p className="text-sm text-muted-foreground">{demoLead.email}</p>
+                <p className="text-sm font-medium">Industry</p>
+                <p className="text-sm text-muted-foreground">Technology</p>
               </div>
             </div>
             
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <Building className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <User className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Company</p>
-                <p className="text-sm text-muted-foreground">{demoLead.company}</p>
+                <p className="text-sm font-medium">Business Size</p>
+                <p className="text-sm text-muted-foreground">Mid-Market</p>
               </div>
             </div>
             
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
               <Briefcase className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Job Title</p>
-                <p className="text-sm text-muted-foreground">{demoLead.jobTitle}</p>
-              </div>
-            </div>
-            
-            <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium">Website Visits</p>
-                <p className="text-sm text-muted-foreground">{demoLead.visitFrequency} times in past 30 days</p>
-              </div>
-            </div>
-            
-            <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <FileText className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium">Content Downloads</p>
-                <p className="text-sm text-muted-foreground">{demoLead.downloadedResources.length} resources</p>
+                <p className="text-sm font-medium">Service Interest</p>
+                <p className="text-sm text-muted-foreground">Sales Automation</p>
               </div>
             </div>
             
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
               <Mail className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-medium">Email Engagement</p>
-                <p className="text-sm text-muted-foreground">{demoLead.emailInteractions} interactions</p>
+                <p className="text-sm font-medium">Marketing Channel</p>
+                <p className="text-sm text-muted-foreground">Referral</p>
+              </div>
+            </div>
+            
+            <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium">Budget Range</p>
+                <p className="text-sm text-muted-foreground">$50,000 - $100,000</p>
+              </div>
+            </div>
+            
+            <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
+              <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium">Project Timeline</p>
+                <p className="text-sm text-muted-foreground">Immediate (1-4 weeks)</p>
               </div>
             </div>
           </div>
