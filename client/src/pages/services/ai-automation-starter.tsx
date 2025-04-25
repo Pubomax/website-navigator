@@ -23,7 +23,8 @@ import {
   CheckCircle,
   Clock,
   DollarSign,
-  ArrowUpRight
+  ArrowUpRight,
+  Share2
 } from "lucide-react";
 
 const getContent = (isPathFrench: boolean) => ({
@@ -84,6 +85,16 @@ const getContent = (isPathFrench: boolean) => ({
       ]
     },
     {
+      title: "Automatisation des Médias Sociaux",
+      description: "Publication automatique sur toutes vos plateformes sociales: Facebook, Instagram, X, TikTok, YouTube et votre blog",
+      icon: Share2,
+      benefits: [
+        "Planification de contenu pour toutes les plateformes",
+        "Publication automatique aux moments optimaux",
+        "Cohérence de la marque sur tous les canaux"
+      ]
+    },
+    {
       title: "Chatbot Client Intelligent",
       description: "Un chatbot IA qui répond aux questions des clients, qualifie les leads et planifie des rendez-vous automatiquement",
       icon: MessageSquare,
@@ -122,6 +133,16 @@ const getContent = (isPathFrench: boolean) => ({
         "80% reduction in email time",
         "Intelligent automated responses",
         "Automatic categorization and prioritization"
+      ]
+    },
+    {
+      title: "Social Media Automation",
+      description: "Automatic posting across all your social platforms: Facebook, Instagram, X, TikTok, YouTube, and your blog",
+      icon: Share2,
+      benefits: [
+        "Content scheduling for all platforms",
+        "Automatic posting at optimal times",
+        "Brand consistency across all channels"
       ]
     },
     {
