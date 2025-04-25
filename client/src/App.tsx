@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ProtectedRoute } from "./lib/protected-route";
+import { Helmet } from "react-helmet";
 
 // Main pages
 import Home from "@/pages/home";
@@ -194,6 +195,17 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <Helmet>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17032394525"></script>
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17032394525');
+          `}
+        </script>
+      </Helmet>
       <Router />
       <Toaster />
     </QueryClientProvider>
