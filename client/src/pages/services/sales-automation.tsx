@@ -490,7 +490,7 @@ export default function SalesAutomation() {
       
       {/* Testimonial Section */}
       <section className="py-20">
-        <div className="container max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -520,7 +520,7 @@ export default function SalesAutomation() {
       
       {/* Final CTA */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-5xl text-center px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-5xl text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-6">{content.cta.title}</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             {content.cta.description}
