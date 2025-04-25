@@ -73,9 +73,7 @@ export function LeadScoreWidget() {
     industry: "",
     businessSize: "",
     channel: "",
-    serviceInterest: "",
-    budget: "",
-    timeline: ""
+    serviceInterest: ""
   });
   
   const [score, setScore] = useState(0);
@@ -147,33 +145,7 @@ export function LeadScoreWidget() {
       maxPossibleScore += 5;
     }
     
-    // Add budget factor if selected
-    if (leadData.budget) {
-      const budgetData = budgetRanges[leadData.budget as keyof typeof budgetRanges];
-      const weight = budgetData?.weight || 3;
-      const impact = weight >= 4 ? "positive" : weight <= 2 ? "negative" : "neutral";
-      newFactors.push({
-        factor: isPathFrench ? "Budget" : "Budget",
-        impact,
-        weight
-      });
-      totalScore += weight;
-      maxPossibleScore += 5;
-    }
-    
-    // Add timeline factor if selected
-    if (leadData.timeline) {
-      const timelineData = timelines[leadData.timeline as keyof typeof timelines];
-      const weight = timelineData?.weight || 3;
-      const impact = weight >= 4 ? "positive" : "neutral";
-      newFactors.push({
-        factor: isPathFrench ? "Échéancier" : "Timeline",
-        impact,
-        weight
-      });
-      totalScore += weight;
-      maxPossibleScore += 5;
-    }
+
     
     // Calculate percentage score
     let percentage = 0;
@@ -185,29 +157,34 @@ export function LeadScoreWidget() {
     setScore(percentage);
     setFactors(newFactors);
     
-    // Calculate potential revenue based on business size and budget
+    // Calculate potential revenue based on business size and industry
     let revEstimate = 5000; // Default base
     if (leadData.businessSize === 'enterprise') revEstimate = 50000;
     else if (leadData.businessSize === 'mid_market') revEstimate = 20000;
     else if (leadData.businessSize === 'small_business') revEstimate = 10000;
     
-    if (leadData.budget === 'enterprise') revEstimate *= 2;
-    else if (leadData.budget === 'large') revEstimate *= 1.5;
-    else if (leadData.budget === 'medium') revEstimate *= 1.2;
+    // Adjust by industry
+    if (leadData.industry === 'technology' || leadData.industry === 'financial_services') {
+      revEstimate *= 1.5;
+    } else if (leadData.industry === 'healthcare' || leadData.industry === 'manufacturing') {
+      revEstimate *= 1.3;
+    }
     
     // Adjust by score percentage
     revEstimate = Math.round(revEstimate * (percentage / 100));
     setPotentialRevenue(revEstimate);
     
-    // Calculate time to close based on timeline and score
+    // Calculate time to close based on marketing channel and score
     let estimatedDays = 90; // Default
-    if (leadData.timeline === 'urgent') estimatedDays = 14;
-    else if (leadData.timeline === 'short') estimatedDays = 30;
-    else if (leadData.timeline === 'medium') estimatedDays = 60;
-    else if (leadData.timeline === 'long') estimatedDays = 120;
+    
+    // Adjust by marketing channel - some channels convert faster
+    if (leadData.channel === 'referral') estimatedDays = 30;
+    else if (leadData.channel === 'direct') estimatedDays = 45; 
+    else if (leadData.channel === 'organic') estimatedDays = 60;
+    else if (leadData.channel === 'paid') estimatedDays = 75;
     
     // Adjust by score - higher scores close faster
-    const adjustedDays = Math.round(estimatedDays * (1 - (percentage - 50) / 100));
+    const adjustedDays = Math.round(estimatedDays * (1 - (percentage - 50) / 200));
     setTimeToClose(Math.max(7, adjustedDays)); // Minimum 7 days
   };
 
@@ -223,9 +200,7 @@ export function LeadScoreWidget() {
       industry: "",
       businessSize: "",
       channel: "",
-      serviceInterest: "",
-      budget: "",
-      timeline: ""
+      serviceInterest: ""
     });
   };
 
