@@ -30,6 +30,7 @@ import MarketingAutomation from "@/pages/services/marketing-automation";
 import AutomatedLeadGeneration from "@/pages/solutions/automated-lead-generation";
 import SmartNurturing from "@/pages/solutions/smart-nurturing";
 import InstantCustomerEngagement from "@/pages/solutions/instant-customer-engagement";
+import QuickAcquisition from "@/pages/solutions/quick-acquisition";
 
 // Sector pages
 import Manufacturing from "@/pages/sectors/manufacturing";
@@ -81,6 +82,7 @@ function Router() {
           <Route path="/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
           <Route path="/solutions/smart-nurturing" component={SmartNurturing} />
           <Route path="/solutions/instant-customer-engagement" component={InstantCustomerEngagement} />
+          <Route path="/solutions/quick-acquisition" component={QuickAcquisition} />
           
           {/* Service Routes */}
           <Route path="/services/digital-foundation" component={DigitalFoundation} />
@@ -128,6 +130,7 @@ function Router() {
           <Route path="/fr/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
           <Route path="/fr/solutions/smart-nurturing" component={SmartNurturing} />
           <Route path="/fr/solutions/instant-customer-engagement" component={InstantCustomerEngagement} />
+          <Route path="/fr/solutions/quick-acquisition" component={QuickAcquisition} />
           
           {/* French Service Routes */}
           <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
