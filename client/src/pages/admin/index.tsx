@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Copy, KeyRound, Check, FileJson } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -19,12 +21,49 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { insertBlogCategorySchema } from "@/schemas/blog-category";
 import type { InsertBlogPost, InsertBlogCategory } from "@shared/schema";
 import { LeadScoreDemo } from "@/components/lead-score-demo"; // Added import
+
+function APIKeyCopyButton({ apiKey }: { apiKey: string }) {
+  const [copied, setCopied] = useState(false);
+  
+  const copyApiKey = () => {
+    navigator.clipboard.writeText(apiKey);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+    
+    toast({
+      title: "API key copied",
+      description: "The API key has been copied to your clipboard.",
+    });
+  };
+  
+  return (
+    <Button 
+      size="sm" 
+      variant="outline" 
+      onClick={copyApiKey}
+      className="flex items-center gap-2"
+    >
+      {copied ? (
+        <>
+          <Check className="h-4 w-4" />
+          <span>Copied</span>
+        </>
+      ) : (
+        <>
+          <Copy className="h-4 w-4" />
+          <span>Copy key</span>
+        </>
+      )}
+    </Button>
+  );
+}
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("categories");
@@ -154,7 +193,8 @@ export default function AdminDashboard() {
         <TabsList>
           <TabsTrigger value="categories">Categories</TabsTrigger>
           <TabsTrigger value="posts">Blog Posts</TabsTrigger>
-          <TabsTrigger value="scoring">Lead Scoring</TabsTrigger> {/* Added Lead Scoring tab */}
+          <TabsTrigger value="scoring">Lead Scoring</TabsTrigger>
+          <TabsTrigger value="api">API Keys</TabsTrigger>
         </TabsList>
 
         <TabsContent value="categories">
@@ -370,6 +410,98 @@ export default function AdminDashboard() {
               <LeadScoreDemo />
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="api">
+          <div className="grid gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <KeyRound className="w-5 h-5 mr-2" /> API Keys
+                </CardTitle>
+                <CardDescription>
+                  Manage API keys for external integrations with tools like n8n, Zapier, and custom applications
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Alert className="mb-6">
+                  <AlertTitle className="font-medium">Important Security Note</AlertTitle>
+                  <AlertDescription>
+                    API keys grant access to your data. Never share your API keys in public repositories, 
+                    client-side code, or with untrusted parties.
+                  </AlertDescription>
+                </Alert>
+
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-medium mb-4">n8n Integration Key</h3>
+                    <div className="flex flex-col space-y-4">
+                      <div className="flex items-center space-x-4 p-4 border rounded-md bg-muted/50">
+                        <div className="p-2 bg-primary/10 rounded-full">
+                          <FileJson className="h-6 w-6 text-primary" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium">n8n Automation Integration</p>
+                          <p className="text-sm text-muted-foreground">Used for blog automation workflows</p>
+                        </div>
+                        <APIKeyCopyButton apiKey="minecore-n8n-integration-key" />
+                      </div>
+                      
+                      <div className="rounded-md p-4 bg-muted">
+                        <h4 className="text-sm font-semibold mb-2">How to use this key</h4>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Include this API key in the HTTP request header when making API calls from n8n:
+                        </p>
+                        <div className="bg-black text-green-400 p-3 rounded-md text-sm font-mono overflow-x-auto">
+                          X-API-Key: minecore-n8n-integration-key
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-medium mb-2">Available API Integration Endpoints</h3>
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left py-2 text-sm">Endpoint</th>
+                          <th className="text-left py-2 text-sm">Method</th>
+                          <th className="text-left py-2 text-sm">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b">
+                          <td className="py-2 font-mono text-xs">/api/integration/blog</td>
+                          <td className="py-2 text-sm">POST</td>
+                          <td className="py-2 text-sm">Create a new blog post</td>
+                        </tr>
+                        <tr className="border-b">
+                          <td className="py-2 font-mono text-xs">/api/integration/blog</td>
+                          <td className="py-2 text-sm">GET</td>
+                          <td className="py-2 text-sm">Get all blog posts</td>
+                        </tr>
+                        <tr className="border-b">
+                          <td className="py-2 font-mono text-xs">/api/integration/blog/categories</td>
+                          <td className="py-2 text-sm">GET</td>
+                          <td className="py-2 text-sm">Get all blog categories</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="border-t pt-6 flex justify-between">
+                <Button variant="outline" asChild>
+                  <a href="/integrations/n8n-guide" target="_blank" rel="noopener noreferrer">
+                    View Integration Documentation
+                  </a>
+                </Button>
+                <div className="text-sm text-muted-foreground">
+                  For help with integrations, contact support
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </main>
