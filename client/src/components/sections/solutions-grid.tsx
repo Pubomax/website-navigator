@@ -14,37 +14,37 @@ const getContent = (isPathFrench: boolean) => ({
       title: "Génération Automatisée de Leads",
       description: "Attirez un flux constant de prospects qualifiés sans effort manuel",
       icon: Target,
-      link: "/solutions/automated-lead-generation"
+      link: "/fr/solutions/automated-lead-generation"
     },
     {
       title: "Nurturing Intelligent",
       description: "Convertissez plus de prospects en clients avec des séquences de nurturing personnalisées",
       icon: Users,
-      link: "/services/ai-automation-starter"
+      link: "/fr/solutions/smart-nurturing"
     },
     {
       title: "Automatisation des Ventes",
       description: "Augmentez vos revenus grâce à des processus de vente automatisés et optimisés",
       icon: DollarSign,
-      link: "/services/sales-automation"
+      link: "/fr/services/sales-automation"
     },
     {
       title: "Engagement Client Instantané",
       description: "Répondez aux prospects instantanément et augmentez vos taux de conversion",
       icon: MessageSquare,
-      link: "/services/marketing-automation"
+      link: "/fr/solutions/instant-customer-engagement"
     },
     {
       title: "Optimisation de Conversion",
       description: "Maximisez votre ROI avec des stratégies de conversion éprouvées",
       icon: AreaChart,
-      link: "/services/transformation-consulting"
+      link: "/fr/services/transformation-consulting"
     },
     {
       title: "Acquisition Rapide",
       description: "Accélérez votre croissance avec des campagnes d'acquisition optimisées",
       icon: Zap,
-      link: "/services/digital-foundation"
+      link: "/fr/solutions/quick-acquisition"
     }
   ] : [
     {
@@ -57,7 +57,7 @@ const getContent = (isPathFrench: boolean) => ({
       title: "Smart Nurturing",
       description: "Convert more prospects into customers with personalized nurturing sequences",
       icon: Users,
-      link: "/services/ai-automation-starter"
+      link: "/solutions/smart-nurturing"
     },
     {
       title: "Sales Automation",
@@ -69,7 +69,7 @@ const getContent = (isPathFrench: boolean) => ({
       title: "Instant Customer Engagement",
       description: "Respond to prospects instantly and increase your conversion rates",
       icon: MessageSquare,
-      link: "/services/marketing-automation"
+      link: "/solutions/instant-customer-engagement"
     },
     {
       title: "Conversion Optimization",
@@ -81,7 +81,7 @@ const getContent = (isPathFrench: boolean) => ({
       title: "Quick Acquisition",
       description: "Accelerate your growth with optimized acquisition campaigns",
       icon: Zap,
-      link: "/services/digital-foundation"
+      link: "/solutions/quick-acquisition"
     }
   ]
 });
