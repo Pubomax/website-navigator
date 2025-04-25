@@ -121,27 +121,39 @@ export function Footer() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-sm font-semibold mb-4">Newsletter</h3>
+                <h3 className="text-sm font-semibold mb-3">Newsletter</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Stay updated with the latest in digital transformation.
+                  Subscribe to receive industry insights, automation tips, and exclusive offers to help your business grow faster with less work.
                 </p>
-                <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-3">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="min-w-0"
-                    {...form.register("email")}
-                    disabled={isPending}
-                  />
-                  <Button type="submit" disabled={isPending}>
-                    {isPending ? "Subscribing..." : "Subscribe"}
-                  </Button>
-                </form>
-                {form.formState.errors.email && (
-                  <p className="mt-2 text-sm text-destructive">
-                    {form.formState.errors.email.message}
+                <form onSubmit={onSubmit} className="space-y-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="flex-grow">
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="min-w-0 h-11"
+                        {...form.register("email")}
+                        disabled={isPending}
+                      />
+                      {form.formState.errors.email && (
+                        <p className="text-destructive text-sm mt-1">
+                          {form.formState.errors.email.message}
+                        </p>
+                      )}
+                    </div>
+                    <Button 
+                      type="submit" 
+                      disabled={isPending}
+                      className="h-11 px-6"
+                    >
+                      {isPending ? "Subscribing..." : "Subscribe"}
+                    </Button>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground">
+                    By subscribing, you agree to our <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link> and consent to receive updates from Minecore Group.
                   </p>
-                )}
+                </form>
               </div>
             </div>
           </div>
