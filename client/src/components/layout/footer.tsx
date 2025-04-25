@@ -27,7 +27,7 @@ const navigation = {
     { name: "Facebook", icon: Facebook, href: "#" },
     { name: "Twitter", icon: Twitter, href: "#" },
     { name: "LinkedIn", icon: Linkedin, href: "#" },
-    { name: "Email", icon: Mail, href: "mailto:contact@minecoregroup.com" },
+    { name: "Email", icon: Mail, href: "mailto:hello@minecoregroup.com" },
   ],
 };
 
@@ -90,6 +90,11 @@ export function Footer() {
                 Canadian leader in digital transformation, AI, and automation solutions
                 for businesses of all sizes.
               </p>
+              <div className="text-sm text-muted-foreground space-y-1 mt-2">
+                <p>Phone: +1 (514) 603-0598</p>
+                <p>Email: hello@minecoregroup.com</p>
+                <p>Address: 3580 Boulevard Saint Elzear Ouest, Laval, QC H7P 0L7</p>
+              </div>
               <div className="flex space-x-4">
                 {navigation.social.map((item) => (
                   <a

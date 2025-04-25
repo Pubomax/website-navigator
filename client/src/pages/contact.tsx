@@ -58,19 +58,19 @@ const getContent = (isPathFrench: boolean) => ({
     {
       icon: Phone,
       label: isPathFrench ? "Téléphone" : "Phone",
-      value: "+1 (555) 123-4567",
+      value: "+1 (514) 603-0598",
     },
     {
       icon: Mail,
       label: isPathFrench ? "Email" : "Email",
-      value: "contact@minecoregroup.com",
+      value: "hello@minecoregroup.com",
     },
     {
       icon: MapPin,
       label: isPathFrench ? "Adresse" : "Address",
       value: isPathFrench 
-        ? "123 Innovation Drive, Toronto, ON M5V 2T6"
-        : "123 Innovation Drive, Toronto, ON M5V 2T6",
+        ? "3580 Boulevard Saint Elzéar Ouest, Laval, QC H7P 0L7"
+        : "3580 Boulevard Saint Elzear Ouest, Laval, QC H7P 0L7",
     },
   ]
 });
