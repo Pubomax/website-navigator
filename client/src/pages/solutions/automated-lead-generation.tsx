@@ -187,7 +187,7 @@ export default function AutomatedLeadGeneration() {
     <main className="w-full">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container max-w-7xl">
+        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -244,7 +244,7 @@ export default function AutomatedLeadGeneration() {
       
       {/* Overview Section */}
       <section className="py-20">
-        <div className="container max-w-7xl">
+        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-bold mb-6">
               {isPathFrench ? "Vue d'Ensemble" : "Overview"}
@@ -286,7 +286,7 @@ export default function AutomatedLeadGeneration() {
       
       {/* Features Section */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-7xl">
+        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12 text-center">
             {isPathFrench ? "Fonctionnalités Clés" : "Key Features"}
           </h2>
@@ -423,7 +423,7 @@ export default function AutomatedLeadGeneration() {
       
       {/* Results & Testimonial Section */}
       <section className="py-20">
-        <div className="container max-w-7xl">
+        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl font-bold mb-8">
@@ -495,7 +495,7 @@ export default function AutomatedLeadGeneration() {
       
       {/* Process Section */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-7xl">
+        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-12 text-center">
             {isPathFrench ? "Notre Processus" : "Our Process"}
           </h2>
@@ -526,7 +526,7 @@ export default function AutomatedLeadGeneration() {
       
       {/* Final CTA */}
       <section className="py-20">
-        <div className="container max-w-5xl text-center">
+        <div className="container max-w-5xl text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-6">
             {content.cta.title}
           </h2>
