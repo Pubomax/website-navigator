@@ -92,10 +92,16 @@ export function WhatWeDo() {
                     {pillar.description}
                   </p>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex flex-col gap-2">
                   <Button variant="outline" className="w-full" asChild>
                     <Link href={pillar.link}>
                       {isPathFrench ? "En Savoir Plus" : "Learn More"}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button variant="default" className="w-full" asChild>
+                    <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
+                      {isPathFrench ? "Commencer" : "Get Started"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

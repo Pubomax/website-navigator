@@ -522,7 +522,7 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
                     <CardContent className="space-y-6">
                       <FormField
                         control={form.control}
-                        name="name"
+                        name="contactName"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
@@ -542,7 +542,7 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
 
                       <FormField
                         control={form.control}
-                        name="email"
+                        name="contactEmail"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
@@ -563,7 +563,7 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
 
                       <FormField
                         control={form.control}
-                        name="phone"
+                        name="contactPhone"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
