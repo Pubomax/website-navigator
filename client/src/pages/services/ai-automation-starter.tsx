@@ -264,7 +264,7 @@ export default function AIAutomationStarter() {
       <section className="relative py-24 overflow-hidden bg-gradient-to-br from-primary/5 via-background to-background">
         <div className="absolute right-0 top-0 h-full w-1/3 bg-primary/5 -skew-x-12 transform origin-top-right"></div>
         
-        <div className="container max-w-7xl relative z-10">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -345,7 +345,7 @@ export default function AIAutomationStarter() {
       
       {/* Highlights Section */}
       <section className="py-20">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <div className="grid md:grid-cols-3 gap-8">
             {content.highlights.map((highlight, index) => (
               <motion.div
@@ -373,7 +373,7 @@ export default function AIAutomationStarter() {
       
       {/* Overview Section */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold mb-6">
               {isPathFrench ? "Vue d'Ensemble" : "Overview"}
@@ -456,7 +456,7 @@ export default function AIAutomationStarter() {
       
       {/* Features Section */}
       <section className="py-20">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <h2 className="text-3xl font-bold mb-16 text-center">
             {isPathFrench ? "Fonctionnalités Clés" : "Key Features"}
           </h2>
@@ -499,7 +499,7 @@ export default function AIAutomationStarter() {
       
       {/* Final CTA */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-5xl text-center">
+        <div className="container px-4 sm:px-6 mx-auto max-w-5xl text-center">
           <h2 className="text-3xl font-bold mb-4">
             {content.cta.title}
           </h2>
