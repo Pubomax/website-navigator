@@ -1,8 +1,11 @@
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "wouter";
-import { ArrowRight, BookOpen, Check, ChevronRight, Code, FileJson, Server, Workflow } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { CodeBlock } from "@/components/ui/code-block";
+import { Separator } from "@/components/ui/separator";
+import { Workflow, FileJson, KeyRound, ArrowRight, MessageSquare, Settings2, Database } from "lucide-react";
 
 export default function N8nGuide() {
   return (
@@ -18,307 +21,366 @@ export default function N8nGuide() {
       </Breadcrumb>
 
       <div className="my-8">
-        <h1 className="text-4xl font-bold mb-4">N8N Integration Guide</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl">
-          Automate your content creation and management with our N8N integration.
-          Create, schedule, and publish blog posts automatically.
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-4xl font-bold mb-4">N8N Integration Guide</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl">
+              Create powerful automation workflows with N8N to manage your blog content, handle leads, and more.
+            </p>
+          </div>
+          <div className="p-4 bg-blue-50 rounded-xl">
+            <Workflow className="h-16 w-16 text-blue-600" />
+          </div>
+        </div>
       </div>
 
-      <Tabs defaultValue="overview">
-        <TabsList className="grid w-full grid-cols-4">
+      <Tabs defaultValue="overview" className="w-full mb-8">
+        <TabsList className="grid w-full grid-cols-4 mb-8">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="authentication">Authentication</TabsTrigger>
-          <TabsTrigger value="endpoints">API Endpoints</TabsTrigger>
+          <TabsTrigger value="api-key">API Authentication</TabsTrigger>
+          <TabsTrigger value="blog-automation">Blog Automation</TabsTrigger>
           <TabsTrigger value="examples">Example Workflows</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="overview" className="mt-6">
-          <div className="grid gap-6 md:grid-cols-2">
+        <TabsContent value="overview" className="space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>What is N8N?</CardTitle>
+              <CardDescription>
+                N8N is a workflow automation tool that allows you to connect various services and automate repetitive tasks without coding.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p>
+                N8N enables you to integrate the Minecore Group website with other services and tools by creating 
+                visual workflows. You can automate tasks such as:
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Automatically publishing blog posts from various sources</li>
+                <li>Sending lead data to your CRM system</li>
+                <li>Syncing newsletter subscribers with email marketing platforms</li>
+                <li>Creating social media posts from your blog content</li>
+                <li>Notifying team members of new contact form submissions</li>
+              </ul>
+              
+              <div className="p-4 bg-amber-50 rounded-lg border border-amber-200 flex items-start space-x-3 mt-6">
+                <div className="flex-shrink-0">
+                  <MessageSquare className="h-5 w-5 text-amber-600" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-amber-800">Getting Started with N8N</h4>
+                  <p className="text-sm text-amber-700 mt-1">
+                    If you're new to N8N, we recommend visiting the <a href="https://docs.n8n.io/getting-started/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">official N8N documentation</a> to learn how to set up and create your first workflow.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="grid md:grid-cols-3 gap-6">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5" />
-                  What is N8N?
-                </CardTitle>
+              <CardHeader className="pb-3">
+                <div className="w-12 h-12 rounded-md flex items-center justify-center mb-2 bg-violet-100">
+                  <Settings2 className="h-6 w-6 text-violet-600" />
+                </div>
+                <CardTitle>Easy Setup</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>
-                  N8N is a workflow automation tool that allows you to connect different systems and automate tasks without coding. It's an excellent tool for creating automated content pipelines, data synchronization, and API integrations.
+                <p className="text-muted-foreground">
+                  Connect to our API endpoints with a simple API key authentication and start creating workflows in minutes.
                 </p>
-                <p className="mt-4">
-                  With our N8N integration, you can automate blog post creation, schedule content publication, and integrate with other tools like CRMs, analytics platforms, and more.
-                </p>
-                <a 
-                  href="https://n8n.io/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center mt-4 text-primary hover:underline"
-                >
-                  Learn more about N8N <ArrowRight className="ml-1 h-4 w-4" />
-                </a>
               </CardContent>
             </Card>
-
+            
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Workflow className="h-5 w-5" />
-                  Key Features
-                </CardTitle>
+              <CardHeader className="pb-3">
+                <div className="w-12 h-12 rounded-md flex items-center justify-center mb-2 bg-emerald-100">
+                  <Database className="h-6 w-6 text-emerald-600" />
+                </div>
+                <CardTitle>Content Management</CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                    <span>Automate blog post creation from external sources</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                    <span>Schedule content publication with precise timing</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                    <span>Transform and enrich content from multiple data sources</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                    <span>Sync content with external platforms (social media, newsletters)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                    <span>Validate content before publishing with our preview API</span>
-                  </li>
-                </ul>
+                <p className="text-muted-foreground">
+                  Automate blog post creation, updates, and distribution across multiple platforms from a single workflow.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="pb-3">
+                <div className="w-12 h-12 rounded-md flex items-center justify-center mb-2 bg-orange-100">
+                  <FileJson className="h-6 w-6 text-orange-600" />
+                </div>
+                <CardTitle>Data Flexibility</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Work with structured JSON data for reliable and consistent automation across all your business systems.
+                </p>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
-
-        <TabsContent value="authentication" className="mt-6">
+        
+        <TabsContent value="api-key" className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Server className="h-5 w-5" />
-                API Authentication
+              <CardTitle className="flex items-center">
+                <KeyRound className="mr-2 h-5 w-5" /> API Authentication
               </CardTitle>
+              <CardDescription>
+                To use our API with N8N, you'll need to generate an API key for authentication.
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="mb-4">
-                Our API uses API Key authentication for N8N integration. You'll need to include the API key in the request headers.
-              </p>
-
-              <div className="bg-muted p-4 rounded-md mb-6">
-                <p className="font-semibold mb-2">API Key Setup:</p>
-                <code className="block bg-background p-2 rounded">
-                  X-API-Key: minecore-n8n-integration-key
-                </code>
+            <CardContent className="space-y-6">
+              <div className="rounded-md bg-muted p-4">
+                <h3 className="text-lg font-medium mb-2">Step 1: Generate an API Key</h3>
+                <p className="mb-4">API keys can be generated from the Admin Dashboard. Log in to your admin account and navigate to the API Keys section.</p>
+                <ol className="list-decimal pl-6 space-y-2">
+                  <li>Go to <Link href="/admin" className="text-primary hover:underline">Admin Dashboard</Link></li>
+                  <li>Navigate to the "API Keys" section</li>
+                  <li>Click on "Generate New API Key"</li>
+                  <li>Provide a descriptive name for your key (e.g., "N8N Blog Automation")</li>
+                  <li>Copy the generated API key (it will only be shown once)</li>
+                </ol>
               </div>
 
-              <p className="text-sm text-muted-foreground">
-                For security reasons, please keep your API key confidential and don't expose it in client-side code.
-              </p>
+              <div className="rounded-md bg-muted p-4">
+                <h3 className="text-lg font-medium mb-2">Step 2: Using the API Key in N8N</h3>
+                <p className="mb-4">When configuring an HTTP Request node in N8N, you need to add your API key as a header:</p>
+                <CodeBlock 
+                  language="json" 
+                  code={`{
+  "Authorization": "ApiKey YOUR_API_KEY_HERE"
+}`} 
+                  fileName="HTTP Request Headers" 
+                />
+              </div>
 
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-2">How to Configure in N8N</h3>
-                <ol className="list-decimal list-inside space-y-2">
-                  <li>Create a new workflow in your N8N instance</li>
-                  <li>Add an "HTTP Request" node</li>
-                  <li>Configure the node with the appropriate method and endpoint URL</li>
-                  <li>In the "Headers" section, add <code>X-API-Key</code> with the value above</li>
-                  <li>Set the "Response Format" to "JSON"</li>
-                </ol>
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 flex items-start space-x-3 mt-4">
+                <div className="flex-shrink-0">
+                  <MessageSquare className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-blue-800">Security Best Practices</h4>
+                  <p className="text-sm text-blue-700 mt-1">
+                    Store your API key securely. Never share your key or commit it to public repositories. For production use, 
+                    we recommend using the N8N credentials feature to securely store your API key.
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
-
-        <TabsContent value="endpoints" className="mt-6">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileJson className="h-5 w-5" />
-                  Available Endpoints
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-2 px-4">Endpoint</th>
-                        <th className="text-left py-2 px-4">Method</th>
-                        <th className="text-left py-2 px-4">Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b">
-                        <td className="py-2 px-4 font-mono text-sm">/api/integration/info</td>
-                        <td className="py-2 px-4">GET</td>
-                        <td className="py-2 px-4">Get API information and available endpoints</td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="py-2 px-4 font-mono text-sm">/api/integration/blog</td>
-                        <td className="py-2 px-4">GET</td>
-                        <td className="py-2 px-4">List all blog posts with optional filtering</td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="py-2 px-4 font-mono text-sm">/api/integration/blog</td>
-                        <td className="py-2 px-4">POST</td>
-                        <td className="py-2 px-4">Create a new blog post</td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="py-2 px-4 font-mono text-sm">/api/integration/blog/categories</td>
-                        <td className="py-2 px-4">GET</td>
-                        <td className="py-2 px-4">List all blog categories</td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="py-2 px-4 font-mono text-sm">/api/integration/blog/preview</td>
-                        <td className="py-2 px-4">POST</td>
-                        <td className="py-2 px-4">Validate a blog post without saving it</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Code className="h-5 w-5" />
-                  Request & Response Formats
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">Creating a Blog Post</h3>
-                    <p className="mb-2">POST to <code>/api/integration/blog</code> with:</p>
-                    <pre className="bg-muted p-4 rounded-md overflow-x-auto">
-{`{
-  "title": "Your Blog Post Title",
-  "content": "Full HTML content of the blog post",
-  "excerpt": "Short summary of the blog post",
-  "categoryId": 1,
-  "featuredImage": "https://example.com/image.jpg",
-  "published": true,
-  "publishedDate": "2025-04-25T12:00:00Z"
-}`}
-                    </pre>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Only <code>title</code>, <code>content</code>, <code>excerpt</code>, and <code>categoryId</code> are required.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">Example Response</h3>
-                    <pre className="bg-muted p-4 rounded-md overflow-x-auto">
-{`{
-  "success": true,
-  "data": {
-    "id": 123,
-    "title": "Your Blog Post Title",
-    "content": "Full HTML content of the blog post",
-    "excerpt": "Short summary of the blog post",
+        
+        <TabsContent value="blog-automation" className="space-y-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Blog Post Management API</CardTitle>
+              <CardDescription>
+                Automate your blog content creation and management using these API endpoints.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">GET /api/blog-posts</h3>
+                  <p className="mb-2">Retrieve all blog posts.</p>
+                  <div className="bg-muted p-4 rounded-md">
+                    <h4 className="text-sm font-medium mb-1">Example Response:</h4>
+                    <CodeBlock 
+                      language="json" 
+                      code={`[
+  {
+    "id": 1,
+    "title": "Getting Started with AI Automation",
+    "slug": "getting-started-with-ai-automation",
+    "content": "Lorem ipsum dolor sit amet...",
+    "image": "https://example.com/images/blog-1.jpg",
     "categoryId": 1,
-    "featuredImage": "https://example.com/image.jpg",
     "published": true,
-    "publishedDate": "2025-04-25T12:00:00Z",
-    "createdAt": "2025-04-25T10:30:45Z"
+    "publishedAt": "2023-10-15T08:00:00Z",
+    "authorName": "John Doe",
+    "excerpt": "A beginner's guide to implementing AI automation..."
   },
-  "message": "Blog post created successfully"
-}`}
-                    </pre>
+  {
+    "id": 2,
+    "title": "5 Ways to Improve Sales with Automation",
+    "slug": "5-ways-to-improve-sales-with-automation",
+    "content": "Lorem ipsum dolor sit amet...",
+    "image": "https://example.com/images/blog-2.jpg",
+    "categoryId": 2,
+    "published": true,
+    "publishedAt": "2023-10-20T10:30:00Z",
+    "authorName": "Jane Smith",
+    "excerpt": "Discover proven strategies to boost your sales..."
+  }
+]`} 
+                      fileName="GET /api/blog-posts" 
+                    />
                   </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h3 className="text-lg font-medium mb-2">POST /api/blog-posts</h3>
+                  <p className="mb-2">Create a new blog post.</p>
+                  <div className="bg-muted p-4 rounded-md">
+                    <h4 className="text-sm font-medium mb-1">Example Request:</h4>
+                    <CodeBlock 
+                      language="json" 
+                      code={`{
+  "title": "How to Integrate N8N with Your Website",
+  "slug": "how-to-integrate-n8n-with-your-website",
+  "content": "In this tutorial, we'll show you step by step...",
+  "image": "https://example.com/images/n8n-tutorial.jpg",
+  "categoryId": 3,
+  "published": true,
+  "authorName": "Alex Johnson",
+  "excerpt": "Learn to create powerful automation workflows..."
+}`} 
+                      fileName="POST /api/blog-posts" 
+                    />
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h3 className="text-lg font-medium mb-2">GET /api/blog-categories</h3>
+                  <p className="mb-2">Retrieve all blog categories.</p>
+                  <div className="bg-muted p-4 rounded-md">
+                    <h4 className="text-sm font-medium mb-1">Example Response:</h4>
+                    <CodeBlock 
+                      language="json" 
+                      code={`[
+  {
+    "id": 1,
+    "name": "AI & Automation",
+    "slug": "ai-automation",
+    "description": "Articles about artificial intelligence and automation"
+  },
+  {
+    "id": 2,
+    "name": "Sales Strategies",
+    "slug": "sales-strategies",
+    "description": "Tips and guides for improving sales"
+  },
+  {
+    "id": 3,
+    "name": "Tutorials",
+    "slug": "tutorials",
+    "description": "Step-by-step guides and tutorials"
+  }
+]`} 
+                      fileName="GET /api/blog-categories" 
+                    />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="examples" className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="flex flex-col h-full">
+              <CardHeader>
+                <CardTitle>Automated Blog Publishing</CardTitle>
+                <CardDescription>
+                  Create a workflow that publishes blog posts from Google Docs to your website.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <ol className="list-decimal pl-6 space-y-3">
+                  <li className="text-sm">
+                    <span className="font-medium">Trigger:</span> Google Drive - New File in Folder
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Process:</span> Google Docs - Read Document
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Transform:</span> Use Code node to format content and extract metadata
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Optional:</span> HTTP Request to download and process images
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Create:</span> HTTP Request to POST to /api/blog-posts
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Notify:</span> Send Slack notification when published
+                  </li>
+                </ol>
+                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                  <p className="text-sm text-blue-700">
+                    This workflow automatically converts Google Docs into properly formatted blog posts, 
+                    complete with images, and publishes them to your website.
+                  </p>
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </TabsContent>
 
-        <TabsContent value="examples" className="mt-6">
-          <div className="grid gap-6">
-            <Card>
+            <Card className="flex flex-col h-full">
               <CardHeader>
-                <CardTitle>RSS to Blog Automation</CardTitle>
+                <CardTitle>Social Media Distribution</CardTitle>
+                <CardDescription>
+                  Automatically share new blog posts across your social media channels.
+                </CardDescription>
               </CardHeader>
-              <CardContent>
-                <p className="mb-4">
-                  This workflow fetches articles from an RSS feed and creates blog posts automatically.
-                </p>
-                <ol className="list-decimal list-inside space-y-2">
-                  <li>Add an "RSS Feed" trigger node configured with your source RSS URL</li>
-                  <li>Add a "Function" node to transform the RSS item into our blog post format</li>
-                  <li>Add an "HTTP Request" node with:
-                    <ul className="list-disc list-inside ml-6 mt-1">
-                      <li>Method: POST</li>
-                      <li>URL: https://yoursite.com/api/integration/blog</li>
-                      <li>Headers: X-API-Key</li>
-                      <li>Body: The transformed data from the Function node</li>
-                    </ul>
+              <CardContent className="flex-grow">
+                <ol className="list-decimal pl-6 space-y-3">
+                  <li className="text-sm">
+                    <span className="font-medium">Trigger:</span> Schedule - Every hour
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Fetch:</span> HTTP Request to GET latest posts from /api/blog-posts
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Filter:</span> Use IF node to check for new posts (not shared yet)
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Format:</span> Create social media message with image and link
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Share:</span> Post to Twitter/X, LinkedIn, Facebook using respective nodes
+                  </li>
+                  <li className="text-sm">
+                    <span className="font-medium">Update:</span> Mark post as shared in your tracking system
                   </li>
                 </ol>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  You can schedule this workflow to run at specific intervals to regularly check for new content.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Scheduled Content Publishing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">
-                  Create blog posts in advance and schedule them for future publication.
-                </p>
-                <ol className="list-decimal list-inside space-y-2">
-                  <li>Add a "Schedule" trigger node with your desired publication schedule</li>
-                  <li>Add a "Google Sheets" node to fetch content from a planning spreadsheet</li>
-                  <li>Add a "Function" node to check which content is due for publication</li>
-                  <li>Add an "HTTP Request" node to create the blog post with:
-                    <ul className="list-disc list-inside ml-6 mt-1">
-                      <li>Method: POST</li>
-                      <li>URL: https://yoursite.com/api/integration/blog</li>
-                      <li>Headers: X-API-Key</li>
-                      <li>Body: The scheduled content data</li>
-                    </ul>
-                  </li>
-                </ol>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>AI-Generated Content Workflow</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4">
-                  Use OpenAI to generate blog content based on prompts and publish it to your blog.
-                </p>
-                <ol className="list-decimal list-inside space-y-2">
-                  <li>Add a "Schedule" trigger node for your desired content generation frequency</li>
-                  <li>Add an "HTTP Request" node to call OpenAI's API with your content brief</li>
-                  <li>Add a "Function" node to format the AI response into a blog post</li>
-                  <li>Add an "HTTP Request" node to validate the content:
-                    <ul className="list-disc list-inside ml-6 mt-1">
-                      <li>Method: POST</li>
-                      <li>URL: https://yoursite.com/api/integration/blog/preview</li>
-                    </ul>
-                  </li>
-                  <li>Add an "If" node to check if the validation was successful</li>
-                  <li>Add a final "HTTP Request" node to publish the validated content</li>
-                </ol>
-                <div className="mt-4 p-3 bg-amber-50 text-amber-800 border border-amber-200 rounded-md">
-                  <p className="text-sm">
-                    <strong>Note:</strong> When using AI-generated content, always review and adapt it to ensure quality and accuracy before publication.
+                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                  <p className="text-sm text-blue-700">
+                    This workflow ensures all your new content is distributed across your social media profiles
+                    with customized messaging appropriate for each platform.
                   </p>
                 </div>
               </CardContent>
             </Card>
           </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Want to learn more?</CardTitle>
+              <CardDescription>
+                Discover additional workflow templates and integration ideas.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col md:flex-row gap-4 items-center">
+                <p className="md:flex-1 text-muted-foreground">
+                  We offer custom N8N workflow development and integration services to help you automate your business processes.
+                  Get in touch with our team to discuss your specific needs.
+                </p>
+                <Button asChild className="whitespace-nowrap">
+                  <Link href="/contact">
+                    Contact for Custom Solutions <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </main>

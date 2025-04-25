@@ -50,6 +50,9 @@ const translations: Translations = {
     companyStory: "Company Story",
     teamBios: "Team Bios",
     missionValues: "Mission & Values",
+    
+    // Integration pages
+    integrations: "Integrations & API",
 
     // Solution names
     automatedLeadGeneration: "Automated Lead Generation",
@@ -130,6 +133,9 @@ const translations: Translations = {
     companyStory: "Notre Histoire",
     teamBios: "Notre Équipe",
     missionValues: "Mission et Valeurs",
+    
+    // Integration pages
+    integrations: "Intégrations & API",
     
     // Solution names
     automatedLeadGeneration: "Génération Automatisée de Leads",
