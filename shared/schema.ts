@@ -43,7 +43,7 @@ export const contactMessages = pgTable("contact_messages", {
   companyName: text("company_name").notNull(),
   industry: text("industry").notNull(),
   companySize: text("company_size").notNull(),
-  annualRevenue: text("annual_revenue"),
+  annualRevenue: text("annual_revenue").notNull(),
   websiteUrl: text("website_url"),
   
   // Business Issues (Step 2)

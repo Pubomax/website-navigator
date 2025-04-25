@@ -103,15 +103,16 @@ const getContent = (isPathFrench: boolean) => ({
       ]
     },
     annualRevenue: {
-      label: isPathFrench ? "Revenu annuel (optionnel)" : "Annual Revenue (optional)",
+      label: isPathFrench ? "Revenu annuel" : "Annual Revenue",
       placeholder: isPathFrench ? "Sélectionnez le revenu" : "Select revenue",
       options: [
-        { value: "less-than-1m", label: isPathFrench ? "Moins de 1M $" : "Less than $1M" },
+        { value: "less-than-100k", label: isPathFrench ? "Moins de 100k $" : "Less than $100k" },
+        { value: "100k-500k", label: isPathFrench ? "100k $ - 500k $" : "$100k - $500k" },
+        { value: "500k-1m", label: isPathFrench ? "500k $ - 1M $" : "$500k - $1M" },
         { value: "1m-5m", label: isPathFrench ? "1M $ - 5M $" : "$1M - $5M" },
         { value: "5m-10m", label: isPathFrench ? "5M $ - 10M $" : "$5M - $10M" },
         { value: "10m-50m", label: isPathFrench ? "10M $ - 50M $" : "$10M - $50M" },
-        { value: "50m-100m", label: isPathFrench ? "50M $ - 100M $" : "$50M - $100M" },
-        { value: "more-than-100m", label: isPathFrench ? "Plus de 100M $" : "More than $100M" }
+        { value: "more-than-50m", label: isPathFrench ? "Plus de 50M $" : "More than $50M" }
       ]
     },
     websiteUrl: {
