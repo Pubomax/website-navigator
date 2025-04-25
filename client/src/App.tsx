@@ -28,6 +28,7 @@ import MarketingAutomation from "@/pages/services/marketing-automation";
 
 // Solution pages
 import AutomatedLeadGeneration from "@/pages/solutions/automated-lead-generation";
+import SmartNurturing from "@/pages/solutions/smart-nurturing";
 
 // Sector pages
 import Manufacturing from "@/pages/sectors/manufacturing";
@@ -77,6 +78,7 @@ function Router() {
 
           {/* Solution Routes */}
           <Route path="/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
+          <Route path="/solutions/smart-nurturing" component={SmartNurturing} />
           
           {/* Service Routes */}
           <Route path="/services/digital-foundation" component={DigitalFoundation} />
@@ -122,6 +124,7 @@ function Router() {
 
           {/* French Solution Routes */}
           <Route path="/fr/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
+          <Route path="/fr/solutions/smart-nurturing" component={SmartNurturing} />
           
           {/* French Service Routes */}
           <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
