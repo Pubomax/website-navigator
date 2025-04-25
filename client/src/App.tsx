@@ -196,13 +196,24 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Helmet>
+        {/* Google Tag for Ads (AW-17032394525) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17032394525"></script>
+        
+        {/* Google Tag for Analytics (G-2S9WTCBXWT) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2S9WTCBXWT"></script>
+        
+        {/* Combined initialization script for both tags */}
         <script>
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            
+            // Google Ads tag
             gtag('config', 'AW-17032394525');
+            
+            // Google Analytics tag
+            gtag('config', 'G-2S9WTCBXWT');
           `}
         </script>
       </Helmet>
