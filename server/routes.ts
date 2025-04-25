@@ -218,12 +218,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/contact", async (req, res) => {
     try {
+      console.log("Received contact form data:", req.body);
       const data = insertContactMessageSchema.parse(req.body);
       const message = await storage.createContactMessage(data);
+      console.log("Created contact message:", message);
       res.status(201).json(message);
     } catch (error) {
+      console.error("Error creating contact message:", error);
       logError(error, 'creating contact message');
-      res.status(400).json({ message: "Invalid contact form data" });
+      
+      if (isZodError(error)) {
+        return res.status(400).json({ 
+          message: "Invalid contact form data",
+          errors: error.errors
+        });
+      }
+      
+      res.status(400).json({ 
+        message: "Invalid contact form data",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
     }
   });
 

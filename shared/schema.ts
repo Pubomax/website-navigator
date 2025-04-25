@@ -39,10 +39,29 @@ export const caseStudies = pgTable("case_studies", {
 
 export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  company: text("company").notNull(),
-  message: text("message").notNull(),
+  // Company Information (Step 1)
+  companyName: text("company_name").notNull(),
+  industry: text("industry").notNull(),
+  companySize: text("company_size").notNull(),
+  annualRevenue: text("annual_revenue"),
+  websiteUrl: text("website_url"),
+  
+  // Business Issues (Step 2)
+  businessChallenges: text("business_challenges").notNull(),
+  currentSolutions: text("current_solutions"),
+  desiredOutcomes: text("desired_outcomes").notNull(),
+  timeline: text("timeline"),
+  budget: text("budget"),
+  
+  // Contact Information (Step 3)
+  contactName: text("contact_name").notNull(),
+  contactEmail: text("contact_email").notNull(),
+  contactPhone: text("contact_phone"),
+  contactJobTitle: text("contact_job_title"),
+  preferredContactMethod: text("preferred_contact_method").notNull(),
+  additionalNotes: text("additional_notes"),
+  
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
