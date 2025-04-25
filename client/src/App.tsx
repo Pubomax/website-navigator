@@ -16,6 +16,10 @@ import FAQ from "@/pages/faq";
 import Blog from "@/pages/blog";
 import CaseStudies from "@/pages/case-studies";
 
+// Integration pages
+import Integrations from "@/pages/integrations";
+import N8nGuide from "@/pages/integrations/n8n-guide";
+
 // Service pages
 import DigitalFoundation from "@/pages/services/digital-foundation";
 import TransformationConsulting from "@/pages/services/transformation-consulting";
@@ -77,6 +81,10 @@ function Router() {
           <Route path="/faq" component={FAQ} />
           <Route path="/blog" component={Blog} />
           <Route path="/case-studies" component={CaseStudies} />
+          
+          {/* Integration Routes */}
+          <Route path="/integrations" component={Integrations} />
+          <Route path="/integrations/n8n-guide" component={N8nGuide} />
 
           {/* Solution Routes */}
           <Route path="/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
@@ -125,6 +133,10 @@ function Router() {
           <Route path="/fr/faq" component={FAQ} />
           <Route path="/fr/blog" component={Blog} />
           <Route path="/fr/case-studies" component={CaseStudies} />
+          
+          {/* French Integration Routes */}
+          <Route path="/fr/integrations" component={Integrations} />
+          <Route path="/fr/integrations/n8n-guide" component={N8nGuide} />
 
           {/* French Solution Routes */}
           <Route path="/fr/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
