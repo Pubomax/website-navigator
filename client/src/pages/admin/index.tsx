@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Copy, KeyRound, Check, FileJson } from "lucide-react";
+import { PageTitle } from "@/components/page-title";
 import {
   Form,
   FormControl,
@@ -187,6 +188,7 @@ export default function AdminDashboard() {
 
   return (
     <main className="container py-10">
+      <PageTitle pageKey="admin" />
       <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
