@@ -261,7 +261,7 @@ export default function SalesAutomation() {
     <main className="w-full">
       {/* Hero Section with Gradient Background */}
       <section className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-background to-background">
-        <div className="container max-w-7xl relative z-10 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -340,7 +340,7 @@ export default function SalesAutomation() {
       
       {/* Benefits Tabs Section */}
       <section className="py-20">
-        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-6">
               {isPathFrench ? "Comment Vous Pouvez Gagner Plus en Travaillant Moins" : "How You Can Make More Money While Working Less"}
@@ -436,7 +436,7 @@ export default function SalesAutomation() {
       
       {/* Features & Process Section */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
             <div>
               <motion.div
