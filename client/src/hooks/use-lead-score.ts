@@ -11,8 +11,6 @@ interface LeadData {
   businessSize?: string;
   channel?: string;
   serviceInterest?: string;
-  budget?: string;
-  timeline?: string;
 }
 
 export function useLeadScore(leadData: LeadData) {
@@ -120,64 +118,6 @@ export function useLeadScore(leadData: LeadData) {
         
         newFactors.push({
           factor: "Service Interest",
-          impact,
-          weight
-        });
-        
-        totalScore += weight * 5;
-        maxPossibleScore += 25;
-      }
-
-      // Budget
-      if (leadData.budget) {
-        let weight = 3;
-        let impact: "positive" | "negative" | "neutral" = "neutral";
-        
-        if (leadData.budget === "enterprise") {
-          weight = 5;
-          impact = "positive";
-        } else if (leadData.budget === "large") {
-          weight = 4;
-          impact = "positive";
-        } else if (leadData.budget === "medium") {
-          weight = 3;
-          impact = "neutral";
-        } else if (leadData.budget === "small") {
-          weight = 1;
-          impact = "negative";
-        }
-        
-        newFactors.push({
-          factor: "Budget",
-          impact,
-          weight
-        });
-        
-        totalScore += weight * 5;
-        maxPossibleScore += 25;
-      }
-
-      // Timeline
-      if (leadData.timeline) {
-        let weight = 3;
-        let impact: "positive" | "negative" | "neutral" = "neutral";
-        
-        if (leadData.timeline === "urgent") {
-          weight = 5;
-          impact = "positive";
-        } else if (leadData.timeline === "short") {
-          weight = 4;
-          impact = "positive";
-        } else if (leadData.timeline === "medium") {
-          weight = 3;
-          impact = "neutral";
-        } else if (leadData.timeline === "long") {
-          weight = 1;
-          impact = "negative";
-        }
-        
-        newFactors.push({
-          factor: "Timeline",
           impact,
           weight
         });

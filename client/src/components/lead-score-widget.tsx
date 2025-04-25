@@ -336,45 +336,7 @@ export function LeadScoreWidget() {
             </Select>
           </div>
           
-          {/* Budget Range */}
-          <div className="space-y-2">
-            <Label htmlFor="budget" className="flex items-center gap-1.5">
-              <AlertCircle className="h-4 w-4 text-muted-foreground" />
-              {isPathFrench ? "Budget" : "Budget Range"}
-            </Label>
-            <Select value={leadData.budget} onValueChange={(value) => handleInputChange('budget', value)}>
-              <SelectTrigger id="budget">
-                <SelectValue placeholder={isPathFrench ? "Sélectionnez un budget" : "Select budget range"} />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(budgetRanges).map(([key, budget]) => (
-                  <SelectItem key={key} value={key}>
-                    {isPathFrench ? budget.label.fr : budget.label.en}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          
-          {/* Timeline */}
-          <div className="space-y-2">
-            <Label htmlFor="timeline" className="flex items-center gap-1.5">
-              <Target className="h-4 w-4 text-muted-foreground" />
-              {isPathFrench ? "Échéancier du Projet" : "Project Timeline"}
-            </Label>
-            <Select value={leadData.timeline} onValueChange={(value) => handleInputChange('timeline', value)}>
-              <SelectTrigger id="timeline">
-                <SelectValue placeholder={isPathFrench ? "Sélectionnez un échéancier" : "Select timeline"} />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(timelines).map(([key, timeline]) => (
-                  <SelectItem key={key} value={key}>
-                    {isPathFrench ? timeline.label.fr : timeline.label.en}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+
         </div>
 
         {score > 0 && (

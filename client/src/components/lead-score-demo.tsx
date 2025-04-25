@@ -14,9 +14,7 @@ const demoLead = {
   industry: "technology",
   businessSize: "mid_market",
   channel: "referral",
-  serviceInterest: "sales_automation",
-  budget: "large",
-  timeline: "urgent"
+  serviceInterest: "sales_automation"
 };
 
 export function LeadScoreDemo() {
@@ -131,21 +129,6 @@ export function LeadScoreDemo() {
               </div>
             </div>
             
-            <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium">Budget Range</p>
-                <p className="text-sm text-muted-foreground">$50,000 - $100,000</p>
-              </div>
-            </div>
-            
-            <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium">Project Timeline</p>
-                <p className="text-sm text-muted-foreground">Immediate (1-4 weeks)</p>
-              </div>
-            </div>
           </div>
           
           <div className="mt-4 bg-primary/5 p-4 rounded-lg border border-primary/10">
