@@ -49,7 +49,15 @@ const translations: Translations = {
     teamBios: "Team Bios",
     missionValues: "Mission & Values",
 
+    // Solution names
+    automatedLeadGeneration: "Automated Lead Generation",
+    smartNurturing: "Smart Nurturing",
+    salesAutomation: "Sales Automation",
+    instantCustomerEngagement: "Instant Customer Engagement",
+    quickAcquisition: "Quick Acquisition",
+    
     // Groups
+    "Solutions": "Solutions",
     "Industries": "Industries",
     "Business Size": "Business Size",
     "About Us": "About Us",
@@ -116,8 +124,16 @@ const translations: Translations = {
     companyStory: "Notre Histoire",
     teamBios: "Notre Équipe",
     missionValues: "Mission et Valeurs",
+    
+    // Solution names
+    automatedLeadGeneration: "Génération Automatisée de Leads",
+    smartNurturing: "Nurturing Intelligent",
+    salesAutomation: "Automatisation des Ventes",
+    instantCustomerEngagement: "Engagement Client Instantané",
+    quickAcquisition: "Acquisition Rapide",
 
     // Groups
+    "Solutions": "Solutions",
     "Industries": "Industries",
     "Business Size": "Taille d'Entreprise",
     "About Us": "À Propos",

@@ -42,6 +42,11 @@ const navigation: NavigationItem[] = [
   {
     name: "solutions",
     items: [
+      { name: "automatedLeadGeneration", group: "Solutions", href: "/solutions/automated-lead-generation" },
+      { name: "smartNurturing", group: "Solutions", href: "/solutions/smart-nurturing" },
+      { name: "salesAutomation", group: "Solutions", href: "/solutions/sales-automation" },
+      { name: "instantCustomerEngagement", group: "Solutions", href: "/solutions/instant-customer-engagement" },
+      { name: "quickAcquisition", group: "Solutions", href: "/solutions/quick-acquisition" },
       { name: "manufacturing", group: "Industries", href: "/sectors/manufacturing" },
       { name: "finance", group: "Industries", href: "/sectors/finance" },
       { name: "retail", group: "Industries", href: "/sectors/retail" },
