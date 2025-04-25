@@ -2,7 +2,6 @@ import { Hero } from "@/components/sections/hero";
 import { WhatWeDo } from "@/components/sections/what-we-do";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { SolutionsGrid } from "@/components/sections/solutions-grid";
-import { ServicesGrid } from "@/components/sections/services-grid";
 import { CaseStudies } from "@/components/sections/case-studies";
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
       <WhatWeDo />
       <SolutionsGrid />
       <WhyChooseUs />
-      <ServicesGrid />
       <CaseStudies />
     </main>
   );
