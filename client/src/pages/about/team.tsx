@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Linkedin, Twitter } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
+import { PageTitle } from "@/components/page-title";
 
 const teamMembersData = {
   en: [
@@ -116,6 +117,7 @@ export default function Team() {
 
   return (
     <main className="py-24">
+      <PageTitle pageKey="team" />
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

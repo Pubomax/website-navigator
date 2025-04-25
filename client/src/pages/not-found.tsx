@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Home } from "lucide-react";
+import { PageTitle } from "@/components/page-title";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "404 Page Non Trouvée" : "404 Page Not Found",
@@ -18,6 +19,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-background">
+      <PageTitle pageKey="notFound" />
       <Card className="w-full max-w-md mx-4">
         <CardContent className="pt-6 flex flex-col items-center text-center">
           <div className="flex flex-col items-center gap-4 mb-6">

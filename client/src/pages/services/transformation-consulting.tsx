@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { DollarSign, Clock, ChartBar, Zap } from "lucide-react";
+import { PageTitle } from "@/components/page-title";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Développez Vos Revenus en 30 Jours" : "Grow Your Revenue in 30 Days",
@@ -85,6 +86,7 @@ export default function RevenueAccelerator() {
 
   return (
     <main className="py-24">
+      <PageTitle pageKey="transformationConsulting" />
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
