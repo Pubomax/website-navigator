@@ -421,7 +421,7 @@ export default function DigitalFoundation() {
       
       {/* Pricing & CTA Section */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">
               {content.cta.title}
