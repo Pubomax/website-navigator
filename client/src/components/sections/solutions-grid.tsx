@@ -20,31 +20,31 @@ const getContent = (isPathFrench: boolean) => ({
       title: "Nurturing Intelligent",
       description: "Convertissez plus de prospects en clients avec des séquences de nurturing personnalisées",
       icon: Users,
-      link: "/solutions/smart-nurturing"
+      link: "/services/ai-automation-starter"
     },
     {
       title: "Automatisation des Ventes",
       description: "Augmentez vos revenus grâce à des processus de vente automatisés et optimisés",
       icon: DollarSign,
-      link: "/solutions/sales-automation"
+      link: "/services/sales-automation"
     },
     {
       title: "Engagement Client Instantané",
       description: "Répondez aux prospects instantanément et augmentez vos taux de conversion",
       icon: MessageSquare,
-      link: "/solutions/instant-customer-engagement"
+      link: "/services/marketing-automation"
     },
     {
       title: "Optimisation de Conversion",
       description: "Maximisez votre ROI avec des stratégies de conversion éprouvées",
       icon: AreaChart,
-      link: "/solutions/conversion-optimization"
+      link: "/services/transformation-consulting"
     },
     {
       title: "Acquisition Rapide",
       description: "Accélérez votre croissance avec des campagnes d'acquisition optimisées",
       icon: Zap,
-      link: "/solutions/quick-acquisition"
+      link: "/services/digital-foundation"
     }
   ] : [
     {
@@ -57,31 +57,31 @@ const getContent = (isPathFrench: boolean) => ({
       title: "Smart Nurturing",
       description: "Convert more prospects into customers with personalized nurturing sequences",
       icon: Users,
-      link: "/solutions/smart-nurturing"
+      link: "/services/ai-automation-starter"
     },
     {
       title: "Sales Automation",
       description: "Increase your revenue through automated and optimized sales processes",
       icon: DollarSign,
-      link: "/solutions/sales-automation"
+      link: "/services/sales-automation"
     },
     {
       title: "Instant Customer Engagement",
       description: "Respond to prospects instantly and increase your conversion rates",
       icon: MessageSquare,
-      link: "/solutions/instant-customer-engagement"
+      link: "/services/marketing-automation"
     },
     {
       title: "Conversion Optimization",
       description: "Maximize your ROI with proven conversion strategies",
       icon: AreaChart,
-      link: "/solutions/conversion-optimization"
+      link: "/services/transformation-consulting"
     },
     {
       title: "Quick Acquisition",
       description: "Accelerate your growth with optimized acquisition campaigns",
       icon: Zap,
-      link: "/solutions/quick-acquisition"
+      link: "/services/digital-foundation"
     }
   ]
 });
