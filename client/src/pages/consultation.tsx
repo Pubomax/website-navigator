@@ -573,6 +573,7 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
                               <Input 
                                 placeholder="+1 (555) 123-4567" 
                                 {...field}
+                                value={field.value || ""}
                               />
                             </FormControl>
                             <FormMessage />
