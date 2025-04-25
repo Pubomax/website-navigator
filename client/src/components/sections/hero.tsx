@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Brain, Bot, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
+import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/lib/i18n";
+import { LeadScoreWidget } from "@/components/lead-score-widget";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
@@ -11,6 +13,18 @@ const getContent = (isPathFrench: boolean) => ({
   subtitle: isPathFrench
     ? "Transformez vos prospects en clients fidèles automatiquement. Notre solution de nurturing de leads vous fait gagner du temps et augmente vos revenus sans effort."
     : "Turn prospects into loyal customers automatically. Our lead nurturing solution saves you time and increases revenue effortlessly.",
+  features: isPathFrench ? [
+    "Intelligence Artificielle",
+    "Scoring de Leads",
+    "Conversion Automatisée"
+  ] : [
+    "Artificial Intelligence",
+    "Lead Scoring",
+    "Automated Conversion"
+  ],
+  aiCaption: isPathFrench
+    ? "Propulsé par l'IA Avancée"
+    : "Powered by Advanced AI",
   cta: {
     primary: isPathFrench ? "Commencer à Gagner Plus" : "Start Making Money",
     secondary: isPathFrench ? "Voir les Résultats" : "See Results"
@@ -25,48 +39,82 @@ export function Hero() {
   return (
     <div className="relative overflow-hidden bg-background mt-16 md:mt-20">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="py-16 sm:py-24 lg:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight"
-            >
-              {content.title}
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-6 text-lg sm:text-xl leading-8 text-muted-foreground"
-            >
-              {content.subtitle}
-            </motion.p>
+        <div className="py-12 sm:py-20 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6"
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left"
             >
-              <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
-                  {content.cta.primary}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
-                <Link href={isPathFrench ? "/fr/case-studies" : "/case-studies"}>
-                  {content.cta.secondary}
-                </Link>
-              </Button>
+              <Badge variant="outline" className="mb-4 px-3 py-1 border-primary/30 font-medium">
+                <Brain className="mr-1 h-3.5 w-3.5 text-primary" />
+                {content.aiCaption}
+              </Badge>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight"
+              >
+                {content.title}
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="mt-6 text-lg sm:text-xl leading-8 text-muted-foreground"
+              >
+                {content.subtitle}
+              </motion.p>
+              
+              {/* Feature badges */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="mt-6 flex flex-wrap justify-center lg:justify-start gap-2"
+              >
+                {content.features.map((feature, index) => (
+                  <Badge key={feature} variant="secondary" className="text-sm px-3 py-1">
+                    {index === 0 && <Bot className="mr-1 h-3.5 w-3.5" />}
+                    {index === 1 && <Zap className="mr-1 h-3.5 w-3.5" />}
+                    {index === 2 && <ArrowRight className="mr-1 h-3.5 w-3.5" />}
+                    {feature}
+                  </Badge>
+                ))}
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="mt-10 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 sm:gap-x-6"
+              >
+                <Button asChild size="lg" className="w-full sm:w-auto">
+                  <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
+                    {content.cta.primary}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
+                  <Link href={isPathFrench ? "/fr/case-studies" : "/case-studies"}>
+                    {content.cta.secondary}
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
+            
+            {/* AI Lead Scoring Demo */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="max-w-md mx-auto lg:mx-0 lg:ml-auto"
+            >
+              <LeadScoreWidget />
+            </motion.div>
+          </div>
         </div>
       </div>
 
