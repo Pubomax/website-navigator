@@ -282,7 +282,7 @@ export default function Contact() {
     
     switch (currentStep) {
       case 0: // Company Information
-        fieldsToValidate = ["companyName", "industry", "companySize"];
+        fieldsToValidate = ["companyName", "industry", "companySize", "annualRevenue"];
         break;
       case 1: // Business Challenges
         fieldsToValidate = ["businessChallenges", "desiredOutcomes"];
