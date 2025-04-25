@@ -9,27 +9,11 @@ import { insertNewsletterSubscriptionSchema } from "@shared/schema";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { 
-  Facebook, 
-  Twitter, 
-  Linkedin, 
-  Mail 
+  Mail, 
+  Instagram
 } from "lucide-react";
-
-const navigation = {
-  main: [
-    { name: "About", href: "/about" },
-    { name: "Services", href: "/services" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" },
-  ],
-  social: [
-    { name: "Facebook", icon: Facebook, href: "#" },
-    { name: "Twitter", icon: Twitter, href: "#" },
-    { name: "LinkedIn", icon: Linkedin, href: "#" },
-    { name: "Email", icon: Mail, href: "mailto:hello@minecoregroup.com" },
-  ],
-};
+import { FaTiktok } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 export function Footer() {
   const { toast } = useToast();
@@ -40,13 +24,25 @@ export function Footer() {
     },
   });
 
+  const navigation = {
+    main: [
+      { name: "About", href: "/about" },
+      { name: "Services", href: "/services" },
+      { name: "Case Studies", href: "/case-studies" },
+      { name: "Blog", href: "/blog" },
+      { name: "Contact", href: "/contact" },
+    ],
+    social: [
+      { name: "X (Twitter)", icon: FaXTwitter, href: "https://x.com/minecoregroup" },
+      { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/minecoregroup/" },
+      { name: "TikTok", icon: FaTiktok, href: "https://www.tiktok.com/@minecoregroup" },
+      { name: "Email", icon: Mail, href: "mailto:hello@minecoregroup.com" },
+    ],
+  };
+
   const { mutate: subscribe, isPending } = useMutation({
     mutationFn: async (data: { email: string }) => {
-      const response = await apiRequest({
-        url: "/api/newsletter",
-        method: "POST",
-        data,
-      });
+      const response = await apiRequest("POST", "/api/newsletter", data);
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message || "Failed to subscribe");
