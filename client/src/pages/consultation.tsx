@@ -131,10 +131,11 @@ export default function Consultation() {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
+      contactName: "",
+      contactEmail: "",
+      contactPhone: "",
       companyName: "",
+      subject: "",
       message: "",
       businessChallenge: "",
       annualRevenue: "",
@@ -143,6 +144,10 @@ export default function Consultation() {
       currentSolutions: "",
       contactJobTitle: "",
       additionalNotes: "",
+      industry: "",
+      companySize: "",
+      businessChallenges: [],
+      desiredOutcomes: "",
     },
   });
 
