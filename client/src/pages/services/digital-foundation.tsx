@@ -190,7 +190,7 @@ export default function DigitalFoundation() {
     <main className="w-full">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -263,7 +263,7 @@ export default function DigitalFoundation() {
       
       {/* Overview Section */}
       <section className="py-20">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-bold mb-6">
               {isPathFrench ? "Vue d'Ensemble" : "Overview"}
@@ -302,7 +302,7 @@ export default function DigitalFoundation() {
       
       {/* Benefits Section */}
       <section className="py-20 bg-primary/5">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-8">
@@ -388,7 +388,7 @@ export default function DigitalFoundation() {
       
       {/* Process Section */}
       <section className="py-20">
-        <div className="container max-w-7xl">
+        <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
           <h2 className="text-3xl font-bold mb-12 text-center">
             {isPathFrench ? "Notre Processus" : "Our Process"}
           </h2>
