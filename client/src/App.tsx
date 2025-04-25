@@ -68,7 +68,7 @@ function Router() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="flex-1">
+      <div className="flex-1 pt-20">
         <Switch>
           {/* Admin Routes - Place these before other routes */}
           <Route path="/admin/login" component={AdminLogin} />
