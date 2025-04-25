@@ -5,6 +5,19 @@ import { storage } from "./storage";
 import { insertContactMessageSchema, insertNewsletterSubscriptionSchema, insertBlogPostSchema, insertBlogCategorySchema } from "@shared/schema";
 import session from 'express-session';
 import MemoryStore from 'memorystore';
+import { ZodError } from 'zod';
+
+// Helper function to check if an error is a ZodError
+function isZodError(error: unknown): error is ZodError {
+  return error instanceof Error && error.name === 'ZodError';
+}
+
+// Extend express-session to include our custom properties
+declare module 'express-session' {
+  interface SessionData {
+    isAuthenticated: boolean;
+  }
+}
 
 // Add this near the top of the file, after imports
 const logError = (error: unknown, context: string) => {
@@ -22,7 +35,17 @@ const logError = (error: unknown, context: string) => {
 const clients = new Set<WebSocket>();
 
 // Basic auth middleware for admin routes
+// API key for automated integrations (n8n)
+const API_KEY = "minecore-n8n-integration-key";
+
 const adminAuthMiddleware = async (req: any, res: any, next: any) => {
+  // Allow API key authentication for external integrations like n8n
+  const apiKey = req.headers['x-api-key'];
+  if (apiKey === API_KEY) {
+    return next();
+  }
+  
+  // Otherwise, use session-based authentication
   if (!req.session?.isAuthenticated) {
     return res.status(401).json({ message: "Authentication required" });
   }
@@ -99,7 +122,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       logError(error, 'creating blog category');
 
-      if (error.name === 'ZodError') {
+      if (isZodError(error)) {
         return res.status(400).json({ 
           message: "Invalid category data",
           errors: error.errors 
@@ -208,6 +231,152 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       logError(error, 'creating newsletter subscription');
       res.status(400).json({ message: "Invalid subscription data" });
+    }
+  });
+
+  // Enhanced API endpoints for n8n integration
+  // Get API information
+  app.get("/api/integration/info", async (_req, res) => {
+    res.json({
+      name: "Minecore Group API",
+      version: "1.0.0",
+      endpoints: [
+        { path: "/api/integration/blog", method: "POST", description: "Create new blog post" },
+        { path: "/api/integration/blog", method: "GET", description: "List all blog posts" },
+        { path: "/api/integration/blog/categories", method: "GET", description: "List all blog categories" },
+        { path: "/api/integration/blog/preview", method: "POST", description: "Preview blog post without saving" }
+      ],
+      authentication: "API Key required in X-API-Key header"
+    });
+  });
+
+  // List blog categories - n8n friendly format
+  app.get("/api/integration/blog/categories", adminAuthMiddleware, async (_req, res) => {
+    try {
+      const categories = await storage.getBlogCategories();
+      res.json({
+        success: true,
+        data: categories.map(cat => ({
+          id: cat.id,
+          name: cat.name,
+          slug: cat.slug,
+          description: cat.description
+        }))
+      });
+    } catch (error) {
+      logError(error, 'fetching categories for integration');
+      res.status(500).json({ 
+        success: false, 
+        error: "Error fetching blog categories",
+        details: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Create blog post with enhanced error handling and extended fields
+  app.post("/api/integration/blog", adminAuthMiddleware, async (req, res) => {
+    try {
+      // Extended schema for integration
+      const data = insertBlogPostSchema.parse({
+        ...req.body,
+        published: req.body.published === undefined ? true : req.body.published,
+        publishedDate: req.body.publishedDate || new Date().toISOString()
+      });
+      
+      const post = await storage.createBlogPost(data);
+      
+      res.status(201).json({
+        success: true,
+        data: post,
+        message: "Blog post created successfully"
+      });
+    } catch (error) {
+      logError(error, 'creating post via integration API');
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          success: false,
+          message: "Invalid blog post data",
+          validationErrors: error.errors,
+          requiredFormat: {
+            title: "string (required)",
+            content: "string (required)",
+            excerpt: "string (required)",
+            categoryId: "number (required)",
+            featuredImage: "string (optional)",
+            published: "boolean (optional, default: true)",
+            publishedDate: "ISO date string (optional, default: current time)"
+          }
+        });
+      }
+      
+      res.status(500).json({ 
+        success: false,
+        message: "Failed to create blog post",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // List posts with optional filtering - n8n friendly format
+  app.get("/api/integration/blog", adminAuthMiddleware, async (req, res) => {
+    try {
+      const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
+      const limit = req.query.limit ? Number(req.query.limit) : undefined;
+      
+      let posts = categoryId
+        ? await storage.getBlogPostsByCategory(categoryId)
+        : await storage.getBlogPosts();
+      
+      // Apply limit if specified
+      if (limit && limit > 0 && limit < posts.length) {
+        posts = posts.slice(0, limit);
+      }
+      
+      res.json({
+        success: true,
+        count: posts.length,
+        data: posts
+      });
+    } catch (error) {
+      logError(error, 'fetching posts for integration');
+      res.status(500).json({ 
+        success: false, 
+        error: "Error fetching blog posts",
+        details: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
+  // Preview endpoint to validate post content without saving
+  app.post("/api/integration/blog/preview", adminAuthMiddleware, async (req, res) => {
+    try {
+      // Validate the data without saving to database
+      const data = insertBlogPostSchema.parse(req.body);
+      
+      res.json({
+        success: true,
+        message: "Blog post validation successful",
+        data: {
+          ...data,
+          previewOnly: true,
+          validatedAt: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          success: false,
+          message: "Invalid blog post data",
+          validationErrors: error.errors
+        });
+      }
+      
+      res.status(500).json({ 
+        success: false,
+        message: "Validation error",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
     }
   });
 
