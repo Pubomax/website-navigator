@@ -24,6 +24,9 @@ import CustomAIAutomation from "@/pages/services/custom-ai-automation";
 import CustomSoftware from "@/pages/services/custom-software";
 import IntelligentSupport from "@/pages/services/intelligent-support";
 
+// Solution pages
+import AutomatedLeadGeneration from "@/pages/solutions/automated-lead-generation";
+
 // Sector pages
 import Manufacturing from "@/pages/sectors/manufacturing";
 import Finance from "@/pages/sectors/finance";
@@ -70,6 +73,9 @@ function Router() {
           <Route path="/blog" component={Blog} />
           <Route path="/case-studies" component={CaseStudies} />
 
+          {/* Solution Routes */}
+          <Route path="/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
+          
           {/* Service Routes */}
           <Route path="/services/digital-foundation" component={DigitalFoundation} />
           <Route path="/services/transformation-consulting" component={TransformationConsulting} />
@@ -110,6 +116,9 @@ function Router() {
           <Route path="/fr/blog" component={Blog} />
           <Route path="/fr/case-studies" component={CaseStudies} />
 
+          {/* French Solution Routes */}
+          <Route path="/fr/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
+          
           {/* French Service Routes */}
           <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
           <Route path="/fr/services/transformation-consulting" component={TransformationConsulting} />
