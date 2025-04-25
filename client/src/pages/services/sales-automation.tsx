@@ -2,238 +2,253 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { 
-  DollarSign, 
-  FileText, 
-  BarChart, 
-  Zap, 
-  ArrowRight,
-  CheckCircle2,
-  Award,
-  ClipboardCheck,
-  RotateCw
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+  Card, 
+  CardContent, 
+  CardHeader, 
+  CardTitle, 
+  CardDescription 
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  ArrowRight, 
+  DollarSign, 
+  Clock, 
+  TrendingUp,
+  Target,
+  Zap,
+  BrainCircuit,
+  Briefcase,
+  MessageSquare,
+  ClipboardCheck,
+  BarChart3,
+  CheckCircle
+} from "lucide-react";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
     ? "Automatisation des Ventes" 
     : "Sales Automation",
   subtitle: isPathFrench
-    ? "Concentrez-vous sur les relations clients et laissez notre système automatiser les processus de vente répétitifs pour générer plus de revenus avec moins d'effort."
-    : "Focus on customer relationships and let our system automate repetitive sales processes to generate more revenue with less effort.",
-  tagline: isPathFrench
-    ? "De la prospection à la clôture : automatisez l'ensemble de votre processus de vente"
-    : "From prospecting to closing: automate your entire sales process",
-  keyFeatures: isPathFrench ? [
-    {
-      title: "Automatisation de la Clôture",
-      description: "Fluidifiez les étapes finales du processus de vente avec l'automatisation intelligente",
-      icon: CheckCircle2
-    },
-    {
-      title: "Automatisation des Devis",
-      description: "Générez des devis précis et professionnels rapidement et efficacement",
-      icon: FileText
-    },
-    {
-      title: "Automatisation du Processus de Vente",
-      description: "Optimisez l'ensemble du flux de travail de vente, du prospect au client",
-      icon: RotateCw
-    }
+    ? "Augmentez vos revenus de 40% tout en réduisant votre charge de travail grâce à notre plateforme d'automatisation des ventes alimentée par l'IA"
+    : "Increase your revenue by 40% while reducing your workload with our AI-powered sales automation platform",
+  badges: isPathFrench ? [
+    "Génération de revenus accélérée",
+    "Moins d'heures de travail",
+    "ROI en 14 jours"
   ] : [
-    {
-      title: "Automated Closing",
-      description: "Streamline the final stages of sales processes with intelligent automation",
-      icon: CheckCircle2
-    },
-    {
-      title: "Quote Automation",
-      description: "Generate accurate, professional quotes quickly and efficiently",
-      icon: FileText
-    },
-    {
-      title: "Sales Process Automation",
-      description: "Optimize the entire sales workflow from prospect to customer",
-      icon: RotateCw
-    }
+    "Accelerated revenue generation",
+    "Fewer working hours",
+    "ROI in 14 days"
   ],
-  benefits: isPathFrench ? [
+  benefitCategories: isPathFrench ? {
+    revenue: "Augmentez Vos Revenus",
+    time: "Réduisez Votre Temps de Travail",
+    experience: "Améliorez l'Expérience Client"
+  } : {
+    revenue: "Increase Your Revenue",
+    time: "Reduce Your Work Time",
+    experience: "Improve Customer Experience"
+  },
+  revenue: isPathFrench ? [
     {
-      metric: "35%",
       title: "Augmentation du Taux de Conversion",
-      description: "Convertissez plus de leads en clients payants avec des séquences optimisées automatiquement"
+      description: "Conversion 47% plus élevée grâce à l'automatisation du suivi et au timing parfait",
+      icon: TrendingUp,
+      stat: "+47%"
     },
     {
-      metric: "68%",
-      title: "Réduction du Temps Administratif",
-      description: "Éliminez les tâches administratives manuelles pour vous concentrer sur la relation client"
-    },
-    {
-      metric: "47%",
       title: "Cycle de Vente Plus Court",
-      description: "Réduisez le temps nécessaire pour passer de la prospection à la vente conclue"
+      description: "Réduisez le cycle de vente moyen de 62% avec des processus automatisés",
+      icon: Zap,
+      stat: "-62%"
     },
     {
-      metric: "92%",
-      title: "Satisfaction Client Améliorée",
-      description: "Réponses plus rapides et suivi cohérent à chaque étape du parcours client"
+      title: "Plus de Leads Qualifiés",
+      description: "Identifiez et ciblez les prospects à forte probabilité de conversion",
+      icon: Target,
+      stat: "3,5x"
     }
   ] : [
     {
-      metric: "35%",
-      title: "Higher Conversion Rate",
-      description: "Convert more leads into paying customers with automatically optimized sequences"
+      title: "Increased Conversion Rate",
+      description: "47% higher conversion with automated follow-up and perfect timing",
+      icon: TrendingUp,
+      stat: "+47%"
     },
     {
-      metric: "68%",
-      title: "Less Administrative Time",
-      description: "Eliminate manual administrative tasks to focus on customer relationships"
-    },
-    {
-      metric: "47%",
       title: "Shorter Sales Cycle",
-      description: "Reduce the time it takes to go from prospecting to closed deal"
+      description: "Reduce average sales cycle by 62% with automated processes",
+      icon: Zap,
+      stat: "-62%"
     },
     {
-      metric: "92%",
-      title: "Improved Customer Satisfaction",
-      description: "Faster responses and consistent follow-up at every stage of the customer journey"
+      title: "More Qualified Leads",
+      description: "Identify and target prospects with high conversion probability",
+      icon: Target,
+      stat: "3.5x"
     }
   ],
-  stages: isPathFrench ? [
+  time: isPathFrench ? [
     {
-      title: "Automatisation de la Prospection",
-      description: "Identification et qualification automatiques des leads pour remplir votre pipeline de vente",
-      progress: 20
+      title: "Automatisation des Tâches Répétitives",
+      description: "Éliminez 85% des tâches répétitives dans votre processus de vente",
+      icon: Clock,
+      stat: "85%"
     },
     {
-      title: "Séquences de Contact Intelligentes",
-      description: "Personnalisation automatique des séquences de contact par email et téléphone",
-      progress: 40
+      title: "Devis et Propositions Instantanés",
+      description: "Générez des devis professionnels en quelques secondes au lieu d'heures",
+      icon: ClipboardCheck,
+      stat: "98%"
     },
     {
-      title: "Gestion des Opportunités",
-      description: "Suivi automatisé des opportunités avec des rappels et des alertes intelligentes",
-      progress: 60
-    },
-    {
-      title: "Génération de Devis et Contrats",
-      description: "Création et envoi automatisés de devis et contrats personnalisés",
-      progress: 80
-    },
-    {
-      title: "Automatisation de la Conclusion",
-      description: "Systèmes automatisés pour faciliter la conclusion des ventes et les signatures",
-      progress: 100
+      title: "Rapports Automatisés",
+      description: "Recevez des analyses de performance sans avoir à les compiler manuellement",
+      icon: BarChart3,
+      stat: "6h+"
     }
   ] : [
     {
-      title: "Prospecting Automation",
-      description: "Automatically identify and qualify leads to fill your sales pipeline",
-      progress: 20
+      title: "Repetitive Task Automation",
+      description: "Eliminate 85% of repetitive tasks in your sales process",
+      icon: Clock,
+      stat: "85%"
     },
     {
-      title: "Intelligent Outreach Sequences",
-      description: "Automatically personalize email and phone outreach sequences",
-      progress: 40
+      title: "Instant Quotes & Proposals",
+      description: "Generate professional quotes in seconds instead of hours",
+      icon: ClipboardCheck,
+      stat: "98%"
     },
     {
-      title: "Opportunity Management",
-      description: "Automated opportunity tracking with intelligent reminders and alerts",
-      progress: 60
-    },
-    {
-      title: "Quote and Contract Generation",
-      description: "Automated creation and delivery of personalized quotes and contracts",
-      progress: 80
-    },
-    {
-      title: "Closing Automation",
-      description: "Automated systems to facilitate deal closings and signatures",
-      progress: 100
+      title: "Automated Reporting",
+      description: "Get performance analytics without manual compilation",
+      icon: BarChart3,
+      stat: "6h+"
     }
   ],
-  tabs: isPathFrench ? [
+  experience: isPathFrench ? [
     {
-      title: "Startups",
-      content: {
-        description: "Solution parfaite pour les startups qui cherchent à établir et automatiser rapidement leurs processus de vente à un prix abordable.",
-        features: [
-          "Configuration rapide en 24 heures",
-          "Intégration avec les outils populaires des startups",
-          "Modèles de vente prédéfinis",
-          "Évolutivité pour accompagner votre croissance"
-        ]
-      }
+      title: "Réponses Instantanées",
+      description: "Répondez aux demandes des clients en moins de 5 minutes, 24/7",
+      icon: MessageSquare,
+      stat: "5min"
     },
     {
-      title: "PME",
-      content: {
-        description: "Solution robuste pour les PME cherchant à augmenter l'efficacité de leurs équipes de vente et à faire évoluer leurs processus.",
-        features: [
-          "Intégration CRM étendue",
-          "Rapports de performance détaillés",
-          "Automatisation des processus complexes",
-          "Support technique premium"
-        ]
-      }
+      title: "Expérience Personnalisée",
+      description: "Offrez des expériences sur mesure basées sur le comportement du client",
+      icon: BrainCircuit,
+      stat: "100%"
     },
     {
-      title: "Entreprises",
-      content: {
-        description: "Solution de niveau entreprise offrant une personnalisation avancée et une automatisation pour les équipes de vente importantes et complexes.",
-        features: [
-          "Intégration complète avec les systèmes existants",
-          "Automatisation hautement personnalisée",
-          "Gestion multi-équipes et multi-services",
-          "Conformité et sécurité de niveau entreprise"
-        ]
-      }
+      title: "Suivi Parfaitement Chronométré",
+      description: "Engagez les prospects exactement au bon moment pour maximiser les conversions",
+      icon: CheckCircle,
+      stat: "3.2x"
     }
   ] : [
     {
-      title: "Startups",
-      content: {
-        description: "Perfect solution for startups looking to quickly establish and automate their sales processes at an affordable price point.",
-        features: [
-          "Quick 24-hour setup",
-          "Integration with popular startup tools",
-          "Pre-built sales templates",
-          "Scalability to grow with you"
-        ]
-      }
+      title: "Instant Responses",
+      description: "Respond to customer inquiries in under 5 minutes, 24/7",
+      icon: MessageSquare,
+      stat: "5min"
     },
     {
-      title: "SMBs",
-      content: {
-        description: "Robust solution for SMBs looking to increase sales team efficiency and scale their processes.",
-        features: [
-          "Extensive CRM integration",
-          "Detailed performance reporting",
-          "Complex process automation",
-          "Premium technical support"
-        ]
-      }
+      title: "Personalized Experience",
+      description: "Deliver tailored experiences based on customer behavior",
+      icon: BrainCircuit,
+      stat: "100%"
     },
     {
-      title: "Enterprise",
-      content: {
-        description: "Enterprise-grade solution offering advanced customization and automation for large, complex sales teams.",
-        features: [
-          "Full integration with existing systems",
-          "Highly customized automation",
-          "Multi-team and multi-department management",
-          "Enterprise-grade compliance and security"
-        ]
-      }
+      title: "Perfectly Timed Follow-up",
+      description: "Engage prospects at exactly the right moment to maximize conversions",
+      icon: CheckCircle,
+      stat: "3.2x"
     }
   ],
+  features: isPathFrench ? [
+    "Séquences de suivi automatisées",
+    "Enrichissement des données de lead en temps réel",
+    "Scoring prédictif des prospects basé sur l'IA",
+    "Automatisation des e-mails avec personnalisation",
+    "Détection d'intention d'achat",
+    "Génération de devis automatisée",
+    "Gestion des objections basée sur l'IA",
+    "Intégration avec votre CRM existant",
+    "Alertes d'opportunités en temps réel",
+    "Tableaux de bord de vente personnalisés"
+  ] : [
+    "Automated follow-up sequences",
+    "Real-time lead data enrichment",
+    "AI-based predictive lead scoring",
+    "Email automation with personalization",
+    "Purchase intent detection",
+    "Automated quote generation",
+    "AI-based objection handling",
+    "Integration with your existing CRM",
+    "Real-time opportunity alerts",
+    "Custom sales dashboards"
+  ],
+  steps: isPathFrench ? [
+    {
+      number: "01",
+      title: "Intégration Rapide",
+      description: "Connectez vos sources de leads et votre CRM en moins de 30 minutes"
+    },
+    {
+      number: "02",
+      title: "Activation Automatique",
+      description: "Notre système commence immédiatement à qualifier et engager vos prospects"
+    },
+    {
+      number: "03",
+      title: "Analyse & Optimisation",
+      description: "L'IA optimise continuellement les séquences pour maximiser les conversions"
+    },
+    {
+      number: "04",
+      title: "Génération de Revenus",
+      description: "Commencez à voir des résultats mesurables dans les 14 premiers jours"
+    }
+  ] : [
+    {
+      number: "01",
+      title: "Quick Integration",
+      description: "Connect your lead sources and CRM in less than 30 minutes"
+    },
+    {
+      number: "02",
+      title: "Automatic Activation",
+      description: "Our system immediately begins qualifying and engaging your prospects"
+    },
+    {
+      number: "03",
+      title: "Analysis & Optimization",
+      description: "AI continuously optimizes sequences to maximize conversions"
+    },
+    {
+      number: "04",
+      title: "Revenue Generation",
+      description: "Start seeing measurable results within the first 14 days"
+    }
+  ],
+  testimonial: isPathFrench ? {
+    quote: "Nous avons augmenté nos ventes de 52% tout en réduisant les heures consacrées au suivi des prospects de 70%. C'est comme avoir une équipe de vente qui travaille 24/7 sans fatigue ni vacances.",
+    author: "Marc Dupont",
+    position: "Directeur Commercial, TechSolutions Inc."
+  } : {
+    quote: "We increased our sales by 52% while reducing hours spent on lead follow-up by 70%. It's like having a sales team that works 24/7 without fatigue or vacations.",
+    author: "Mark Johnson",
+    position: "Sales Director, TechSolutions Inc."
+  },
   cta: {
-    primary: isPathFrench ? "Automatisez Vos Ventes" : "Automate Your Sales",
-    secondary: isPathFrench ? "Voir les Cas Clients" : "View Case Studies"
+    title: isPathFrench ? "Prêt à Vendre Plus Avec Moins d'Effort?" : "Ready to Sell More With Less Effort?",
+    description: isPathFrench 
+      ? "Commencez à utiliser notre plateforme d'automatisation des ventes et constatez des résultats en moins de deux semaines." 
+      : "Start using our sales automation platform and see results in less than two weeks.",
+    primary: isPathFrench ? "Commencer à Gagner Plus" : "Start Making More Money",
+    secondary: isPathFrench ? "Voir une Démo" : "Watch Demo"
   }
 });
 
@@ -243,214 +258,272 @@ export default function SalesAutomation() {
   const content = getContent(isPathFrench);
 
   return (
-    <main className="py-24">
-      <div className="container max-w-7xl mx-auto">
-        {/* Hero Section with Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-          <div>
-            <Badge className="mb-4" variant="outline">
-              <DollarSign className="mr-1 h-3.5 w-3.5 text-primary" />
-              {isPathFrench ? "Ventes et Revenus" : "Sales & Revenue"}
-            </Badge>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-              {content.title}
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              {content.subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg">
-                <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
-                  {content.cta.primary}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href={isPathFrench ? "/fr/case-studies" : "/case-studies"}>
-                  {content.cta.secondary}
-                </Link>
-              </Button>
-            </div>
-          </div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-1"
-          >
-            <div className="bg-background/80 backdrop-blur-sm rounded-lg p-8">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold flex items-center">
-                  <BarChart className="h-6 w-6 mr-2 text-primary" />
-                  {isPathFrench ? "Boostez Vos Résultats" : "Boost Your Results"}
-                </h3>
-                <Badge variant="secondary">
-                  <Zap className="mr-1 h-3.5 w-3.5" />
-                  {isPathFrench ? "IA Propulsée" : "AI Powered"}
-                </Badge>
+    <main className="w-full">
+      {/* Hero Section with Gradient Background */}
+      <section className="relative py-20 overflow-hidden bg-gradient-to-br from-primary/5 via-background to-background">
+        <div className="container max-w-7xl relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Badge variant="outline" className="mb-6 px-3 py-1">
+                <BrainCircuit className="mr-1 h-3.5 w-3.5 text-primary" />
+                {isPathFrench ? "IA & Automatisation" : "AI & Automation"}
+              </Badge>
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
+                {content.title}
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8 max-w-lg">
+                {content.subtitle}
+              </p>
+              
+              <div className="flex flex-wrap gap-3 mb-8">
+                {content.badges.map((badge, i) => (
+                  <span key={i} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                    {badge}
+                  </span>
+                ))}
               </div>
               
-              <p className="text-lg mb-6">{content.tagline}</p>
-              
-              <div className="space-y-4 mt-5">
-                {content.keyFeatures.map((feature, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
-                    className="flex items-start gap-3 p-3 bg-background rounded-lg"
-                  >
-                    <div className="p-2 rounded-full bg-primary/10">
-                      <feature.icon className="h-5 w-5 text-primary" />
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg">
+                  <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
+                    {content.cta.primary}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="#">
+                    {content.cta.secondary}
+                  </Link>
+                </Button>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="aspect-square max-w-md mx-auto lg:ml-auto relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/5 rounded-full blur-3xl opacity-30"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                  <div className="relative">
+                    <div className="text-8xl font-bold text-primary/40">
+                      <DollarSign className="h-32 w-32 opacity-20" />
                     </div>
-                    <div>
-                      <h4 className="font-medium">{feature.title}</h4>
-                      <p className="text-sm text-muted-foreground">{feature.description}</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-5xl font-bold">+40%</span>
+                      <span className="text-sm text-muted-foreground">
+                        {isPathFrench ? "REVENUS" : "REVENUE"}
+                      </span>
                     </div>
-                  </motion.div>
+                  </div>
+                </div>
+                <div className="absolute bottom-0 right-0 bg-background p-4 rounded-full shadow-lg border border-primary/10">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-5 w-5 text-primary" />
+                    <span className="font-bold">-65%</span>
+                    <span className="text-xs text-muted-foreground">
+                      {isPathFrench ? "TEMPS" : "TIME"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Benefits Tabs Section */}
+      <section className="py-20">
+        <div className="container max-w-7xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-6">
+              {isPathFrench ? "Comment Vous Pouvez Gagner Plus en Travaillant Moins" : "How You Can Make More Money While Working Less"}
+            </h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              {isPathFrench 
+                ? "Notre plateforme d'automatisation des ventes vous aide à générer plus de revenus tout en réduisant votre charge de travail grâce à des processus intelligents et automatisés."
+                : "Our sales automation platform helps you generate more revenue while reducing your workload through intelligent, automated processes."}
+            </p>
+          </div>
+          
+          <Tabs defaultValue="revenue" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="revenue">
+                <DollarSign className="h-4 w-4 mr-2" />
+                {content.benefitCategories.revenue}
+              </TabsTrigger>
+              <TabsTrigger value="time">
+                <Clock className="h-4 w-4 mr-2" />
+                {content.benefitCategories.time}
+              </TabsTrigger>
+              <TabsTrigger value="experience">
+                <BrainCircuit className="h-4 w-4 mr-2" />
+                {content.benefitCategories.experience}
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="revenue" className="mt-8">
+              <div className="grid md:grid-cols-3 gap-8">
+                {content.revenue.map((item, i) => (
+                  <Card key={i} className="border-primary/10 overflow-hidden">
+                    <div className="absolute top-4 right-4 bg-primary/10 text-primary font-bold rounded-full px-3 py-1 text-lg">
+                      {item.stat}
+                    </div>
+                    <CardHeader>
+                      <div className="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+                        <item.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <CardTitle>{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{item.description}</p>
+                    </CardContent>
+                  </Card>
                 ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="time" className="mt-8">
+              <div className="grid md:grid-cols-3 gap-8">
+                {content.time.map((item, i) => (
+                  <Card key={i} className="border-primary/10 overflow-hidden">
+                    <div className="absolute top-4 right-4 bg-primary/10 text-primary font-bold rounded-full px-3 py-1 text-lg">
+                      {item.stat}
+                    </div>
+                    <CardHeader>
+                      <div className="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+                        <item.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <CardTitle>{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{item.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="experience" className="mt-8">
+              <div className="grid md:grid-cols-3 gap-8">
+                {content.experience.map((item, i) => (
+                  <Card key={i} className="border-primary/10 overflow-hidden">
+                    <div className="absolute top-4 right-4 bg-primary/10 text-primary font-bold rounded-full px-3 py-1 text-lg">
+                      {item.stat}
+                    </div>
+                    <CardHeader>
+                      <div className="p-3 rounded-lg bg-primary/10 w-fit mb-4">
+                        <item.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <CardTitle>{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{item.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
+      
+      {/* Features & Process Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="container max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-16">
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl font-bold mb-6">
+                  {isPathFrench ? "Fonctionnalités Puissantes" : "Powerful Features"}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {content.features.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="mt-1 flex-shrink-0">
+                        <CheckCircle className="h-5 w-5 text-primary" />
+                      </div>
+                      <p>{feature}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+            
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <h2 className="text-3xl font-bold mb-8">
+                  {isPathFrench ? "Comment Ça Fonctionne" : "How It Works"}
+                </h2>
+                <div className="space-y-8">
+                  {content.steps.map((step, i) => (
+                    <div key={i} className="flex items-start gap-6">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span className="font-bold text-primary">{step.number}</span>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-xl mb-2">{step.title}</h3>
+                        <p className="text-muted-foreground">{step.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Testimonial Section */}
+      <section className="py-20">
+        <div className="container max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="bg-primary/5 p-8 sm:p-12 rounded-xl relative"
+          >
+            <div className="absolute -top-6 -left-6 text-primary text-9xl opacity-10">"</div>
+            
+            <div className="relative z-10">
+              <p className="text-xl sm:text-2xl mb-8 relative z-10">
+                "{content.testimonial.quote}"
+              </p>
+              
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Briefcase className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold">{content.testimonial.author}</p>
+                  <p className="text-sm text-muted-foreground">{content.testimonial.position}</p>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
-        
-        {/* Benefits Section */}
-        <div className="mb-24">
-          <div className="text-center mb-12">
-            <Badge className="mb-2" variant="outline">
-              <Award className="mr-1 h-3.5 w-3.5 text-primary" />
-              {isPathFrench ? "Avantages Prouvés" : "Proven Benefits"}
-            </Badge>
-            <h2 className="text-3xl font-bold mb-4">
-              {isPathFrench ? "Pourquoi Automatiser vos Ventes?" : "Why Automate Your Sales?"}
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {isPathFrench 
-                ? "Notre solution d'automatisation des ventes transforme votre processus pour maximiser l'efficacité et les revenus."
-                : "Our sales automation solution transforms your process to maximize efficiency and revenue."
-              }
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {content.benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-primary/5 rounded-lg p-6 flex flex-col"
-              >
-                <div className="text-3xl font-bold text-primary mb-3">{benefit.metric}</div>
-                <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-sm text-muted-foreground mt-auto">{benefit.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Sales Process Automation Stages */}
-        <div className="mb-24">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              {isPathFrench ? "Automatisez Tout Votre Processus de Vente" : "Automate Your Entire Sales Process"}
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {isPathFrench 
-                ? "De la prospection à la conclusion, notre plateforme automatise chaque étape du cycle de vente."
-                : "From prospecting to closing, our platform automates every step of the sales cycle."
-              }
-            </p>
-          </div>
-          
-          <div className="space-y-8 max-w-4xl mx-auto">
-            {content.stages.map((stage, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex flex-col md:flex-row gap-6 items-center"
-              >
-                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
-                  <h3 className="text-xl font-semibold mb-2">{stage.title}</h3>
-                  <p className="text-muted-foreground">{stage.description}</p>
-                </div>
-                <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:order-2' : 'md:order-1'}`}>
-                  <div className="p-6 bg-primary/5 rounded-lg">
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium">
-                        {isPathFrench ? "Étape" : "Stage"} {index + 1}
-                      </span>
-                      <span className="text-sm font-medium">{stage.progress}%</span>
-                    </div>
-                    <Progress value={stage.progress} className="h-2" />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Solutions for Different Business Sizes */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <Badge className="mb-2" variant="outline">
-              <ClipboardCheck className="mr-1 h-3.5 w-3.5 text-primary" />
-              {isPathFrench ? "Solutions Adaptées" : "Tailored Solutions"}
-            </Badge>
-            <h2 className="text-3xl font-bold mb-4">
-              {isPathFrench ? "Adapté à Tous les Types d'Entreprises" : "Fits All Business Sizes"}
-            </h2>
-          </div>
-          
-          <Tabs defaultValue={content.tabs[0].title} className="max-w-3xl mx-auto">
-            <TabsList className="grid grid-cols-3 mb-8">
-              {content.tabs.map((tab) => (
-                <TabsTrigger key={tab.title} value={tab.title}>
-                  {tab.title}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            
-            {content.tabs.map((tab) => (
-              <TabsContent key={tab.title} value={tab.title} className="mt-0">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{tab.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-4">{tab.content.description}</p>
-                    <ul className="space-y-2">
-                      {tab.content.features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-        
-        {/* Final CTA */}
-        <div className="text-center bg-primary/5 rounded-xl p-8">
-          <h2 className="text-2xl font-bold mb-4">
-            {isPathFrench 
-              ? "Prêt à Automatiser Vos Ventes et Augmenter Vos Revenus ?"
-              : "Ready to Automate Your Sales and Increase Revenue?"
-            }
-          </h2>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            {isPathFrench
-              ? "Découvrez comment notre solution d'automatisation des ventes peut vous aider à vendre plus tout en travaillant moins."
-              : "Discover how our sales automation solution can help you sell more while working less."
-            }
+      </section>
+      
+      {/* Final CTA */}
+      <section className="py-20 bg-primary/5">
+        <div className="container max-w-5xl text-center">
+          <h2 className="text-3xl font-bold mb-6">{content.cta.title}</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            {content.cta.description}
           </p>
           <Button asChild size="lg">
             <Link href={isPathFrench ? "/fr/contact" : "/contact"}>
@@ -459,7 +532,7 @@ export default function SalesAutomation() {
             </Link>
           </Button>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
