@@ -7,14 +7,12 @@ interface LeadScoreFactor {
 }
 
 interface LeadData {
-  email?: string;
-  company?: string;
-  jobTitle?: string;
-  lastVisit?: Date;
-  visitFrequency?: number;
-  pagesViewed?: string[];
-  downloadedResources?: string[];
-  emailInteractions?: number;
+  industry?: string;
+  businessSize?: string;
+  channel?: string;
+  serviceInterest?: string;
+  budget?: string;
+  timeline?: string;
 }
 
 export function useLeadScore(leadData: LeadData) {
@@ -22,69 +20,179 @@ export function useLeadScore(leadData: LeadData) {
   const [factors, setFactors] = useState<LeadScoreFactor[]>([]);
 
   useEffect(() => {
-    // This is a simplified scoring algorithm
-    // In a real application, this would call an AI service
+    // In a real application, this would call an AI service or more complex algorithm
     const calculateScore = () => {
       const newFactors: LeadScoreFactor[] = [];
       let totalScore = 0;
+      let maxPossibleScore = 0;
 
-      // Email domain check
-      if (leadData.email) {
-        const domain = leadData.email.split('@')[1];
-        const isCorporate = !domain?.includes('gmail.com') && !domain?.includes('yahoo.com');
+      // Industry weighting
+      if (leadData.industry) {
+        const highValueIndustries = ["finance", "healthcare", "education", "real_estate", "technology", "manufacturing"];
+        const isHighValue = highValueIndustries.includes(leadData.industry);
+        
         newFactors.push({
-          factor: "Corporate Email",
-          impact: isCorporate ? "positive" : "neutral",
-          weight: isCorporate ? 4 : 2
+          factor: "Industry",
+          impact: isHighValue ? "positive" : "neutral",
+          weight: isHighValue ? 5 : 3
         });
-        totalScore += isCorporate ? 20 : 10;
+        
+        totalScore += isHighValue ? 25 : 15;
+        maxPossibleScore += 25;
       }
 
-      // Job title relevance
-      if (leadData.jobTitle) {
-        const isDecisionMaker = /director|manager|head|chief|owner|founder/i.test(leadData.jobTitle);
+      // Business size
+      if (leadData.businessSize) {
+        let weight = 3;
+        let impact: "positive" | "negative" | "neutral" = "neutral";
+        
+        if (leadData.businessSize === "enterprise") {
+          weight = 5;
+          impact = "positive";
+        } else if (leadData.businessSize === "mid_market") {
+          weight = 4;
+          impact = "positive";
+        } else if (leadData.businessSize === "small_business") {
+          weight = 3;
+          impact = "neutral";
+        } else if (leadData.businessSize === "startup") {
+          weight = 2;
+          impact = "negative";
+        }
+        
         newFactors.push({
-          factor: "Decision Maker Role",
-          impact: isDecisionMaker ? "positive" : "neutral",
-          weight: isDecisionMaker ? 5 : 3
+          factor: "Business Size",
+          impact,
+          weight
         });
-        totalScore += isDecisionMaker ? 25 : 15;
+        
+        totalScore += weight * 5;
+        maxPossibleScore += 25;
       }
 
-      // Engagement scoring
-      if (leadData.visitFrequency && leadData.visitFrequency > 3) {
+      // Marketing channel
+      if (leadData.channel) {
+        let weight = 3;
+        let impact: "positive" | "negative" | "neutral" = "neutral";
+        
+        if (["email", "referral"].includes(leadData.channel)) {
+          weight = 5;
+          impact = "positive";
+        } else if (leadData.channel === "paid_search") {
+          weight = 4;
+          impact = "positive";
+        } else if (["organic_search", "social_media"].includes(leadData.channel)) {
+          weight = 3;
+          impact = "neutral";
+        } else if (leadData.channel === "direct") {
+          weight = 2;
+          impact = "negative";
+        }
+        
         newFactors.push({
-          factor: "Frequent Visitor",
-          impact: "positive",
-          weight: 4
+          factor: "Marketing Channel",
+          impact,
+          weight
         });
-        totalScore += 20;
+        
+        totalScore += weight * 5;
+        maxPossibleScore += 25;
       }
 
-      // Resource downloads
-      if (leadData.downloadedResources?.length) {
+      // Service interest
+      if (leadData.serviceInterest) {
+        let weight = 3;
+        let impact: "positive" | "negative" | "neutral" = "neutral";
+        
+        if (["sales_automation", "crm_integration"].includes(leadData.serviceInterest)) {
+          weight = 5;
+          impact = "positive";
+        } else if (["marketing_automation", "business_intelligence"].includes(leadData.serviceInterest)) {
+          weight = 4;
+          impact = "positive";
+        } else if (leadData.serviceInterest === "custom_software") {
+          weight = 3;
+          impact = "neutral";
+        } else if (leadData.serviceInterest === "digital_foundation") {
+          weight = 2;
+          impact = "negative";
+        }
+        
         newFactors.push({
-          factor: "Downloaded Resources",
-          impact: "positive",
-          weight: 4
+          factor: "Service Interest",
+          impact,
+          weight
         });
-        totalScore += leadData.downloadedResources.length * 5;
+        
+        totalScore += weight * 5;
+        maxPossibleScore += 25;
       }
 
-      // Email engagement
-      if (leadData.emailInteractions) {
+      // Budget
+      if (leadData.budget) {
+        let weight = 3;
+        let impact: "positive" | "negative" | "neutral" = "neutral";
+        
+        if (leadData.budget === "enterprise") {
+          weight = 5;
+          impact = "positive";
+        } else if (leadData.budget === "large") {
+          weight = 4;
+          impact = "positive";
+        } else if (leadData.budget === "medium") {
+          weight = 3;
+          impact = "neutral";
+        } else if (leadData.budget === "small") {
+          weight = 1;
+          impact = "negative";
+        }
+        
         newFactors.push({
-          factor: "Email Engagement",
-          impact: "positive",
-          weight: 3
+          factor: "Budget",
+          impact,
+          weight
         });
-        totalScore += leadData.emailInteractions * 5;
+        
+        totalScore += weight * 5;
+        maxPossibleScore += 25;
       }
 
-      // Normalize score to 0-100
-      totalScore = Math.min(Math.max(totalScore, 0), 100);
+      // Timeline
+      if (leadData.timeline) {
+        let weight = 3;
+        let impact: "positive" | "negative" | "neutral" = "neutral";
+        
+        if (leadData.timeline === "urgent") {
+          weight = 5;
+          impact = "positive";
+        } else if (leadData.timeline === "short") {
+          weight = 4;
+          impact = "positive";
+        } else if (leadData.timeline === "medium") {
+          weight = 3;
+          impact = "neutral";
+        } else if (leadData.timeline === "long") {
+          weight = 1;
+          impact = "negative";
+        }
+        
+        newFactors.push({
+          factor: "Timeline",
+          impact,
+          weight
+        });
+        
+        totalScore += weight * 5;
+        maxPossibleScore += 25;
+      }
 
-      setScore(Math.round(totalScore));
+      // Calculate percentage
+      let percentageScore = 0;
+      if (maxPossibleScore > 0) {
+        percentageScore = Math.min(Math.round((totalScore / maxPossibleScore) * 100), 100);
+      }
+      
+      setScore(percentageScore);
       setFactors(newFactors);
     };
 

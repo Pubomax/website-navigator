@@ -11,12 +11,12 @@ import { Link } from "wouter";
 // This represents an example of lead data that would be collected and analyzed by the system
 // when implemented for a client. It is NOT data that site visitors need to provide.
 const demoLead = {
-  email: "john.smith@acme-corp.com",
-  company: "Acme Corporation",
-  jobTitle: "Sales Director",
-  visitFrequency: 5,
-  downloadedResources: ["whitepaper-1", "case-study-2"],
-  emailInteractions: 3,
+  industry: "technology",
+  businessSize: "mid_market",
+  channel: "referral",
+  serviceInterest: "sales_automation",
+  budget: "large",
+  timeline: "urgent"
 };
 
 export function LeadScoreDemo() {

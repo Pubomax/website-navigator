@@ -1,113 +1,232 @@
-import { useState } from 'react';
-import { useLeadScore } from "@/hooks/use-lead-score";
-import { LeadScoreTooltip } from "@/components/ui/lead-score-tooltip";
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, TrendingUp, Clock, Bot, PieChart, AlertTriangle, ArrowRight, Check, Info, Mail } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertCircle, TrendingUp, Clock, Bot, PieChart, Briefcase, Building2, ArrowRight, Target, Globe, Users } from "lucide-react";
 import { useLocation, Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { businessSizes, sectors, industries } from "@/data/services";
+import { LeadScoreTooltip } from "@/components/ui/lead-score-tooltip";
+
+const marketingChannels = {
+  organic_search: { label: { en: "Organic Search", fr: "Recherche Organique" }, weight: 3 },
+  paid_search: { label: { en: "Paid Search", fr: "Recherche Payante" }, weight: 4 },
+  social_media: { label: { en: "Social Media", fr: "Médias Sociaux" }, weight: 3 },
+  email: { label: { en: "Email Marketing", fr: "Marketing par Email" }, weight: 5 },
+  referral: { label: { en: "Referral", fr: "Parrainage" }, weight: 5 },
+  direct: { label: { en: "Direct Visit", fr: "Visite Directe" }, weight: 2 }
+};
+
+const serviceInterests = {
+  sales_automation: { label: { en: "Sales Automation", fr: "Automatisation des Ventes" }, weight: 5 },
+  marketing_automation: { label: { en: "Marketing Automation", fr: "Automatisation Marketing" }, weight: 4 },
+  custom_software: { label: { en: "Custom Software Solutions", fr: "Solutions Logicielles Personnalisées" }, weight: 3 },
+  crm_integration: { label: { en: "CRM Integration", fr: "Intégration CRM" }, weight: 5 },
+  business_intelligence: { label: { en: "Business Intelligence", fr: "Intelligence d'Affaires" }, weight: 4 },
+  digital_foundation: { label: { en: "Digital Foundation", fr: "Fondation Numérique" }, weight: 2 }
+};
+
+const budgetRanges = {
+  small: { label: { en: "Under $10,000", fr: "Moins de 10 000$" }, weight: 1 },
+  medium: { label: { en: "$10,000 - $50,000", fr: "10 000$ - 50 000$" }, weight: 3 },
+  large: { label: { en: "$50,000 - $100,000", fr: "50 000$ - 100 000$" }, weight: 4 },
+  enterprise: { label: { en: "Over $100,000", fr: "Plus de 100 000$" }, weight: 5 }
+};
+
+const timelines = {
+  urgent: { label: { en: "Immediate (1-4 weeks)", fr: "Immédiat (1-4 semaines)" }, weight: 5 },
+  short: { label: { en: "Short-term (1-3 months)", fr: "Court terme (1-3 mois)" }, weight: 4 },
+  medium: { label: { en: "Medium-term (3-6 months)", fr: "Moyen terme (3-6 mois)" }, weight: 3 },
+  long: { label: { en: "Long-term (6+ months)", fr: "Long terme (6+ mois)" }, weight: 1 }
+};
+
+// Function to get sector/industry weight
+const getIndustryWeight = (industry: string): number => {
+  const highValueIndustries = ["finance", "healthcare", "education", "real_estate", "technology", "manufacturing"];
+  return highValueIndustries.includes(industry) ? 5 : 3;
+};
+
+// Function to get business size weight
+const getBusinessSizeWeight = (size: string): number => {
+  const weights: {[key: string]: number} = {
+    enterprise: 5,
+    mid_market: 4,
+    small_business: 3,
+    startup: 2
+  };
+  return weights[size] || 3;
+};
+
+interface ScoreFactors {
+  factor: string;
+  impact: "positive" | "negative" | "neutral";
+  weight: number;
+}
 
 export function LeadScoreWidget() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
-  const { toast } = useToast();
   
   const [leadData, setLeadData] = useState({
-    email: "",
-    jobTitle: "",
-    company: "",
-    visitFrequency: 2,
-    downloadedResources: [] as string[],
-    emailInteractions: 0,
+    industry: "",
+    businessSize: "",
+    channel: "",
+    serviceInterest: "",
+    budget: "",
+    timeline: ""
   });
   
-  const [consentGiven, setConsentGiven] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  const { score, factors } = useLeadScore(leadData);
-
-  // Calculate revenue potential
-  const potentialRevenue = Math.round((score / 100) * 10000);
-  const timeToClose = Math.max(5, 30 - Math.round((score / 100) * 25));
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLeadData({ ...leadData, email: e.target.value });
-  };
-
-  const handleCompanyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLeadData({ ...leadData, company: e.target.value });
-  };
-
-  const handleJobTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLeadData({ ...leadData, jobTitle: e.target.value });
-  };
-
-  const simulateInteraction = () => {
-    if (!leadData.email) return;
+  const [score, setScore] = useState(0);
+  const [factors, setFactors] = useState<ScoreFactors[]>([]);
+  const [potentialRevenue, setPotentialRevenue] = useState(0);
+  const [timeToClose, setTimeToClose] = useState(0);
+  
+  // Calculate the lead score whenever leadData changes
+  useEffect(() => {
+    calculateScore();
+  }, [leadData]);
+  
+  const calculateScore = () => {
+    let totalScore = 0;
+    let maxPossibleScore = 0;
+    const newFactors: ScoreFactors[] = [];
     
-    // Only simulate if we have valid email
+    // Add industry factor if selected
+    if (leadData.industry) {
+      const weight = getIndustryWeight(leadData.industry);
+      const impact = weight >= 4 ? "positive" : "neutral";
+      newFactors.push({
+        factor: isPathFrench ? "Secteur d'Activité" : "Industry",
+        impact,
+        weight
+      });
+      totalScore += weight;
+      maxPossibleScore += 5;
+    }
+    
+    // Add business size factor if selected
+    if (leadData.businessSize) {
+      const weight = getBusinessSizeWeight(leadData.businessSize);
+      const impact = weight >= 4 ? "positive" : weight <= 2 ? "negative" : "neutral";
+      newFactors.push({
+        factor: isPathFrench ? "Taille de l'Entreprise" : "Business Size",
+        impact,
+        weight
+      });
+      totalScore += weight;
+      maxPossibleScore += 5;
+    }
+    
+    // Add marketing channel factor if selected
+    if (leadData.channel) {
+      const channelData = marketingChannels[leadData.channel as keyof typeof marketingChannels];
+      const weight = channelData?.weight || 3;
+      const impact = weight >= 4 ? "positive" : weight <= 2 ? "negative" : "neutral";
+      newFactors.push({
+        factor: isPathFrench ? "Canal Marketing" : "Marketing Channel",
+        impact,
+        weight
+      });
+      totalScore += weight;
+      maxPossibleScore += 5;
+    }
+    
+    // Add service interest factor if selected
+    if (leadData.serviceInterest) {
+      const serviceData = serviceInterests[leadData.serviceInterest as keyof typeof serviceInterests];
+      const weight = serviceData?.weight || 3;
+      const impact = weight >= 4 ? "positive" : "neutral";
+      newFactors.push({
+        factor: isPathFrench ? "Service d'Intérêt" : "Service Interest",
+        impact,
+        weight
+      });
+      totalScore += weight;
+      maxPossibleScore += 5;
+    }
+    
+    // Add budget factor if selected
+    if (leadData.budget) {
+      const budgetData = budgetRanges[leadData.budget as keyof typeof budgetRanges];
+      const weight = budgetData?.weight || 3;
+      const impact = weight >= 4 ? "positive" : weight <= 2 ? "negative" : "neutral";
+      newFactors.push({
+        factor: isPathFrench ? "Budget" : "Budget",
+        impact,
+        weight
+      });
+      totalScore += weight;
+      maxPossibleScore += 5;
+    }
+    
+    // Add timeline factor if selected
+    if (leadData.timeline) {
+      const timelineData = timelines[leadData.timeline as keyof typeof timelines];
+      const weight = timelineData?.weight || 3;
+      const impact = weight >= 4 ? "positive" : "neutral";
+      newFactors.push({
+        factor: isPathFrench ? "Échéancier" : "Timeline",
+        impact,
+        weight
+      });
+      totalScore += weight;
+      maxPossibleScore += 5;
+    }
+    
+    // Calculate percentage score
+    let percentage = 0;
+    if (maxPossibleScore > 0) {
+      percentage = Math.round((totalScore / maxPossibleScore) * 100);
+    }
+    
+    // Update state
+    setScore(percentage);
+    setFactors(newFactors);
+    
+    // Calculate potential revenue based on business size and budget
+    let revEstimate = 5000; // Default base
+    if (leadData.businessSize === 'enterprise') revEstimate = 50000;
+    else if (leadData.businessSize === 'mid_market') revEstimate = 20000;
+    else if (leadData.businessSize === 'small_business') revEstimate = 10000;
+    
+    if (leadData.budget === 'enterprise') revEstimate *= 2;
+    else if (leadData.budget === 'large') revEstimate *= 1.5;
+    else if (leadData.budget === 'medium') revEstimate *= 1.2;
+    
+    // Adjust by score percentage
+    revEstimate = Math.round(revEstimate * (percentage / 100));
+    setPotentialRevenue(revEstimate);
+    
+    // Calculate time to close based on timeline and score
+    let estimatedDays = 90; // Default
+    if (leadData.timeline === 'urgent') estimatedDays = 14;
+    else if (leadData.timeline === 'short') estimatedDays = 30;
+    else if (leadData.timeline === 'medium') estimatedDays = 60;
+    else if (leadData.timeline === 'long') estimatedDays = 120;
+    
+    // Adjust by score - higher scores close faster
+    const adjustedDays = Math.round(estimatedDays * (1 - (percentage - 50) / 100));
+    setTimeToClose(Math.max(7, adjustedDays)); // Minimum 7 days
+  };
+
+  const handleInputChange = (field: string, value: string) => {
     setLeadData({
       ...leadData,
-      downloadedResources: [...leadData.downloadedResources, 'resource-' + (leadData.downloadedResources.length + 1)],
-      visitFrequency: leadData.visitFrequency + 1,
-      emailInteractions: leadData.emailInteractions + 1
+      [field]: value
     });
   };
   
-  const submitLeadData = async () => {
-    if (!leadData.email || !leadData.company || !consentGiven) {
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    try {
-      // Submit the lead to the newsletter subscription endpoint
-      const payload = {
-        email: leadData.email,
-        source: "lead-scoring-demo",
-        status: "active",
-        metadata: {
-          company: leadData.company,
-          jobTitle: leadData.jobTitle,
-          leadScore: score,
-        }
-      };
-      
-      await apiRequest("POST", "/api/newsletter", payload);
-      
-      // Show success message
-      toast({
-        title: isPathFrench ? "Merci de votre intérêt!" : "Thanks for your interest!",
-        description: isPathFrench 
-          ? "Nous vous contacterons bientôt avec plus d'informations." 
-          : "We'll be in touch with more information soon.",
-        variant: "default",
-      });
-      
-      setHasSubmitted(true);
-      
-      // Invalidate any related queries
-      queryClient.invalidateQueries({ queryKey: ["/api/newsletter"] });
-      
-    } catch (error) {
-      console.error("Error submitting lead:", error);
-      toast({
-        title: isPathFrench ? "Erreur" : "Error",
-        description: isPathFrench 
-          ? "Une erreur s'est produite. Veuillez réessayer." 
-          : "An error occurred. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  const resetForm = () => {
+    setLeadData({
+      industry: "",
+      businessSize: "",
+      channel: "",
+      serviceInterest: "",
+      budget: "",
+      timeline: ""
+    });
   };
 
   return (
@@ -124,58 +243,142 @@ export function LeadScoreWidget() {
         <div className="flex flex-col gap-2">
           <CardTitle className="text-xl flex items-center gap-2">
             <Bot className="h-5 w-5" />
-            {isPathFrench ? "Évaluez Vos Leads avec l'IA" : "AI Lead Scoring"}
+            {isPathFrench ? "Évaluez la Qualité de Vos Leads" : "Lead Quality Scoring"}
           </CardTitle>
           <CardDescription>
             {isPathFrench 
-              ? "Essayez notre simulateur de score de leads pour voir comment notre IA peut vous aider"
-              : "Try our lead scoring simulator to see how our AI can help your business"
+              ? "Découvrez comment notre IA évalue les prospects en fonction de critères commerciaux importants"
+              : "See how our AI evaluates prospects based on important business criteria"
             }
           </CardDescription>
         </div>
       </CardHeader>
       
-      <CardContent className="pt-6 pb-2">
-        <div className="space-y-4">
+      <CardContent className="pt-6 pb-2 grid gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Industry Selection */}
           <div className="space-y-2">
-            <Label htmlFor="email">
-              {isPathFrench ? "Email Professionnel" : "Business Email"}
+            <Label htmlFor="industry" className="flex items-center gap-1.5">
+              <Building2 className="h-4 w-4 text-muted-foreground" />
+              {isPathFrench ? "Secteur d'Activité" : "Industry"}
             </Label>
-            <Input 
-              id="email" 
-              placeholder={isPathFrench ? "votreemail@entreprise.com" : "youremail@company.com"}
-              onChange={handleEmailChange}
-              value={leadData.email}
-            />
+            <Select value={leadData.industry} onValueChange={(value) => handleInputChange('industry', value)}>
+              <SelectTrigger id="industry">
+                <SelectValue placeholder={isPathFrench ? "Sélectionnez un secteur" : "Select industry"} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(industries).map(([key, industry]) => (
+                  <SelectItem key={key} value={key}>
+                    {isPathFrench ? (industry.title as any).fr : (industry.title as any).en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           
+          {/* Business Size */}
           <div className="space-y-2">
-            <Label htmlFor="company">
-              {isPathFrench ? "Entreprise" : "Company"} 
+            <Label htmlFor="business-size" className="flex items-center gap-1.5">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              {isPathFrench ? "Taille de l'Entreprise" : "Business Size"}
             </Label>
-            <Input 
-              id="company" 
-              placeholder={isPathFrench ? "Nom de l'entreprise" : "Company name"}
-              onChange={handleCompanyChange}
-              value={leadData.company}
-            />
+            <Select value={leadData.businessSize} onValueChange={(value) => handleInputChange('businessSize', value)}>
+              <SelectTrigger id="business-size">
+                <SelectValue placeholder={isPathFrench ? "Sélectionnez une taille" : "Select business size"} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(businessSizes).map(([key, size]) => (
+                  <SelectItem key={key} value={key}>
+                    {isPathFrench ? (size.title as any).fr : (size.title as any).en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           
+          {/* Marketing Channel */}
           <div className="space-y-2">
-            <Label htmlFor="jobTitle">
-              {isPathFrench ? "Titre du Poste" : "Job Title"}
+            <Label htmlFor="channel" className="flex items-center gap-1.5">
+              <Globe className="h-4 w-4 text-muted-foreground" />
+              {isPathFrench ? "Canal Marketing" : "Marketing Channel"}
             </Label>
-            <Input 
-              id="jobTitle" 
-              placeholder={isPathFrench ? "Directeur, Manager, etc." : "Director, Manager, etc."}
-              onChange={handleJobTitleChange}
-              value={leadData.jobTitle}
-            />
+            <Select value={leadData.channel} onValueChange={(value) => handleInputChange('channel', value)}>
+              <SelectTrigger id="channel">
+                <SelectValue placeholder={isPathFrench ? "Sélectionnez un canal" : "Select channel"} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(marketingChannels).map(([key, channel]) => (
+                  <SelectItem key={key} value={key}>
+                    {isPathFrench ? channel.label.fr : channel.label.en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Service Interest */}
+          <div className="space-y-2">
+            <Label htmlFor="service-interest" className="flex items-center gap-1.5">
+              <Briefcase className="h-4 w-4 text-muted-foreground" />
+              {isPathFrench ? "Service d'Intérêt" : "Service Interest"}
+            </Label>
+            <Select value={leadData.serviceInterest} onValueChange={(value) => handleInputChange('serviceInterest', value)}>
+              <SelectTrigger id="service-interest">
+                <SelectValue placeholder={isPathFrench ? "Sélectionnez un service" : "Select service"} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(serviceInterests).map(([key, service]) => (
+                  <SelectItem key={key} value={key}>
+                    {isPathFrench ? service.label.fr : service.label.en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Budget Range */}
+          <div className="space-y-2">
+            <Label htmlFor="budget" className="flex items-center gap-1.5">
+              <AlertCircle className="h-4 w-4 text-muted-foreground" />
+              {isPathFrench ? "Budget" : "Budget Range"}
+            </Label>
+            <Select value={leadData.budget} onValueChange={(value) => handleInputChange('budget', value)}>
+              <SelectTrigger id="budget">
+                <SelectValue placeholder={isPathFrench ? "Sélectionnez un budget" : "Select budget range"} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(budgetRanges).map(([key, budget]) => (
+                  <SelectItem key={key} value={key}>
+                    {isPathFrench ? budget.label.fr : budget.label.en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Timeline */}
+          <div className="space-y-2">
+            <Label htmlFor="timeline" className="flex items-center gap-1.5">
+              <Target className="h-4 w-4 text-muted-foreground" />
+              {isPathFrench ? "Échéancier du Projet" : "Project Timeline"}
+            </Label>
+            <Select value={leadData.timeline} onValueChange={(value) => handleInputChange('timeline', value)}>
+              <SelectTrigger id="timeline">
+                <SelectValue placeholder={isPathFrench ? "Sélectionnez un échéancier" : "Select timeline"} />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(timelines).map(([key, timeline]) => (
+                  <SelectItem key={key} value={key}>
+                    {isPathFrench ? timeline.label.fr : timeline.label.en}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
         {score > 0 && (
-          <div className="mt-6 space-y-3">
+          <div className="mt-2 space-y-3">
             <div className="bg-muted p-3 rounded-lg flex justify-between items-center">
               <span className="text-sm font-medium">{isPathFrench ? "Score du Lead" : "Lead Score"}</span>
               <div className="flex items-center gap-2">
@@ -208,125 +411,57 @@ export function LeadScoreWidget() {
               </span>
             </div>
             
-            {leadData.downloadedResources.length > 0 && (
-              <div className="flex justify-between items-center p-3 rounded-lg bg-primary/5">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5 text-amber-500" />
-                  <span>
-                    {isPathFrench ? "Niveau d'Engagement" : "Engagement Level"}
-                  </span>
-                </div>
-                <span className="font-semibold text-amber-500">
-                  {leadData.downloadedResources.length * 10 + leadData.emailInteractions * 5}%
-                </span>
+            {score >= 75 && (
+              <div className="bg-green-50 border border-green-100 p-3 rounded-lg text-sm text-green-800">
+                {isPathFrench 
+                  ? "Ce lead a un excellent potentiel! Nous recommandons un suivi immédiat avec une approche personnalisée."
+                  : "This lead has excellent potential! We recommend immediate follow-up with a personalized approach."
+                }
+              </div>
+            )}
+            
+            {score >= 50 && score < 75 && (
+              <div className="bg-blue-50 border border-blue-100 p-3 rounded-lg text-sm text-blue-800">
+                {isPathFrench 
+                  ? "Ce lead montre un bon potentiel. Une stratégie de nurturing ciblée serait efficace."
+                  : "This lead shows good potential. A targeted nurturing strategy would be effective."
+                }
+              </div>
+            )}
+            
+            {score < 50 && score > 0 && (
+              <div className="bg-amber-50 border border-amber-100 p-3 rounded-lg text-sm text-amber-800">
+                {isPathFrench 
+                  ? "Ce lead nécessite un développement supplémentaire. Concentrez-vous sur l'éducation et la qualification."
+                  : "This lead needs further development. Focus on education and qualification."
+                }
               </div>
             )}
           </div>
         )}
         
-        <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100">
-          <div className="flex items-start gap-3">
-            <Info className="h-5 w-5 text-blue-600 mt-0.5" />
-            <div>
-              <p className="text-sm font-medium text-blue-800">
-                {isPathFrench ? "Recevez plus d'informations" : "Get more information"}
-              </p>
-              <p className="text-sm text-blue-700 mb-3">
-                {isPathFrench 
-                  ? "Souhaitez-vous recevoir des informations personnalisées sur la façon dont notre solution peut aider votre entreprise?"
-                  : "Would you like to receive personalized information on how our solution can help your business?"
-                }
-              </p>
-              
-              <div className="flex items-start gap-2 mb-3">
-                <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-primary">
-                  {consentGiven && <Check className="h-3 w-3" />}
-                  <input
-                    type="checkbox"
-                    id="consent"
-                    className="sr-only"
-                    checked={consentGiven}
-                    onChange={(e) => setConsentGiven(e.target.checked)}
-                    disabled={hasSubmitted}
-                  />
-                </div>
-                <div className="grid gap-1.5 leading-none">
-                  <label
-                    htmlFor="consent"
-                    className="text-sm font-medium leading-none cursor-pointer select-none"
-                  >
-                    {isPathFrench 
-                      ? "Oui, j'accepte d'être contacté par Minecore Group" 
-                      : "Yes, I agree to be contacted by Minecore Group"}
-                  </label>
-                  <p className="text-xs text-muted-foreground">
-                    {isPathFrench 
-                      ? "Consultez notre politique de confidentialité pour plus d'informations." 
-                      : "See our privacy policy for more information."}
-                  </p>
-                </div>
-              </div>
-              
-              {!hasSubmitted ? (
-                <Button 
-                  size="sm" 
-                  className="w-full"
-                  onClick={submitLeadData}
-                  disabled={isSubmitting || !consentGiven || !leadData.email || !leadData.company}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5 animate-spin" />
-                      {isPathFrench ? "Envoi en cours..." : "Submitting..."}
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-1">
-                      <Mail className="h-3.5 w-3.5" />
-                      {isPathFrench ? "Recevoir plus d'informations" : "Get more information"}
-                    </span>
-                  )}
-                </Button>
-              ) : (
-                <div className="bg-green-100 p-2 rounded-md flex items-center gap-2 text-sm text-green-800">
-                  <Check className="h-4 w-4" />
-                  {isPathFrench ? "Merci! Nous vous contacterons bientôt." : "Thank you! We'll be in touch soon."}
-                </div>
-              )}
-            </div>
-          </div>
+        <div className="bg-primary/5 p-3 rounded-lg text-xs text-center text-muted-foreground">
+          {isPathFrench 
+            ? "Ceci est une démonstration. Dans un système réel, les données historiques et les interactions seraient également utilisées."
+            : "This is a demonstration. In a real system, historical data and interactions would also be used."
+          }
         </div>
       </CardContent>
       
       <Separator />
       
       <CardFooter className="flex flex-col sm:flex-row gap-3 justify-between border-t pt-4">
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => setLeadData({
-              email: "",
-              jobTitle: "",
-              company: "",
-              visitFrequency: 2,
-              downloadedResources: [],
-              emailInteractions: 0,
-            })}
-          >
-            {isPathFrench ? "Réinitialiser" : "Reset"}
-          </Button>
-          <Button 
-            size="sm"
-            onClick={simulateInteraction}
-            disabled={!leadData.email}
-          >
-            {isPathFrench ? "Simuler l'Engagement" : "Simulate Engagement"}
-          </Button>
-        </div>
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={resetForm}
+        >
+          {isPathFrench ? "Réinitialiser" : "Reset"}
+        </Button>
         
         <Link href={isPathFrench ? "/fr/services/sales-automation" : "/services/sales-automation"}>
           <Button variant="link" size="sm" className="font-normal">
-            {isPathFrench ? "En savoir plus" : "Learn More"}
+            {isPathFrench ? "En savoir plus sur les solutions" : "Learn more about solutions"}
             <ArrowRight className="ml-1 h-3 w-3" />
           </Button>
         </Link>
