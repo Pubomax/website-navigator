@@ -24,8 +24,20 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
+interface ServiceType {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  benefits: string[];
+  link: string;
+  primaryColor: string;
+  iconColor: string;
+  featured?: boolean;
+}
+
 // Our core solutions based on AI Automation
-const coreServices = [
+const coreServices: ServiceType[] = [
   {
     id: "marketing-automation",
     title: "Marketing Automation",
@@ -121,8 +133,14 @@ const coreServices = [
   }
 ];
 
+interface BusinessSizeSection {
+  title: string;
+  description: string;
+  solutions: string[];
+}
+
 // Solutions organized by business size
-const businessSizeData = {
+const businessSizeData: Record<string, BusinessSizeSection> = {
   small: {
     title: "Small Business Solutions",
     description: "Generate more revenue quickly without complex integrations",
@@ -153,8 +171,14 @@ const businessSizeData = {
   }
 };
 
+interface IndustrySection {
+  title: string;
+  description: string;
+  solutions: string[];
+}
+
 // Solutions organized by industry
-const industryData = {
+const industryData: Record<string, IndustrySection> = {
   retail: {
     title: "Retail & E-commerce",
     description: "Convert browsers into buyers and increase customer lifetime value",
@@ -189,7 +213,36 @@ export default function Services() {
   const isPathFrench = location.startsWith("/fr");
 
   // Find a service by ID
-  const getServiceById = (id) => coreServices.find(service => service.id === id);
+  const getServiceById = (id: string): ServiceType | undefined => 
+    coreServices.find(service => service.id === id);
+
+  // Render a service card with null check
+  const renderServiceCard = (serviceId: string) => {
+    const service = getServiceById(serviceId);
+    if (!service) return null;
+    
+    return (
+      <Card key={serviceId} className="border-primary/10">
+        <CardHeader>
+          <div className="flex items-center gap-2 mb-2">
+            <div className={`p-2 rounded-full ${service.primaryColor}`}>
+              <service.icon className={`h-5 w-5 ${service.iconColor}`} />
+            </div>
+            <CardTitle className="text-lg">{service.title}</CardTitle>
+          </div>
+          <CardDescription>{service.description}</CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <Button variant="outline" className="w-full" asChild>
+            <Link href={service.link}>
+              {isPathFrench ? "Détails" : "View Details"}
+              <ChevronRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    );
+  };
 
   return (
     <main className="py-24">
@@ -284,30 +337,7 @@ export default function Services() {
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-3">
-                      {data.solutions.map((serviceId) => {
-                        const service = getServiceById(serviceId);
-                        return (
-                          <Card key={serviceId} className="border-primary/10">
-                            <CardHeader>
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className={`p-2 rounded-full ${service.primaryColor}`}>
-                                  <service.icon className={`h-5 w-5 ${service.iconColor}`} />
-                                </div>
-                                <CardTitle className="text-lg">{service.title}</CardTitle>
-                              </div>
-                              <CardDescription>{service.description}</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Button variant="outline" className="w-full" asChild>
-                                <Link href={service.link}>
-                                  {isPathFrench ? "Détails" : "View Details"}
-                                  <ChevronRight className="ml-1 h-4 w-4" />
-                                </Link>
-                              </Button>
-                            </CardFooter>
-                          </Card>
-                        );
-                      })}
+                      {data.solutions.map(serviceId => renderServiceCard(serviceId))}
                     </div>
                   </div>
                 ))}
@@ -325,30 +355,7 @@ export default function Services() {
                     </div>
 
                     <div className="grid gap-4 md:grid-cols-3">
-                      {data.solutions.map((serviceId) => {
-                        const service = getServiceById(serviceId);
-                        return (
-                          <Card key={serviceId} className="border-primary/10">
-                            <CardHeader>
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className={`p-2 rounded-full ${service.primaryColor}`}>
-                                  <service.icon className={`h-5 w-5 ${service.iconColor}`} />
-                                </div>
-                                <CardTitle className="text-lg">{service.title}</CardTitle>
-                              </div>
-                              <CardDescription>{service.description}</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Button variant="outline" className="w-full" asChild>
-                                <Link href={service.link}>
-                                  {isPathFrench ? "Détails" : "View Details"}
-                                  <ChevronRight className="ml-1 h-4 w-4" />
-                                </Link>
-                              </Button>
-                            </CardFooter>
-                          </Card>
-                        );
-                      })}
+                      {data.solutions.map(serviceId => renderServiceCard(serviceId))}
                     </div>
                   </div>
                 ))}
