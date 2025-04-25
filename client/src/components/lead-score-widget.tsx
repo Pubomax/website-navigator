@@ -5,14 +5,17 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription }
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, TrendingUp, Clock, Bot, PieChart, AlertTriangle, ArrowRight } from "lucide-react";
+import { AlertCircle, TrendingUp, Clock, Bot, PieChart, AlertTriangle, ArrowRight, Check, Info, Mail } from "lucide-react";
 import { useLocation, Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export function LeadScoreWidget() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
+  const { toast } = useToast();
   
   const [leadData, setLeadData] = useState({
     email: "",
@@ -22,6 +25,10 @@ export function LeadScoreWidget() {
     downloadedResources: [] as string[],
     emailInteractions: 0,
   });
+  
+  const [consentGiven, setConsentGiven] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { score, factors } = useLeadScore(leadData);
 
@@ -52,6 +59,56 @@ export function LeadScoreWidget() {
       emailInteractions: leadData.emailInteractions + 1
     });
   };
+  
+  const submitLeadData = async () => {
+    if (!leadData.email || !leadData.company || !consentGiven) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Submit the lead to the newsletter subscription endpoint
+      const payload = {
+        email: leadData.email,
+        source: "lead-scoring-demo",
+        status: "active",
+        metadata: {
+          company: leadData.company,
+          jobTitle: leadData.jobTitle,
+          leadScore: score,
+        }
+      };
+      
+      await apiRequest("POST", "/api/newsletter", payload);
+      
+      // Show success message
+      toast({
+        title: isPathFrench ? "Merci de votre intérêt!" : "Thanks for your interest!",
+        description: isPathFrench 
+          ? "Nous vous contacterons bientôt avec plus d'informations." 
+          : "We'll be in touch with more information soon.",
+        variant: "default",
+      });
+      
+      setHasSubmitted(true);
+      
+      // Invalidate any related queries
+      queryClient.invalidateQueries({ queryKey: ["/api/newsletter"] });
+      
+    } catch (error) {
+      console.error("Error submitting lead:", error);
+      toast({
+        title: isPathFrench ? "Erreur" : "Error",
+        description: isPathFrench 
+          ? "Une erreur s'est produite. Veuillez réessayer." 
+          : "An error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Card className="shadow-lg border-primary/20 relative overflow-hidden">
@@ -79,29 +136,6 @@ export function LeadScoreWidget() {
       </CardHeader>
       
       <CardContent className="pt-6 pb-2">
-        <div className="bg-amber-50 border-l-4 border-amber-500 p-3 mb-6 rounded-r-md">
-          <div className="flex gap-2">
-            <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-            <div>
-              <p className="text-xs font-medium text-amber-800">
-                {isPathFrench ? "Ceci est une démonstration" : "This is a demonstration only"}
-              </p>
-              <p className="text-xs text-amber-700">
-                {isPathFrench 
-                  ? "Essayez notre démo pour voir comment notre système d'IA évaluerait vos leads dans une vraie implémentation."
-                  : "Try our demo to see how our AI system would score your leads in a real implementation."
-                }
-              </p>
-              <p className="text-xs text-amber-700 mt-1 border-t border-amber-200 pt-1">
-                <strong>{isPathFrench ? "Confidentialité" : "Privacy Note"}:</strong> {isPathFrench 
-                  ? "Les informations saisies ne sont pas collectées ou stockées et restent uniquement dans votre navigateur."
-                  : "Information entered here is not collected or stored and remains only in your browser."
-                }
-              </p>
-            </div>
-          </div>
-        </div>
-        
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">
@@ -189,6 +223,78 @@ export function LeadScoreWidget() {
             )}
           </div>
         )}
+        
+        <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100">
+          <div className="flex items-start gap-3">
+            <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-blue-800">
+                {isPathFrench ? "Recevez plus d'informations" : "Get more information"}
+              </p>
+              <p className="text-sm text-blue-700 mb-3">
+                {isPathFrench 
+                  ? "Souhaitez-vous recevoir des informations personnalisées sur la façon dont notre solution peut aider votre entreprise?"
+                  : "Would you like to receive personalized information on how our solution can help your business?"
+                }
+              </p>
+              
+              <div className="flex items-start gap-2 mb-3">
+                <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border border-primary">
+                  {consentGiven && <Check className="h-3 w-3" />}
+                  <input
+                    type="checkbox"
+                    id="consent"
+                    className="sr-only"
+                    checked={consentGiven}
+                    onChange={(e) => setConsentGiven(e.target.checked)}
+                    disabled={hasSubmitted}
+                  />
+                </div>
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="consent"
+                    className="text-sm font-medium leading-none cursor-pointer select-none"
+                  >
+                    {isPathFrench 
+                      ? "Oui, j'accepte d'être contacté par Minecore Group" 
+                      : "Yes, I agree to be contacted by Minecore Group"}
+                  </label>
+                  <p className="text-xs text-muted-foreground">
+                    {isPathFrench 
+                      ? "Consultez notre politique de confidentialité pour plus d'informations." 
+                      : "See our privacy policy for more information."}
+                  </p>
+                </div>
+              </div>
+              
+              {!hasSubmitted ? (
+                <Button 
+                  size="sm" 
+                  className="w-full"
+                  onClick={submitLeadData}
+                  disabled={isSubmitting || !consentGiven || !leadData.email || !leadData.company}
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5 animate-spin" />
+                      {isPathFrench ? "Envoi en cours..." : "Submitting..."}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1">
+                      <Mail className="h-3.5 w-3.5" />
+                      {isPathFrench ? "Recevoir plus d'informations" : "Get more information"}
+                    </span>
+                  )}
+                </Button>
+              ) : (
+                <div className="bg-green-100 p-2 rounded-md flex items-center gap-2 text-sm text-green-800">
+                  <Check className="h-4 w-4" />
+                  {isPathFrench ? "Merci! Nous vous contacterons bientôt." : "Thank you! We'll be in touch soon."}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </CardContent>
       
       <Separator />
