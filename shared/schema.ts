@@ -56,7 +56,7 @@ export const contactMessages = pgTable("contact_messages", {
   // Contact Information (Step 3)
   contactName: text("contact_name").notNull(),
   contactEmail: text("contact_email").notNull(),
-  contactPhone: text("contact_phone"),
+  contactPhone: text("contact_phone").notNull(),
   contactJobTitle: text("contact_job_title"),
   preferredContactMethod: text("preferred_contact_method").notNull(),
   additionalNotes: text("additional_notes"),

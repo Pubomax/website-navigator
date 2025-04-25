@@ -178,7 +178,7 @@ const getContent = (isPathFrench: boolean) => ({
       placeholder: isPathFrench ? "votre@email.com" : "your@email.com"
     },
     contactPhone: {
-      label: isPathFrench ? "Téléphone (optionnel)" : "Phone (optional)",
+      label: isPathFrench ? "Téléphone" : "Phone",
       placeholder: isPathFrench ? "Votre numéro de téléphone" : "Your phone number"
     },
     contactJobTitle: {
@@ -286,6 +286,9 @@ export default function Contact() {
         break;
       case 1: // Business Challenges
         fieldsToValidate = ["businessChallenges", "desiredOutcomes"];
+        break;
+      case 2: // Contact Information
+        fieldsToValidate = ["contactName", "contactEmail", "contactPhone", "preferredContactMethod"];
         break;
     }
     
