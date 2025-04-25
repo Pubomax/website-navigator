@@ -11,41 +11,41 @@ const getContent = (isPathFrench: boolean) => ({
     : "Minecore Group specializes in AI Automation solutions designed to streamline business operations and drive growth. Our core expertise lies in three key areas:",
   pillars: isPathFrench ? [
     {
-      title: "Automatisation Marketing",
-      description: "Transformez vos prospects en clients fidèles automatiquement grâce à nos solutions d'automatisation marketing intelligentes.",
+      title: "Fondation Numérique",
+      description: "Établissez une présence numérique solide avec nos solutions qui créent une base d'automatisation efficace pour votre entreprise.",
       icon: MessageSquare,
-      link: "/services/marketing-automation"
+      link: "/services/digital-foundation"
     },
     {
-      title: "Automatisation des Ventes",
-      description: "Augmentez vos revenus avec des processus de vente automatisés qui réduisent l'effort manuel et accélèrent les conversions.",
+      title: "Automatisation IA",
+      description: "Augmentez vos revenus et réduisez votre charge de travail grâce à nos solutions d'automatisation IA intelligentes.",
       icon: DollarSign,
-      link: "/services/sales-automation"
+      link: "/services/ai-automation-starter"
     },
     {
-      title: "Développement & Implémentation",
-      description: "Solutions techniques sur mesure comprenant le développement CRM, l'implémentation Kommo et les chatbots intelligents.",
+      title: "Développement Sur Mesure",
+      description: "Solutions logicielles personnalisées conçues pour vos besoins uniques, du développement CRM aux chatbots intelligents.",
       icon: Code,
-      link: "/services/development-implementation"
+      link: "/services/custom-software"
     }
   ] : [
     {
-      title: "Marketing Automation",
-      description: "Transform your prospects into loyal customers automatically with our intelligent marketing automation solutions.",
+      title: "Digital Foundation",
+      description: "Establish a strong digital presence with our solutions that create an effective automation foundation for your business.",
       icon: MessageSquare,
-      link: "/services/marketing-automation"
+      link: "/services/digital-foundation"
     },
     {
-      title: "Sales Automation",
-      description: "Increase your revenue with automated sales processes that reduce manual effort and accelerate conversions.",
+      title: "AI Automation",
+      description: "Increase your revenue and reduce your workload with our intelligent AI automation solutions.",
       icon: DollarSign,
-      link: "/services/sales-automation"
+      link: "/services/ai-automation-starter"
     },
     {
-      title: "Development & Implementation",
-      description: "Custom technical solutions including CRM development, Kommo implementation, and intelligent chatbots.",
+      title: "Custom Development",
+      description: "Tailored software solutions designed for your unique needs, from custom CRM development to intelligent chatbots.",
       icon: Code,
-      link: "/services/development-implementation"
+      link: "/services/custom-software"
     }
   ]
 });

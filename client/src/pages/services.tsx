@@ -39,73 +39,58 @@ interface ServiceType {
 // Our core solutions based on AI Automation
 const coreServices: ServiceType[] = [
   {
-    id: "marketing-automation",
-    title: "Marketing Automation",
-    description: "Transform prospects into loyal customers with automated marketing sequences",
-    icon: MessageSquare,
+    id: "digital-foundation",
+    title: "Digital Foundation Package",
+    description: "Establish a strong digital presence and automation foundation for your business",
+    icon: Settings,
     benefits: [
-      "Increase lead generation by 35%",
-      "Automate social media and content scheduling",
-      "Smart lead nurturing sequences",
-      "Comprehensive analytics and reporting"
+      "Essential digital tools setup",
+      "Basic automation implementation",
+      "Website and online presence optimization",
+      "Digital workflow streamlining"
     ],
-    link: "/services/marketing-automation",
+    link: "/services/digital-foundation",
     primaryColor: "bg-indigo-50 dark:bg-indigo-950/20",
     iconColor: "text-indigo-600 dark:text-indigo-400",
     featured: true
   },
   {
-    id: "sales-automation",
-    title: "Sales Automation",
-    description: "Close more deals with less effort using AI-powered sales automation",
-    icon: DollarSign,
+    id: "transformation-consulting",
+    title: "Digital Transformation Consulting",
+    description: "Expert guidance to transform your business processes with digital solutions",
+    icon: LineChart,
     benefits: [
-      "Reduce sales cycle by 47%",
-      "Automated quote generation",
-      "Intelligent sales process optimization",
-      "Close more deals without extra effort"
+      "Comprehensive digital strategy",
+      "Process automation roadmap",
+      "Technology stack optimization",
+      "Change management support"
     ],
-    link: "/services/sales-automation",
+    link: "/services/transformation-consulting",
     primaryColor: "bg-emerald-50 dark:bg-emerald-950/20",
     iconColor: "text-emerald-600 dark:text-emerald-400",
     featured: true
   },
   {
-    id: "development-implementation",
-    title: "Development & Implementation",
-    description: "Custom technical solutions to power your business automation needs",
-    icon: Code,
-    benefits: [
-      "Custom CRM development",
-      "Kommo implementation and optimization",
-      "Intelligent chatbot development",
-      "Integration with your existing systems"
-    ],
-    link: "/services/development-implementation",
-    primaryColor: "bg-blue-50 dark:bg-blue-950/20",
-    iconColor: "text-blue-600 dark:text-blue-400",
-    featured: true
-  },
-  {
     id: "ai-automation-starter",
-    title: "AI Automation Starter",
-    description: "Begin your AI journey with our comprehensive starter package",
+    title: "AI & Automation Starter Package",
+    description: "Begin your AI journey with our comprehensive starter solution",
     icon: Bot,
     benefits: [
       "AI readiness assessment",
-      "Basic process automation",
+      "Basic AI process automation",
       "Data analysis automation",
       "Rapid return on investment"
     ],
     link: "/services/ai-automation-starter",
     primaryColor: "bg-violet-50 dark:bg-violet-950/20",
-    iconColor: "text-violet-600 dark:text-violet-400"
+    iconColor: "text-violet-600 dark:text-violet-400",
+    featured: true
   },
   {
     id: "custom-ai-automation",
-    title: "Custom AI Automation",
+    title: "Custom AI & Automation Package",
     description: "Tailored AI solutions designed specifically for your unique business needs",
-    icon: Settings,
+    icon: BrainCircuit,
     benefits: [
       "Custom AI workflow design",
       "Deep integration with your processes",
@@ -117,17 +102,32 @@ const coreServices: ServiceType[] = [
     iconColor: "text-amber-600 dark:text-amber-400"
   },
   {
-    id: "intelligent-analytics",
-    title: "Intelligent Analytics",
-    description: "Make data-driven decisions with AI-powered business intelligence",
-    icon: LineChart,
+    id: "custom-software",
+    title: "Custom Software Development",
+    description: "Custom technical solutions to power your business automation needs",
+    icon: Code,
     benefits: [
-      "Real-time performance dashboards",
-      "Predictive analytics",
-      "Automated reporting",
-      "Customer behavior insights"
+      "Bespoke software development",
+      "Custom CRM solutions",
+      "Intelligent system integrations",
+      "Tailored digital tools"
     ],
-    link: "/services/intelligent-analytics",
+    link: "/services/custom-software",
+    primaryColor: "bg-blue-50 dark:bg-blue-950/20",
+    iconColor: "text-blue-600 dark:text-blue-400"
+  },
+  {
+    id: "intelligent-support",
+    title: "Intelligent Support Package",
+    description: "Ongoing AI-powered support and optimization for your digital solutions",
+    icon: MessageSquare,
+    benefits: [
+      "24/7 intelligent system monitoring",
+      "AI-powered customer support",
+      "Continuous optimization",
+      "Regular performance analytics"
+    ],
+    link: "/services/intelligent-support",
     primaryColor: "bg-rose-50 dark:bg-rose-950/20",
     iconColor: "text-rose-600 dark:text-rose-400"
   }
@@ -145,19 +145,18 @@ const businessSizeData: Record<string, BusinessSizeSection> = {
     title: "Small Business Solutions",
     description: "Generate more revenue quickly without complex integrations",
     solutions: [
+      "digital-foundation",
       "ai-automation-starter",
-      "marketing-automation",
-      "sales-automation"
+      "intelligent-support"
     ]
   },
   medium: {
     title: "Mid-Market Solutions",
     description: "Scale your automation efforts across multiple departments",
     solutions: [
-      "marketing-automation",
-      "sales-automation",
+      "transformation-consulting",
       "custom-ai-automation",
-      "intelligent-analytics"
+      "intelligent-support"
     ]
   },
   enterprise: {
@@ -165,8 +164,8 @@ const businessSizeData: Record<string, BusinessSizeSection> = {
     description: "Enterprise-grade automation for complex organizations",
     solutions: [
       "custom-ai-automation",
-      "development-implementation",
-      "intelligent-analytics"
+      "custom-software",
+      "transformation-consulting"
     ]
   }
 };
@@ -183,9 +182,9 @@ const industryData: Record<string, IndustrySection> = {
     title: "Retail & E-commerce",
     description: "Convert browsers into buyers and increase customer lifetime value",
     solutions: [
-      "marketing-automation",
-      "intelligent-analytics",
-      "ai-automation-starter"
+      "digital-foundation",
+      "ai-automation-starter",
+      "intelligent-support"
     ]
   },
   financial: {
@@ -193,17 +192,17 @@ const industryData: Record<string, IndustrySection> = {
     description: "Streamline client acquisition and compliance processes",
     solutions: [
       "custom-ai-automation",
-      "development-implementation",
-      "sales-automation"
+      "custom-software",
+      "transformation-consulting"
     ]
   },
   manufacturing: {
     title: "Manufacturing",
     description: "Optimize production and supply chain with intelligent automation",
     solutions: [
-      "intelligent-analytics",
+      "intelligent-support",
       "custom-ai-automation",
-      "development-implementation"
+      "custom-software"
     ]
   }
 };
