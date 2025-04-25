@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { ArrowRight, Check, Calendar, BarChart, Users, MessageSquareText } from "lucide-react";
+import { OfferPopupForm } from "./offer-popup-form";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
@@ -111,12 +112,12 @@ export function DirectOfferCTA() {
               ))}
             </CardContent>
             <CardFooter className="p-6 flex justify-center">
-              <Button size="lg" className="w-full sm:w-auto" asChild>
-                <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
+              <OfferPopupForm offerType="Standard Package $500/month">
+                <Button size="lg" className="w-full sm:w-auto">
                   {content.cta}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+                </Button>
+              </OfferPopupForm>
             </CardFooter>
           </Card>
         </motion.div>
