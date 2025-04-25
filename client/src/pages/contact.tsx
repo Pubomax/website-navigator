@@ -322,7 +322,7 @@ export default function Contact() {
 
   return (
     <main className="py-20">
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -566,7 +566,7 @@ export default function Contact() {
                                   <FormDescription>
                                     {content.form.businessChallenges.description}
                                   </FormDescription>
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                                     {content.form.businessChallenges.options.map((option) => {
                                       const isSelected = field.value?.includes(option.value);
                                       return (
@@ -574,7 +574,7 @@ export default function Contact() {
                                           key={option.value}
                                           type="button"
                                           variant={isSelected ? "default" : "outline"}
-                                          className={`justify-start text-left ${isSelected ? "border-primary" : ""}`}
+                                          className={`justify-start text-left h-auto py-3 px-4 ${isSelected ? "border-2 border-primary" : ""}`}
                                           onClick={() => {
                                             const currentValue = field.value || [];
                                             const newValue = isSelected
@@ -583,13 +583,13 @@ export default function Contact() {
                                             field.onChange(newValue);
                                           }}
                                         >
-                                          <div className="flex items-center gap-2">
+                                          <div className="flex items-center gap-3">
                                             {isSelected ? (
-                                              <CheckCircle2 className="h-4 w-4 text-white" />
+                                              <CheckCircle2 className="h-5 w-5 text-white shrink-0" />
                                             ) : (
-                                              <div className="h-4 w-4 rounded-full border border-foreground/20" />
+                                              <div className="h-5 w-5 rounded-full border-2 border-foreground/20 shrink-0" />
                                             )}
-                                            <span>{option.label}</span>
+                                            <span className="font-medium">{option.label}</span>
                                           </div>
                                         </Button>
                                       );
