@@ -1,7 +1,7 @@
 import React from "react";
-import { cn } from "@/lib/utils";
 import { Copy } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "./button";
+import { toast } from "@/hooks/use-toast";
 
 interface CodeBlockProps {
   code: string;
@@ -13,9 +13,9 @@ interface CodeBlockProps {
 
 export function CodeBlock({
   code,
-  language = "typescript",
+  language = "javascript",
   fileName,
-  showLineNumbers = false,
+  showLineNumbers = true,
   className,
 }: CodeBlockProps) {
   const [copied, setCopied] = React.useState(false);
@@ -23,60 +23,53 @@ export function CodeBlock({
   const copyToClipboard = () => {
     navigator.clipboard.writeText(code);
     setCopied(true);
+    
+    toast({
+      title: "Copied to clipboard",
+      description: "The code has been copied to your clipboard.",
+    });
+    
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Split code into lines and add line numbers
+  const codeLines = code.split("\n");
+  
   return (
-    <div className={cn("rounded-md overflow-hidden", className)}>
+    <div className={`relative rounded-md overflow-hidden mb-4 ${className}`}>
       {fileName && (
-        <div className="bg-accent px-4 py-2 text-xs font-mono text-muted-foreground flex justify-between items-center">
-          <span>{fileName}</span>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="text-xs">{language.toUpperCase()}</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-6 w-6"
-              onClick={copyToClipboard}
-              title="Copy code"
-            >
-              <Copy className="h-3.5 w-3.5" />
-              <span className="sr-only">Copy code</span>
-            </Button>
-          </div>
+        <div className="bg-slate-800 text-slate-200 text-xs px-4 py-2 border-b border-slate-700 flex items-center">
+          <span className="font-medium">{fileName}</span>
+          <span className="ml-2 text-slate-400 text-xs">{language}</span>
         </div>
       )}
-      <pre
-        className={cn(
-          "p-4 text-sm overflow-x-auto bg-black text-white",
-          language === "json" && "text-green-400",
-          language === "bash" && "text-yellow-300"
-        )}
-      >
-        {showLineNumbers ? (
-          code.split("\n").map((line, i) => (
-            <div key={i} className="table-row">
-              <span className="table-cell text-right pr-4 select-none text-muted-foreground">{i + 1}</span>
-              <span className="table-cell">{line}</span>
-            </div>
-          ))
-        ) : (
-          <code>{code}</code>
-        )}
-      </pre>
-      {!fileName && (
-        <div className="bg-accent px-3 py-1.5 text-xs flex justify-end">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-6 px-2 text-xs"
-            onClick={copyToClipboard}
-          >
-            {copied ? "Copied!" : "Copy"}
-            <Copy className="ml-1 h-3 w-3" />
-          </Button>
-        </div>
-      )}
+      <div className="relative">
+        <pre className={`p-4 overflow-x-auto bg-slate-900 text-slate-50 text-sm ${showLineNumbers ? 'pl-12' : ''}`}>
+          {showLineNumbers ? (
+            <code className="block">
+              {codeLines.map((line, i) => (
+                <div key={i} className="relative">
+                  <span className="absolute left-[-2rem] text-slate-500 w-8 text-right pr-2 select-none">
+                    {i + 1}
+                  </span>
+                  <span>{line}</span>
+                </div>
+              ))}
+            </code>
+          ) : (
+            <code>{code}</code>
+          )}
+        </pre>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="absolute top-2 right-2 h-8 w-8 p-0 text-slate-300 hover:text-slate-50 hover:bg-slate-700"
+          onClick={copyToClipboard}
+        >
+          <Copy className="h-4 w-4" />
+          <span className="sr-only">Copy code</span>
+        </Button>
+      </div>
     </div>
   );
 }

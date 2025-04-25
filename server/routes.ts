@@ -97,6 +97,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     });
   });
+  
+  // Endpoint to check if a user is authenticated
+  app.get("/api/admin/check-auth", (req, res) => {
+    if (req.session?.isAuthenticated) {
+      res.status(200).json({ authenticated: true });
+    } else {
+      res.status(401).json({ authenticated: false });
+    }
+  });
 
   app.get("/api/admin/blog-categories", adminAuthMiddleware, async (_req, res) => {
     try {

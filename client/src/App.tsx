@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { ProtectedRoute } from "./lib/protected-route";
 
 // Main pages
 import Home from "@/pages/home";
@@ -82,9 +83,9 @@ function Router() {
           <Route path="/blog" component={Blog} />
           <Route path="/case-studies" component={CaseStudies} />
           
-          {/* Integration Routes */}
+          {/* Integration Routes - Protected */}
           <Route path="/integrations" component={Integrations} />
-          <Route path="/integrations/n8n-guide" component={N8nGuide} />
+          <ProtectedRoute path="/integrations/n8n-guide" component={N8nGuide} />
 
           {/* Solution Routes */}
           <Route path="/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
@@ -134,9 +135,9 @@ function Router() {
           <Route path="/fr/blog" component={Blog} />
           <Route path="/fr/case-studies" component={CaseStudies} />
           
-          {/* French Integration Routes */}
+          {/* French Integration Routes - Protected */}
           <Route path="/fr/integrations" component={Integrations} />
-          <Route path="/fr/integrations/n8n-guide" component={N8nGuide} />
+          <ProtectedRoute path="/fr/integrations/n8n-guide" component={N8nGuide} />
 
           {/* French Solution Routes */}
           <Route path="/fr/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
