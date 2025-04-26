@@ -83,7 +83,13 @@ export function WhatWeDo() {
               <Card className="h-full flex flex-col shadow-lg border-primary/10 hover:shadow-xl transition-shadow">
                 <CardHeader>
                   <div className="inline-block p-3 rounded-lg bg-primary/10 mb-4">
-                    <pillar.icon className="h-6 w-6 text-primary" />
+                    <pillar.icon className={`h-6 w-6 ${
+                      pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                      ? "text-blue-500" 
+                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                        ? "text-emerald-500" 
+                        : "text-purple-500"
+                    }`} />
                   </div>
                   <CardTitle className="text-xl">{pillar.title}</CardTitle>
                 </CardHeader>

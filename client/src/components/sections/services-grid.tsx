@@ -113,7 +113,19 @@ export function ServicesGrid() {
               <Card className="h-full">
                 <CardHeader>
                   <div className="mb-4 inline-block rounded-lg bg-primary/10 p-3">
-                    <service.icon className="h-6 w-6 text-primary" />
+                    <service.icon className={`h-6 w-6 ${
+                      service.name.includes("Lead") || service.name.includes("Leads") 
+                        ? "text-red-500" 
+                        : service.name.includes("Sales") || service.name.includes("Ventes") || service.name.includes("Dollar")
+                          ? "text-green-500"
+                          : service.name.includes("Nurturing") || service.name.includes("Smart")
+                            ? "text-blue-500"
+                            : service.name.includes("Engagement") || service.name.includes("Customer")
+                              ? "text-purple-500"
+                              : service.name.includes("Conversion") || service.name.includes("Optimization")
+                                ? "text-orange-500"
+                                : "text-indigo-500"
+                    }`} />
                   </div>
                   <CardTitle className="text-xl">{service.name}</CardTitle>
                   <CardDescription className="mt-2">{service.description}</CardDescription>

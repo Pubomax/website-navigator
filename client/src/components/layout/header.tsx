@@ -936,9 +936,12 @@ export function Header() {
                                       <Link
                                         key={subItem.href}
                                         href={getLocalizedPath(subItem.href)}
-                                        className="block py-1 text-sm text-gray-600 hover:text-gray-900"
+                                        className="flex items-center gap-2 py-1 text-sm text-gray-600 hover:text-gray-900"
                                         onClick={() => setMobileMenuOpen(false)}
                                       >
+                                        {subItem.icon && (
+                                          <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
+                                        )}
                                         {t(subItem.name)}
                                       </Link>
                                     ))}
