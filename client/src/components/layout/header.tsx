@@ -105,12 +105,16 @@ const navigation: NavigationItem[] = [
           { 
             name: "salesAutomation", 
             href: "/services/sales-automation",
-            description: "Automate and qualify leads."
+            description: "Automate and qualify leads.",
+            icon: Building2,
+            iconColor: "text-emerald-500"
           },
           { 
             name: "marketingAutomation", 
             href: "/services/marketing-automation",
-            description: "Automated customer journeys."
+            description: "Automated customer journeys.",
+            icon: Users,
+            iconColor: "text-blue-500"
           }
         ]
       },
@@ -120,12 +124,16 @@ const navigation: NavigationItem[] = [
           { 
             name: "digitalFoundation", 
             href: "/services/digital-foundation",
-            description: "Custom CRM solutions tailored to business needs."
+            description: "Custom CRM solutions tailored to business needs.",
+            icon: Building,
+            iconColor: "text-cyan-500"
           },
           { 
             name: "customSoftware", 
             href: "/services/custom-software",
-            description: "Business-specific automation solutions."
+            description: "Business-specific automation solutions.",
+            icon: Factory,
+            iconColor: "text-green-500"
           }
         ]
       },
@@ -135,12 +143,16 @@ const navigation: NavigationItem[] = [
           { 
             name: "aiAutomationStarter", 
             href: "/services/ai-automation-starter",
-            description: "Basic AI-powered automation package."
+            description: "Basic AI-powered automation package.",
+            icon: Users2,
+            iconColor: "text-indigo-500"
           },
           { 
             name: "transformationConsulting", 
             href: "/services/transformation-consulting",
-            description: "Full business process automation guidance."
+            description: "Full business process automation guidance.",
+            icon: BuildingLarge,
+            iconColor: "text-orange-500"
           }
         ]
       }
@@ -389,111 +401,198 @@ export function Header() {
                       >
                         <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="flex bg-white">
-                            {/* Three-column layout for Industries */}
-                            {item.name === "industries" && (
+                            {/* Three-column layout for Industries and Products */}
+                            {(item.name === "industries" || item.name === "products") && (
                               <>
-                                {/* Left Column - Private Sector */}
+                                {/* Left Column */}
                                 <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                                   <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {t("Private Sector")}
+                                    {item.name === "industries" ? t("Private Sector") : t("Automation Systems")}
                                   </h4>
                                   <div className="space-y-5">
-                                    {item.items.find(g => g.group === "Private Sector")?.items.map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-sm text-[#6b7280]">
-                                                {t(subItem.description)}
+                                    {item.name === "industries" 
+                                      ? (item.items.find(g => g.group === "Private Sector")?.items || []).map((subItem) => (
+                                          <Link
+                                            key={subItem.href}
+                                            href={getLocalizedPath(subItem.href)}
+                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            <div className="flex items-start gap-3">
+                                              {subItem.icon && (
+                                                <div className="flex-shrink-0 mt-1">
+                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                </div>
+                                              )}
+                                              <div>
+                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                  {t(subItem.name)}
+                                                </div>
+                                                {subItem.description && (
+                                                  <div className="mt-1 text-sm text-[#6b7280]">
+                                                    {t(subItem.description)}
+                                                  </div>
+                                                )}
                                               </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                                            </div>
+                                          </Link>
+                                        ))
+                                      : (item.items.find(g => g.group === "Automation Systems")?.items || []).map((subItem) => (
+                                          <Link
+                                            key={subItem.href}
+                                            href={getLocalizedPath(subItem.href)}
+                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            <div className="flex items-start gap-3">
+                                              {subItem.icon && (
+                                                <div className="flex-shrink-0 mt-1">
+                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                </div>
+                                              )}
+                                              <div>
+                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                  {t(subItem.name)}
+                                                </div>
+                                                {subItem.description && (
+                                                  <div className="mt-1 text-sm text-[#6b7280]">
+                                                    {t(subItem.description)}
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </div>
+                                          </Link>
+                                        ))
+                                    }
                                   </div>
                                 </div>
                                 
-                                {/* Middle column - Public Sector */}
+                                {/* Middle column */}
                                 <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                  {/* First section heading */}
                                   <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {t("Public Sector")}
+                                    {item.name === "industries" ? t("Public Sector") : t("Custom Development")}
                                   </h4>
                                   
+                                  {/* First section content */}
                                   <div className="space-y-5 mb-8">
-                                    {(item.items.find(g => g.group === "Public Sector")?.items || []).map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-sm text-[#6b7280]">
-                                                {t(subItem.description)}
+                                    {item.name === "industries"
+                                      ? (item.items.find(g => g.group === "Public Sector")?.items || []).map((subItem) => (
+                                          <Link
+                                            key={subItem.href}
+                                            href={getLocalizedPath(subItem.href)}
+                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            <div className="flex items-start gap-3">
+                                              {subItem.icon && (
+                                                <div className="flex-shrink-0 mt-1">
+                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                </div>
+                                              )}
+                                              <div>
+                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                  {t(subItem.name)}
+                                                </div>
+                                                {subItem.description && (
+                                                  <div className="mt-1 text-sm text-[#6b7280]">
+                                                    {t(subItem.description)}
+                                                  </div>
+                                                )}
                                               </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                                            </div>
+                                          </Link>
+                                        ))
+                                      : (item.items.find(g => g.group === "Custom Development")?.items || []).map((subItem) => (
+                                          <Link
+                                            key={subItem.href}
+                                            href={getLocalizedPath(subItem.href)}
+                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            <div className="flex items-start gap-3">
+                                              {subItem.icon && (
+                                                <div className="flex-shrink-0 mt-1">
+                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                </div>
+                                              )}
+                                              <div>
+                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                  {t(subItem.name)}
+                                                </div>
+                                                {subItem.description && (
+                                                  <div className="mt-1 text-sm text-[#6b7280]">
+                                                    {t(subItem.description)}
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </div>
+                                          </Link>
+                                        ))
+                                    }
                                   </div>
 
-                                  {/* Business Size Section */}
+                                  {/* Second section heading */}
                                   <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {t("Business Size")}
+                                    {item.name === "industries" ? t("Business Size") : t("Implementation Services")}
                                   </h4>
                                   
+                                  {/* Second section content */}
                                   <div className="space-y-5">
-                                    {(item.items.find(g => g.group === "Business Size")?.items || []).map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-sm text-[#6b7280]">
-                                                {t(subItem.description)}
+                                    {item.name === "industries"
+                                      ? (item.items.find(g => g.group === "Business Size")?.items || []).map((subItem) => (
+                                          <Link
+                                            key={subItem.href}
+                                            href={getLocalizedPath(subItem.href)}
+                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            <div className="flex items-start gap-3">
+                                              {subItem.icon && (
+                                                <div className="flex-shrink-0 mt-1">
+                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                </div>
+                                              )}
+                                              <div>
+                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                  {t(subItem.name)}
+                                                </div>
+                                                {subItem.description && (
+                                                  <div className="mt-1 text-sm text-[#6b7280]">
+                                                    {t(subItem.description)}
+                                                  </div>
+                                                )}
                                               </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                                            </div>
+                                          </Link>
+                                        ))
+                                      : (item.items.find(g => g.group === "Implementation Services")?.items || []).map((subItem) => (
+                                          <Link
+                                            key={subItem.href}
+                                            href={getLocalizedPath(subItem.href)}
+                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            <div className="flex items-start gap-3">
+                                              {subItem.icon && (
+                                                <div className="flex-shrink-0 mt-1">
+                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                </div>
+                                              )}
+                                              <div>
+                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                  {t(subItem.name)}
+                                                </div>
+                                                {subItem.description && (
+                                                  <div className="mt-1 text-sm text-[#6b7280]">
+                                                    {t(subItem.description)}
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </div>
+                                          </Link>
+                                        ))
+                                    }
                                   </div>
                                 </div>
                               </>
@@ -610,7 +709,7 @@ export function Header() {
                             )}
                             
                             {/* Original Pattern with left category selectors for other items */}
-                            {item.name !== "industries" && item.name !== "solutions" && (
+                            {item.name !== "industries" && item.name !== "solutions" && item.name !== "products" && (
                               <>
                                 {/* Left column - Category selectors */}
                                 <div className="w-48 border-r border-gray-100 py-4">
