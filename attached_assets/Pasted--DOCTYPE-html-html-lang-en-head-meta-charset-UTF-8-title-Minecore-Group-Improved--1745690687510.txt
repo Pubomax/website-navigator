@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minecore Group - Improved Header</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS 2.2.19 -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.5.2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@3.3.1/400.css" rel="stylesheet">
+  <style>
+    html { font-family: 'Inter', sans-serif; }
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      display: block;
+    }
+    .dropdown-menu {
+      display: none;
+    }
+    /* For better dropdown shadow and animation */
+    .fade-in {
+      animation: fadeIn 0.15s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* Custom scrollbar for dropdown on mobile */
+    ::-webkit-scrollbar { width: 8px; background: #f9fafb;}
+    ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius:4px; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="w-full bg-white shadow-sm z-30">
+    <div class="container max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2">
+        <img src="/logo.png" alt="Minecore Group" class="h-12 w-auto" />
+        <span class="text-xl font-bold text-gray-900 tracking-tight hidden sm:inline">Minecore Group</span>
+      </a>
+
+      <!-- Desktop navigation -->
+      <nav class="hidden lg:flex items-center gap-4">
+        <!-- Industries Mega Dropdown Example -->
+        <div class="relative dropdown">
+          <button class="flex items-center gap-1 text-base font-medium px-3 py-2 rounded-md transition-colors text-gray-700 hover:text-primary focus:text-primary focus:outline-none">
+            Industries <i class="fas fa-chevron-down text-xs mt-1"></i>
+          </button>
+          <div class="dropdown-menu absolute left-0 top-full min-w-[620px] bg-white shadow-2xl fade-in py-4 px-6 rounded-2xl border border-gray-100 mt-2 z-50" style="width:700px;" tabindex="-1">
+            <div class="flex gap-8">
+              <!-- Multi-column structure -->
+              <div class="flex-1">
+                <h4 class="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">Private Sector</h4>
+                <ul>
+                  <li class="flex items-start gap-2 mb-4">
+                    <span class="mt-1"><i class="fa-solid fa-industry text-green-500 text-lg"></i></span>
+                    <div>
+                      <a href="/sectors/manufacturing" class="font-semibold text-gray-900 hover:text-primary transition">Manufacturing</a>
+                      <div class="text-xs text-gray-500">Automation for production and operations.</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2 mb-4">
+                    <span class="mt-1"><i class="fa-solid fa-coins text-yellow-500 text-lg"></i></span>
+                    <div>
+                      <a href="/sectors/finance" class="font-semibold text-gray-900 hover:text-primary transition">Finance</a>
+                      <div class="text-xs text-gray-500">Solutions for financial services and banking.</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2 mb-4">
+                    <span class="mt-1"><i class="fa-solid fa-store-alt text-blue-500 text-lg"></i></span>
+                    <div>
+                      <a href="/sectors/retail" class="font-semibold text-gray-900 hover:text-primary transition">Retail</a>
+                      <div class="text-xs text-gray-500">Customer engagement and inventory automation.</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1"><i class="fa-solid fa-heart-pulse text-pink-500 text-lg"></i></span>
+                    <div>
+                      <a href="/sectors/healthcare" class="font-semibold text-gray-900 hover:text-primary transition">Healthcare</a>
+                      <div class="text-xs text-gray-500">Compliant automation for healthcare providers.</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="flex-1 border-l border-gray-100 pl-8">
+                <h4 class="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">Public Sector</h4>
+                <ul>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1"><i class="fa-solid fa-building-columns text-cyan-500 text-lg"></i></span>
+                    <div>
+                      <a href="/sectors/public-sector" class="font-semibold text-gray-900 hover:text-primary transition">Public Sector</a>
+                      <div class="text-xs text-gray-500">Government automation solutions.</div>
+                    </div>
+                  </li>
+                </ul>
+                <h4 class="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4 mt-8">Business Size</h4>
+                <ul>
+                  <li class="flex items-start gap-2 mb-4">
+                    <span class="mt-1"><i class="fa-solid fa-user-group text-indigo-500 text-lg"></i></span>
+                    <div>
+                      <a href="/business-types/micro" class="font-semibold text-gray-900 hover:text-primary transition">Micro Enterprises</a>
+                      <div class="text-xs text-gray-500">1-10 employees, affordable automation.</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2 mb-4">
+                    <span class="mt-1"><i class="fa-solid fa-people-arrows text-lime-500 text-lg"></i></span>
+                    <div>
+                      <a href="/business-types/mid-sized" class="font-semibold text-gray-900 hover:text-primary transition">Mid-Sized Enterprises</a>
+                      <div class="text-xs text-gray-500">10-250 employees, scalable solutions.</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1"><i class="fa-solid fa-city text-orange-500 text-lg"></i></span>
+                    <div>
+                      <a href="/business-types/large" class="font-semibold text-gray-900 hover:text-primary transition">Large Enterprises</a>
+                      <div class="text-xs text-gray-500">250+ employees, enterprise-grade tools.</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- Optional: right-side quick links or promo -->
+              <div class="flex flex-col min-w-[160px] max-w-[160px] ml-4">
+                <h4 class="uppercase text-xs text-gray-500 font-semibold tracking-widest mb-4">More</h4>
+                <ul class="space-y-2">
+                  <li><a href="/about" class="text-gray-700 hover:text-primary text-sm">About Us</a></li>
+                  <li><a href="/faq" class="text-gray-700 hover:text-primary text-sm">FAQ</a></li>
+                  <li><a href="/blog" class="text-gray-700 hover:text-primary text-sm">Blog</a></li>
+                  <li><a href="/contact" class="text-gray-700 hover:text-primary text-sm">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/solutions" class="text-base font-medium px-3 py-2 rounded-md text-gray-700 hover:text-primary transition">Solutions</a>
+        <a href="/products" class="text-base font-medium px-3 py-2 rounded-md text-gray-700 hover:text-primary transition">Products</a>
+        <a href="/resources" class="text-base font-medium px-3 py-2 rounded-md text-gray-700 hover:text-primary transition">Resources</a>
+        <a href="/company" class="text-base font-medium px-3 py-2 rounded-md text-gray-700 hover:text-primary transition">Company</a>
+      </nav>
+
+      <!-- Call to action button -->
+      <div class="hidden lg:block">
+        <a href="/consultation" class="inline-block px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow transition-colors">Get Started</a>
+      </div>
+
+      <!-- Hamburger Mobile menu button -->
+      <button class="lg:hidden flex items-center px-2 py-2 rounded-md text-gray-500 hover:bg-gray-100" id="mobile-menu-btn" aria-label="Open Menu">
+        <i class="fa-solid fa-bars text-2xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu - hidden by default, toggled by button -->
+    <div class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden" id="mobile-backdrop"></div>
+    <aside class="fixed top-0 right-0 h-full w-[300px] sm:w-[380px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform" id="mobile-menu">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/logo.png" alt="logo" class="h-10" />
+          <span class="font-semibold text-gray-900 text-lg">Minecore Group</span>
+        </a>
+        <button class="text-gray-500 p-2 rounded hover:bg-gray-100" id="mobile-close-btn" aria-label="Close Menu">
+          <i class="fa-solid fa-times text-xl"></i>
+        </button>
+      </div>
+      <nav class="p-6 text-base">
+        <!-- Mobile nav structure, simplier, collapsible -->
+        <details class="mb-3">
+          <summary class="flex items-center justify-between font-semibold py-2 cursor-pointer select-none">
+            Industries <i class="fa-solid fa-chevron-down"></i>
+          </summary>
+          <div class="ml-3 mt-3 space-y-4 text-[15px]">
+            <div>
+              <div class="text-xs uppercase text-gray-500 font-semibold mb-2">Private Sector</div>
+              <ul>
+                <li class="mb-2">
+                  <a href="/sectors/manufacturing" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-industry text-green-500"></i>Manufacturing</a>
+                </li>
+                <li class="mb-2">
+                  <a href="/sectors/finance" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-coins text-yellow-500"></i>Finance</a>
+                </li>
+                <li class="mb-2">
+                  <a href="/sectors/retail" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-store-alt text-blue-500"></i>Retail</a>
+                </li>
+                <li>
+                  <a href="/sectors/healthcare" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-heart-pulse text-pink-500"></i>Healthcare</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div class="text-xs uppercase text-gray-500 font-semibold mb-2 mt-4">Public Sector</div>
+              <ul>
+                <li>
+                  <a href="/sectors/public-sector" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-building-columns text-cyan-500"></i>Public Sector</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div class="text-xs uppercase text-gray-500 font-semibold mb-2 mt-4">Business Size</div>
+              <ul>
+                <li class="mb-2">
+                  <a href="/business-types/micro" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-user-group text-indigo-500"></i>Micro Enterprises</a>
+                </li>
+                <li class="mb-2">
+                  <a href="/business-types/mid-sized" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-people-arrows text-lime-500"></i>Mid-Sized Enterprises</a>
+                </li>
+                <li>
+                  <a href="/business-types/large" class="flex items-center gap-2 text-gray-900 hover:text-primary"><i class="fa-solid fa-city text-orange-500"></i>Large Enterprises</a>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4">
+              <div class="text-xs uppercase text-gray-500 font-semibold mb-2">More</div>
+              <ul>
+                <li><a href="/about" class="text-gray-700 hover:text-primary">About Us</a></li>
+                <li><a href="/faq" class="text-gray-700 hover:text-primary">FAQ</a></li>
+                <li><a href="/blog" class="text-gray-700 hover:text-primary">Blog</a></li>
+                <li><a href="/contact" class="text-gray-700 hover:text-primary">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </details>
+        <a href="/solutions" class="block font-semibold py-2 text-gray-900 hover:text-primary">Solutions</a>
+        <a href="/products" class="block font-semibold py-2 text-gray-900 hover:text-primary">Products</a>
+        <a href="/resources" class="block font-semibold py-2 text-gray-900 hover:text-primary">Resources</a>
+        <a href="/company" class="block font-semibold py-2 text-gray-900 hover:text-primary">Company</a>
+        <div class="mt-6">
+          <a href="/consultation" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center font-semibold py-2 rounded-lg shadow transition">Get Started</a>
+        </div>
+      </nav>
+    </aside>
+  </header>

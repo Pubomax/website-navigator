@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, ChevronDown } from "lucide-react";
+import { 
+  Menu, 
+  ChevronDown, 
+  Factory, 
+  Building2, 
+  Store, 
+  Heart, 
+  Building, 
+  Users, 
+  Users2, 
+  Building2 as BuildingLarge,
+  Banknote
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -21,6 +33,8 @@ interface NavigationItem {
       name: string;
       href: string;
       description?: string;
+      icon?: React.ElementType;
+      iconColor?: string;
     }>;
   }>;
 }
@@ -131,22 +145,30 @@ const navigation: NavigationItem[] = [
           { 
             name: "manufacturing", 
             href: "/sectors/manufacturing",
-            description: "Automation solutions for production and operations."
+            description: "Automation solutions for production and operations.",
+            icon: Factory,
+            iconColor: "text-green-500"
           },
           { 
             name: "finance", 
             href: "/sectors/finance",
-            description: "Smart solutions for financial services and banking."
+            description: "Smart solutions for financial services and banking.",
+            icon: Banknote,
+            iconColor: "text-yellow-500"
           },
           { 
             name: "retail", 
             href: "/sectors/retail",
-            description: "Automate customer engagement and inventory management."
+            description: "Automate customer engagement and inventory management.",
+            icon: Store,
+            iconColor: "text-blue-500"
           },
           { 
             name: "healthcare", 
             href: "/sectors/healthcare",
-            description: "Compliant automation solutions for healthcare providers."
+            description: "Compliant automation solutions for healthcare providers.",
+            icon: Heart,
+            iconColor: "text-pink-500"
           }
         ]
       },
@@ -156,7 +178,9 @@ const navigation: NavigationItem[] = [
           { 
             name: "publicSector", 
             href: "/sectors/public-sector",
-            description: "Efficient solutions for government organizations."
+            description: "Efficient solutions for government organizations.",
+            icon: Building,
+            iconColor: "text-cyan-500"
           }
         ]
       },
@@ -166,17 +190,23 @@ const navigation: NavigationItem[] = [
           { 
             name: "microEnterprises", 
             href: "/business-types/micro",
-            description: "Affordable solutions for businesses with 1-10 employees."
+            description: "Affordable solutions for businesses with 1-10 employees.",
+            icon: Users,
+            iconColor: "text-indigo-500"
           },
           { 
             name: "midSizedEnterprises", 
             href: "/business-types/mid-sized",
-            description: "Scalable automation for businesses with 10-250 employees."
+            description: "Scalable automation for businesses with 10-250 employees.",
+            icon: Users2,
+            iconColor: "text-lime-500"
           },
           { 
             name: "largeEnterprises", 
             href: "/business-types/large",
-            description: "Enterprise-grade solutions for 250+ employee organizations."
+            description: "Enterprise-grade solutions for 250+ employee organizations.",
+            icon: BuildingLarge,
+            iconColor: "text-orange-500"
           }
         ]
       }
@@ -344,10 +374,10 @@ export function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2"
+                        className="absolute left-1/2 z-10 mt-3 w-screen max-w-3xl -translate-x-1/2 transform px-2"
                         onMouseLeave={() => setActiveGroup(null)}
                       >
-                        <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="flex bg-white">
                             {/* Left column - Category selectors */}
                             <div className="w-48 border-r border-gray-100 py-4">
@@ -369,8 +399,8 @@ export function Header() {
                               </div>
                             </div>
                             
-                            {/* Right column - Content panel */}
-                            <div className="py-5 px-6 w-96">
+                            {/* Middle column - Content panel */}
+                            <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                               {item.items.map((group) => (
                                 <motion.div
                                   key={group.group}
@@ -389,14 +419,23 @@ export function Header() {
                                       className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
                                       onClick={() => setActiveItem(null)}
                                     >
-                                      <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                        {t(subItem.name)}
-                                      </div>
-                                      {subItem.description && (
-                                        <div className="mt-1 text-sm text-[#6b7280]">
-                                          {t(subItem.description)}
+                                      <div className="flex items-start gap-3">
+                                        {subItem.icon && (
+                                          <div className="flex-shrink-0 mt-1">
+                                            <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                          </div>
+                                        )}
+                                        <div>
+                                          <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                            {t(subItem.name)}
+                                          </div>
+                                          {subItem.description && (
+                                            <div className="mt-1 text-sm text-[#6b7280]">
+                                              {t(subItem.description)}
+                                            </div>
+                                          )}
                                         </div>
-                                      )}
+                                      </div>
                                     </Link>
                                   ))}
                                 </motion.div>
@@ -525,14 +564,23 @@ export function Header() {
                                       className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
                                       onClick={() => setMobileMenuOpen(false)}
                                     >
-                                      <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
-                                        {t(subItem.name)}
-                                      </div>
-                                      {subItem.description && (
-                                        <div className="mt-1 text-xs text-[#6b7280]">
-                                          {t(subItem.description)}
+                                      <div className="flex items-start gap-3">
+                                        {subItem.icon && (
+                                          <div className="flex-shrink-0 mt-1">
+                                            <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
+                                          </div>
+                                        )}
+                                        <div>
+                                          <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
+                                            {t(subItem.name)}
+                                          </div>
+                                          {subItem.description && (
+                                            <div className="mt-1 text-xs text-[#6b7280]">
+                                              {t(subItem.description)}
+                                            </div>
+                                          )}
                                         </div>
-                                      )}
+                                      </div>
                                     </Link>
                                   ))}
                                 </div>
