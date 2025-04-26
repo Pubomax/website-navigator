@@ -53,6 +53,13 @@ const translations: Translations = {
     "Team": "Team",
     "Mission": "Mission",
     "Story": "Story",
+    "Automated Lead Generation": "Automated Lead Generation",
+    "Smart Nurturing": "Smart Nurturing",
+    "Quick Acquisition": "Quick Acquisition",
+    "Instant Customer Engagement": "Instant Customer Engagement",
+    "Lead Generation Solutions": "Lead Generation Solutions",
+    "Sales Acceleration Solutions": "Sales Acceleration Solutions",
+    "Customer Engagement Solutions": "Customer Engagement Solutions",
 
     // Industry sectors
     manufacturing: "Manufacturing",
@@ -164,6 +171,13 @@ const translations: Translations = {
     "Team": "Équipe",
     "Mission": "Mission",
     "Story": "Histoire",
+    "Automated Lead Generation": "Génération Automatisée de Leads",
+    "Smart Nurturing": "Nurturing Intelligent",
+    "Quick Acquisition": "Acquisition Rapide",
+    "Instant Customer Engagement": "Engagement Client Instantané",
+    "Lead Generation Solutions": "Solutions de Génération de Leads",
+    "Sales Acceleration Solutions": "Solutions d'Accélération des Ventes",
+    "Customer Engagement Solutions": "Solutions d'Engagement Client",
 
     // Industry sectors
     manufacturing: "Fabrication",
