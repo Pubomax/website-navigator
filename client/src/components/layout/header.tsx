@@ -441,6 +441,51 @@ export function Header() {
                                 </motion.div>
                               ))}
                             </div>
+                            
+                            {/* Right column - Quick links (fixed content) */}
+                            <div className="py-5 px-6 min-w-[160px] max-w-[160px]">
+                              <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                {t("more")}
+                              </h4>
+                              <ul className="space-y-2">
+                                <li>
+                                  <Link 
+                                    href={getLocalizedPath("/about")} 
+                                    className="text-gray-700 hover:text-primary text-sm"
+                                    onClick={() => setActiveItem(null)}
+                                  >
+                                    {t("about")}
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link 
+                                    href={getLocalizedPath("/faq")} 
+                                    className="text-gray-700 hover:text-primary text-sm"
+                                    onClick={() => setActiveItem(null)}
+                                  >
+                                    {t("faq")}
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link 
+                                    href={getLocalizedPath("/blog")} 
+                                    className="text-gray-700 hover:text-primary text-sm"
+                                    onClick={() => setActiveItem(null)}
+                                  >
+                                    {t("blog")}
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link 
+                                    href={getLocalizedPath("/contact")} 
+                                    className="text-gray-700 hover:text-primary text-sm"
+                                    onClick={() => setActiveItem(null)}
+                                  >
+                                    {t("contact")}
+                                  </Link>
+                                </li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </motion.div>
