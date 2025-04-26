@@ -282,8 +282,8 @@ const navigation: NavigationItem[] = [
 
 // Define language options
 const languages = [
-  { code: "en", name: "English", href: "" },
-  { code: "fr", name: "Français", href: "/fr" },
+  { code: "en", name: "English" },
+  { code: "fr", name: "Français" },
 ];
 
 export function Header() {
@@ -864,7 +864,7 @@ export function Header() {
                     {languages.map((lang) => (
                       <Link
                         key={lang.code}
-                        href={lang.href}
+                        href={lang.code === "en" ? location.replace(/^\/fr/, "") : `/fr${location.replace(/^\/fr/, "")}`}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setActiveItem(null)}
                       >
@@ -970,7 +970,7 @@ export function Header() {
                     {languages.map((lang) => (
                       <Link
                         key={lang.code}
-                        href={lang.href}
+                        href={lang.code === "en" ? location.replace(/^\/fr/, "") : `/fr${location.replace(/^\/fr/, "")}`}
                         className={cn(
                           "px-3 py-1 text-sm rounded-md",
                           lang.code === (isPathFrench ? "fr" : "en")
