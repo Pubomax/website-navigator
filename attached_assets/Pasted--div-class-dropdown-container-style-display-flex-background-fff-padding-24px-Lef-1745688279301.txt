@@ -1,0 +1,67 @@
+<div class="dropdown-container" style="display: flex; background: #fff; padding: 24px;">
+
+  <!-- Left Column (Categories) -->
+  <div class="dropdown-left" style="flex: 1; padding-right: 24px;">
+    <ul style="list-style: none; padding: 0;">
+      <li class="menu-category" onmouseover="showMenu('private')">Private Sector</li>
+      <li class="menu-category" onmouseover="showMenu('public')">Public Sector</li>
+      <li class="menu-category" onmouseover="showMenu('business')">Business Size</li>
+    </ul>
+  </div>
+
+  <!-- Right Column (Dynamic Links) -->
+  <div class="dropdown-right" style="flex: 2;">
+    <div id="private" class="menu-items">
+      <a href="/sectors/manufacturing" class="menu-link">Manufacturing<br><span class="desc">Automation solutions for production and operations.</span></a>
+      <a href="/sectors/finance" class="menu-link">Finance<br><span class="desc">Smart solutions for financial services and banking.</span></a>
+      <a href="/sectors/retail" class="menu-link">Retail<br><span class="desc">Automate customer engagement and inventory management.</span></a>
+      <a href="/sectors/healthcare" class="menu-link">Healthcare<br><span class="desc">Compliant automation solutions for healthcare providers.</span></a>
+    </div>
+
+    <div id="public" class="menu-items" style="display:none;">
+      <a href="/sectors/public-sector" class="menu-link">Public Sector<br><span class="desc">Efficient solutions for government organizations.</span></a>
+    </div>
+
+    <div id="business" class="menu-items" style="display:none;">
+      <a href="/business-types/micro" class="menu-link">Micro Enterprises<br><span class="desc">Affordable solutions for businesses with 1–10 employees.</span></a>
+      <a href="/business-types/mid-sized" class="menu-link">Mid-Sized Enterprises<br><span class="desc">Scalable automation for businesses with 10–250 employees.</span></a>
+      <a href="/business-types/large" class="menu-link">Large Enterprises<br><span class="desc">Enterprise-grade solutions for 250+ employee organizations.</span></a>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function showMenu(menuId) {
+  var sections = document.querySelectorAll('.menu-items');
+  sections.forEach(function(section) {
+    section.style.display = 'none';
+  });
+  document.getElementById(menuId).style.display = 'block';
+}
+</script>
+
+<style>
+.menu-link {
+  display: block;
+  padding: 8px 0;
+  font-size: 16px;
+  color: #111827;
+  text-decoration: none;
+}
+.menu-link:hover {
+  background-color: #f5f5f5;
+  color: #3b82f6;
+}
+
+.desc {
+  font-size: 14px;
+  color: #6b7280;
+}
+.menu-category {
+  font-weight: bold;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+</style>

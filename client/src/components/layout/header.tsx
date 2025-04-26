@@ -257,6 +257,14 @@ export function Header() {
     setActiveItem(activeItem === itemName ? null : itemName);
   };
 
+  // For hovering over menu items
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
+
+  // Show specific group on hover
+  const showGroup = (groupName: string | null) => {
+    setActiveGroup(groupName);
+  };
+
   // Toggle mobile accordion
   const toggleMobileGroup = (groupName: string) => {
     setOpenMobileGroup(openMobileGroup === groupName ? null : groupName);
@@ -277,7 +285,17 @@ export function Header() {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-6">
           {navigation.map((item) => (
-            <div key={item.name} className="relative inline-block text-left">
+            <div 
+              key={item.name} 
+              className="relative inline-block text-left"
+              onMouseEnter={() => toggleDropdown(item.name)}
+              onMouseLeave={() => {
+                setTimeout(() => {
+                  setActiveItem(null);
+                  setActiveGroup(null);
+                }, 100);
+              }}
+            >
               {item.items ? (
                 // Dropdown menu for items with subitems
                 <>
@@ -289,7 +307,6 @@ export function Header() {
                     )}
                     aria-expanded={activeItem === item.name}
                     aria-haspopup="true"
-                    onClick={() => toggleDropdown(item.name)}
                   >
                     {t(item.name)}
                     <ChevronDown className={cn(
@@ -307,14 +324,24 @@ export function Header() {
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
                         className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2"
+                        onMouseLeave={() => setActiveGroup(null)}
                       >
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                          <div className="relative grid grid-cols-2 gap-6 bg-white p-7">
+                          <div className="relative grid grid-cols-2 gap-0 bg-white">
                             {/* Left column - Category groups */}
-                            <div className="col-span-1 border-r border-gray-100 pr-6">
+                            <div className="col-span-1 border-r border-gray-100 py-6 pl-6">
                               {item.items.map((group) => (
-                                <div key={group.group} className="mb-6 last:mb-0">
-                                  <div className="font-medium text-gray-900 mb-3">
+                                <div 
+                                  key={group.group} 
+                                  className="mb-5 last:mb-0"
+                                  onMouseEnter={() => showGroup(group.group)}
+                                >
+                                  <div className={cn(
+                                    "font-medium text-sm px-3 py-2 rounded-md cursor-pointer",
+                                    activeGroup === group.group || (!activeGroup && group === item.items[0]) 
+                                      ? "bg-gray-100 text-gray-900" 
+                                      : "text-gray-600 hover:text-gray-900"
+                                  )}>
                                     {t(group.group)}
                                   </div>
                                 </div>
@@ -322,28 +349,32 @@ export function Header() {
                             </div>
                             
                             {/* Right column - Items with descriptions */}
-                            <div className="col-span-1">
+                            <div className="col-span-1 py-6 px-6">
                               {item.items.map((group) => (
-                                <div key={group.group} className="mb-6 last:mb-0">
-                                  <div className="space-y-4">
-                                    {group.items.map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
-                                          {t(subItem.name)}
+                                <div 
+                                  key={group.group} 
+                                  className={cn(
+                                    "space-y-4",
+                                    (activeGroup === group.group || (!activeGroup && group === item.items[0])) ? "block" : "hidden"
+                                  )}
+                                >
+                                  {group.items.map((subItem) => (
+                                    <Link
+                                      key={subItem.href}
+                                      href={getLocalizedPath(subItem.href)}
+                                      className="block group p-2 rounded-md hover:bg-gray-50"
+                                      onClick={() => setActiveItem(null)}
+                                    >
+                                      <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+                                        {t(subItem.name)}
+                                      </p>
+                                      {subItem.description && (
+                                        <p className="mt-1 text-sm text-gray-500">
+                                          {t(subItem.description)}
                                         </p>
-                                        {subItem.description && (
-                                          <p className="mt-1 text-sm text-gray-500">
-                                            {t(subItem.description)}
-                                          </p>
-                                        )}
-                                      </Link>
-                                    ))}
-                                  </div>
+                                      )}
+                                    </Link>
+                                  ))}
                                 </div>
                               ))}
                             </div>
