@@ -38,15 +38,8 @@ export function Hero() {
   const content = getContent(isPathFrench);
 
   return (
-    <div className="relative overflow-hidden mt-16 md:mt-20">
-      {/* Primary hero background with multiple gradients for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-background to-background z-0"></div>
-      
-      {/* Accent gradient orbs for visual interest */}
-      <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/5 blur-3xl opacity-60 z-0"></div>
-      <div className="absolute bottom-0 right-1/4 translate-x-1/2 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-primary/10 to-primary/5 blur-3xl opacity-40 z-0"></div>
-      
-      <div className="container-pro section relative z-10">
+    <div className="relative overflow-hidden bg-gradient-to-b from-background to-background/95 mt-16 md:mt-20">
+      <div className="container-pro section">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
