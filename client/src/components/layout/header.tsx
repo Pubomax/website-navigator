@@ -198,7 +198,7 @@ const navigation: NavigationItem[] = [
         group: "Public Sector",
         items: [
           { 
-            name: "publicSector", 
+            name: "Public Sector", 
             href: "/sectors/public-sector",
             description: "Efficient solutions for government organizations.",
             icon: Building,
@@ -210,21 +210,21 @@ const navigation: NavigationItem[] = [
         group: "Business Size",
         items: [
           { 
-            name: "microEnterprises", 
+            name: "Micro Enterprises", 
             href: "/business-types/micro",
             description: "Affordable solutions for businesses with 1-10 employees.",
             icon: Users,
             iconColor: "text-indigo-500"
           },
           { 
-            name: "midSizedEnterprises", 
+            name: "Mid-Sized Enterprises", 
             href: "/business-types/mid-sized",
             description: "Scalable automation for businesses with 10-250 employees.",
             icon: Users2,
             iconColor: "text-lime-500"
           },
           { 
-            name: "largeEnterprises", 
+            name: "Large Enterprises", 
             href: "/business-types/large",
             description: "Enterprise-grade solutions for 250+ employee organizations.",
             icon: BuildingLarge,
