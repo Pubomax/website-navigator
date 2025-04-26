@@ -68,32 +68,18 @@ export function DirectOfferCTA() {
   const content = getContent(isPathFrench);
 
   return (
-    <section className="section relative overflow-hidden bg-gradient-to-b from-background/80 to-primary/5">
-      {/* Background decoration - professional subtle */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute -top-40 -right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-60"></div>
-      </div>
-      
-      <div className="container-pro">
+    <section className="py-20 bg-primary/5">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <div className="inline-flex items-center px-4 py-1.5 mb-6 rounded-full bg-primary/10 text-primary/80 text-sm font-medium border border-primary/10">
-            <span className="mr-1.5 relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            Limited time offer
-          </div>
-          
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-6 gradient-text">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
             {content.title}
           </h2>
-          <p className="max-w-2xl mx-auto text-lg text-muted-foreground/90 leading-relaxed">
+          <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
             {content.subtitle}
           </p>
         </motion.div>
@@ -104,34 +90,32 @@ export function DirectOfferCTA() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <Card className="border-primary/10 shadow-xl overflow-hidden rounded-2xl bg-card/95 backdrop-blur-sm">
-            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary to-primary/60"></div>
-            <CardHeader className="text-center py-8 px-8 pb-6">
-              <div className="mx-auto mb-3 flex items-center justify-center">
-                <span className="text-4xl sm:text-5xl font-medium tracking-tight gradient-text">{content.price}</span>
+          <Card className="border-primary/20 shadow-lg overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary to-primary/60"></div>
+            <CardHeader className="text-center pb-4">
+              <div className="mx-auto mb-3">
+                <span className="text-3xl sm:text-4xl font-bold text-primary">{content.price}</span>
               </div>
-              <CardTitle className="text-xl font-medium text-foreground/90">{content.priceSubtitle}</CardTitle>
+              <CardTitle className="text-xl font-medium">{content.priceSubtitle}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6 border-t border-b border-border/30 px-8 py-8">
-              {content.features.map((feature, index) => (
-                <div key={feature.title} className="flex items-start group">
-                  <div className="flex-shrink-0 mr-4 mt-1">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
-                      <feature.icon className="h-4 w-4" />
-                    </div>
+            <CardContent className="space-y-4 border-t border-b border-muted p-6">
+              {content.features.map((feature) => (
+                <div key={feature.title} className="flex items-start">
+                  <div className="flex-shrink-0 mr-3 mt-1">
+                    <Check className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground/90 mb-1 group-hover:text-primary/90 transition-colors">{feature.title}</h3>
-                    <p className="text-muted-foreground/80 leading-relaxed">{feature.description}</p>
+                    <h3 className="font-medium">{feature.title}</h3>
+                    <p className="text-sm text-muted-foreground">{feature.description}</p>
                   </div>
                 </div>
               ))}
             </CardContent>
-            <CardFooter className="px-8 py-8 flex justify-center">
+            <CardFooter className="p-6 flex justify-center">
               <OfferPopupForm offerType="Standard Package $500/month">
-                <Button size="xl" variant="gradient" className="w-full font-medium shadow-lg">
+                <Button size="lg" className="w-full sm:w-auto">
                   {content.cta}
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </OfferPopupForm>
             </CardFooter>
@@ -139,11 +123,10 @@ export function DirectOfferCTA() {
         </motion.div>
 
         <div className="mt-10 text-center">
-          <p className="text-sm text-muted-foreground/90 max-w-2xl mx-auto flex items-center justify-center gap-2">
-            <Check className="w-4 h-4 text-primary" />
+          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
             {isPathFrench 
-              ? "Pas de contrat à long terme requis. Annulez à tout moment."
-              : "No long-term contract required. Cancel anytime."}
+              ? "Pas de contrat à long terme requis. Annulez à tout moment. Commencez par un appel de consultation pour voir si ce forfait est adapté à vos besoins."
+              : "No long-term contract required. Cancel anytime. Start with a consultation call to see if this package fits your needs."}
           </p>
         </div>
       </div>
