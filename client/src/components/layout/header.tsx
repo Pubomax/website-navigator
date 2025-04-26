@@ -489,9 +489,9 @@ export function Header() {
                                   <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                                     {/* First section heading */}
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {item.name === "industries" 
+                                      {item.name === "Industries" 
                                         ? t("Public Sector") 
-                                        : item.name === "products"
+                                        : item.name === "Products"
                                           ? t("Custom Development")
                                           : t("Our Mission")
                                       }
@@ -499,7 +499,7 @@ export function Header() {
                                     
                                     {/* First section content */}
                                     <div className="space-y-5 mb-8">
-                                      {item.name === "industries"
+                                      {item.name === "Industries"
                                         ? (item.items.find(g => g.group === "Public Sector")?.items || []).map((subItem) => (
                                             <Link
                                               key={subItem.href}
@@ -526,7 +526,7 @@ export function Header() {
                                               </div>
                                             </Link>
                                           ))
-                                        : item.name === "products"
+                                        : item.name === "Products"
                                           ? (item.items.find(g => g.group === "Custom Development")?.items || []).map((subItem) => (
                                               <Link
                                                 key={subItem.href}
@@ -584,9 +584,9 @@ export function Header() {
 
                                     {/* Second section heading */}
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {item.name === "industries" 
+                                      {item.name === "Industries" 
                                         ? t("Business Size") 
-                                        : item.name === "products"
+                                        : item.name === "Products"
                                           ? t("Implementation Services")
                                           : ""
                                       }
@@ -594,7 +594,7 @@ export function Header() {
                                     
                                     {/* Second section content */}
                                     <div className="space-y-5">
-                                      {item.name === "industries"
+                                      {item.name === "Industries"
                                         ? (item.items.find(g => g.group === "Business Size")?.items || []).map((subItem) => (
                                             <Link
                                               key={subItem.href}
@@ -621,7 +621,7 @@ export function Header() {
                                               </div>
                                             </Link>
                                           ))
-                                        : item.name === "products"
+                                        : item.name === "Products"
                                           ? (item.items.find(g => g.group === "Implementation Services")?.items || []).map((subItem) => (
                                               <Link
                                                 key={subItem.href}
