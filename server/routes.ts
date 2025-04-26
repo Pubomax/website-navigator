@@ -1,6 +1,5 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { insertContactMessageSchema, insertNewsletterSubscriptionSchema, insertBlogPostSchema, insertBlogCategorySchema } from "@shared/schema";
 import session from 'express-session';
@@ -31,8 +30,7 @@ const logError = (error: unknown, context: string) => {
   }
 };
 
-// Store connected clients
-const clients = new Set<WebSocket>();
+// Removed WebSocket chat functionality
 
 // Basic auth middleware for admin routes
 // API key for automated integrations (n8n)
@@ -70,95 +68,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   }));
 
-  // Initialize WebSocket server
-  const wss = new WebSocketServer({ server: httpServer, path: '/ws/chat' });
-
-  wss.on('connection', (ws) => {
-    console.log('Client connected to chat');
-    clients.add(ws);
-    
-    // Send welcome message
-    const welcomeMessage = {
-      type: 'system',
-      message: 'Welcome to Minecore Group Support! How can we help you today?',
-      timestamp: new Date().toISOString()
-    };
-    ws.send(JSON.stringify(welcomeMessage));
-    
-    // Handle messages from clients
-    ws.on('message', async (message) => {
-      try {
-        const parsedMessage = JSON.parse(message.toString());
-        console.log('Received message:', parsedMessage);
-        
-        // Add timestamp to user message and broadcast it back to confirm receipt
-        const userMessage = {
-          ...parsedMessage,
-          timestamp: new Date().toISOString()
-        };
-        ws.send(JSON.stringify(userMessage));
-        
-        // Generate automated response based on message content
-        setTimeout(() => {
-          const keywords = parsedMessage.message.toLowerCase();
-          let responseMessage = '';
-          
-          if (keywords.includes('pricing') || keywords.includes('cost') || keywords.includes('package') || keywords.includes('price')) {
-            responseMessage = 'Our automation packages start at $500/month. Would you like to schedule a consultation to discuss which package would best fit your needs?';
-          } 
-          else if (keywords.includes('help') || keywords.includes('support')) {
-            responseMessage = 'I\'d be happy to help! Could you please provide more details about what you need assistance with?';
-          }
-          else if (keywords.includes('automation') || keywords.includes('ai')) {
-            responseMessage = 'Minecore Group specializes in AI Automation solutions designed to help your business make more money while working less. Would you like to learn more about our specific automation services?';
-          }
-          else if (keywords.includes('contact') || keywords.includes('talk') || keywords.includes('human')) {
-            responseMessage = 'I\'d be happy to connect you with one of our specialists. Please provide your email or phone number, and someone will reach out to you shortly.';
-          }
-          else if (keywords.includes('schedule') || keywords.includes('appointment') || keywords.includes('meeting') || keywords.includes('consultation')) {
-            responseMessage = 'We\'d be happy to schedule a consultation with you. Please visit our consultation page or provide your contact information here, and we\'ll arrange a time to discuss your business needs.';
-          }
-          else {
-            responseMessage = 'Thank you for your message. How else can I assist you with your business automation needs today?';
-          }
-          
-          const response = {
-            type: 'support',
-            message: responseMessage,
-            timestamp: new Date().toISOString()
-          };
-          
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify(response));
-          }
-        }, 1000); // Slight delay to simulate thinking/typing
-        
-      } catch (error) {
-        console.error('Error processing message:', error);
-        
-        // Send error message back to client
-        const errorMessage = {
-          type: 'system',
-          message: 'Sorry, there was an error processing your message. Please try again.',
-          timestamp: new Date().toISOString()
-        };
-        
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify(errorMessage));
-        }
-      }
-    });
-    
-    ws.on('close', () => {
-      console.log('Client disconnected from chat');
-      clients.delete(ws);
-    });
-    
-    ws.on('error', (error) => {
-      console.error('WebSocket error:', error);
-      clients.delete(ws);
-    });
-  });
+  // Chat functionality has been removed
 
   // Admin Routes
   app.post("/api/admin/login", async (req, res) => {
