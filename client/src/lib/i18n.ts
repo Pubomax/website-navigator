@@ -49,6 +49,10 @@ const translations: Translations = {
     "Micro Enterprises": "Micro Enterprises",
     "Mid-Sized Enterprises": "Mid-Sized Enterprises",
     "Large Enterprises": "Large Enterprises",
+    "About": "About",
+    "Team": "Team",
+    "Mission": "Mission",
+    "Story": "Story",
 
     // Industry sectors
     manufacturing: "Manufacturing",
@@ -156,6 +160,10 @@ const translations: Translations = {
     "Micro Enterprises": "Micro-entreprises",
     "Mid-Sized Enterprises": "Moyennes Entreprises",
     "Large Enterprises": "Grandes Entreprises",
+    "About": "À Propos",
+    "Team": "Équipe",
+    "Mission": "Mission",
+    "Story": "Histoire",
 
     // Industry sectors
     manufacturing: "Fabrication",

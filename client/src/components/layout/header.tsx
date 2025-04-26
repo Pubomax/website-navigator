@@ -241,14 +241,14 @@ const navigation: NavigationItem[] = [
         group: "Who We Are",
         items: [
           { 
-            name: "about", 
+            name: "About", 
             href: "/about", 
             description: "Learn about Minecore Group.",
             icon: Building,
             iconColor: "text-cyan-500"
           },
           { 
-            name: "team", 
+            name: "Team", 
             href: "/about/team",
             description: "Meet our expert team.",
             icon: Users,
@@ -260,14 +260,14 @@ const navigation: NavigationItem[] = [
         group: "Our Mission",
         items: [
           { 
-            name: "mission", 
+            name: "Mission", 
             href: "/about/mission",
             description: "Our vision for the future of business.",
             icon: BuildingLarge,
             iconColor: "text-orange-500"
           },
           { 
-            name: "story", 
+            name: "Story", 
             href: "/about/story",
             description: "The journey behind Minecore Group.",
             icon: Factory,
