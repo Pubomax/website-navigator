@@ -28,9 +28,13 @@ export function Footer() {
     main: [
       { name: "About", href: "/about" },
       { name: "Services", href: "/services" },
-      { name: "Case Studies", href: "/case-studies" },
-      { name: "Blog", href: "/blog" },
+      { name: "Solutions", href: "/solutions" },
       { name: "Contact", href: "/contact" },
+    ],
+    resources: [
+      { name: "Blog", href: "/blog" },
+      { name: "Case Studies", href: "/case-studies" },
+      { name: "FAQ", href: "/faq" },
     ],
     social: [
       { name: "X (Twitter)", icon: FaXTwitter, href: "https://x.com/minecoregroup" },
@@ -104,11 +108,26 @@ export function Footer() {
                 ))}
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-8 xl:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:col-span-2">
               <div>
                 <h3 className="text-sm font-semibold mb-4">Navigation</h3>
                 <ul role="list" className="space-y-3">
                   {navigation.main.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold mb-4">Resources</h3>
+                <ul role="list" className="space-y-3">
+                  {navigation.resources.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}

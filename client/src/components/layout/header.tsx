@@ -235,36 +235,6 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
-    name: "resources",
-    items: [
-      {
-        group: "Knowledge Center",
-        items: [
-          { 
-            name: "blog", 
-            href: "/blog",
-            description: "Latest automation insights and strategies."
-          },
-          { 
-            name: "caseStudies", 
-            href: "/case-studies",
-            description: "Success stories from our clients."
-          }
-        ]
-      },
-      {
-        group: "Support Resources",
-        items: [
-          { 
-            name: "faq", 
-            href: "/faq",
-            description: "Answers to commonly asked questions."
-          }
-        ]
-      }
-    ],
-  },
-  {
     name: "company",
     items: [
       {
@@ -783,74 +753,6 @@ export function Header() {
                                       </Link>
                                     ))}
                                   </div>
-                                </div>
-                              </>
-                            )}
-                            
-                            {/* Original Pattern with left category selectors for Resources */}
-                            {item.name === "resources" && (
-                              <>
-                                {/* Left column - Category selectors */}
-                                <div className="w-48 border-r border-gray-100 py-4">
-                                  <div className="flex flex-col">
-                                    {item.items.map((group) => (
-                                      <button
-                                        key={group.group}
-                                        className={cn(
-                                          "py-2 px-4 text-left text-base font-medium transition-colors",
-                                          activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])
-                                            ? "bg-gray-50 text-gray-900"
-                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                                        )}
-                                        onMouseEnter={() => showGroup(group.group)}
-                                      >
-                                        {t(group.group)}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                                
-                                {/* Middle column - Content panel */}
-                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                                  {item.items.map((group) => (
-                                    <motion.div
-                                      key={group.group}
-                                      initial={{ opacity: 0 }}
-                                      animate={{ 
-                                        opacity: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? 1 : 0,
-                                        display: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? "block" : "none"
-                                      }}
-                                      transition={{ duration: 0.2 }}
-                                      className="space-y-4"
-                                    >
-                                      {group.items.map((subItem) => (
-                                        <Link
-                                          key={subItem.href}
-                                          href={getLocalizedPath(subItem.href)}
-                                          className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                          onClick={() => setActiveItem(null)}
-                                        >
-                                          <div className="flex items-start gap-3">
-                                            {subItem.icon && (
-                                              <div className="flex-shrink-0 mt-1">
-                                                <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                              </div>
-                                            )}
-                                            <div>
-                                              <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                                {t(subItem.name)}
-                                              </div>
-                                              {subItem.description && (
-                                                <div className="mt-1 text-sm text-[#6b7280]">
-                                                  {t(subItem.description)}
-                                                </div>
-                                              )}
-                                            </div>
-                                          </div>
-                                        </Link>
-                                      ))}
-                                    </motion.div>
-                                  ))}
                                 </div>
                               </>
                             )}
