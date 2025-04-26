@@ -6,7 +6,8 @@ import {
   DollarSign, 
   Settings, 
   Users, 
-  HeadphonesIcon
+  LifeBuoy,
+  ShieldCheck
 } from "lucide-react";
 
 const getContent = (isPathFrench: boolean) => ({
@@ -43,7 +44,7 @@ const getContent = (isPathFrench: boolean) => ({
     {
       title: "Support Continu",
       description: "Assistance et maintenance régulières pour garantir des performances optimales à long terme",
-      icon: HeadphonesIcon
+      icon: LifeBuoy
     }
   ] : [
     {
@@ -74,7 +75,7 @@ const getContent = (isPathFrench: boolean) => ({
     {
       title: "Ongoing Support",
       description: "Regular assistance and maintenance to ensure optimal long-term performance",
-      icon: HeadphonesIcon
+      icon: LifeBuoy
     }
   ]
 });
@@ -110,10 +111,46 @@ export function WhyChooseUs() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="flex flex-col items-center text-center"
             >
-              <div className="w-14 h-14 rounded-full bg-background flex items-center justify-center shadow-md mb-4">
-                <benefit.icon className="h-6 w-6 text-primary" />
+              <div className={`w-14 h-14 rounded-full flex items-center justify-center shadow-md mb-4 ${
+                benefit.title.includes("Efficiency") || benefit.title.includes("Efficacité") 
+                  ? "bg-amber-50" 
+                  : benefit.title.includes("Cost") || benefit.title.includes("Coûts")
+                    ? "bg-emerald-50"
+                    : benefit.title.includes("Scalable") || benefit.title.includes("Évolutives")
+                      ? "bg-blue-50"
+                      : benefit.title.includes("Custom") || benefit.title.includes("Sur Mesure")
+                        ? "bg-purple-50"
+                        : benefit.title.includes("Expert") || benefit.title.includes("Experts")
+                          ? "bg-indigo-50"
+                          : "bg-rose-50"
+              }`}>
+                <benefit.icon className={`h-6 w-6 ${
+                benefit.title.includes("Efficiency") || benefit.title.includes("Efficacité") 
+                  ? "text-amber-500" 
+                  : benefit.title.includes("Cost") || benefit.title.includes("Coûts")
+                    ? "text-emerald-500"
+                    : benefit.title.includes("Scalable") || benefit.title.includes("Évolutives")
+                      ? "text-blue-500"
+                      : benefit.title.includes("Custom") || benefit.title.includes("Sur Mesure")
+                        ? "text-purple-500"
+                        : benefit.title.includes("Expert") || benefit.title.includes("Experts")
+                          ? "text-indigo-500"
+                          : "text-rose-500"
+                }`} />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+              <h3 className={`text-xl font-semibold mb-2 ${
+                benefit.title.includes("Efficiency") || benefit.title.includes("Efficacité") 
+                  ? "text-amber-700" 
+                  : benefit.title.includes("Cost") || benefit.title.includes("Coûts")
+                    ? "text-emerald-700"
+                    : benefit.title.includes("Scalable") || benefit.title.includes("Évolutives")
+                      ? "text-blue-700"
+                      : benefit.title.includes("Custom") || benefit.title.includes("Sur Mesure")
+                        ? "text-purple-700"
+                        : benefit.title.includes("Expert") || benefit.title.includes("Experts")
+                          ? "text-indigo-700"
+                          : "text-rose-700"
+              }`}>{benefit.title}</h3>
               <p className="text-muted-foreground">{benefit.description}</p>
             </motion.div>
           ))}
