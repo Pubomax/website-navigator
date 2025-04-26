@@ -1,73 +1,172 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
-// Type definition for navigation items
+// Type definition for navigation items with enhanced structure
 interface NavigationItem {
   name: string;
   href?: string;
   items?: Array<{
-    name: string;
-    href: string;
-    group?: string;
+    group: string;
+    description?: string;
+    items: Array<{
+      name: string;
+      href: string;
+      description?: string;
+    }>;
   }>;
 }
 
+// Define the navigation structure following Stripe's pattern
 const navigation: NavigationItem[] = [
-  {
-    name: "services",
-    items: [
-      { name: "digitalFoundation", group: "Core Services", href: "/services/digital-foundation" },
-      { name: "aiAutomation", group: "Core Services", href: "/services/ai-automation-starter" },
-      { name: "customDevelopment", group: "Core Services", href: "/services/custom-software" },
-      { name: "transformationConsulting", group: "Additional Services", href: "/services/transformation-consulting" },
-      { name: "customAiAutomation", group: "Additional Services", href: "/services/custom-ai-automation" },
-      { name: "intelligentSupport", group: "Additional Services", href: "/services/intelligent-support" },
-    ],
-  },
   {
     name: "solutions",
     items: [
-      { name: "automatedLeadGeneration", group: "Solutions", href: "/solutions/automated-lead-generation" },
-      { name: "smartNurturing", group: "Solutions", href: "/solutions/smart-nurturing" },
-      { name: "salesAutomation", group: "Solutions", href: "/solutions/sales-automation" },
-      { name: "instantCustomerEngagement", group: "Solutions", href: "/solutions/instant-customer-engagement" },
-      { name: "quickAcquisition", group: "Solutions", href: "/solutions/quick-acquisition" },
-      { name: "manufacturing", group: "Industries", href: "/sectors/manufacturing" },
-      { name: "finance", group: "Industries", href: "/sectors/finance" },
-      { name: "retail", group: "Industries", href: "/sectors/retail" },
-      { name: "healthcare", group: "Industries", href: "/sectors/healthcare" },
-      { name: "publicSector", group: "Industries", href: "/sectors/public-sector" },
-      { name: "microEnterprises", group: "Business Size", href: "/business-types/micro" },
-      { name: "midSizedEnterprises", group: "Business Size", href: "/business-types/mid-sized" },
-      { name: "largeEnterprises", group: "Business Size", href: "/business-types/large" },
+      {
+        group: "Lead Generation Solutions",
+        items: [
+          { 
+            name: "automatedLeadGeneration", 
+            href: "/solutions/automated-lead-generation",
+            description: "Find new prospects automatically using AI."
+          },
+          { 
+            name: "smartNurturing", 
+            href: "/solutions/smart-nurturing",
+            description: "Turn leads into clients automatically."
+          }
+        ]
+      },
+      {
+        group: "Sales Acceleration Solutions",
+        items: [
+          { 
+            name: "salesAutomation", 
+            href: "/services/sales-automation",
+            description: "Automate your sales pipeline and follow-ups."
+          },
+          { 
+            name: "quickAcquisition", 
+            href: "/solutions/quick-acquisition",
+            description: "Boost conversion rates fast."
+          }
+        ]
+      },
+      {
+        group: "Customer Engagement Solutions",
+        items: [
+          { 
+            name: "instantCustomerEngagement", 
+            href: "/solutions/instant-customer-engagement",
+            description: "Real-time customer interactions to close deals."
+          }
+        ]
+      }
+    ],
+  },
+  {
+    name: "products",
+    items: [
+      {
+        group: "Automation Systems",
+        items: [
+          { 
+            name: "salesAutomation", 
+            href: "/services/sales-automation",
+            description: "Automate and qualify leads."
+          },
+          { 
+            name: "marketingAutomation", 
+            href: "/services/marketing-automation",
+            description: "Automated customer journeys."
+          }
+        ]
+      },
+      {
+        group: "Custom Development",
+        items: [
+          { 
+            name: "digitalFoundation", 
+            href: "/services/digital-foundation",
+            description: "Custom CRM solutions tailored to business needs."
+          },
+          { 
+            name: "customSoftware", 
+            href: "/services/custom-software",
+            description: "Web and Mobile apps customized for business workflows."
+          },
+          { 
+            name: "customAiAutomation", 
+            href: "/services/custom-ai-automation",
+            description: "Custom AI solutions for business automation."
+          }
+        ]
+      }
+    ],
+  },
+  {
+    name: "industries",
+    items: [
+      {
+        group: "Private Sector",
+        items: [
+          { name: "manufacturing", href: "/sectors/manufacturing" },
+          { name: "finance", href: "/sectors/finance" },
+          { name: "retail", href: "/sectors/retail" },
+          { name: "healthcare", href: "/sectors/healthcare" }
+        ]
+      },
+      {
+        group: "Public Sector",
+        items: [
+          { name: "publicSector", href: "/sectors/public-sector" }
+        ]
+      },
+      {
+        group: "Business Size",
+        items: [
+          { name: "microEnterprises", href: "/business-types/micro" },
+          { name: "midSizedEnterprises", href: "/business-types/mid-sized" },
+          { name: "largeEnterprises", href: "/business-types/large" }
+        ]
+      }
     ],
   },
   {
     name: "company",
     items: [
-      { name: "companyStory", group: "About Us", href: "/about/story" },
-      { name: "teamBios", group: "About Us", href: "/about/team" },
-      { name: "missionValues", group: "About Us", href: "/about/mission" },
-      { name: "FAQ", group: "Resources", href: "/faq" },
-      { name: "caseStudies", group: "Resources", href: "/case-studies" },
-      { name: "blog", group: "Resources", href: "/blog" },
-      { name: "integrations", group: "Resources", href: "/integrations" },
-    ],
+      {
+        group: "About Us",
+        items: [
+          { name: "companyStory", href: "/about/story" },
+          { name: "teamBios", href: "/about/team" },
+          { name: "missionValues", href: "/about/mission" }
+        ]
+      }
+    ]
+  },
+  {
+    name: "resources",
+    items: [
+      {
+        group: "Resources",
+        items: [
+          { name: "caseStudies", href: "/case-studies" },
+          { name: "blog", href: "/blog" },
+          { name: "FAQ", href: "/faq" },
+          { name: "integrations", href: "/integrations" }
+        ]
+      }
+    ]
   },
   { name: "contact", href: "/contact" },
 ];
@@ -79,10 +178,13 @@ const languages = [
 
 export function Header() {
   const [location] = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState<string | null>(null);
+  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const isPathFrench = location.startsWith("/fr");
   const { t } = useTranslation(isPathFrench ? 'fr' : 'en');
 
+  // Function to localize paths based on current language
   const getLocalizedPath = (path: string) => {
     if (isPathFrench) {
       return path.startsWith("/fr") ? path : `/fr${path}`;
@@ -90,192 +192,307 @@ export function Header() {
     return path.startsWith("/fr") ? path.substring(3) : path;
   };
 
-  const renderDropdownContent = (items: any[]) => {
-    const groupedItems = items.reduce((acc: any, item) => {
-      if (item.group) {
-        if (!acc[item.group]) acc[item.group] = [];
-        acc[item.group].push(item);
-      } else {
-        if (!acc['Other']) acc['Other'] = [];
-        acc['Other'].push(item);
-      }
-      return acc;
-    }, {});
+  // Toggle dropdown visibility
+  const toggleDropdown = (itemName: string) => {
+    setActiveItem(activeItem === itemName ? null : itemName);
+  };
 
-    return (
-      <ul className="grid w-[400px] gap-4 p-4">
-        {Object.entries(groupedItems).map(([group, groupItems]: [string, any]) => (
-          <li key={group}>
-            {group !== 'Other' && (
-              <div className="mb-2 text-sm font-medium text-muted-foreground">
-                {t(group)}
-              </div>
-            )}
-            <div className="grid gap-2">
-              {groupItems.map((item: any) => (
-                <Link
-                  key={item.href}
-                  href={getLocalizedPath(item.href)}
-                  className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
-                >
-                  {t(item.name)}
-                </Link>
-              ))}
-            </div>
-          </li>
-        ))}
-      </ul>
-    );
+  // Toggle mobile accordion
+  const toggleMobileGroup = (groupName: string) => {
+    setOpenMobileGroup(openMobileGroup === groupName ? null : groupName);
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b bg-background/60 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
-      <nav className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-20 items-center justify-between">
-        <div className="flex items-center">
-          <Link href={getLocalizedPath("/")} className="flex items-center">
-            <img
-              src="/images/logo.png"
-              alt="Minecore Group"
-              className="h-14 w-auto" // Increased from h-12 to h-14
-            />
-          </Link>
-        </div>
+    <header className="fixed top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-20 items-center justify-between">
+        {/* Logo */}
+        <Link href={getLocalizedPath("/")} className="flex items-center">
+          <img
+            src="/images/logo.png"
+            alt="Minecore Group"
+            className="h-14 w-auto"
+          />
+        </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-8">
+        <div className="hidden lg:flex items-center space-x-6">
           {navigation.map((item) => (
-            item.items ? (
-              <NavigationMenu key={item.name}>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
-                      {t(item.name)}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      {renderDropdownContent(item.items)}
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            ) : (
-              <Link
-                key={item.name}
-                href={getLocalizedPath(item.href!)}
-                className="text-sm font-medium px-4 py-2 rounded-md transition-colors hover:text-primary hover:bg-accent/50"
-              >
-                {t(item.name)}
-              </Link>
-            )
+            <div key={item.name} className="relative inline-block text-left">
+              {item.items ? (
+                // Dropdown menu for items with subitems
+                <>
+                  <button
+                    type="button"
+                    className={cn(
+                      "inline-flex items-center gap-x-1 text-sm font-medium px-3 py-2 rounded-md transition-colors",
+                      activeItem === item.name ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+                    )}
+                    aria-expanded={activeItem === item.name}
+                    aria-haspopup="true"
+                    onClick={() => toggleDropdown(item.name)}
+                  >
+                    {t(item.name)}
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform duration-200",
+                      activeItem === item.name ? "rotate-180" : ""
+                    )} />
+                  </button>
+                  
+                  {/* Dropdown panel */}
+                  <AnimatePresence>
+                    {activeItem === item.name && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2"
+                      >
+                        <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                          <div className="relative grid grid-cols-2 gap-6 bg-white p-7">
+                            {/* Left column - Category groups */}
+                            <div className="col-span-1 border-r border-gray-100 pr-6">
+                              {item.items.map((group) => (
+                                <div key={group.group} className="mb-6 last:mb-0">
+                                  <div className="font-medium text-gray-900 mb-3">
+                                    {t(group.group)}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            
+                            {/* Right column - Items with descriptions */}
+                            <div className="col-span-1">
+                              {item.items.map((group) => (
+                                <div key={group.group} className="mb-6 last:mb-0">
+                                  <div className="space-y-4">
+                                    {group.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+                                          {t(subItem.name)}
+                                        </p>
+                                        {subItem.description && (
+                                          <p className="mt-1 text-sm text-gray-500">
+                                            {t(subItem.description)}
+                                          </p>
+                                        )}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              ) : (
+                // Regular link for items without subitems
+                <Link
+                  href={getLocalizedPath(item.href!)}
+                  className="text-sm font-medium px-3 py-2 rounded-md transition-colors text-gray-600 hover:text-gray-900"
+                >
+                  {t(item.name)}
+                </Link>
+              )}
+            </div>
           ))}
 
           {/* Language Selector */}
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="h-9 px-4 hover:bg-accent/50 transition-colors">
-                  {isPathFrench ? "FR" : "EN"}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[200px] gap-2 p-4">
-                    {languages.map((lang) => (
-                      <li key={lang.code}>
-                        <Link
-                          href={lang.href + location.replace("/fr", "")}
-                          className="block select-none rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent/50 hover:text-accent-foreground"
-                        >
-                          {lang.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="lg:hidden">
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-6 pt-6">
-                {navigation.map((item) => (
-                  item.items ? (
-                    <div key={item.name} className="space-y-4">
-                      <div className="font-medium text-lg text-foreground">{t(item.name)}</div>
-                      {Object.entries(
-                        item.items.reduce((acc: any, curr) => {
-                          const group = curr.group || 'Other';
-                          if (!acc[group]) acc[group] = [];
-                          acc[group].push(curr);
-                          return acc;
-                        }, {})
-                      ).map(([group, items]: [string, any]) => (
-                        <div key={group} className="space-y-3">
-                          {group !== 'Other' && (
-                            <div className="text-sm font-medium text-muted-foreground pl-4">
-                              {t(group)}
-                            </div>
-                          )}
-                          <div className="pl-4 space-y-3">
-                            {items.map((subItem: any) => (
-                              <Link
-                                key={subItem.href}
-                                href={getLocalizedPath(subItem.href)}
-                                className="block text-muted-foreground hover:text-primary transition-colors"
-                                onClick={() => setIsOpen(false)}
-                              >
-                                {t(subItem.name)}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      href={getLocalizedPath(item.href!)}
-                      className="text-lg font-medium transition-colors text-muted-foreground hover:text-primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {t(item.name)}
-                    </Link>
-                  )
-                ))}
-
-                {/* Mobile Language Selection */}
-                <div className="space-y-4">
-                  <div className="font-medium text-lg text-foreground">{t('language')}</div>
-                  <div className="pl-4 space-y-3">
+          <div className="relative inline-block text-left">
+            <button
+              type="button"
+              className={cn(
+                "inline-flex items-center gap-x-1 text-sm font-medium px-3 py-2 rounded-md transition-colors",
+                activeItem === "language" ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+              )}
+              aria-expanded={activeItem === "language"}
+              aria-haspopup="true"
+              onClick={() => toggleDropdown("language")}
+            >
+              {isPathFrench ? "FR" : "EN"}
+              <ChevronDown className={cn(
+                "h-4 w-4 transition-transform duration-200",
+                activeItem === "language" ? "rotate-180" : ""
+              )} />
+            </button>
+            
+            <AnimatePresence>
+              {activeItem === "language" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+                >
+                  <div className="py-1">
                     {languages.map((lang) => (
                       <Link
                         key={lang.code}
                         href={lang.href + location.replace("/fr", "")}
-                        className="block text-muted-foreground hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        onClick={() => setActiveItem(null)}
                       >
                         {lang.name}
                       </Link>
                     ))}
                   </div>
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        <div className="hidden lg:flex items-center">
-          <Button asChild className="bg-primary/90 hover:bg-primary transition-colors">
-            <Link href={getLocalizedPath("/contact")}>{t("getStarted")}</Link>
+        {/* Mobile menu button */}
+        <div className="lg:hidden flex items-center">
+          <Button variant="outline" size="icon" onClick={() => setMobileMenuOpen(true)}>
+            <Menu className="h-6 w-6" />
           </Button>
         </div>
-      </nav>
+
+        {/* CTA button */}
+        <div className="hidden lg:block">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-white">
+            <Link href={getLocalizedPath("/consultation")}>{t("getStarted")}</Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Mobile navigation */}
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetContent side="right" className="w-[300px] sm:w-[400px] pt-10">
+          <nav className="flex flex-col gap-5">
+            {navigation.map((item) => (
+              <div key={item.name} className="border-b border-gray-100 pb-5">
+                {item.items ? (
+                  <div>
+                    <button
+                      className="flex w-full items-center justify-between text-lg font-medium mb-3"
+                      onClick={() => toggleMobileGroup(item.name)}
+                    >
+                      {t(item.name)}
+                      <ChevronDown 
+                        className={cn(
+                          "h-5 w-5 transition-transform duration-200",
+                          openMobileGroup === item.name ? "rotate-180" : ""
+                        )} 
+                      />
+                    </button>
+                    
+                    <AnimatePresence>
+                      {openMobileGroup === item.name && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pl-4 space-y-4">
+                            {item.items.map((group) => (
+                              <div key={group.group} className="mb-4">
+                                <div className="text-sm font-medium text-gray-900 mb-2">
+                                  {t(group.group)}
+                                </div>
+                                <div className="space-y-3 pl-2">
+                                  {group.items.map((subItem) => (
+                                    <Link
+                                      key={subItem.href}
+                                      href={getLocalizedPath(subItem.href)}
+                                      className="block text-gray-600 hover:text-gray-900"
+                                      onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                      <div className="text-sm">{t(subItem.name)}</div>
+                                      {subItem.description && (
+                                        <div className="text-xs text-gray-500 mt-1">
+                                          {t(subItem.description)}
+                                        </div>
+                                      )}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link
+                    href={getLocalizedPath(item.href!)}
+                    className="block text-lg font-medium text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t(item.name)}
+                  </Link>
+                )}
+              </div>
+            ))}
+
+            {/* Mobile language selection */}
+            <div className="border-b border-gray-100 pb-5">
+              <button
+                className="flex w-full items-center justify-between text-lg font-medium mb-3"
+                onClick={() => toggleMobileGroup("language")}
+              >
+                {t("language")}
+                <ChevronDown
+                  className={cn(
+                    "h-5 w-5 transition-transform duration-200",
+                    openMobileGroup === "language" ? "rotate-180" : ""
+                  )}
+                />
+              </button>
+              
+              <AnimatePresence>
+                {openMobileGroup === "language" && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pl-4 space-y-4">
+                      {languages.map((lang) => (
+                        <Link
+                          key={lang.code}
+                          href={lang.href + location.replace("/fr", "")}
+                          className="block text-gray-600 hover:text-gray-900"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {lang.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            
+            {/* Mobile CTA */}
+            <div className="pt-2">
+              <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white">
+                <Link 
+                  href={getLocalizedPath("/consultation")}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {t("getStarted")}
+                </Link>
+              </Button>
+            </div>
+          </nav>
+        </SheetContent>
+      </Sheet>
     </header>
   );
 }

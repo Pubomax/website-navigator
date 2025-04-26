@@ -1,0 +1,88 @@
+Objective:
+Redesign the main navigation menu for Minecore Group following Stripe's navigation best practices.
+
+General Design Instructions:
+- Implement a two-level navigation system.
+- When hovering over a top menu item, open a structured, two-column dropdown.
+- Left Column: Group Titles (outcome categories or logical clusters).
+- Right Column: Sub-items (specific services or solutions with a short micro-description under each).
+- Keep the design minimal: clean white background, soft section dividers (no hard lines), subtle hover highlights.
+- Use smooth fade-in/fade-out transitions when dropdowns open/close.
+- Prioritize fast readability and clean hierarchy.
+
+Mobile Instructions:
+- On mobile, convert dropdowns into expandable accordion menus.
+- First click = open category group.
+- Second click = select sub-item.
+
+Navigation Menu Structure:
+
+Top Navigation:
+[Solutions]   [Products]   [Industries]   [Company]   [Resources]   [Contact]   [Get Started Button]
+
+Dropdown Details:
+
+1. Solutions (Dropdown)
+- Lead Generation Solutions
+  - Automated Lead Generation (Find new prospects automatically using AI.)
+  - Smart Nurturing (Turn leads into clients automatically.)
+- Sales Acceleration Solutions
+  - Sales Automation (Automate your sales pipeline and follow-ups.)
+  - Quick Acquisition (Boost conversion rates fast.)
+- Customer Engagement Solutions
+  - Instant Customer Engagement (Real-time customer interactions to close deals.)
+
+2. Products (Dropdown)
+- Automation Systems
+  - Sales Automation Systems (Automate and qualify leads.)
+  - Marketing Automation Systems (Automated customer journeys.)
+- Custom Development
+  - CRM Development (Custom CRM solutions tailored to business needs.)
+  - App Development (Web and Mobile apps customized for business workflows.)
+
+3. Industries (Dropdown)
+- Private Sector
+  - Manufacturing
+  - Finance
+  - Retail
+  - Healthcare
+- Public Sector
+  - Government Services
+
+4. Company (Dropdown)
+- About Us
+- Company Story
+- Our Team
+- Careers
+
+5. Resources (Dropdown)
+- Case Studies
+- Blog
+- FAQs
+- Integrations & API
+
+6. Contact
+- Direct link to contact page (simple form, email, phone if needed)
+
+7. Get Started
+- Highlighted button (primary color) leading to the consultation form page.
+
+Design Style Instructions:
+- Background: Pure white (`#ffffff`) for dropdowns.
+- Font: Modern clean sans-serif (Inter or IBM Plex Sans).
+- Font sizes: Group Titles 18px bold, Sub-items 16px regular, Microcopy 14px muted gray.
+- Hover State: Light gray background on hover (`#f5f5f5`), text darkens slightly.
+- Padding: Generous vertical spacing for readability.
+- Animation: Dropdown fade-in within 300ms, smooth.
+- Borders: No hard box borders, only soft internal spacing.
+
+Accessibility Instructions:
+- Ensure keyboard accessibility (Tab navigation possible across menu items).
+- ARIA labels for dropdowns where applicable.
+
+SEO Instructions:
+- Use semantic HTML for nav elements (`<nav>`, `<ul>`, `<li>`, `<a>`).
+
+Deliverable:
+- Clean, modular, reusable HTML and CSS.
+- Optional: Minimal JavaScript if necessary for hover/open behavior and mobile accordion transitions.
