@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
@@ -102,12 +101,22 @@ const navigation: NavigationItem[] = [
           { 
             name: "customSoftware", 
             href: "/services/custom-software",
-            description: "Web and Mobile apps customized for business workflows."
+            description: "Business-specific automation solutions."
+          }
+        ]
+      },
+      {
+        group: "Implementation Services",
+        items: [
+          { 
+            name: "aiAutomationStarter", 
+            href: "/services/ai-automation-starter",
+            description: "Basic AI-powered automation package."
           },
           { 
-            name: "customAiAutomation", 
-            href: "/services/custom-ai-automation",
-            description: "Custom AI solutions for business automation."
+            name: "transformationConsulting", 
+            href: "/services/transformation-consulting",
+            description: "Full business process automation guidance."
           }
         ]
       }
@@ -174,116 +183,120 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
-    name: "company",
-    items: [
-      {
-        group: "About Us",
-        items: [
-          { 
-            name: "companyStory", 
-            href: "/about/story",
-            description: "Our journey and vision for business automation."
-          },
-          { 
-            name: "teamBios", 
-            href: "/about/team",
-            description: "Meet our expert automation specialists."
-          },
-          { 
-            name: "missionValues", 
-            href: "/about/mission",
-            description: "Our commitment to helping businesses grow effortlessly."
-          }
-        ]
-      }
-    ]
-  },
-  {
     name: "resources",
     items: [
       {
-        group: "Resources",
+        group: "Knowledge Center",
         items: [
-          { 
-            name: "caseStudies", 
-            href: "/case-studies",
-            description: "Success stories from businesses we've transformed."
-          },
           { 
             name: "blog", 
             href: "/blog",
-            description: "Latest insights on AI and business automation."
+            description: "Latest automation insights and strategies."
           },
           { 
-            name: "FAQ", 
+            name: "caseStudies", 
+            href: "/case-studies",
+            description: "Success stories from our clients."
+          }
+        ]
+      },
+      {
+        group: "Support Resources",
+        items: [
+          { 
+            name: "faq", 
             href: "/faq",
-            description: "Common questions about our services and process."
-          },
-          { 
-            name: "integrations", 
-            href: "/integrations",
-            description: "Seamlessly connect with your existing tools."
+            description: "Answers to commonly asked questions."
           }
         ]
       }
-    ]
+    ],
+  },
+  {
+    name: "company",
+    items: [
+      {
+        group: "Who We Are",
+        items: [
+          { 
+            name: "about", 
+            href: "/about", 
+            description: "Learn about Minecore Group."
+          },
+          { 
+            name: "team", 
+            href: "/about/team",
+            description: "Meet our expert team."
+          }
+        ]
+      },
+      {
+        group: "Our Mission",
+        items: [
+          { 
+            name: "mission", 
+            href: "/about/mission",
+            description: "Our vision for the future of business."
+          },
+          { 
+            name: "story", 
+            href: "/about/story",
+            description: "The journey behind Minecore Group."
+          }
+        ]
+      }
+    ],
   },
   { name: "contact", href: "/contact" },
 ];
 
+// Define language options
 const languages = [
   { code: "en", name: "English", href: "" },
   { code: "fr", name: "Français", href: "/fr" },
 ];
 
 export function Header() {
-  const [location] = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState<string | null>(null);
-  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
+  const [location, setLocation] = useLocation();
   const isPathFrench = location.startsWith("/fr");
-  const { t } = useTranslation(isPathFrench ? 'fr' : 'en');
-
-  // Function to localize paths based on current language
-  const getLocalizedPath = (path: string) => {
-    if (isPathFrench) {
-      return path.startsWith("/fr") ? path : `/fr${path}`;
-    }
-    return path.startsWith("/fr") ? path.substring(3) : path;
-  };
-
-  // Toggle dropdown visibility
-  const toggleDropdown = (itemName: string) => {
-    setActiveItem(activeItem === itemName ? null : itemName);
-  };
-
-  // For hovering over menu items
+  const { t } = useTranslation(isPathFrench ? "fr" : "en");
+  
+  // State for managing dropdowns
+  const [activeItem, setActiveItem] = useState<string | null>(null);
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
 
-  // Show specific group on hover
-  const showGroup = (groupName: string | null) => {
-    setActiveGroup(groupName);
+  // Helper function to get localized path
+  const getLocalizedPath = (path: string) => {
+    return isPathFrench ? `/fr${path}` : path;
   };
 
-  // Toggle mobile accordion
-  const toggleMobileGroup = (groupName: string) => {
-    setOpenMobileGroup(openMobileGroup === groupName ? null : groupName);
+  // Function to toggle dropdown display
+  const toggleDropdown = (name: string) => {
+    setActiveItem(prevItem => (prevItem === name ? null : name));
+  };
+
+  // Function to show a specific group in the dropdown
+  const showGroup = (group: string) => {
+    setActiveGroup(group);
+  };
+
+  // Function to toggle mobile navigation groups
+  const toggleMobileGroup = (name: string) => {
+    setOpenMobileGroup(prev => (prev === name ? null : name));
   };
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-20 items-center justify-between">
+    <header className="fixed w-full bg-white shadow-sm z-50">
+      <div className="container mx-auto max-w-7xl px-4 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href={getLocalizedPath("/")} className="flex items-center">
-          <img
-            src="/images/logo.png"
-            alt="Minecore Group"
-            className="h-14 w-auto"
-          />
+        <Link href={getLocalizedPath("/")} className="shrink-0">
+          <img src="/logo.png" alt="Minecore Group" className="h-14" />
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-6">
+        {/* Desktop navigation */}
+        <div className="hidden lg:flex items-center gap-2">
           {navigation.map((item) => (
             <div 
               key={item.name} 
@@ -335,31 +348,31 @@ export function Header() {
                         onMouseLeave={() => setActiveGroup(null)}
                       >
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                          <div className="relative grid grid-cols-4 gap-0 bg-white">
-                            {/* Left column - Category groups */}
-                            <div className="col-span-1 border-r border-gray-100 py-6 pl-6 pr-2">
-                              {item.items.map((group) => (
-                                <div 
-                                  key={group.group} 
-                                  className="mb-5 last:mb-0"
-                                  onMouseEnter={() => showGroup(group.group)}
-                                >
-                                  <div className={cn(
-                                    "font-medium text-base px-3 py-2 rounded-md cursor-pointer transition-colors",
-                                    activeGroup === group.group || (!activeGroup && item.items && group === item.items[0]) 
-                                      ? "bg-gray-100 text-gray-900" 
-                                      : "text-gray-600 hover:text-gray-900"
-                                  )}>
+                          <div className="flex bg-white">
+                            {/* Left column - Category selectors */}
+                            <div className="w-48 border-r border-gray-100 py-4">
+                              <div className="flex flex-col">
+                                {item.items.map((group) => (
+                                  <button
+                                    key={group.group}
+                                    className={cn(
+                                      "py-2 px-4 text-left text-base font-medium transition-colors",
+                                      activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])
+                                        ? "bg-gray-50 text-gray-900"
+                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                                    )}
+                                    onMouseEnter={() => showGroup(group.group)}
+                                  >
                                     {t(group.group)}
-                                  </div>
-                                </div>
-                              ))}
+                                  </button>
+                                ))}
+                              </div>
                             </div>
                             
-                            {/* Right column - Items with descriptions */}
-                            <div className="col-span-3 py-6 px-6">
+                            {/* Right column - Content panel */}
+                            <div className="py-5 px-6 w-96">
                               {item.items.map((group) => (
-                                <motion.div 
+                                <motion.div
                                   key={group.group}
                                   initial={{ opacity: 0 }}
                                   animate={{ 
@@ -373,16 +386,16 @@ export function Header() {
                                     <Link
                                       key={subItem.href}
                                       href={getLocalizedPath(subItem.href)}
-                                      className="block group p-2 rounded-md hover:bg-gray-50"
+                                      className="block py-2 px-2 rounded-md hover:bg-gray-50 group"
                                       onClick={() => setActiveItem(null)}
                                     >
-                                      <p className="text-base font-medium text-gray-900 group-hover:text-primary">
+                                      <div className="text-base font-medium text-[#111827] group-hover:text-primary">
                                         {t(subItem.name)}
-                                      </p>
+                                      </div>
                                       {subItem.description && (
-                                        <p className="mt-1 text-sm text-gray-500">
+                                        <div className="mt-1 text-sm text-[#6b7280]">
                                           {t(subItem.description)}
-                                        </p>
+                                        </div>
                                       )}
                                     </Link>
                                   ))}
