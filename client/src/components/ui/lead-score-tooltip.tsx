@@ -5,8 +5,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Info, Star, StarHalf, HelpCircle, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { 
+  Info, 
+  Star, 
+  StarHalf, 
+  HelpCircle, 
+  TrendingUp, 
+  TrendingDown, 
+  Minus,
+  BarChart4,
+  CircleCheck,
+  CircleX
+} from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 interface LeadScoreTooltipProps {
   score: number; // 0-100
@@ -18,15 +30,21 @@ interface LeadScoreTooltipProps {
 }
 
 const getScoreColor = (score: number): string => {
-  if (score >= 80) return "text-green-500";
-  if (score >= 60) return "text-yellow-500";
-  return "text-red-500";
+  if (score >= 80) return "text-emerald-600";
+  if (score >= 60) return "text-amber-600";
+  return "text-rose-600";
 };
 
 const getScoreBackground = (score: number): string => {
-  if (score >= 80) return "bg-green-100";
-  if (score >= 60) return "bg-yellow-100";
-  return "bg-red-100";
+  if (score >= 80) return "bg-emerald-50 border-emerald-200/70";
+  if (score >= 60) return "bg-amber-50 border-amber-200/70";
+  return "bg-rose-50 border-rose-200/70";
+};
+
+const getScoreGradient = (score: number): string => {
+  if (score >= 80) return "from-emerald-500 to-teal-500";
+  if (score >= 60) return "from-amber-500 to-orange-500";
+  return "from-rose-500 to-pink-500";
 };
 
 const getScoreText = (score: number): string => {
@@ -35,16 +53,22 @@ const getScoreText = (score: number): string => {
   return "Low potential lead - nurture over time";
 };
 
+const getScoreIcon = (score: number) => {
+  if (score >= 80) return <CircleCheck className="h-5 w-5 text-emerald-500" />;
+  if (score >= 60) return <BarChart4 className="h-5 w-5 text-amber-500" />;
+  return <CircleX className="h-5 w-5 text-rose-500" />;
+};
+
 const getStars = (weight: number) => {
   const stars = [];
   const fullStars = Math.floor(weight);
   const hasHalfStar = weight % 1 >= 0.5;
 
   for (let i = 0; i < fullStars; i++) {
-    stars.push(<Star key={`full-${i}`} className="h-4 w-4 inline" />);
+    stars.push(<Star key={`full-${i}`} className="h-4 w-4 inline text-amber-500 fill-amber-500" />);
   }
   if (hasHalfStar) {
-    stars.push(<StarHalf key="half" className="h-4 w-4 inline" />);
+    stars.push(<StarHalf key="half" className="h-4 w-4 inline text-amber-500 fill-amber-500" />);
   }
   return stars;
 };
@@ -52,11 +76,11 @@ const getStars = (weight: number) => {
 const getImpactIcon = (impact: string) => {
   switch (impact) {
     case "positive":
-      return <TrendingUp className="h-4 w-4 text-green-500" />;
+      return <TrendingUp className="h-4 w-4 text-emerald-500" />;
     case "negative":
-      return <TrendingDown className="h-4 w-4 text-red-500" />;
+      return <TrendingDown className="h-4 w-4 text-rose-500" />;
     default:
-      return <Minus className="h-4 w-4 text-gray-500" />;
+      return <Minus className="h-4 w-4 text-slate-400" />;
   }
 };
 
@@ -65,56 +89,80 @@ export function LeadScoreTooltip({ score, factors }: LeadScoreTooltipProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="inline-flex items-center gap-1 cursor-help">
-            <HelpCircle className="h-4 w-4 text-muted-foreground" />
-            <span className={`font-semibold ${getScoreColor(score)}`}>
+          <div className="inline-flex items-center gap-1.5 cursor-help group">
+            <div className="relative w-5 h-5 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+              <HelpCircle className="h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition-colors" />
+            </div>
+            <span className={cn("font-medium transition-colors", getScoreColor(score))}>
               {score}%
             </span>
           </div>
         </TooltipTrigger>
-        <TooltipContent className="w-96 p-4">
-          <div className="space-y-4">
+        <TooltipContent className="w-[380px] p-0 shadow-lg overflow-hidden border-border/50">
+          {/* Tooltip header with gradient */}
+          <div className={cn("py-3 px-4 text-white bg-gradient-to-r", getScoreGradient(score))}>
+            <div className="flex items-center gap-2 mb-2">
+              {getScoreIcon(score)}
+              <h3 className="font-medium">Lead Conversion Potential</h3>
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-white/90">Based on AI analysis</p>
+              <span className="text-2xl font-bold">{score}%</span>
+            </div>
+          </div>
+
+          <div className="p-4 space-y-4 bg-white">
+            {/* Progress bar */}
             <div>
-              <p className="font-bold text-lg">Lead Conversion Potential</p>
-              <p className="text-sm text-muted-foreground mb-2">Based on AI analysis of engagement patterns</p>
-              
-              <div className="mb-2">
-                <Progress value={score} className="h-3" />
-              </div>
-              <div className={`text-sm p-2 rounded-md ${getScoreBackground(score)} ${getScoreColor(score)}`}>
+              <Progress 
+                value={score} 
+                className={cn("h-2.5 bg-slate-100", score >= 80 ? "bg-emerald-100" : score >= 60 ? "bg-amber-100" : "bg-rose-100")} 
+              />
+              <div className={cn(
+                "text-sm p-2 mt-2 rounded-md border", 
+                getScoreBackground(score), 
+                getScoreColor(score)
+              )}>
                 {getScoreText(score)}
               </div>
             </div>
             
+            {/* Influence factors */}
             <div>
-              <p className="font-semibold mb-2">Key Influence Factors:</p>
-              <div className="space-y-2 border rounded-md p-2">
+              <p className="font-medium mb-2 text-sm flex items-center">
+                <BarChart4 className="h-4 w-4 mr-1.5 text-slate-400" />
+                Key Influence Factors
+              </p>
+              <div className="space-y-3 rounded-md p-3 bg-slate-50 border border-slate-100">
                 {factors.map((factor, index) => (
-                  <div key={index} className="text-sm flex items-center gap-2">
-                    {getImpactIcon(factor.impact)}
-                    <div className="flex-1">
-                      <div className="flex justify-between">
-                        <span className="font-medium">{factor.factor}</span>
-                        <span className="text-muted-foreground">
-                          {getStars(factor.weight)}
-                        </span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        {factor.impact === "positive" 
-                          ? "Increases conversion likelihood" 
-                          : factor.impact === "negative" 
-                            ? "Decreases conversion likelihood" 
-                            : "Neutral impact"}
-                      </p>
+                  <div key={index} className="text-sm group">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="flex items-center font-medium text-slate-700 group-hover:text-primary transition-colors">
+                        {getImpactIcon(factor.impact)}
+                        <span className="ml-2">{factor.factor}</span>
+                      </span>
+                      <span>
+                        {getStars(factor.weight)}
+                      </span>
                     </div>
+                    <p className="text-xs text-slate-500 ml-6">
+                      {factor.impact === "positive" 
+                        ? "Increases conversion likelihood" 
+                        : factor.impact === "negative" 
+                          ? "Decreases conversion likelihood" 
+                          : "Neutral impact"}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
             
-            <div className="text-xs text-muted-foreground">
-              <p><strong>Why this matters:</strong> Higher lead scores correlate with faster sales cycles 
-              and higher close rates, helping you focus on leads most likely to convert.</p>
+            {/* Info footer */}
+            <div className="text-xs bg-slate-50 mx-[-16px] mb-[-16px] mt-2 p-3 border-t border-slate-100">
+              <p className="text-slate-600">
+                <strong className="font-medium text-slate-700">Why this matters:</strong> Higher lead scores correlate with faster sales cycles 
+                and higher close rates, helping you focus on leads most likely to convert.
+              </p>
             </div>
           </div>
         </TooltipContent>
