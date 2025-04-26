@@ -42,7 +42,7 @@ interface NavigationItem {
 // Define the navigation structure following Stripe's pattern
 const navigation: NavigationItem[] = [
   {
-    name: "solutions",
+    name: "Solutions",
     items: [
       {
         group: "Lead Generation Solutions",
@@ -97,7 +97,7 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
-    name: "products",
+    name: "Products",
     items: [
       {
         group: "Automation Systems",
@@ -159,7 +159,7 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
-    name: "industries",
+    name: "Industries",
     items: [
       {
         group: "Private Sector",
@@ -235,7 +235,7 @@ const navigation: NavigationItem[] = [
     ],
   },
   {
-    name: "company",
+    name: "Company",
     items: [
       {
         group: "Who We Are",
@@ -277,7 +277,7 @@ const navigation: NavigationItem[] = [
       }
     ],
   },
-  { name: "contact", href: "/contact" },
+  { name: "Contact", href: "/contact" },
 ];
 
 // Define language options
@@ -379,7 +379,7 @@ export function Header() {
                           transition={{ duration: 0.2 }}
                           className="absolute left-0 z-10 mt-3 w-screen max-w-4xl transform px-2"
                           style={{ 
-                            left: item.name === "industries" || item.name === "company" 
+                            left: item.name === "Industries" || item.name === "Company" 
                               ? "calc(50% - 300px)" 
                               : "calc(50% - 200px)" 
                           }}
@@ -388,20 +388,20 @@ export function Header() {
                           <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="flex bg-white">
                               {/* Three-column layout for Industries, Products, and Company */}
-                              {(item.name === "industries" || item.name === "products" || item.name === "company") && (
+                              {(item.name === "Industries" || item.name === "Products" || item.name === "Company") && (
                                 <>
                                   {/* Left Column */}
                                   <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {item.name === "industries" 
+                                      {item.name === "Industries" 
                                         ? t("Private Sector") 
-                                        : item.name === "products" 
+                                        : item.name === "Products" 
                                           ? t("Automation Systems")
                                           : t("Who We Are")
                                       }
                                     </h4>
                                     <div className="space-y-5">
-                                      {item.name === "industries" 
+                                      {item.name === "Industries" 
                                         ? (item.items.find(g => g.group === "Private Sector")?.items || []).map((subItem) => (
                                             <Link
                                               key={subItem.href}
@@ -428,7 +428,7 @@ export function Header() {
                                               </div>
                                             </Link>
                                           ))
-                                        : item.name === "products"
+                                        : item.name === "Products"
                                           ? (item.items.find(g => g.group === "Automation Systems")?.items || []).map((subItem) => (
                                               <Link
                                                 key={subItem.href}
