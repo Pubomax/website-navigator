@@ -33,6 +33,14 @@ const translations: Translations = {
     customAiAutomation: "Custom AI & Automation Package",
     customSoftware: "Custom Software Development",
     intelligentSupport: "Intelligent Support Package",
+    
+    // New capitalized menu items
+    "Sales Automation": "Sales Automation",
+    "Marketing Automation": "Marketing Automation",
+    "Digital Foundation": "Digital Foundation",
+    "Custom Software": "Custom Software Development",
+    "AI Automation Starter": "AI & Automation Starter Package",
+    "Transformation Consulting": "Digital Transformation Consulting",
 
     // Industry sectors
     manufacturing: "Manufacturing",
@@ -69,6 +77,15 @@ const translations: Translations = {
     "Business Size": "Business Size",
     "About Us": "About Us",
     "Resources": "Resources",
+    "Private Sector": "Private Sector",
+    "Public Sector": "Public Sector",
+    "Automation Systems": "Automation Systems",
+    "Custom Development": "Custom Development",
+    "Implementation Services": "Implementation Services",
+    "Who We Are": "Who We Are",
+    "Our Mission": "Our Mission",
+    "Products": "Products",
+    "Company": "Company",
 
     // Common actions
     startProject: "Start Your Project",
@@ -116,6 +133,14 @@ const translations: Translations = {
     customAiAutomation: "Pack IA & Automatisation Personnalisé",
     customSoftware: "Développement Logiciel sur Mesure",
     intelligentSupport: "Pack Support Intelligent",
+    
+    // New capitalized menu items
+    "Sales Automation": "Automatisation des Ventes",
+    "Marketing Automation": "Automatisation Marketing",
+    "Digital Foundation": "Fondation Numérique",
+    "Custom Software": "Développement Logiciel sur Mesure",
+    "AI Automation Starter": "Pack Démarrage IA & Automatisation",
+    "Transformation Consulting": "Conseil en Transformation Numérique",
 
     // Industry sectors
     manufacturing: "Fabrication",
@@ -152,6 +177,15 @@ const translations: Translations = {
     "Business Size": "Taille d'Entreprise",
     "About Us": "À Propos",
     "Resources": "Ressources",
+    "Private Sector": "Secteur Privé",
+    "Public Sector": "Secteur Public",
+    "Automation Systems": "Systèmes d'Automatisation",
+    "Custom Development": "Développement Sur Mesure",
+    "Implementation Services": "Services d'Implémentation",
+    "Who We Are": "Qui Sommes-Nous",
+    "Our Mission": "Notre Mission",
+    "Products": "Produits",
+    "Company": "Entreprise",
 
     // Common actions
     startProject: "Démarrer Votre Projet",

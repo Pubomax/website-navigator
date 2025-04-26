@@ -165,28 +165,28 @@ const navigation: NavigationItem[] = [
         group: "Private Sector",
         items: [
           { 
-            name: "manufacturing", 
+            name: "Manufacturing", 
             href: "/sectors/manufacturing",
             description: "Automation solutions for production and operations.",
             icon: Factory,
             iconColor: "text-green-500"
           },
           { 
-            name: "finance", 
+            name: "Finance", 
             href: "/sectors/finance",
             description: "Smart solutions for financial services and banking.",
             icon: Banknote,
             iconColor: "text-yellow-500"
           },
           { 
-            name: "retail", 
+            name: "Retail", 
             href: "/sectors/retail",
             description: "Automate customer engagement and inventory management.",
             icon: Store,
             iconColor: "text-blue-500"
           },
           { 
-            name: "healthcare", 
+            name: "Healthcare", 
             href: "/sectors/healthcare",
             description: "Compliant automation solutions for healthcare providers.",
             icon: Heart,
