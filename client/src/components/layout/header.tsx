@@ -103,14 +103,14 @@ const navigation: NavigationItem[] = [
         group: "Automation Systems",
         items: [
           { 
-            name: "salesAutomation", 
+            name: "Sales Automation", 
             href: "/services/sales-automation",
             description: "Automate and qualify leads.",
             icon: Building2,
             iconColor: "text-emerald-500"
           },
           { 
-            name: "marketingAutomation", 
+            name: "Marketing Automation", 
             href: "/services/marketing-automation",
             description: "Automated customer journeys.",
             icon: Users,
@@ -122,14 +122,14 @@ const navigation: NavigationItem[] = [
         group: "Custom Development",
         items: [
           { 
-            name: "digitalFoundation", 
+            name: "Digital Foundation", 
             href: "/services/digital-foundation",
             description: "Custom CRM solutions tailored to business needs.",
             icon: Building,
             iconColor: "text-cyan-500"
           },
           { 
-            name: "customSoftware", 
+            name: "Custom Software", 
             href: "/services/custom-software",
             description: "Business-specific automation solutions.",
             icon: Factory,
@@ -141,14 +141,14 @@ const navigation: NavigationItem[] = [
         group: "Implementation Services",
         items: [
           { 
-            name: "aiAutomationStarter", 
+            name: "AI Automation Starter", 
             href: "/services/ai-automation-starter",
             description: "Basic AI-powered automation package.",
             icon: Users2,
             iconColor: "text-indigo-500"
           },
           { 
-            name: "transformationConsulting", 
+            name: "Transformation Consulting", 
             href: "/services/transformation-consulting",
             description: "Full business process automation guidance.",
             icon: BuildingLarge,
