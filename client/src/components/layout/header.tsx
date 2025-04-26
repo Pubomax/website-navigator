@@ -325,103 +325,77 @@ export function Header() {
           <img src="/logo.png" alt="Minecore Group" className="h-14" />
         </Link>
 
-        {/* Desktop navigation */}
-        <div className="hidden lg:flex items-center gap-2">
-          {navigation.map((item) => (
-            <div 
-              key={item.name} 
-              className="relative inline-block text-left"
-              onMouseEnter={() => {
-                if (item.items) {
-                  toggleDropdown(item.name);
-                  // Set initial group to show on hover
-                  if (item.items.length > 0) {
-                    showGroup(item.items[0].group);
+        {/* Desktop navigation - centered */}
+        <div className="hidden lg:flex items-center justify-center flex-grow">
+          <div className="flex items-center gap-2">
+            {navigation.map((item) => (
+              <div 
+                key={item.name} 
+                className="relative inline-block text-left"
+                onMouseEnter={() => {
+                  if (item.items) {
+                    toggleDropdown(item.name);
+                    // Set initial group to show on hover
+                    if (item.items.length > 0) {
+                      showGroup(item.items[0].group);
+                    }
                   }
-                }
-              }}
-              onMouseLeave={() => {
-                setTimeout(() => {
-                  setActiveItem(null);
-                  setActiveGroup(null);
-                }, 100);
-              }}
-            >
-              {item.items ? (
-                // Dropdown menu for items with subitems
-                <>
-                  <button
-                    type="button"
-                    className={cn(
-                      "inline-flex items-center gap-x-1 text-sm font-medium px-3 py-2 rounded-md transition-colors",
-                      activeItem === item.name ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
-                    )}
-                    aria-expanded={activeItem === item.name}
-                    aria-haspopup="true"
-                  >
-                    {t(item.name)}
-                    <ChevronDown className={cn(
-                      "h-4 w-4 transition-transform duration-200",
-                      activeItem === item.name ? "rotate-180" : ""
-                    )} />
-                  </button>
-                  
-                  {/* Dropdown panel */}
-                  <AnimatePresence>
-                    {activeItem === item.name && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute left-1/2 z-10 mt-3 w-screen max-w-4xl -translate-x-1/2 transform px-2"
-                        onMouseLeave={() => setActiveGroup(null)}
-                      >
-                        <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
-                          <div className="flex bg-white">
-                            {/* Three-column layout for Industries, Products, and Company */}
-                            {(item.name === "industries" || item.name === "products" || item.name === "company") && (
-                              <>
-                                {/* Left Column */}
-                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {item.name === "industries" 
-                                      ? t("Private Sector") 
-                                      : item.name === "products" 
-                                        ? t("Automation Systems")
-                                        : t("Who We Are")
-                                    }
-                                  </h4>
-                                  <div className="space-y-5">
-                                    {item.name === "industries" 
-                                      ? (item.items.find(g => g.group === "Private Sector")?.items || []).map((subItem) => (
-                                          <Link
-                                            key={subItem.href}
-                                            href={getLocalizedPath(subItem.href)}
-                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                            onClick={() => setActiveItem(null)}
-                                          >
-                                            <div className="flex items-start gap-3">
-                                              {subItem.icon && (
-                                                <div className="flex-shrink-0 mt-1">
-                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                                </div>
-                                              )}
-                                              <div>
-                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                                  {t(subItem.name)}
-                                                </div>
-                                                {subItem.description && (
-                                                  <div className="mt-1 text-sm text-[#6b7280]">
-                                                    {t(subItem.description)}
-                                                  </div>
-                                                )}
-                                              </div>
-                                            </div>
-                                          </Link>
-                                        ))
-                                      : item.name === "products"
-                                        ? (item.items.find(g => g.group === "Automation Systems")?.items || []).map((subItem) => (
+                }}
+                onMouseLeave={() => {
+                  setTimeout(() => {
+                    setActiveItem(null);
+                    setActiveGroup(null);
+                  }, 100);
+                }}
+              >
+                {item.items ? (
+                  // Dropdown menu for items with subitems
+                  <>
+                    <button
+                      type="button"
+                      className={cn(
+                        "inline-flex items-center gap-x-1 text-sm font-medium px-3 py-2 rounded-md transition-colors",
+                        activeItem === item.name ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
+                      )}
+                      aria-expanded={activeItem === item.name}
+                      aria-haspopup="true"
+                    >
+                      {t(item.name)}
+                      <ChevronDown className={cn(
+                        "h-4 w-4 transition-transform duration-200",
+                        activeItem === item.name ? "rotate-180" : ""
+                      )} />
+                    </button>
+                    
+                    {/* Dropdown panel */}
+                    <AnimatePresence>
+                      {activeItem === item.name && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-1/2 z-10 mt-3 w-screen max-w-4xl -translate-x-1/2 transform px-2"
+                          onMouseLeave={() => setActiveGroup(null)}
+                        >
+                          <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
+                            <div className="flex bg-white">
+                              {/* Three-column layout for Industries, Products, and Company */}
+                              {(item.name === "industries" || item.name === "products" || item.name === "company") && (
+                                <>
+                                  {/* Left Column */}
+                                  <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                    <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                      {item.name === "industries" 
+                                        ? t("Private Sector") 
+                                        : item.name === "products" 
+                                          ? t("Automation Systems")
+                                          : t("Who We Are")
+                                      }
+                                    </h4>
+                                    <div className="space-y-5">
+                                      {item.name === "industries" 
+                                        ? (item.items.find(g => g.group === "Private Sector")?.items || []).map((subItem) => (
                                             <Link
                                               key={subItem.href}
                                               href={getLocalizedPath(subItem.href)}
@@ -447,79 +421,79 @@ export function Header() {
                                               </div>
                                             </Link>
                                           ))
-                                        : (item.items.find(g => g.group === "Who We Are")?.items || []).map((subItem) => (
-                                            <Link
-                                              key={subItem.href}
-                                              href={getLocalizedPath(subItem.href)}
-                                              className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                              onClick={() => setActiveItem(null)}
-                                            >
-                                              <div className="flex items-start gap-3">
-                                                {subItem.icon && (
-                                                  <div className="flex-shrink-0 mt-1">
-                                                    <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                                  </div>
-                                                )}
-                                                <div>
-                                                  <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                                    {t(subItem.name)}
-                                                  </div>
-                                                  {subItem.description && (
-                                                    <div className="mt-1 text-sm text-[#6b7280]">
-                                                      {t(subItem.description)}
+                                        : item.name === "products"
+                                          ? (item.items.find(g => g.group === "Automation Systems")?.items || []).map((subItem) => (
+                                              <Link
+                                                key={subItem.href}
+                                                href={getLocalizedPath(subItem.href)}
+                                                className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                                onClick={() => setActiveItem(null)}
+                                              >
+                                                <div className="flex items-start gap-3">
+                                                  {subItem.icon && (
+                                                    <div className="flex-shrink-0 mt-1">
+                                                      <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
                                                     </div>
                                                   )}
+                                                  <div>
+                                                    <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                      {t(subItem.name)}
+                                                    </div>
+                                                    {subItem.description && (
+                                                      <div className="mt-1 text-sm text-[#6b7280]">
+                                                        {t(subItem.description)}
+                                                      </div>
+                                                    )}
+                                                  </div>
                                                 </div>
-                                              </div>
-                                            </Link>
-                                          ))
-                                    }
+                                              </Link>
+                                            ))
+                                          : (item.items.find(g => g.group === "Who We Are")?.items || []).map((subItem) => (
+                                              <Link
+                                                key={subItem.href}
+                                                href={getLocalizedPath(subItem.href)}
+                                                className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                                onClick={() => setActiveItem(null)}
+                                              >
+                                                <div className="flex items-start gap-3">
+                                                  {subItem.icon && (
+                                                    <div className="flex-shrink-0 mt-1">
+                                                      <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                    </div>
+                                                  )}
+                                                  <div>
+                                                    <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                      {t(subItem.name)}
+                                                    </div>
+                                                    {subItem.description && (
+                                                      <div className="mt-1 text-sm text-[#6b7280]">
+                                                        {t(subItem.description)}
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                </div>
+                                              </Link>
+                                            ))
+                                      }
+                                    </div>
                                   </div>
-                                </div>
-                                
-                                {/* Middle column */}
-                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                                  {/* First section heading */}
-                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {item.name === "industries" 
-                                      ? t("Public Sector") 
-                                      : item.name === "products"
-                                        ? t("Custom Development")
-                                        : t("Our Mission")
-                                    }
-                                  </h4>
                                   
-                                  {/* First section content */}
-                                  <div className="space-y-5 mb-8">
-                                    {item.name === "industries"
-                                      ? (item.items.find(g => g.group === "Public Sector")?.items || []).map((subItem) => (
-                                          <Link
-                                            key={subItem.href}
-                                            href={getLocalizedPath(subItem.href)}
-                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                            onClick={() => setActiveItem(null)}
-                                          >
-                                            <div className="flex items-start gap-3">
-                                              {subItem.icon && (
-                                                <div className="flex-shrink-0 mt-1">
-                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                                </div>
-                                              )}
-                                              <div>
-                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                                  {t(subItem.name)}
-                                                </div>
-                                                {subItem.description && (
-                                                  <div className="mt-1 text-sm text-[#6b7280]">
-                                                    {t(subItem.description)}
-                                                  </div>
-                                                )}
-                                              </div>
-                                            </div>
-                                          </Link>
-                                        ))
-                                      : item.name === "products"
-                                        ? (item.items.find(g => g.group === "Custom Development")?.items || []).map((subItem) => (
+                                  {/* Middle column */}
+                                  <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                    {/* First section heading */}
+                                    <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                      {item.name === "industries" 
+                                        ? t("Public Sector") 
+                                        : item.name === "products"
+                                          ? t("Custom Development")
+                                          : t("Our Mission")
+                                      }
+                                    </h4>
+                                    
+                                    {/* First section content */}
+                                    <div className="space-y-5 mb-8">
+                                      {item.name === "industries"
+                                        ? (item.items.find(g => g.group === "Public Sector")?.items || []).map((subItem) => (
                                             <Link
                                               key={subItem.href}
                                               href={getLocalizedPath(subItem.href)}
@@ -545,76 +519,76 @@ export function Header() {
                                               </div>
                                             </Link>
                                           ))
-                                        : (item.items.find(g => g.group === "Our Mission")?.items || []).map((subItem) => (
-                                            <Link
-                                              key={subItem.href}
-                                              href={getLocalizedPath(subItem.href)}
-                                              className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                              onClick={() => setActiveItem(null)}
-                                            >
-                                              <div className="flex items-start gap-3">
-                                                {subItem.icon && (
-                                                  <div className="flex-shrink-0 mt-1">
-                                                    <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                                  </div>
-                                                )}
-                                                <div>
-                                                  <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                                    {t(subItem.name)}
-                                                  </div>
-                                                  {subItem.description && (
-                                                    <div className="mt-1 text-sm text-[#6b7280]">
-                                                      {t(subItem.description)}
+                                        : item.name === "products"
+                                          ? (item.items.find(g => g.group === "Custom Development")?.items || []).map((subItem) => (
+                                              <Link
+                                                key={subItem.href}
+                                                href={getLocalizedPath(subItem.href)}
+                                                className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                                onClick={() => setActiveItem(null)}
+                                              >
+                                                <div className="flex items-start gap-3">
+                                                  {subItem.icon && (
+                                                    <div className="flex-shrink-0 mt-1">
+                                                      <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
                                                     </div>
                                                   )}
+                                                  <div>
+                                                    <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                      {t(subItem.name)}
+                                                    </div>
+                                                    {subItem.description && (
+                                                      <div className="mt-1 text-sm text-[#6b7280]">
+                                                        {t(subItem.description)}
+                                                      </div>
+                                                    )}
+                                                  </div>
                                                 </div>
-                                              </div>
-                                            </Link>
-                                          ))
-                                    }
-                                  </div>
+                                              </Link>
+                                            ))
+                                          : (item.items.find(g => g.group === "Our Mission")?.items || []).map((subItem) => (
+                                              <Link
+                                                key={subItem.href}
+                                                href={getLocalizedPath(subItem.href)}
+                                                className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                                onClick={() => setActiveItem(null)}
+                                              >
+                                                <div className="flex items-start gap-3">
+                                                  {subItem.icon && (
+                                                    <div className="flex-shrink-0 mt-1">
+                                                      <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                    </div>
+                                                  )}
+                                                  <div>
+                                                    <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                      {t(subItem.name)}
+                                                    </div>
+                                                    {subItem.description && (
+                                                      <div className="mt-1 text-sm text-[#6b7280]">
+                                                        {t(subItem.description)}
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                </div>
+                                              </Link>
+                                            ))
+                                      }
+                                    </div>
 
-                                  {/* Second section heading */}
-                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {item.name === "industries" 
-                                      ? t("Business Size") 
-                                      : item.name === "products"
-                                        ? t("Implementation Services")
-                                        : ""
-                                    }
-                                  </h4>
-                                  
-                                  {/* Second section content */}
-                                  <div className="space-y-5">
-                                    {item.name === "industries"
-                                      ? (item.items.find(g => g.group === "Business Size")?.items || []).map((subItem) => (
-                                          <Link
-                                            key={subItem.href}
-                                            href={getLocalizedPath(subItem.href)}
-                                            className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                            onClick={() => setActiveItem(null)}
-                                          >
-                                            <div className="flex items-start gap-3">
-                                              {subItem.icon && (
-                                                <div className="flex-shrink-0 mt-1">
-                                                  <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                                </div>
-                                              )}
-                                              <div>
-                                                <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                                  {t(subItem.name)}
-                                                </div>
-                                                {subItem.description && (
-                                                  <div className="mt-1 text-sm text-[#6b7280]">
-                                                    {t(subItem.description)}
-                                                  </div>
-                                                )}
-                                              </div>
-                                            </div>
-                                          </Link>
-                                        ))
-                                      : item.name === "products"
-                                        ? (item.items.find(g => g.group === "Implementation Services")?.items || []).map((subItem) => (
+                                    {/* Second section heading */}
+                                    <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                      {item.name === "industries" 
+                                        ? t("Business Size") 
+                                        : item.name === "products"
+                                          ? t("Implementation Services")
+                                          : ""
+                                      }
+                                    </h4>
+                                    
+                                    {/* Second section content */}
+                                    <div className="space-y-5">
+                                      {item.name === "industries"
+                                        ? (item.items.find(g => g.group === "Business Size")?.items || []).map((subItem) => (
                                             <Link
                                               key={subItem.href}
                                               href={getLocalizedPath(subItem.href)}
@@ -640,185 +614,216 @@ export function Header() {
                                               </div>
                                             </Link>
                                           ))
-                                        : null
-                                    }
+                                        : item.name === "products"
+                                          ? (item.items.find(g => g.group === "Implementation Services")?.items || []).map((subItem) => (
+                                              <Link
+                                                key={subItem.href}
+                                                href={getLocalizedPath(subItem.href)}
+                                                className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                                onClick={() => setActiveItem(null)}
+                                              >
+                                                <div className="flex items-start gap-3">
+                                                  {subItem.icon && (
+                                                    <div className="flex-shrink-0 mt-1">
+                                                      <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                                    </div>
+                                                  )}
+                                                  <div>
+                                                    <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                      {t(subItem.name)}
+                                                    </div>
+                                                    {subItem.description && (
+                                                      <div className="mt-1 text-sm text-[#6b7280]">
+                                                        {t(subItem.description)}
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                </div>
+                                              </Link>
+                                            ))
+                                          : null
+                                      }
+                                    </div>
                                   </div>
-                                </div>
-                              </>
-                            )}
-                            
-                            {/* Three-column layout for Solutions */}
-                            {item.name === "solutions" && (
-                              <>
-                                {/* Left Column - Lead Generation */}
-                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {t("Lead Generation Solutions")}
-                                  </h4>
-                                  <div className="space-y-5">
-                                    {(item.items.find(g => g.group === "Lead Generation Solutions")?.items || []).map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-sm text-[#6b7280]">
-                                                {t(subItem.description)}
+                                </>
+                              )}
+                              
+                              {/* Three-column layout for Solutions */}
+                              {item.name === "solutions" && (
+                                <>
+                                  {/* Left Column - Lead Generation */}
+                                  <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                    <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                      {t("Lead Generation Solutions")}
+                                    </h4>
+                                    <div className="space-y-5">
+                                      {(item.items.find(g => g.group === "Lead Generation Solutions")?.items || []).map((subItem) => (
+                                        <Link
+                                          key={subItem.href}
+                                          href={getLocalizedPath(subItem.href)}
+                                          className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                          onClick={() => setActiveItem(null)}
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            {subItem.icon && (
+                                              <div className="flex-shrink-0 mt-1">
+                                                <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
                                               </div>
                                             )}
+                                            <div>
+                                              <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                {t(subItem.name)}
+                                              </div>
+                                              {subItem.description && (
+                                                <div className="mt-1 text-sm text-[#6b7280]">
+                                                  {t(subItem.description)}
+                                                </div>
+                                              )}
+                                            </div>
                                           </div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                                        </Link>
+                                      ))}
+                                    </div>
                                   </div>
-                                </div>
-                                
-                                {/* Middle column - Sales Acceleration */}
-                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {t("Sales Acceleration Solutions")}
-                                  </h4>
                                   
-                                  <div className="space-y-5 mb-8">
-                                    {(item.items.find(g => g.group === "Sales Acceleration Solutions")?.items || []).map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-sm text-[#6b7280]">
-                                                {t(subItem.description)}
+                                  {/* Middle column - Sales Acceleration */}
+                                  <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                    <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                      {t("Sales Acceleration Solutions")}
+                                    </h4>
+                                    
+                                    <div className="space-y-5 mb-8">
+                                      {(item.items.find(g => g.group === "Sales Acceleration Solutions")?.items || []).map((subItem) => (
+                                        <Link
+                                          key={subItem.href}
+                                          href={getLocalizedPath(subItem.href)}
+                                          className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                          onClick={() => setActiveItem(null)}
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            {subItem.icon && (
+                                              <div className="flex-shrink-0 mt-1">
+                                                <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
                                               </div>
                                             )}
+                                            <div>
+                                              <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                {t(subItem.name)}
+                                              </div>
+                                              {subItem.description && (
+                                                <div className="mt-1 text-sm text-[#6b7280]">
+                                                  {t(subItem.description)}
+                                                </div>
+                                              )}
+                                            </div>
                                           </div>
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
+                                        </Link>
+                                      ))}
+                                    </div>
 
-                                  {/* Customer Engagement Section */}
-                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                    {t("Customer Engagement Solutions")}
-                                  </h4>
-                                  
-                                  <div className="space-y-5">
-                                    {(item.items.find(g => g.group === "Customer Engagement Solutions")?.items || []).map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setActiveItem(null)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-sm text-[#6b7280]">
-                                                {t(subItem.description)}
+                                    {/* Customer Engagement Section */}
+                                    <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                      {t("Customer Engagement Solutions")}
+                                    </h4>
+                                    
+                                    <div className="space-y-5">
+                                      {(item.items.find(g => g.group === "Customer Engagement Solutions")?.items || []).map((subItem) => (
+                                        <Link
+                                          key={subItem.href}
+                                          href={getLocalizedPath(subItem.href)}
+                                          className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                          onClick={() => setActiveItem(null)}
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            {subItem.icon && (
+                                              <div className="flex-shrink-0 mt-1">
+                                                <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
                                               </div>
                                             )}
+                                            <div>
+                                              <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                {t(subItem.name)}
+                                              </div>
+                                              {subItem.description && (
+                                                <div className="mt-1 text-sm text-[#6b7280]">
+                                                  {t(subItem.description)}
+                                                </div>
+                                              )}
+                                            </div>
                                           </div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                                        </Link>
+                                      ))}
+                                    </div>
                                   </div>
-                                </div>
-                              </>
-                            )}
-                            
-                            {/* Right column - Quick links (fixed content) */}
-                            <div className="py-5 px-6 min-w-[160px] max-w-[160px]">
-                              <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                {t("more")}
-                              </h4>
-                              <ul className="space-y-2">
-                                <li>
-                                  <Link 
-                                    href={getLocalizedPath("/about")} 
-                                    className="text-gray-700 hover:text-primary text-sm"
-                                    onClick={() => setActiveItem(null)}
-                                  >
-                                    {t("about")}
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link 
-                                    href={getLocalizedPath("/faq")} 
-                                    className="text-gray-700 hover:text-primary text-sm"
-                                    onClick={() => setActiveItem(null)}
-                                  >
-                                    {t("faq")}
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link 
-                                    href={getLocalizedPath("/blog")} 
-                                    className="text-gray-700 hover:text-primary text-sm"
-                                    onClick={() => setActiveItem(null)}
-                                  >
-                                    {t("blog")}
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link 
-                                    href={getLocalizedPath("/contact")} 
-                                    className="text-gray-700 hover:text-primary text-sm"
-                                    onClick={() => setActiveItem(null)}
-                                  >
-                                    {t("contact")}
-                                  </Link>
-                                </li>
-                              </ul>
+                                </>
+                              )}
+                              
+                              {/* Right column - Quick links (fixed content) */}
+                              <div className="py-5 px-6 min-w-[160px] max-w-[160px]">
+                                <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                  {t("more")}
+                                </h4>
+                                <ul className="space-y-2">
+                                  <li>
+                                    <Link 
+                                      href={getLocalizedPath("/about")} 
+                                      className="text-gray-700 hover:text-primary text-sm"
+                                      onClick={() => setActiveItem(null)}
+                                    >
+                                      {t("about")}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link 
+                                      href={getLocalizedPath("/faq")} 
+                                      className="text-gray-700 hover:text-primary text-sm"
+                                      onClick={() => setActiveItem(null)}
+                                    >
+                                      {t("faq")}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link 
+                                      href={getLocalizedPath("/blog")} 
+                                      className="text-gray-700 hover:text-primary text-sm"
+                                      onClick={() => setActiveItem(null)}
+                                    >
+                                      {t("blog")}
+                                    </Link>
+                                  </li>
+                                  <li>
+                                    <Link 
+                                      href={getLocalizedPath("/contact")} 
+                                      className="text-gray-700 hover:text-primary text-sm"
+                                      onClick={() => setActiveItem(null)}
+                                    >
+                                      {t("contact")}
+                                    </Link>
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </>
-              ) : (
-                // Regular link for items without subitems
-                <Link
-                  href={getLocalizedPath(item.href!)}
-                  className="text-sm font-medium px-3 py-2 rounded-md transition-colors text-gray-600 hover:text-gray-900"
-                >
-                  {t(item.name)}
-                </Link>
-              )}
-            </div>
-          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  // Regular link for items without subitems
+                  <Link
+                    href={getLocalizedPath(item.href!)}
+                    className="text-sm font-medium px-3 py-2 rounded-md transition-colors text-gray-600 hover:text-gray-900"
+                  >
+                    {t(item.name)}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
 
+        {/* Right section with language picker and CTA */}
+        <div className="hidden lg:flex items-center gap-2">
           {/* Language Selector */}
           <div className="relative inline-block text-left">
             <button
