@@ -288,7 +288,15 @@ export function Header() {
             <div 
               key={item.name} 
               className="relative inline-block text-left"
-              onMouseEnter={() => toggleDropdown(item.name)}
+              onMouseEnter={() => {
+                if (item.items) {
+                  toggleDropdown(item.name);
+                  // Set initial group to show on hover
+                  if (item.items.length > 0) {
+                    showGroup(item.items[0].group);
+                  }
+                }
+              }}
               onMouseLeave={() => {
                 setTimeout(() => {
                   setActiveItem(null);
@@ -327,9 +335,9 @@ export function Header() {
                         onMouseLeave={() => setActiveGroup(null)}
                       >
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                          <div className="relative grid grid-cols-2 gap-0 bg-white">
+                          <div className="relative grid grid-cols-4 gap-0 bg-white">
                             {/* Left column - Category groups */}
-                            <div className="col-span-1 border-r border-gray-100 py-6 pl-6">
+                            <div className="col-span-1 border-r border-gray-100 py-6 pl-6 pr-2">
                               {item.items.map((group) => (
                                 <div 
                                   key={group.group} 
@@ -337,8 +345,8 @@ export function Header() {
                                   onMouseEnter={() => showGroup(group.group)}
                                 >
                                   <div className={cn(
-                                    "font-medium text-sm px-3 py-2 rounded-md cursor-pointer",
-                                    activeGroup === group.group || (!activeGroup && group === item.items[0]) 
+                                    "font-medium text-base px-3 py-2 rounded-md cursor-pointer transition-colors",
+                                    activeGroup === group.group || (!activeGroup && item.items && group === item.items[0]) 
                                       ? "bg-gray-100 text-gray-900" 
                                       : "text-gray-600 hover:text-gray-900"
                                   )}>
@@ -349,14 +357,17 @@ export function Header() {
                             </div>
                             
                             {/* Right column - Items with descriptions */}
-                            <div className="col-span-1 py-6 px-6">
+                            <div className="col-span-3 py-6 px-6">
                               {item.items.map((group) => (
-                                <div 
-                                  key={group.group} 
-                                  className={cn(
-                                    "space-y-4",
-                                    (activeGroup === group.group || (!activeGroup && group === item.items[0])) ? "block" : "hidden"
-                                  )}
+                                <motion.div 
+                                  key={group.group}
+                                  initial={{ opacity: 0 }}
+                                  animate={{ 
+                                    opacity: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? 1 : 0,
+                                    display: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? "block" : "none"
+                                  }}
+                                  transition={{ duration: 0.2 }}
+                                  className="space-y-4"
                                 >
                                   {group.items.map((subItem) => (
                                     <Link
@@ -365,7 +376,7 @@ export function Header() {
                                       className="block group p-2 rounded-md hover:bg-gray-50"
                                       onClick={() => setActiveItem(null)}
                                     >
-                                      <p className="text-sm font-medium text-gray-900 group-hover:text-primary">
+                                      <p className="text-base font-medium text-gray-900 group-hover:text-primary">
                                         {t(subItem.name)}
                                       </p>
                                       {subItem.description && (
@@ -375,7 +386,7 @@ export function Header() {
                                       )}
                                     </Link>
                                   ))}
-                                </div>
+                                </motion.div>
                               ))}
                             </div>
                           </div>

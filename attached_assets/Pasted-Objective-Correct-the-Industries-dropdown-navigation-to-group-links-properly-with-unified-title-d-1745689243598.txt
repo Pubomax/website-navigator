@@ -1,0 +1,60 @@
+Objective:
+Correct the Industries dropdown navigation to group links properly with unified title + description formatting, based on user outcome and visitor expectation.
+
+Requirements:
+
+1. One Left Column (Sector Categories):
+- "Private Sector"
+- "Public Sector"
+- "Business Size"
+
+(Left items are section labels only — no links.)
+
+2. One Right Column (Sector Pages):
+
+- When hovering "Private Sector" (left):
+  - Show these links in right column:
+    - Manufacturing (Clickable title link) ➔ Small description below: "Automation solutions for production and operations."
+    - Finance (Clickable title link) ➔ Small description below: "Smart solutions for financial services and banking."
+    - Retail (Clickable title link) ➔ Small description below: "Automate customer engagement and inventory management."
+    - Healthcare (Clickable title link) ➔ Small description below: "Compliant automation solutions for healthcare providers."
+
+- When hovering "Public Sector" (left):
+  - Show:
+    - Public Sector (Clickable title link) ➔ Small description: "Efficient solutions for government organizations."
+
+- When hovering "Business Size" (left):
+  - Show:
+    - Micro Enterprises (Clickable title link) ➔ "Affordable solutions for businesses with 1-10 employees."
+    - Mid-Sized Enterprises (Clickable title link) ➔ "Scalable automation for businesses with 10-250 employees."
+    - Large Enterprises (Clickable title link) ➔ "Enterprise-grade solutions for 250+ employee organizations."
+
+Technical Rules:
+- Each link (Manufacturing, Finance, etc.) must be a clickable `<a>` HTML element.
+- The description must appear directly underneath the clickable title, in a smaller, muted gray font.
+- There must be no break between title and description — they form a single block.
+- No second independent columns; one clean right column only.
+- Switch content dynamically based on hover over left categories.
+- Smooth fade transition when switching panels (optional but preferred, 200ms fade-in).
+- Keep layout clean, minimal, premium style like Stripe.com.
+
+Accessibility Rules:
+- Maintain keyboard navigation (tab between links).
+- Use ARIA roles if necessary for the nav.
+
+Styling Requirements:
+- Title font: 16px, dark color (#111827).
+- Description font: 14px, muted gray color (#6b7280).
+- Space between title and description: 4-6px.
+- Space between items: 16px vertically.
+- No bullets, no borders.
+
+Deliverable:
+- Clean HTML, CSS, and minimal JS.
+- Modular code for reuse.
+- Fully responsive.
+
+Important: 
+Do not split items into multiple unrelated columns.  
+One sector group at a time dynamically displayed.  
+Title and description must stay visually and structurally connected.
