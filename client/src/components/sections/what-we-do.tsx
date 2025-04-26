@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
-import { ArrowRight, MessageSquare, DollarSign, Code } from "lucide-react";
+import { ArrowRight, ChevronRight, MessageSquare, DollarSign, Code, Globe } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Ce Que Nous Faisons" : "What We Do",
@@ -56,59 +57,75 @@ export function WhatWeDo() {
   const content = getContent(isPathFrench);
 
   return (
-    <section className="py-16 sm:py-20 bg-background">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="section bg-gradient-to-b from-background to-background/95">
+      <div className="container-pro">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+          <div className="inline-flex items-center mb-4 px-4 py-1.5 rounded-full bg-secondary/20 text-secondary-foreground text-sm font-medium">
+            <Globe className="mr-2 h-4 w-4 text-primary/80" />
+            {isPathFrench ? "Notre expertise" : "Our expertise"}
+          </div>
+          
+          <h2 className="text-4xl sm:text-5xl font-medium tracking-tight mb-6">
             {content.title}
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-muted-foreground/90">
             {content.subtitle}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {content.pillars.map((pillar, index) => (
-            <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card className="h-full flex flex-col shadow-lg border-primary/10 hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <div className="inline-block p-3 rounded-lg bg-primary/10 mb-4">
-                    <pillar.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-xl">{pillar.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-muted-foreground">
-                    {pillar.description}
-                  </p>
-                </CardContent>
-                <CardFooter className="flex flex-col gap-2">
-                  <Button variant="outline" className="w-full" asChild>
-                    <Link href={pillar.link}>
-                      {isPathFrench ? "En Savoir Plus" : "Learn More"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button variant="default" className="w-full" asChild>
-                    <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
-                      {isPathFrench ? "Commencer" : "Get Started"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
+        <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          {content.pillars.map((pillar, index) => {
+            // Generate unique gradient for each pillar
+            const gradientColors = [
+              "from-blue-500/10 to-indigo-500/10", 
+              "from-green-500/10 to-emerald-500/10",
+              "from-purple-500/10 to-pink-500/10"
+            ];
+            
+            return (
+              <motion.div
+                key={pillar.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
+                className="group"
+              >
+                <Card className="h-full flex flex-col bg-card/95 border-border/20 rounded-xl overflow-hidden shadow-md group-hover:shadow-xl group-hover:border-primary/20 transition-all duration-300">
+                  <div className={cn("h-2 w-full bg-gradient-to-r", gradientColors[index])}></div>
+                  <CardHeader className="pt-8 px-6">
+                    <div className="mb-6 w-14 h-14 flex items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10 transition-colors duration-300 ring-1 ring-primary/10 group-hover:ring-primary/20">
+                      <pillar.icon className="h-6 w-6 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <CardTitle className="text-2xl font-medium tracking-tight">{pillar.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-grow px-6">
+                    <p className="text-muted-foreground/90 leading-relaxed">
+                      {pillar.description}
+                    </p>
+                  </CardContent>
+                  <CardFooter className="flex flex-col gap-3 p-6 pt-4 border-t border-border/10">
+                    <Button variant="outline" className="w-full justify-start font-normal text-sm px-3 h-9" asChild>
+                      <Link href={pillar.link}>
+                        {isPathFrench ? "Explorer les services" : "Explore services"}
+                        <ChevronRight className="ml-1 h-4 w-4 opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </Button>
+                    <Button variant="gradient" className="w-full shadow-sm" asChild>
+                      <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
+                        {isPathFrench ? "Commencer" : "Get Started"}
+                        <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -6,8 +6,10 @@ import {
   DollarSign, 
   Settings, 
   Users, 
-  HeadphonesIcon
+  HeadphonesIcon,
+  Award
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Pourquoi Nous Choisir" : "Why Choose Us",
