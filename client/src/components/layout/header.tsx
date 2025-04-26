@@ -386,7 +386,7 @@ export function Header() {
                                     <Link
                                       key={subItem.href}
                                       href={getLocalizedPath(subItem.href)}
-                                      className="block py-2 px-2 rounded-md hover:bg-gray-50 group"
+                                      className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
                                       onClick={() => setActiveItem(null)}
                                     >
                                       <div className="text-base font-medium text-[#111827] group-hover:text-primary">
@@ -522,12 +522,14 @@ export function Header() {
                                     <Link
                                       key={subItem.href}
                                       href={getLocalizedPath(subItem.href)}
-                                      className="block text-gray-600 hover:text-gray-900"
+                                      className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
                                       onClick={() => setMobileMenuOpen(false)}
                                     >
-                                      <div className="text-sm">{t(subItem.name)}</div>
+                                      <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
+                                        {t(subItem.name)}
+                                      </div>
                                       {subItem.description && (
-                                        <div className="text-xs text-gray-500 mt-1">
+                                        <div className="mt-1 text-xs text-[#6b7280]">
                                           {t(subItem.description)}
                                         </div>
                                       )}

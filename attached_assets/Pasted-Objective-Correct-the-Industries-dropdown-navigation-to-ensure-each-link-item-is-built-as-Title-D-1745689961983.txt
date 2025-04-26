@@ -1,0 +1,87 @@
+Objective:
+Correct the Industries dropdown navigation to ensure each link item is built as Title + Description together, inside one clean unified hoverable block.
+
+Behavior Specifications:
+- Left Column = Category Groups:
+  - Private Sector
+  - Public Sector
+  - Business Size
+
+- Right Column = Dynamic Content:
+  - Hover on "Private Sector" ➔ Show only Manufacturing, Finance, Retail, Healthcare
+  - Hover on "Public Sector" ➔ Show only Public Sector
+  - Hover on "Business Size" ➔ Show Micro, Mid-Sized, Large Enterprises
+
+- Each Title must be a clickable link.
+- Each Description must appear directly underneath the Title, smaller and muted.
+- Clicking the whole block should act as a link (Title + Description clickable together).
+
+Design Specifications:
+- Title (e.g., "Manufacturing"): text-base (16px), font-medium, #111827
+- Description (e.g., "Automation solutions..."): text-sm (14px), #6b7280, margin-top 4px (mt-1)
+- Hover Behavior: Light background hover (hover:bg-gray-50), text darkens slightly
+- Padding per Block: px-2 py-2
+- Block Behavior: Entire block (Title + Description) clickable and hoverable
+- Layout: Clean vertical stack inside right column, one after another, visually unified
+
+HTML/JSX Code Template (USE THIS STRUCTURE):
+
+{group.items.map((subItem) => (
+  <Link
+    key={subItem.href}
+    href={getLocalizedPath(subItem.href)}
+    className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+    onClick={() => setActiveItem(null)}
+  >
+    <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+      {t(subItem.name)}
+    </div>
+    {subItem.description && (
+      <div className="mt-1 text-sm text-[#6b7280]">
+        {t(subItem.description)}
+      </div>
+    )}
+  </Link>
+))}
+
+CSS Behavior Expected:
+
+.menu-link {
+  display: block;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #111827;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: 6px;
+}
+
+.menu-link:hover {
+  background-color: #f5f5f5;
+  color: #3b82f6;
+}
+
+.menu-link .desc {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+Interaction Behavior:
+- Hover over the left column (Private Sector, Public Sector, Business Size): change right panel dynamically to show matching groups.
+- Fade-in transition optional (200ms opacity transition).
+- Whole right block stays cleanly vertically stacked.
+- No random space or jumps between Title and Description.
+
+Important:
+- DO NOT separate titles and descriptions into different visual blocks.
+- DO NOT create two unrelated columns inside the right panel.
+- DO NOT make only the title clickable without including the description under hover.
+- Keep UX aligned: Stripe/Intercom-style.
+
+Deliverables:
+- Correct JSX/HTML structure inside the dropdown menu.
+- CSS adjusted for hover, spacing, typography.
+- Smooth dynamic panel switching.
+- Responsive behavior ready for desktop and mobile.
+- Modular clean code easy to extend for other dropdown sections (Solutions, Products, Resources, etc.).
