@@ -48,14 +48,14 @@ const navigation: NavigationItem[] = [
         group: "Lead Generation Solutions",
         items: [
           { 
-            name: "automatedLeadGeneration", 
+            name: "Automated Lead Generation", 
             href: "/solutions/automated-lead-generation",
-            description: "Find new prospects automatically using AI.",
+            description: "Find prospects faster.",
             icon: Users,
             iconColor: "text-blue-500"
           },
           { 
-            name: "smartNurturing", 
+            name: "Smart Nurturing", 
             href: "/solutions/smart-nurturing",
             description: "Turn leads into clients automatically.",
             icon: Users2,
@@ -67,16 +67,16 @@ const navigation: NavigationItem[] = [
         group: "Sales Acceleration Solutions",
         items: [
           { 
-            name: "salesAutomation", 
+            name: "Sales Automation", 
             href: "/services/sales-automation",
-            description: "Automate your sales pipeline and follow-ups.",
+            description: "Automate your pipeline.",
             icon: Building2,
             iconColor: "text-emerald-500"
           },
           { 
-            name: "quickAcquisition", 
+            name: "Quick Acquisition", 
             href: "/solutions/quick-acquisition",
-            description: "Boost conversion rates fast.",
+            description: "Boost conversion rates.",
             icon: Banknote,
             iconColor: "text-green-500"
           }
@@ -86,9 +86,9 @@ const navigation: NavigationItem[] = [
         group: "Customer Engagement Solutions",
         items: [
           { 
-            name: "instantCustomerEngagement", 
+            name: "Instant Customer Engagement", 
             href: "/solutions/instant-customer-engagement",
-            description: "Real-time customer interactions to close deals.",
+            description: "Real-time responses to prospects.",
             icon: Store,
             iconColor: "text-purple-500"
           }
@@ -661,7 +661,7 @@ export function Header() {
                                   {/* Left Column - Lead Generation */}
                                   <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {t("Lead Generation Solutions")}
+                                      {t("Find More Leads")}
                                     </h4>
                                     <div className="space-y-5">
                                       {(item.items.find(g => g.group === "Lead Generation Solutions")?.items || []).map((subItem) => (
@@ -696,7 +696,7 @@ export function Header() {
                                   {/* Middle column - Sales Acceleration */}
                                   <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {t("Sales Acceleration Solutions")}
+                                      {t("Close More Sales")}
                                     </h4>
                                     
                                     <div className="space-y-5 mb-8">
@@ -730,7 +730,7 @@ export function Header() {
 
                                     {/* Customer Engagement Section */}
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {t("Customer Engagement Solutions")}
+                                      {t("Customer Engagement")}
                                     </h4>
                                     
                                     <div className="space-y-5">
