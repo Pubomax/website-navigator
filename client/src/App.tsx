@@ -4,7 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ProtectedRoute } from "./lib/protected-route";
 import { Helmet } from "react-helmet";
 
@@ -187,7 +186,6 @@ function Router() {
         </Switch>
       </div>
       <Footer />
-      <ChatWidget />
     </div>
   );
 }
