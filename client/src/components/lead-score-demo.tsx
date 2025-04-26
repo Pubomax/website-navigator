@@ -98,7 +98,7 @@ export function LeadScoreDemo() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <Building className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <Building className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium">Industry</p>
                 <p className="text-sm text-muted-foreground">Technology</p>
@@ -106,7 +106,7 @@ export function LeadScoreDemo() {
             </div>
             
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <User className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <User className="h-5 w-5 text-purple-500 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium">Business Size</p>
                 <p className="text-sm text-muted-foreground">Mid-Market</p>
@@ -114,7 +114,7 @@ export function LeadScoreDemo() {
             </div>
             
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <Briefcase className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <Briefcase className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium">Service Interest</p>
                 <p className="text-sm text-muted-foreground">Sales Automation</p>
@@ -122,7 +122,7 @@ export function LeadScoreDemo() {
             </div>
             
             <div className="bg-secondary/30 rounded-lg p-3 flex items-start gap-3">
-              <Mail className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <Mail className="h-5 w-5 text-orange-500 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium">Marketing Channel</p>
                 <p className="text-sm text-muted-foreground">Referral</p>
@@ -133,7 +133,7 @@ export function LeadScoreDemo() {
           
           <div className="mt-4 bg-primary/5 p-4 rounded-lg border border-primary/10">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="h-5 w-5 text-primary" />
+              <Zap className="h-5 w-5 text-amber-500" />
               <h3 className="font-medium">AI Scoring Analysis</h3>
             </div>
             <div className="space-y-2">

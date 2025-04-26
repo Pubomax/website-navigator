@@ -102,11 +102,24 @@ export function DirectOfferCTA() {
               {content.features.map((feature) => (
                 <div key={feature.title} className="flex items-start">
                   <div className="flex-shrink-0 mr-3 mt-1">
-                    <Check className="h-5 w-5 text-primary" />
+                    <Check className="h-5 w-5 text-emerald-500" />
                   </div>
-                  <div>
-                    <h3 className="font-medium">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  <div className="flex items-start gap-2">
+                    <div className="flex-shrink-0 mt-0.5">
+                      <feature.icon className={`h-4 w-4 ${
+                        feature.title.includes("Social") || feature.title.includes("Réseaux") 
+                          ? "text-blue-500" 
+                          : feature.title.includes("Report") || feature.title.includes("Rapport")
+                            ? "text-orange-500"
+                            : feature.title.includes("Nurturing") || feature.title.includes("Lead")
+                              ? "text-purple-500"
+                              : "text-cyan-500"
+                      }`} />
+                    </div>
+                    <div>
+                      <h3 className="font-medium">{feature.title}</h3>
+                      <p className="text-sm text-muted-foreground">{feature.description}</p>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -119,7 +119,19 @@ export function SolutionsGrid() {
               <Card className="h-full flex flex-col shadow-lg border-primary/10 hover:shadow-xl transition-shadow">
                 <CardHeader>
                   <div className="inline-block p-3 rounded-lg bg-primary/10 mb-4">
-                    <solution.icon className="h-6 w-6 text-primary" />
+                    <solution.icon className={`h-6 w-6 ${
+                      solution.title.includes("Lead") || solution.title.includes("Génération") 
+                        ? "text-red-500" 
+                        : solution.title.includes("Sales") || solution.title.includes("Ventes")
+                          ? "text-green-500"
+                          : solution.title.includes("Nurturing") || solution.title.includes("Smart")
+                            ? "text-blue-500"
+                            : solution.title.includes("Engagement") || solution.title.includes("Customer")
+                              ? "text-purple-500"
+                              : solution.title.includes("Conversion") || solution.title.includes("Optimization")
+                                ? "text-orange-500"
+                                : "text-amber-500"
+                    }`} />
                   </div>
                   <CardTitle className="text-xl">{solution.title}</CardTitle>
                 </CardHeader>
