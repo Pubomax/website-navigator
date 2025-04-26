@@ -44,9 +44,10 @@
     @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
   
-  /* Gradient text like Stripe uses sparingly */
+  /* Enhanced gradient text for visually striking headers */
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80;
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-primary via-primary/90 to-blue-500/90;
+    text-shadow: 0 0 80px rgba(var(--primary), 0.2);
   }
   
   /* Professional card styling */
