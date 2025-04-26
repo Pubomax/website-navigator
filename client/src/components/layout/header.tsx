@@ -322,7 +322,7 @@ export function Header() {
       <div className="container mx-auto max-w-7xl px-4 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href={getLocalizedPath("/")} className="shrink-0">
-          <img src="/logo.png" alt="Minecore Group" className="h-14" />
+          <img src="/images/logo.png" alt="Minecore Group" className="h-14" />
         </Link>
 
         {/* Desktop navigation - centered */}
@@ -901,6 +901,12 @@ export function Header() {
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <SheetContent side="left" className="w-[300px] sm:w-[350px] pt-16">
             <div className="flex flex-col h-full">
+              {/* Logo in mobile menu */}
+              <div className="flex justify-center mb-6">
+                <Link href={getLocalizedPath("/")} onClick={() => setMobileMenuOpen(false)}>
+                  <img src="/images/logo.png" alt="Minecore Group" className="h-10" />
+                </Link>
+              </div>
               <div className="flex-1 overflow-y-auto">
                 {/* Mobile Navigation */}
                 <div className="space-y-2 mt-4">
