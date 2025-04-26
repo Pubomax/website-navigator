@@ -326,7 +326,14 @@ export function Header() {
         </Link>
 
         {/* Desktop navigation - centered */}
-        <div className="hidden lg:flex items-center justify-center flex-grow">
+        <div 
+          className="hidden lg:flex items-center justify-center flex-grow"
+          onMouseLeave={() => {
+            // Close all dropdowns when mouse leaves the navigation area
+            setActiveItem(null);
+            setActiveGroup(null);
+          }}
+        >
           <div className="flex items-center gap-2">
             {navigation.map((item) => (
               <div 
@@ -334,18 +341,13 @@ export function Header() {
                 className="relative inline-block text-left"
                 onMouseEnter={() => {
                   if (item.items) {
-                    toggleDropdown(item.name);
+                    // Directly set the active item rather than toggling
+                    setActiveItem(item.name);
                     // Set initial group to show on hover
                     if (item.items.length > 0) {
                       showGroup(item.items[0].group);
                     }
                   }
-                }}
-                onMouseLeave={() => {
-                  setTimeout(() => {
-                    setActiveItem(null);
-                    setActiveGroup(null);
-                  }, 100);
                 }}
               >
                 {item.items ? (
@@ -376,7 +378,7 @@ export function Header() {
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                           className="absolute left-1/2 z-10 mt-3 w-screen max-w-4xl -translate-x-1/2 transform px-2"
-                          onMouseLeave={() => setActiveGroup(null)}
+                          onMouseEnter={() => setActiveItem(item.name)}
                         >
                           <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="flex bg-white">
