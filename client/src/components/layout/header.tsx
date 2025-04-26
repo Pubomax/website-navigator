@@ -377,7 +377,8 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute left-1/2 z-10 mt-3 w-screen max-w-4xl -translate-x-1/2 transform px-2"
+                          className="absolute left-0 z-10 mt-3 w-screen max-w-4xl transform px-2"
+                          style={{ left: "calc(50% - 200px)" }}
                           onMouseEnter={() => setActiveItem(item.name)}
                         >
                           <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
