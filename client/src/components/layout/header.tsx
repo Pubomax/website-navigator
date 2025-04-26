@@ -379,68 +379,182 @@ export function Header() {
                       >
                         <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="flex bg-white">
-                            {/* Left column - Category selectors */}
-                            <div className="w-48 border-r border-gray-100 py-4">
-                              <div className="flex flex-col">
-                                {item.items.map((group) => (
-                                  <button
-                                    key={group.group}
-                                    className={cn(
-                                      "py-2 px-4 text-left text-base font-medium transition-colors",
-                                      activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])
-                                        ? "bg-gray-50 text-gray-900"
-                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                                    )}
-                                    onMouseEnter={() => showGroup(group.group)}
-                                  >
-                                    {t(group.group)}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                            
-                            {/* Middle column - Content panel */}
-                            <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                              {item.items.map((group) => (
-                                <motion.div
-                                  key={group.group}
-                                  initial={{ opacity: 0 }}
-                                  animate={{ 
-                                    opacity: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? 1 : 0,
-                                    display: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? "block" : "none"
-                                  }}
-                                  transition={{ duration: 0.2 }}
-                                  className="space-y-4"
-                                >
-                                  {group.items.map((subItem) => (
-                                    <Link
-                                      key={subItem.href}
-                                      href={getLocalizedPath(subItem.href)}
-                                      className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                      onClick={() => setActiveItem(null)}
-                                    >
-                                      <div className="flex items-start gap-3">
-                                        {subItem.icon && (
-                                          <div className="flex-shrink-0 mt-1">
-                                            <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
-                                          </div>
-                                        )}
-                                        <div>
-                                          <div className="text-base font-medium text-[#111827] group-hover:text-primary">
-                                            {t(subItem.name)}
-                                          </div>
-                                          {subItem.description && (
-                                            <div className="mt-1 text-sm text-[#6b7280]">
-                                              {t(subItem.description)}
+                            {/* Now we use a three-column layout where all categories are shown side by side */}
+                            {item.name === "industries" && (
+                              <>
+                                {/* Private Sector Column */}
+                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                    {t("Private Sector")}
+                                  </h4>
+                                  <div className="space-y-5">
+                                    {item.items.find(g => g.group === "Private Sector")?.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
                                             </div>
                                           )}
+                                          <div>
+                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-sm text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
                                         </div>
-                                      </div>
-                                    </Link>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                {/* Middle column - Public Sector and Business Size */}
+                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                  {/* Public Sector Section */}
+                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                    {t("Public Sector")}
+                                  </h4>
+                                  <div className="space-y-5 mb-8">
+                                    {item.items.find(g => g.group === "Public Sector")?.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-sm text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+
+                                  {/* Business Size Section */}
+                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                    {t("Business Size")}
+                                  </h4>
+                                  <div className="space-y-5">
+                                    {item.items.find(g => g.group === "Business Size")?.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-sm text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                            
+                            {/* For other menu items, keep the original pattern with left category selectors */}
+                            {item.name !== "industries" && (
+                              <>
+                                {/* Left column - Category selectors */}
+                                <div className="w-48 border-r border-gray-100 py-4">
+                                  <div className="flex flex-col">
+                                    {item.items.map((group) => (
+                                      <button
+                                        key={group.group}
+                                        className={cn(
+                                          "py-2 px-4 text-left text-base font-medium transition-colors",
+                                          activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])
+                                            ? "bg-gray-50 text-gray-900"
+                                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                                        )}
+                                        onMouseEnter={() => showGroup(group.group)}
+                                      >
+                                        {t(group.group)}
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                {/* Middle column - Content panel */}
+                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                  {item.items.map((group) => (
+                                    <motion.div
+                                      key={group.group}
+                                      initial={{ opacity: 0 }}
+                                      animate={{ 
+                                        opacity: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? 1 : 0,
+                                        display: (activeGroup === group.group || (!activeGroup && item.items && group === item.items[0])) ? "block" : "none"
+                                      }}
+                                      transition={{ duration: 0.2 }}
+                                      className="space-y-4"
+                                    >
+                                      {group.items.map((subItem) => (
+                                        <Link
+                                          key={subItem.href}
+                                          href={getLocalizedPath(subItem.href)}
+                                          className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                          onClick={() => setActiveItem(null)}
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            {subItem.icon && (
+                                              <div className="flex-shrink-0 mt-1">
+                                                <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                              </div>
+                                            )}
+                                            <div>
+                                              <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                                {t(subItem.name)}
+                                              </div>
+                                              {subItem.description && (
+                                                <div className="mt-1 text-sm text-[#6b7280]">
+                                                  {t(subItem.description)}
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </motion.div>
                                   ))}
-                                </motion.div>
-                              ))}
-                            </div>
+                                </div>
+                              </>
+                            )}
                             
                             {/* Right column - Quick links (fixed content) */}
                             <div className="py-5 px-6 min-w-[160px] max-w-[160px]">
@@ -596,41 +710,152 @@ export function Header() {
                           className="overflow-hidden"
                         >
                           <div className="pl-4 space-y-4">
-                            {item.items.map((group) => (
-                              <div key={group.group} className="mb-4">
-                                <div className="text-sm font-medium text-gray-900 mb-2">
-                                  {t(group.group)}
-                                </div>
-                                <div className="space-y-3 pl-2">
-                                  {group.items.map((subItem) => (
-                                    <Link
-                                      key={subItem.href}
-                                      href={getLocalizedPath(subItem.href)}
-                                      className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                      onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                      <div className="flex items-start gap-3">
-                                        {subItem.icon && (
-                                          <div className="flex-shrink-0 mt-1">
-                                            <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
-                                          </div>
-                                        )}
-                                        <div>
-                                          <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
-                                            {t(subItem.name)}
-                                          </div>
-                                          {subItem.description && (
-                                            <div className="mt-1 text-xs text-[#6b7280]">
-                                              {t(subItem.description)}
+                            {/* Special handling for Industries menu */}
+                            {item.name === "industries" ? (
+                              <>
+                                {/* Private Sector */}
+                                <div className="mb-6">
+                                  <div className="text-sm font-medium text-gray-900 mb-2">
+                                    {t("Private Sector")}
+                                  </div>
+                                  <div className="space-y-3 pl-2">
+                                    {item.items.find(g => g.group === "Private Sector")?.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
                                             </div>
                                           )}
+                                          <div>
+                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-xs text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
                                         </div>
-                                      </div>
-                                    </Link>
-                                  ))}
+                                      </Link>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
+                                
+                                {/* Public Sector */}
+                                <div className="mb-6">
+                                  <div className="text-sm font-medium text-gray-900 mb-2">
+                                    {t("Public Sector")}
+                                  </div>
+                                  <div className="space-y-3 pl-2">
+                                    {item.items.find(g => g.group === "Public Sector")?.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-xs text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                {/* Business Size */}
+                                <div className="mb-4">
+                                  <div className="text-sm font-medium text-gray-900 mb-2">
+                                    {t("Business Size")}
+                                  </div>
+                                  <div className="space-y-3 pl-2">
+                                    {item.items.find(g => g.group === "Business Size")?.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-xs text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              /* Regular menu items */
+                              item.items.map((group) => (
+                                <div key={group.group} className="mb-4">
+                                  <div className="text-sm font-medium text-gray-900 mb-2">
+                                    {t(group.group)}
+                                  </div>
+                                  <div className="space-y-3 pl-2">
+                                    {group.items.map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-xs text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))
+                            )}
                           </div>
                         </motion.div>
                       )}
