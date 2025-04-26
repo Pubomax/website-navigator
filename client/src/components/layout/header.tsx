@@ -656,7 +656,7 @@ export function Header() {
                               )}
                               
                               {/* Three-column layout for Solutions */}
-                              {item.name === "solutions" && (
+                              {item.name === "Solutions" && (
                                 <>
                                   {/* Left Column - Lead Generation */}
                                   <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
