@@ -50,12 +50,16 @@ const navigation: NavigationItem[] = [
           { 
             name: "automatedLeadGeneration", 
             href: "/solutions/automated-lead-generation",
-            description: "Find new prospects automatically using AI."
+            description: "Find new prospects automatically using AI.",
+            icon: Users,
+            iconColor: "text-blue-500"
           },
           { 
             name: "smartNurturing", 
             href: "/solutions/smart-nurturing",
-            description: "Turn leads into clients automatically."
+            description: "Turn leads into clients automatically.",
+            icon: Users2,
+            iconColor: "text-indigo-500"
           }
         ]
       },
@@ -65,12 +69,16 @@ const navigation: NavigationItem[] = [
           { 
             name: "salesAutomation", 
             href: "/services/sales-automation",
-            description: "Automate your sales pipeline and follow-ups."
+            description: "Automate your sales pipeline and follow-ups.",
+            icon: Building2,
+            iconColor: "text-emerald-500"
           },
           { 
             name: "quickAcquisition", 
             href: "/solutions/quick-acquisition",
-            description: "Boost conversion rates fast."
+            description: "Boost conversion rates fast.",
+            icon: Banknote,
+            iconColor: "text-green-500"
           }
         ]
       },
@@ -80,7 +88,9 @@ const navigation: NavigationItem[] = [
           { 
             name: "instantCustomerEngagement", 
             href: "/solutions/instant-customer-engagement",
-            description: "Real-time customer interactions to close deals."
+            description: "Real-time customer interactions to close deals.",
+            icon: Store,
+            iconColor: "text-purple-500"
           }
         ]
       }
@@ -374,15 +384,15 @@ export function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-1/2 z-10 mt-3 w-screen max-w-3xl -translate-x-1/2 transform px-2"
+                        className="absolute left-1/2 z-10 mt-3 w-screen max-w-4xl -translate-x-1/2 transform px-2"
                         onMouseLeave={() => setActiveGroup(null)}
                       >
                         <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="flex bg-white">
-                            {/* Now we use a three-column layout where all categories are shown side by side */}
+                            {/* Three-column layout for Industries */}
                             {item.name === "industries" && (
                               <>
-                                {/* Private Sector Column */}
+                                {/* Left Column - Private Sector */}
                                 <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
                                   <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
                                     {t("Private Sector")}
@@ -417,14 +427,14 @@ export function Header() {
                                   </div>
                                 </div>
                                 
-                                {/* Middle column - Public Sector and Business Size */}
+                                {/* Middle column - Public Sector */}
                                 <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
-                                  {/* Public Sector Section */}
                                   <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
                                     {t("Public Sector")}
                                   </h4>
+                                  
                                   <div className="space-y-5 mb-8">
-                                    {item.items.find(g => g.group === "Public Sector")?.items.map((subItem) => (
+                                    {(item.items.find(g => g.group === "Public Sector")?.items || []).map((subItem) => (
                                       <Link
                                         key={subItem.href}
                                         href={getLocalizedPath(subItem.href)}
@@ -456,8 +466,9 @@ export function Header() {
                                   <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
                                     {t("Business Size")}
                                   </h4>
+                                  
                                   <div className="space-y-5">
-                                    {item.items.find(g => g.group === "Business Size")?.items.map((subItem) => (
+                                    {(item.items.find(g => g.group === "Business Size")?.items || []).map((subItem) => (
                                       <Link
                                         key={subItem.href}
                                         href={getLocalizedPath(subItem.href)}
@@ -488,8 +499,118 @@ export function Header() {
                               </>
                             )}
                             
-                            {/* For other menu items, keep the original pattern with left category selectors */}
-                            {item.name !== "industries" && (
+                            {/* Three-column layout for Solutions */}
+                            {item.name === "solutions" && (
+                              <>
+                                {/* Left Column - Lead Generation */}
+                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                    {t("Lead Generation Solutions")}
+                                  </h4>
+                                  <div className="space-y-5">
+                                    {(item.items.find(g => g.group === "Lead Generation Solutions")?.items || []).map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-sm text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                {/* Middle column - Sales Acceleration */}
+                                <div className="py-5 px-6 w-full max-w-md border-r border-gray-100">
+                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                    {t("Sales Acceleration Solutions")}
+                                  </h4>
+                                  
+                                  <div className="space-y-5 mb-8">
+                                    {(item.items.find(g => g.group === "Sales Acceleration Solutions")?.items || []).map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-sm text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+
+                                  {/* Customer Engagement Section */}
+                                  <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
+                                    {t("Customer Engagement Solutions")}
+                                  </h4>
+                                  
+                                  <div className="space-y-5">
+                                    {(item.items.find(g => g.group === "Customer Engagement Solutions")?.items || []).map((subItem) => (
+                                      <Link
+                                        key={subItem.href}
+                                        href={getLocalizedPath(subItem.href)}
+                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        onClick={() => setActiveItem(null)}
+                                      >
+                                        <div className="flex items-start gap-3">
+                                          {subItem.icon && (
+                                            <div className="flex-shrink-0 mt-1">
+                                              <subItem.icon className={cn("h-5 w-5", subItem.iconColor || "text-gray-400")} />
+                                            </div>
+                                          )}
+                                          <div>
+                                            <div className="text-base font-medium text-[#111827] group-hover:text-primary">
+                                              {t(subItem.name)}
+                                            </div>
+                                            {subItem.description && (
+                                              <div className="mt-1 text-sm text-[#6b7280]">
+                                                {t(subItem.description)}
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                            
+                            {/* Original Pattern with left category selectors for other items */}
+                            {item.name !== "industries" && item.name !== "solutions" && (
                               <>
                                 {/* Left column - Category selectors */}
                                 <div className="w-48 border-r border-gray-100 py-4">
@@ -637,6 +758,7 @@ export function Header() {
               )} />
             </button>
             
+            {/* Language selector dropdown */}
             <AnimatePresence>
               {activeItem === "language" && (
                 <motion.div
@@ -644,14 +766,14 @@ export function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+                  className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
                   <div className="py-1">
                     {languages.map((lang) => (
                       <Link
                         key={lang.code}
-                        href={lang.href + location.replace("/fr", "")}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        href={lang.href}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setActiveItem(null)}
                       >
                         {lang.name}
@@ -662,272 +784,125 @@ export function Header() {
               )}
             </AnimatePresence>
           </div>
+
+          {/* CTA Button */}
+          <Button asChild className="ml-3">
+            <Link href={getLocalizedPath("/consultation")}>
+              {t("getStarted")}
+            </Link>
+          </Button>
         </div>
 
         {/* Mobile menu button */}
-        <div className="lg:hidden flex items-center">
-          <Button variant="outline" size="icon" onClick={() => setMobileMenuOpen(true)}>
+        <div className="flex items-center lg:hidden">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Menu"
+          >
             <Menu className="h-6 w-6" />
           </Button>
         </div>
 
-        {/* CTA button */}
-        <div className="hidden lg:block">
-          <Button asChild className="bg-primary hover:bg-primary/90 text-white">
-            <Link href={getLocalizedPath("/consultation")}>{t("getStarted")}</Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Mobile navigation */}
-      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-        <SheetContent side="right" className="w-[300px] sm:w-[400px] pt-10">
-          <nav className="flex flex-col gap-5">
-            {navigation.map((item) => (
-              <div key={item.name} className="border-b border-gray-100 pb-5">
-                {item.items ? (
-                  <div>
-                    <button
-                      className="flex w-full items-center justify-between text-lg font-medium mb-3"
-                      onClick={() => toggleMobileGroup(item.name)}
-                    >
-                      {t(item.name)}
-                      <ChevronDown 
-                        className={cn(
-                          "h-5 w-5 transition-transform duration-200",
-                          openMobileGroup === item.name ? "rotate-180" : ""
-                        )} 
-                      />
-                    </button>
-                    
-                    <AnimatePresence>
-                      {openMobileGroup === item.name && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pl-4 space-y-4">
-                            {/* Special handling for Industries menu */}
-                            {item.name === "industries" ? (
-                              <>
-                                {/* Private Sector */}
-                                <div className="mb-6">
-                                  <div className="text-sm font-medium text-gray-900 mb-2">
-                                    {t("Private Sector")}
-                                  </div>
-                                  <div className="space-y-3 pl-2">
-                                    {item.items.find(g => g.group === "Private Sector")?.items.map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-xs text-[#6b7280]">
-                                                {t(subItem.description)}
-                                              </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                                
-                                {/* Public Sector */}
-                                <div className="mb-6">
-                                  <div className="text-sm font-medium text-gray-900 mb-2">
-                                    {t("Public Sector")}
-                                  </div>
-                                  <div className="space-y-3 pl-2">
-                                    {item.items.find(g => g.group === "Public Sector")?.items.map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-xs text-[#6b7280]">
-                                                {t(subItem.description)}
-                                              </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                                
-                                {/* Business Size */}
-                                <div className="mb-4">
-                                  <div className="text-sm font-medium text-gray-900 mb-2">
-                                    {t("Business Size")}
-                                  </div>
-                                  <div className="space-y-3 pl-2">
-                                    {item.items.find(g => g.group === "Business Size")?.items.map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                      >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-xs text-[#6b7280]">
-                                                {t(subItem.description)}
-                                              </div>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              </>
-                            ) : (
-                              /* Regular menu items */
-                              item.items.map((group) => (
+        {/* Mobile menu */}
+        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+          <SheetContent side="left" className="w-[300px] sm:w-[350px] pt-16">
+            <div className="flex flex-col h-full">
+              <div className="flex-1 overflow-y-auto">
+                {/* Mobile Navigation */}
+                <div className="space-y-2 mt-4">
+                  {navigation.map((item) => (
+                    <div key={item.name} className="border-b border-gray-100 pb-2">
+                      {item.items ? (
+                        <>
+                          <button
+                            onClick={() => toggleMobileGroup(item.name)}
+                            className="flex justify-between items-center w-full py-2 text-base font-medium text-left"
+                          >
+                            {t(item.name)}
+                            <ChevronDown className={cn(
+                              "h-4 w-4 transition-transform",
+                              openMobileGroup === item.name ? "rotate-180" : ""
+                            )} />
+                          </button>
+                          {openMobileGroup === item.name && (
+                            <div className="ml-4 pl-4 mt-2 space-y-4 border-l border-gray-100">
+                              {item.items.map((group) => (
                                 <div key={group.group} className="mb-4">
-                                  <div className="text-sm font-medium text-gray-900 mb-2">
+                                  <p className="text-xs font-semibold uppercase text-gray-500 pb-1">
                                     {t(group.group)}
-                                  </div>
-                                  <div className="space-y-3 pl-2">
+                                  </p>
+                                  <div className="space-y-2">
                                     {group.items.map((subItem) => (
                                       <Link
                                         key={subItem.href}
                                         href={getLocalizedPath(subItem.href)}
-                                        className="block px-2 py-2 hover:bg-gray-50 rounded-md transition group"
+                                        className="block py-1 text-sm text-gray-600 hover:text-gray-900"
                                         onClick={() => setMobileMenuOpen(false)}
                                       >
-                                        <div className="flex items-start gap-3">
-                                          {subItem.icon && (
-                                            <div className="flex-shrink-0 mt-1">
-                                              <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
-                                            </div>
-                                          )}
-                                          <div>
-                                            <div className="text-sm font-medium text-[#111827] group-hover:text-primary">
-                                              {t(subItem.name)}
-                                            </div>
-                                            {subItem.description && (
-                                              <div className="mt-1 text-xs text-[#6b7280]">
-                                                {t(subItem.description)}
-                                              </div>
-                                            )}
-                                          </div>
-                                        </div>
+                                        {t(subItem.name)}
                                       </Link>
                                     ))}
                                   </div>
                                 </div>
-                              ))
-                            )}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
-                  <Link
-                    href={getLocalizedPath(item.href!)}
-                    className="block text-lg font-medium text-gray-900"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t(item.name)}
-                  </Link>
-                )}
-              </div>
-            ))}
-
-            {/* Mobile language selection */}
-            <div className="border-b border-gray-100 pb-5">
-              <button
-                className="flex w-full items-center justify-between text-lg font-medium mb-3"
-                onClick={() => toggleMobileGroup("language")}
-              >
-                {t("language")}
-                <ChevronDown
-                  className={cn(
-                    "h-5 w-5 transition-transform duration-200",
-                    openMobileGroup === "language" ? "rotate-180" : ""
-                  )}
-                />
-              </button>
-              
-              <AnimatePresence>
-                {openMobileGroup === "language" && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pl-4 space-y-4">
-                      {languages.map((lang) => (
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      ) : (
                         <Link
-                          key={lang.code}
-                          href={lang.href + location.replace("/fr", "")}
-                          className="block text-gray-600 hover:text-gray-900"
+                          href={getLocalizedPath(item.href!)}
+                          className="block py-2 text-base font-medium text-gray-700 hover:text-gray-900"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          {lang.name}
+                          {t(item.name)}
                         </Link>
-                      ))}
+                      )}
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  ))}
+                </div>
+
+                {/* Language Selector - Mobile */}
+                <div className="mt-6 border-t border-gray-100 pt-6">
+                  <p className="text-xs font-semibold uppercase text-gray-500 pb-3">
+                    {t("language")}
+                  </p>
+                  <div className="flex space-x-2">
+                    {languages.map((lang) => (
+                      <Link
+                        key={lang.code}
+                        href={lang.href}
+                        className={cn(
+                          "px-3 py-1 text-sm rounded-md",
+                          lang.code === (isPathFrench ? "fr" : "en")
+                            ? "bg-gray-100 text-gray-900 font-medium"
+                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        )}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {lang.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Button - Mobile */}
+              <div className="pt-6 pb-4">
+                <Button asChild className="w-full">
+                  <Link 
+                    href={getLocalizedPath("/consultation")}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t("getStarted")}
+                  </Link>
+                </Button>
+              </div>
             </div>
-            
-            {/* Mobile CTA */}
-            <div className="pt-2">
-              <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white">
-                <Link 
-                  href={getLocalizedPath("/consultation")}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {t("getStarted")}
-                </Link>
-              </Button>
-            </div>
-          </nav>
-        </SheetContent>
-      </Sheet>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 }
