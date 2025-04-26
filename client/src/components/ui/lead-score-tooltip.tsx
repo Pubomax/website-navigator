@@ -41,10 +41,10 @@ const getStars = (weight: number) => {
   const hasHalfStar = weight % 1 >= 0.5;
 
   for (let i = 0; i < fullStars; i++) {
-    stars.push(<Star key={`full-${i}`} className="h-4 w-4 inline" />);
+    stars.push(<Star key={`full-${i}`} className="h-4 w-4 inline text-amber-400" />);
   }
   if (hasHalfStar) {
-    stars.push(<StarHalf key="half" className="h-4 w-4 inline" />);
+    stars.push(<StarHalf key="half" className="h-4 w-4 inline text-amber-400" />);
   }
   return stars;
 };
@@ -66,7 +66,7 @@ export function LeadScoreTooltip({ score, factors }: LeadScoreTooltipProps) {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="inline-flex items-center gap-1 cursor-help">
-            <HelpCircle className="h-4 w-4 text-muted-foreground" />
+            <HelpCircle className="h-4 w-4 text-blue-500" />
             <span className={`font-semibold ${getScoreColor(score)}`}>
               {score}%
             </span>
