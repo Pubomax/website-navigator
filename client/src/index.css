@@ -10,47 +10,4 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-medium tracking-tight;
-    letter-spacing: -0.02em;
-  }
-  
-  h1 {
-    @apply text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mb-8;
-  }
-  
-  h2 {
-    @apply text-3xl sm:text-4xl leading-[1.15] mb-6;
-  }
-  
-  h3 {
-    @apply text-2xl leading-tight mb-4;
-  }
-  
-  p {
-    @apply leading-relaxed mb-6 text-base sm:text-lg;
-  }
-}
-
-@layer components {
-  /* Professional section spacing */
-  .section {
-    @apply py-16 md:py-24;
-  }
-  
-  /* Container with professional padding */
-  .container-pro {
-    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
-  }
-  
-  /* Gradient text like Stripe uses sparingly */
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80;
-  }
-  
-  /* Professional card styling */
-  .card-pro {
-    @apply rounded-xl border border-border/40 bg-card shadow-sm hover:shadow-md transition-all duration-300;
-  }
 }
