@@ -209,7 +209,7 @@ export function LeadScoreWidget() {
       {/* Interactive Demo badge */}
       <div className="absolute top-0 right-0">
         <Badge variant="secondary" className="rounded-none rounded-bl-lg shadow-sm">
-          <PieChart className="h-3.5 w-3.5 mr-1" />
+          <PieChart className="h-3.5 w-3.5 mr-1 text-purple-500" />
           {isPathFrench ? "Démo Interactive" : "Interactive Demo"}
         </Badge>
       </div>
@@ -217,7 +217,7 @@ export function LeadScoreWidget() {
       <CardHeader className="bg-primary/5 border-b pb-4">
         <div className="flex flex-col gap-2">
           <CardTitle className="text-xl flex items-center gap-2">
-            <Bot className="h-5 w-5" />
+            <Bot className="h-5 w-5 text-cyan-500" />
             {isPathFrench ? "Évaluez la Qualité de Vos Leads" : "Lead Quality Scoring"}
           </CardTitle>
           <CardDescription>
@@ -234,7 +234,7 @@ export function LeadScoreWidget() {
           {/* Industry Selection */}
           <div className="space-y-2">
             <Label htmlFor="industry" className="flex items-center gap-1.5">
-              <Building2 className="h-4 w-4 text-muted-foreground" />
+              <Building2 className="h-4 w-4 text-blue-500" />
               {isPathFrench ? "Secteur d'Activité" : "Industry"}
             </Label>
             <Select value={leadData.industry} onValueChange={(value) => handleInputChange('industry', value)}>
@@ -254,7 +254,7 @@ export function LeadScoreWidget() {
           {/* Business Size */}
           <div className="space-y-2">
             <Label htmlFor="business-size" className="flex items-center gap-1.5">
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <Users className="h-4 w-4 text-purple-500" />
               {isPathFrench ? "Taille de l'Entreprise" : "Business Size"}
             </Label>
             <Select value={leadData.businessSize} onValueChange={(value) => handleInputChange('businessSize', value)}>
@@ -274,7 +274,7 @@ export function LeadScoreWidget() {
           {/* Marketing Channel */}
           <div className="space-y-2">
             <Label htmlFor="channel" className="flex items-center gap-1.5">
-              <Globe className="h-4 w-4 text-muted-foreground" />
+              <Globe className="h-4 w-4 text-orange-500" />
               {isPathFrench ? "Canal Marketing" : "Marketing Channel"}
             </Label>
             <Select value={leadData.channel} onValueChange={(value) => handleInputChange('channel', value)}>
@@ -294,7 +294,7 @@ export function LeadScoreWidget() {
           {/* Service Interest */}
           <div className="space-y-2">
             <Label htmlFor="service-interest" className="flex items-center gap-1.5">
-              <Briefcase className="h-4 w-4 text-muted-foreground" />
+              <Briefcase className="h-4 w-4 text-green-500" />
               {isPathFrench ? "Service d'Intérêt" : "Service Interest"}
             </Label>
             <Select value={leadData.serviceInterest} onValueChange={(value) => handleInputChange('serviceInterest', value)}>
