@@ -119,24 +119,56 @@ const navigation: NavigationItem[] = [
       {
         group: "Private Sector",
         items: [
-          { name: "manufacturing", href: "/sectors/manufacturing" },
-          { name: "finance", href: "/sectors/finance" },
-          { name: "retail", href: "/sectors/retail" },
-          { name: "healthcare", href: "/sectors/healthcare" }
+          { 
+            name: "manufacturing", 
+            href: "/sectors/manufacturing",
+            description: "Automation solutions for production and operations."
+          },
+          { 
+            name: "finance", 
+            href: "/sectors/finance",
+            description: "Smart solutions for financial services and banking."
+          },
+          { 
+            name: "retail", 
+            href: "/sectors/retail",
+            description: "Automate customer engagement and inventory management."
+          },
+          { 
+            name: "healthcare", 
+            href: "/sectors/healthcare",
+            description: "Compliant automation solutions for healthcare providers."
+          }
         ]
       },
       {
         group: "Public Sector",
         items: [
-          { name: "publicSector", href: "/sectors/public-sector" }
+          { 
+            name: "publicSector", 
+            href: "/sectors/public-sector",
+            description: "Efficient solutions for government organizations."
+          }
         ]
       },
       {
         group: "Business Size",
         items: [
-          { name: "microEnterprises", href: "/business-types/micro" },
-          { name: "midSizedEnterprises", href: "/business-types/mid-sized" },
-          { name: "largeEnterprises", href: "/business-types/large" }
+          { 
+            name: "microEnterprises", 
+            href: "/business-types/micro",
+            description: "Affordable solutions for businesses with 1-10 employees."
+          },
+          { 
+            name: "midSizedEnterprises", 
+            href: "/business-types/mid-sized",
+            description: "Scalable automation for businesses with 10-250 employees."
+          },
+          { 
+            name: "largeEnterprises", 
+            href: "/business-types/large",
+            description: "Enterprise-grade solutions for 250+ employee organizations."
+          }
         ]
       }
     ],
@@ -147,9 +179,21 @@ const navigation: NavigationItem[] = [
       {
         group: "About Us",
         items: [
-          { name: "companyStory", href: "/about/story" },
-          { name: "teamBios", href: "/about/team" },
-          { name: "missionValues", href: "/about/mission" }
+          { 
+            name: "companyStory", 
+            href: "/about/story",
+            description: "Our journey and vision for business automation."
+          },
+          { 
+            name: "teamBios", 
+            href: "/about/team",
+            description: "Meet our expert automation specialists."
+          },
+          { 
+            name: "missionValues", 
+            href: "/about/mission",
+            description: "Our commitment to helping businesses grow effortlessly."
+          }
         ]
       }
     ]
@@ -160,10 +204,26 @@ const navigation: NavigationItem[] = [
       {
         group: "Resources",
         items: [
-          { name: "caseStudies", href: "/case-studies" },
-          { name: "blog", href: "/blog" },
-          { name: "FAQ", href: "/faq" },
-          { name: "integrations", href: "/integrations" }
+          { 
+            name: "caseStudies", 
+            href: "/case-studies",
+            description: "Success stories from businesses we've transformed."
+          },
+          { 
+            name: "blog", 
+            href: "/blog",
+            description: "Latest insights on AI and business automation."
+          },
+          { 
+            name: "FAQ", 
+            href: "/faq",
+            description: "Common questions about our services and process."
+          },
+          { 
+            name: "integrations", 
+            href: "/integrations",
+            description: "Seamlessly connect with your existing tools."
+          }
         ]
       }
     ]
