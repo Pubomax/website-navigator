@@ -80,9 +80,21 @@ export function WhatWeDo() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full flex flex-col shadow-lg border-primary/10 hover:shadow-xl transition-shadow">
+              <Card className={`h-full flex flex-col shadow-lg border-primary/10 hover:shadow-xl transition-shadow ${
+                pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                  ? "bg-blue-50/50" 
+                  : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                    ? "bg-emerald-50/50" 
+                    : "bg-purple-50/50"
+              }`}>
                 <CardHeader>
-                  <div className="inline-block p-3 rounded-lg bg-primary/10 mb-4">
+                  <div className={`inline-block p-3 rounded-lg mb-4 ${
+                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                      ? "bg-blue-100/80" 
+                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                        ? "bg-emerald-100/80" 
+                        : "bg-purple-100/80"
+                  }`}>
                     <pillar.icon className={`h-6 w-6 ${
                       pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
                       ? "text-blue-500" 
@@ -91,7 +103,13 @@ export function WhatWeDo() {
                         : "text-purple-500"
                     }`} />
                   </div>
-                  <CardTitle className="text-xl">{pillar.title}</CardTitle>
+                  <CardTitle className={`text-xl ${
+                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                      ? "text-blue-700" 
+                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                        ? "text-emerald-700" 
+                        : "text-purple-700"
+                  }`}>{pillar.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <p className="text-muted-foreground">
@@ -99,13 +117,25 @@ export function WhatWeDo() {
                   </p>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-2">
-                  <Button variant="outline" className="w-full" asChild>
+                  <Button variant="outline" className={`w-full border-primary/30 hover:bg-transparent ${
+                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                      ? "text-blue-600 hover:text-blue-700 hover:border-blue-300" 
+                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                        ? "text-emerald-600 hover:text-emerald-700 hover:border-emerald-300" 
+                        : "text-purple-600 hover:text-purple-700 hover:border-purple-300"
+                  }`} asChild>
                     <Link href={pillar.link}>
                       {isPathFrench ? "En Savoir Plus" : "Learn More"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
-                  <Button variant="default" className="w-full" asChild>
+                  <Button variant="default" className={`w-full shadow-sm ${
+                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                      ? "bg-blue-600 hover:bg-blue-700" 
+                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                        ? "bg-emerald-600 hover:bg-emerald-700" 
+                        : "bg-purple-600 hover:bg-purple-700"
+                  }`} asChild>
                     <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
                       {isPathFrench ? "Commencer" : "Get Started"}
                       <ArrowRight className="ml-2 h-4 w-4" />

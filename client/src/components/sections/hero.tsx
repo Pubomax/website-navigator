@@ -77,9 +77,9 @@ export function Hero() {
               >
                 {content.features.map((feature, index) => (
                   <Badge key={feature} variant="secondary" className="text-sm px-3 py-1">
-                    {index === 0 && <Bot className="mr-1 h-3.5 w-3.5" />}
-                    {index === 1 && <Zap className="mr-1 h-3.5 w-3.5" />}
-                    {index === 2 && <ArrowRight className="mr-1 h-3.5 w-3.5" />}
+                    {index === 0 && <Bot className="mr-1 h-3.5 w-3.5 text-purple-500" />}
+                    {index === 1 && <Zap className="mr-1 h-3.5 w-3.5 text-amber-500" />}
+                    {index === 2 && <ArrowRight className="mr-1 h-3.5 w-3.5 text-emerald-500" />}
                     {feature}
                   </Badge>
                 ))}
@@ -91,13 +91,13 @@ export function Hero() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="mt-10 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 sm:gap-x-6"
               >
-                <Button asChild size="lg" className="w-full sm:w-auto">
+                <Button asChild size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-md">
                   <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
                     {content.cta.primary}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" asChild className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" asChild className="w-full sm:w-auto border-primary/40 text-primary hover:bg-primary/5 hover:text-primary/90">
                   <Link href={isPathFrench ? "/fr/case-studies" : "/case-studies"}>
                     {content.cta.secondary}
                   </Link>
