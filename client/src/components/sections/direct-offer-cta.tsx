@@ -2,13 +2,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 import { 
-  ArrowRight, Check, Calendar, BarChart, Users, MessageSquareText, 
+  ArrowRight, Calendar, BarChart, Users, MessageSquareText, 
   Search, Linkedin, MapPin, FileSpreadsheet, Brain, 
-  MessageCircle, Mail, PhoneCall, BarChart2, Bot,
-  ChevronRight, ChevronLeft
+  MessageCircle, Mail, PhoneCall, BarChart2, Bot
 } from "lucide-react";
 import { OfferPopupForm } from "./offer-popup-form";
-import { useEffect, useRef, useState } from "react";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
@@ -37,7 +35,7 @@ const getContent = (isPathFrench: boolean) => ({
         : "Automation allows us to post content regularly on our social media without spending hours on it. The weekly reports help us track our progress and make better decisions.",
       person: isPathFrench ? "Marie Dubois, Marketing Manager" : "John Smith, Marketing Manager",
       color: "indigo",
-      gradient: "bg-gradient-to-br from-indigo-600 to-blue-600",
+      gradient: "bg-gradient-to-br from-indigo-600 to-indigo-900",
       features: isPathFrench ? [
         {
           title: "Publications sur Réseaux Sociaux Automatisées",
@@ -50,11 +48,7 @@ const getContent = (isPathFrench: boolean) => ({
         {
           title: "Gestion de Plateforme de Nurturing",
           icon: Users
-        },
-        {
-          title: "Réunion Individuelle Mensuelle",
-          icon: Calendar
-        },
+        }
       ] : [
         {
           title: "Automated Social Media Posting",
@@ -67,11 +61,7 @@ const getContent = (isPathFrench: boolean) => ({
         {
           title: "Lead Nurturing Platform Management",
           icon: Users
-        },
-        {
-          title: "Monthly One-on-One Meeting",
-          icon: Calendar
-        },
+        }
       ],
     },
     {
@@ -86,7 +76,7 @@ const getContent = (isPathFrench: boolean) => ({
         : "Our chatbot has transformed our ability to capture leads. It answers basic questions even when our team isn't available, and sends information from interested visitors directly to our CRM.",
       person: isPathFrench ? "Thomas Martin, PDG" : "Sarah Johnson, CEO",
       color: "emerald",
-      gradient: "bg-gradient-to-br from-emerald-600 to-green-600",
+      gradient: "bg-gradient-to-br from-emerald-600 to-emerald-900",
       features: isPathFrench ? [
         {
           title: "Chatbot sur Votre Site Web 24/7",
@@ -99,15 +89,7 @@ const getContent = (isPathFrench: boolean) => ({
         {
           title: "Transfert Simple vers un Humain",
           icon: PhoneCall
-        },
-        {
-          title: "Rapport de Performance",
-          icon: BarChart2
-        },
-        {
-          title: "Session d'Amélioration du Chat",
-          icon: Bot
-        },
+        }
       ] : [
         {
           title: "Chatbot on Your Website 24/7",
@@ -120,15 +102,7 @@ const getContent = (isPathFrench: boolean) => ({
         {
           title: "Simple Human Handoff",
           icon: PhoneCall
-        },
-        {
-          title: "Chat Performance Report",
-          icon: BarChart2
-        },
-        {
-          title: "Chat Improvement Session",
-          icon: Bot
-        },
+        }
       ],
     },
     {
@@ -143,7 +117,7 @@ const getContent = (isPathFrench: boolean) => ({
         : "The service provides us with a constant source of qualified leads we would never have found on our own. Social media, LinkedIn, and local directories are all explored to find us the best prospects.",
       person: isPathFrench ? "Philippe Leclerc, Directeur des Ventes" : "Michael Brown, Sales Director",
       color: "purple",
-      gradient: "bg-gradient-to-br from-purple-600 to-fuchsia-600",
+      gradient: "bg-gradient-to-br from-purple-600 to-purple-900",
       features: isPathFrench ? [
         {
           title: "Recherche sur Réseaux Sociaux",
@@ -156,15 +130,7 @@ const getContent = (isPathFrench: boolean) => ({
         {
           title: "Recherche d'Entreprises Locales",
           icon: MapPin
-        },
-        {
-          title: "Liste Hebdomadaire de Leads",
-          icon: FileSpreadsheet
-        },
-        {
-          title: "Session de Stratégie de Leads",
-          icon: Brain
-        },
+        }
       ] : [
         {
           title: "Social Media Lead Finder",
@@ -177,15 +143,7 @@ const getContent = (isPathFrench: boolean) => ({
         {
           title: "Local Business Search",
           icon: MapPin
-        },
-        {
-          title: "Weekly Leads List",
-          icon: FileSpreadsheet
-        },
-        {
-          title: "Leads Strategy Session",
-          icon: Brain
-        },
+        }
       ],
     }
   ]
@@ -234,16 +192,9 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
   
   const colors = colorMap[offer.color as keyof typeof colorMap];
   
-  // Card width based on index
-  const widthClass = index === 0 
-    ? "w-[66.666%]" // First card takes exactly 2/3 width
-    : index === 1 
-      ? "w-[33.333%]" // Second card takes exactly 1/3 width
-      : "w-[85%] sm:w-[340px]"; // Other cards take default width
-  
   return (
-    <div className={`flex-shrink-0 snap-center ${widthClass} mx-4 mt-2 mb-8 ${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform`}>
-      <div className="p-6 md:p-7 pt-8 flex flex-col h-full">
+    <div className={`${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform h-full`}>
+      <div className="p-7 pt-8 flex flex-col h-full">
         <div className="text-right text-lg font-semibold">
           {offer.price}<span className="text-base font-normal">/month</span>
         </div>
@@ -260,8 +211,8 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
           {offer.person}
         </div>
         
-        <ul className="mb-4 sm:mb-6 space-y-2 text-sm">
-          {offer.features.slice(0, index === 0 ? 3 : 2).map((feature, idx) => (
+        <ul className="mb-6 space-y-2 text-sm">
+          {offer.features.map((feature, idx) => (
             <li key={idx} className="flex items-center gap-2">
               <feature.icon className="h-4 w-4" />
               <span>{feature.title}</span>
@@ -269,7 +220,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
           ))}
         </ul>
         
-        <div className={`flex ${index === 1 ? 'flex-col' : 'flex-row'} gap-2 mt-auto`}>
+        <div className="flex gap-2 mt-auto">
           <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
             <a className={`inline-flex items-center justify-center px-4 py-2.5 bg-white text-[15px] font-medium ${colors.text} rounded-lg shadow ${colors.hover} transition`}>
               <span className="mr-2">{ctaText}</span>
@@ -277,19 +228,17 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
             </a>
           </OfferPopupForm>
           
-          {index !== 1 && (
-            <a 
-              className="inline-flex items-center justify-center px-4 py-2.5 bg-none text-[15px] font-medium text-white/90 rounded-lg hover:text-white border border-white border-opacity-10 transition"
-              onClick={() => {
-                const el = document.getElementById(`offer-details-${index}`);
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            >
-              {readMoreText}
-            </a>
-          )}
+          <a 
+            className="inline-flex items-center justify-center px-4 py-2.5 bg-none text-[15px] font-medium text-white/90 rounded-lg hover:text-white border border-white border-opacity-10 transition"
+            onClick={() => {
+              const el = document.getElementById(`offer-details-${index}`);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            {readMoreText}
+          </a>
         </div>
       </div>
     </div>
@@ -346,100 +295,10 @@ export function DirectOfferCTA() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
   const content = getContent(isPathFrench);
-  
-  // Carousel references and state
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(content.offers.length - 1);
-  const [showButtons, setShowButtons] = useState(false);
-  
-  // Handle window resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setShowButtons(true);
-      } else {
-        setShowButtons(false);
-      }
-    };
-    
-    handleResize(); // Run once on mount
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  
-  // Set up carousel when component loads
-  useEffect(() => {
-    if (carouselRef.current) {
-      // Add custom styling for the carousel
-      const style = document.createElement('style');
-      style.textContent = `
-        .carousel-container {
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-        }
-        .carousel-container::-webkit-scrollbar {
-          display: none;
-        }
-        .carousel-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `;
-      document.head.appendChild(style);
-      
-      return () => {
-        document.head.removeChild(style);
-      };
-    }
-  }, []);
-  
-  // Scroll to a specific card index
-  const scrollToCard = (index: number) => {
-    if (carouselRef.current) {
-      // The scrollLeft is different based on which card we want to show
-      let scrollAmount = 0;
-      
-      if (index === 0) {
-        // First card (already at beginning)
-        scrollAmount = 0;
-      } else if (index === 1) {
-        // For second card, scroll to show first card and second card
-        const firstCardWidth = carouselRef.current.children[0]?.getBoundingClientRect().width || 0;
-        scrollAmount = 0; // Keep first card visible
-      } else {
-        // For third card and beyond, scroll to fully reveal that card
-        const firstCardWidth = carouselRef.current.children[0]?.getBoundingClientRect().width || 0;
-        const secondCardWidth = carouselRef.current.children[1]?.getBoundingClientRect().width || 0;
-        scrollAmount = firstCardWidth + secondCardWidth - 32; // Minus the card gap
-      }
-      
-      carouselRef.current.scrollTo({
-        left: scrollAmount,
-        behavior: 'smooth'
-      });
-      
-      setCurrentIndex(index);
-    }
-  };
-  
-  // Handlers for prev/next buttons
-  const handlePrev = () => {
-    const newIndex = Math.max(0, currentIndex - 1);
-    scrollToCard(newIndex);
-  };
-  
-  const handleNext = () => {
-    const newIndex = Math.min(maxIndex, currentIndex + 1);
-    scrollToCard(newIndex);
-  };
 
   return (
-    <section className="py-16 sm:py-24 bg-background">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -451,53 +310,23 @@ export function DirectOfferCTA() {
           </h2>
         </motion.div>
 
-        <div className="relative w-full max-w-4xl mx-auto">
-          {/* Carousel Container - contains exactly cards 1 and 2 on initial view */}
-          <div className="relative overflow-hidden">
-            <div 
-              ref={carouselRef}
-              className="carousel-container flex overflow-x-auto snap-x snap-mandatory select-none"
-              style={{ width: '100%', paddingLeft: '8px' }}
+        {/* Grid of cards instead of carousel */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {content.offers.map((offer, index) => (
+            <motion.div
+              key={offer.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 * index }}
             >
-              {content.offers.map((offer, index) => (
-                <motion.div
-                  key={offer.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 * index }}
-                >
-                  <OfferCard 
-                    offer={offer}
-                    ctaText={content.cta}
-                    readMoreText={content.readMore}
-                    index={index}
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Carousel Controls */}
-          {showButtons && (
-            <>
-              <button
-                className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                onClick={handlePrev}
-                disabled={currentIndex <= 0}
-                aria-label="Previous"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                className="absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none"
-                onClick={handleNext}
-                disabled={currentIndex >= maxIndex}
-                aria-label="Next"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </>
-          )}
+              <OfferCard 
+                offer={offer}
+                ctaText={content.cta}
+                readMoreText={content.readMore}
+                index={index}
+              />
+            </motion.div>
+          ))}
         </div>
         
         {/* Detailed features for each offering below */}
