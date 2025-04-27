@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom card gradients for marketing service plans */
+.card-gradient1 {
+  background: linear-gradient(135deg, #5F4BD9 30%, #8048ff 100%);
+}
+.card-gradient2 {
+  background: linear-gradient(135deg, #22c55e 10%, #14b884 80%);
+}
+.card-gradient3 {
+  background: linear-gradient(135deg, #9333ea 20%, #7f5fff 100%);
+}
+
 @layer base {
   * {
     @apply border-border;

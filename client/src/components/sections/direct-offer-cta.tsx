@@ -4,9 +4,11 @@ import { useLocation } from "wouter";
 import { 
   ArrowRight, Calendar, BarChart, Users, MessageSquareText, 
   Search, Linkedin, MapPin, FileSpreadsheet, Brain, 
-  MessageCircle, Mail, PhoneCall, BarChart2, Bot
+  MessageCircle, Mail, PhoneCall, BarChart2, Bot,
+  ChevronLeft, ChevronRight
 } from "lucide-react";
 import { OfferPopupForm } from "./offer-popup-form";
+import { useEffect, useRef, useState } from "react";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
@@ -35,7 +37,7 @@ const getContent = (isPathFrench: boolean) => ({
         : "Automation allows us to post content regularly on our social media without spending hours on it. The weekly reports help us track our progress and make better decisions.",
       person: isPathFrench ? "Marie Dubois, Marketing Manager" : "John Smith, Marketing Manager",
       color: "indigo",
-      gradient: "bg-gradient-to-br from-indigo-600 to-indigo-900",
+      gradient: "card-gradient1",
       features: isPathFrench ? [
         {
           title: "Publications sur Réseaux Sociaux Automatisées",
@@ -76,7 +78,7 @@ const getContent = (isPathFrench: boolean) => ({
         : "Our chatbot has transformed our ability to capture leads. It answers basic questions even when our team isn't available, and sends information from interested visitors directly to our CRM.",
       person: isPathFrench ? "Thomas Martin, PDG" : "Sarah Johnson, CEO",
       color: "emerald",
-      gradient: "bg-gradient-to-br from-emerald-600 to-emerald-900",
+      gradient: "card-gradient2",
       features: isPathFrench ? [
         {
           title: "Chatbot sur Votre Site Web 24/7",
@@ -117,7 +119,7 @@ const getContent = (isPathFrench: boolean) => ({
         : "The service provides us with a constant source of qualified leads we would never have found on our own. Social media, LinkedIn, and local directories are all explored to find us the best prospects.",
       person: isPathFrench ? "Philippe Leclerc, Directeur des Ventes" : "Michael Brown, Sales Director",
       color: "purple",
-      gradient: "bg-gradient-to-br from-purple-600 to-purple-900",
+      gradient: "card-gradient3",
       features: isPathFrench ? [
         {
           title: "Recherche sur Réseaux Sociaux",
@@ -295,6 +297,69 @@ export function DirectOfferCTA() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
   const content = getContent(isPathFrench);
+  
+  // Carousel references and state
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(content.offers.length - 1);
+  
+  // Set up carousel when component loads
+  useEffect(() => {
+    if (carouselRef.current) {
+      // Add custom styling for the carousel
+      const style = document.createElement('style');
+      style.textContent = `
+        .carousel-container {
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+        }
+        .carousel-container::-webkit-scrollbar {
+          display: none;
+        }
+        .carousel-container {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, []);
+  
+  // Calculate card width for scrolling
+  const getCardWidth = () => {
+    if (carouselRef.current) {
+      const card = carouselRef.current.children[0];
+      return card ? (card as HTMLElement).offsetWidth + 32 : 370 + 32;
+    }
+    return 370 + 32;
+  };
+  
+  // Scroll to a specific card index
+  const scrollToCard = (index: number) => {
+    if (carouselRef.current) {
+      const cardWidth = getCardWidth();
+      carouselRef.current.scrollTo({
+        left: index * cardWidth,
+        behavior: 'smooth'
+      });
+      setCurrentIndex(index);
+    }
+  };
+  
+  // Handlers for prev/next buttons
+  const handlePrev = () => {
+    const newIndex = Math.max(0, currentIndex - 1);
+    scrollToCard(newIndex);
+  };
+  
+  const handleNext = () => {
+    const newIndex = Math.min(maxIndex, currentIndex + 1);
+    scrollToCard(newIndex);
+  };
 
   return (
     <section className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
@@ -305,28 +370,53 @@ export function DirectOfferCTA() {
           transition={{ duration: 0.8 }}
           className="text-center mb-8"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">
             {content.title}
           </h2>
         </motion.div>
 
-        {/* Grid of cards instead of carousel */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {content.offers.map((offer, index) => (
-            <motion.div
-              key={offer.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-            >
-              <OfferCard 
-                offer={offer}
-                ctaText={content.cta}
-                readMoreText={content.readMore}
-                index={index}
-              />
-            </motion.div>
-          ))}
+        {/* Carousel Implementation */}
+        <div className="relative w-full max-w-4xl mx-auto">
+          <div 
+            ref={carouselRef}
+            className="carousel-container flex overflow-x-auto snap-x snap-mandatory select-none px-2 md:px-0"
+            style={{ scrollPaddingLeft: '2rem' }}
+          >
+            {content.offers.map((offer, index) => (
+              <motion.div
+                key={offer.id}
+                className="flex-shrink-0 snap-center w-3/4 md:w-[340px] mx-4 mt-2 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+              >
+                <OfferCard 
+                  offer={offer}
+                  ctaText={content.cta}
+                  readMoreText={content.readMore}
+                  index={index}
+                />
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Carousel Controls */}
+          <button
+            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none hidden md:block ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={handlePrev}
+            disabled={currentIndex <= 0}
+            aria-label="Previous"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none hidden md:block ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={handleNext}
+            disabled={currentIndex >= maxIndex}
+            aria-label="Next"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
         
         {/* Detailed features for each offering below */}
