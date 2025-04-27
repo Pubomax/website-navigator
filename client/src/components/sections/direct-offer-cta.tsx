@@ -205,7 +205,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
         {/* Main content with more horizontal layout */}
         <div className="flex flex-col">
           {/* Title with more horizontal space */}
-          <h3 className="text-xl md:text-2xl font-bold mt-2 mb-3 pr-20 leading-snug drop-shadow">
+          <h3 className="text-2xl md:text-3xl font-bold mt-2 mb-3 pr-20 leading-snug drop-shadow">
             {offer.testimonyTitle}
           </h3>
           
@@ -400,7 +400,7 @@ export function DirectOfferCTA() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">
             {content.title}
           </h2>
         </motion.div>
