@@ -196,32 +196,40 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
   
   return (
     <div className={`${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform h-full`}>
-      <div className="p-7 pt-8 flex flex-col h-full">
-        <div className="text-right text-lg font-semibold">
+      <div className="p-6 flex flex-col h-full">
+        {/* Price in top right corner */}
+        <div className="absolute top-6 right-6 text-lg font-semibold">
           {offer.price}<span className="text-base font-normal">/month</span>
         </div>
         
-        <h3 className="text-xl md:text-2xl font-bold mt-2 mb-2 leading-snug drop-shadow">
-          {offer.testimonyTitle}
-        </h3>
-        
-        <p className="mb-4 text-sm opacity-90">
-          {offer.testimony}
-        </p>
-        
-        <div className="mb-4 text-xs opacity-80">
-          {offer.person}
+        {/* Main content with more horizontal layout */}
+        <div className="flex flex-col">
+          {/* Title with more horizontal space */}
+          <h3 className="text-xl md:text-2xl font-bold mt-2 mb-3 pr-20 leading-snug drop-shadow">
+            {offer.testimonyTitle}
+          </h3>
+          
+          {/* Testimonial section */}
+          <p className="mb-4 text-sm opacity-90">
+            {offer.testimony}
+          </p>
+          
+          <div className="mb-4 text-xs opacity-80">
+            {offer.person}
+          </div>
+          
+          {/* Features in compact layout */}
+          <ul className="mb-6 grid grid-cols-1 gap-y-2 text-sm">
+            {offer.features.map((feature, idx) => (
+              <li key={idx} className="flex items-center gap-2">
+                <feature.icon className="h-4 w-4 flex-shrink-0" />
+                <span className="flex-1">{feature.title}</span>
+              </li>
+            ))}
+          </ul>
         </div>
         
-        <ul className="mb-6 space-y-2 text-sm">
-          {offer.features.map((feature, idx) => (
-            <li key={idx} className="flex items-center gap-2">
-              <feature.icon className="h-4 w-4" />
-              <span>{feature.title}</span>
-            </li>
-          ))}
-        </ul>
-        
+        {/* Action buttons */}
         <div className="flex gap-2 mt-auto">
           <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
             <a className={`inline-flex items-center justify-center px-4 py-2.5 bg-white text-[15px] font-medium ${colors.text} rounded-lg shadow ${colors.hover} transition`}>
@@ -299,32 +307,65 @@ export function DirectOfferCTA() {
   
   // Carousel references and state
   const carouselRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [translateValue, setTranslateValue] = useState(0);
-  const [cardWidth, setCardWidth] = useState(0);
+  const [cardWidths, setCardWidths] = useState<number[]>([]);
   const [containerWidth, setContainerWidth] = useState(0);
   const maxIndex = content.offers.length - 1;
   
   // Set dimensions when component loads or window resizes
   useEffect(() => {
     const updateDimensions = () => {
-      if (carouselRef.current) {
-        const containerWidth = carouselRef.current.offsetWidth;
-        // Each card takes up 75% of the container on mobile, fixed width on desktop
-        const isMobile = window.innerWidth < 768;
-        const calculatedCardWidth = isMobile ? containerWidth * 0.75 : 340;
-        setCardWidth(calculatedCardWidth);
-        setContainerWidth(containerWidth);
+      if (!carouselRef.current) return;
+      
+      const containerWidth = carouselRef.current.offsetWidth;
+      const isMobile = window.innerWidth < 768;
+      
+      // Calculate card widths based on viewport
+      let widths: number[] = [];
+      if (isMobile) {
+        // On mobile, first card takes 75% of container
+        widths = content.offers.map((_, i) => 
+          i === 0 ? containerWidth * 0.75 : containerWidth * 0.75
+        );
+      } else {
+        // On desktop:
+        // - First card takes 66.6% (2/3) of container
+        // - Second card takes 33.3% (1/3) of container
+        // - Third+ cards take same as second
+        widths = content.offers.map((_, i) => {
+          if (i === 0) return containerWidth * 0.66;
+          return containerWidth * 0.33;
+        });
+      }
+      
+      setCardWidths(widths);
+      setContainerWidth(containerWidth);
+      
+      // Adjust the transform to maintain current view after resize
+      if (currentIndex > 0) {
+        const offset = widths.slice(0, currentIndex).reduce((sum, width) => sum + width, 0);
+        setTranslateValue(-offset);
       }
     };
 
     updateDimensions();
-    window.addEventListener('resize', updateDimensions);
+    
+    // Add event listener with debounce for performance
+    let resizeTimer: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateDimensions, 100);
+    };
+    
+    window.addEventListener('resize', handleResize);
     
     return () => {
-      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
     };
-  }, []);
+  }, [content.offers.length, currentIndex]);
   
   // Handlers for prev/next buttons
   const handlePrev = () => {
@@ -332,7 +373,10 @@ export function DirectOfferCTA() {
     
     const newIndex = currentIndex - 1;
     setCurrentIndex(newIndex);
-    setTranslateValue(-(cardWidth * newIndex));
+    
+    // Calculate the offset based on the width of all previous cards
+    const offset = cardWidths.slice(0, newIndex).reduce((sum, width) => sum + width, 0);
+    setTranslateValue(-offset);
   };
   
   const handleNext = () => {
@@ -340,13 +384,19 @@ export function DirectOfferCTA() {
     
     const newIndex = currentIndex + 1;
     setCurrentIndex(newIndex);
-    setTranslateValue(-(cardWidth * newIndex));
+    
+    // Calculate the offset based on the width of all previous cards
+    const offset = cardWidths.slice(0, newIndex).reduce((sum, width) => sum + width, 0);
+    setTranslateValue(-offset);
   };
   
   // Go to a specific slide
   const goToSlide = (index: number) => {
+    if (index < 0 || index > maxIndex) return;
+    
     setCurrentIndex(index);
-    setTranslateValue(-(cardWidth * index));
+    const offset = cardWidths.slice(0, index).reduce((sum, width) => sum + width, 0);
+    setTranslateValue(-offset);
   };
 
   return (
@@ -356,7 +406,7 @@ export function DirectOfferCTA() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-12"
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">
             {content.title}
@@ -364,16 +414,20 @@ export function DirectOfferCTA() {
         </motion.div>
 
         {/* Carousel Implementation with Transform */}
-        <div className="relative w-full max-w-4xl mx-auto overflow-hidden" ref={carouselRef}>
+        <div className="relative w-full mx-auto" ref={carouselRef}>
           <div 
-            className="flex transition-transform duration-300 ease-in-out"
+            ref={trackRef}
+            className="flex transition-transform duration-300 ease-out"
             style={{ transform: `translateX(${translateValue}px)` }}
           >
             {content.offers.map((offer, index) => (
               <motion.div
                 key={offer.id}
-                className="flex-shrink-0 px-4"
-                style={{ width: cardWidth ? `${cardWidth}px` : '75%' }}
+                className="flex-shrink-0 pr-2 pl-2 md:pl-0"
+                style={{ 
+                  width: cardWidths[index] ? `${cardWidths[index]}px` : '66.6%',
+                  marginRight: index === maxIndex ? '0' : '0'
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -388,34 +442,37 @@ export function DirectOfferCTA() {
             ))}
           </div>
           
-          {/* Carousel Controls */}
-          <button
-            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none md:block ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-            onClick={handlePrev}
-            disabled={currentIndex <= 0}
-            aria-label="Previous"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none md:block ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
-            onClick={handleNext}
-            disabled={currentIndex >= maxIndex}
-            aria-label="Next"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-          
-          {/* Dots indicator */}
-          <div className="flex justify-center mt-6">
-            {content.offers.map((_, index) => (
-              <button
-                key={index}
-                className={`w-2 h-2 mx-1 rounded-full ${currentIndex === index ? 'bg-gray-800 dark:bg-gray-200' : 'bg-gray-300 dark:bg-gray-600'}`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+          {/* Navigation Controls - Left Side Only */}
+          <div className="mt-8 flex items-center justify-start space-x-2">
+            <button
+              className={`flex items-center justify-center w-10 h-10 rounded-full bg-white/90 hover:bg-gray-200 text-gray-700 shadow transition focus:outline-none ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={handlePrev}
+              disabled={currentIndex <= 0}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              className={`flex items-center justify-center w-10 h-10 rounded-full bg-white/90 hover:bg-gray-200 text-gray-700 shadow transition focus:outline-none ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={handleNext}
+              disabled={currentIndex >= maxIndex}
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+            
+            {/* Visual Indicators */}
+            <div className="flex ml-4">
+              {content.offers.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-2.5 h-2.5 mx-1 rounded-full ${currentIndex === index ? 'bg-gray-800 dark:bg-gray-200' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                  aria-current={currentIndex === index ? 'true' : 'false'}
+                />
+              ))}
+            </div>
           </div>
         </div>
         
