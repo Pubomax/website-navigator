@@ -197,17 +197,22 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
   return (
     <div className={`${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform h-full`}>
       <div className="p-6 flex flex-col h-full">
-        {/* Price in top right corner */}
-        <div className="absolute top-6 right-6 text-lg font-semibold">
-          {offer.price}<span className="text-base font-normal">/month</span>
-        </div>
-        
         {/* Main content with more horizontal layout */}
         <div className="flex flex-col">
-          {/* Title with more horizontal space */}
-          <h3 className="text-2xl md:text-3xl font-bold mt-2 mb-3 pr-20 leading-snug drop-shadow">
+          {/* Title without price overlapping */}
+          <h3 className="text-2xl md:text-3xl font-bold mt-2 mb-3 leading-snug drop-shadow">
             {offer.testimonyTitle}
           </h3>
+          
+          {/* Prominent pricing display */}
+          <div className="mb-5 bg-white/10 p-3 rounded-lg inline-block">
+            <div className="flex items-baseline">
+              <span className="text-3xl md:text-4xl font-extrabold tracking-tight">
+                {offer.price}
+              </span>
+              <span className="text-lg font-medium ml-1.5">/month</span>
+            </div>
+          </div>
           
           {/* Testimonial section */}
           <p className="mb-4 text-sm opacity-90">
