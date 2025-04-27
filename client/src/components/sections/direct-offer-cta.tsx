@@ -325,19 +325,11 @@ export function DirectOfferCTA() {
       // Calculate card widths based on viewport
       let widths: number[] = [];
       if (isMobile) {
-        // On mobile, first card takes 75% of container
-        widths = content.offers.map((_, i) => 
-          i === 0 ? containerWidth * 0.75 : containerWidth * 0.75
-        );
+        // On mobile, all cards are the same width at 75% of container
+        widths = content.offers.map(() => containerWidth * 0.75);
       } else {
-        // On desktop:
-        // - First card takes 66.6% (2/3) of container
-        // - Second card takes 33.3% (1/3) of container
-        // - Third+ cards take same as second
-        widths = content.offers.map((_, i) => {
-          if (i === 0) return containerWidth * 0.66;
-          return containerWidth * 0.33;
-        });
+        // On desktop, all cards are the same width at 75% of container
+        widths = content.offers.map(() => containerWidth * 0.75);
       }
       
       setCardWidths(widths);
