@@ -1,0 +1,139 @@
+import React, { useState, useRef, useEffect } from 'react';
+import PricingCard from './PricingCard';
+import CarouselControls from './CarouselControls';
+import '../styles/PricingCards.css';
+
+const PricingCards = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [translateValue, setTranslateValue] = useState(0);
+  const carouselRef = useRef(null);
+  const [cardWidth, setCardWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  
+  const pricingData = [
+    {
+      id: 1,
+      price: '$500',
+      title: 'The all-in-one solution for automating your marketing tasks.',
+      description: 'Automation allows us to post content regularly on our social media without spending hours on it. The weekly reports help us track our progress and make better decisions.',
+      testimonial: {
+        name: 'John Smith',
+        role: 'Marketing Manager'
+      },
+      features: [
+        { icon: 'chart-bar', text: 'Automated Social Media Posting' },
+        { icon: 'chart-line', text: 'Weekly Automated Reporting' },
+        { icon: 'user-plus', text: 'Lead Nurturing Platform Management' }
+      ],
+      colorClass: 'purple-card'
+    },
+    {
+      id: 2,
+      price: '$800',
+      title: 'Automatically answer questions and capture leads 24/7.',
+      description: 'Our chatbot has transformed our ability to capture leads. It answers basic questions even when our team isn't available, and sends information from interested visitors directly to our CRM.',
+      testimonial: {
+        name: 'Sarah Johnson',
+        role: 'CEO'
+      },
+      features: [
+        { icon: 'comments', text: 'Chatbot on Your Website 24/7' },
+        { icon: 'envelope', text: 'Automatic Lead Capture' },
+        { icon: 'headset', text: 'Simple Human Handoff' }
+      ],
+      colorClass: 'green-card'
+    },
+    {
+      id: 3,
+      price: '$1,500',
+      title: 'We research and deliver qualified prospects to you every week.',
+      description: 'The service provides us with a constant source of qualified leads we would never have found on our own. Social media, LinkedIn, and local directories are all explored to find us the best prospects.',
+      testimonial: {
+        name: 'Michael Brown',
+        role: 'Sales Director'
+      },
+      features: [
+        { icon: 'search', text: 'Social Media Lead Finder' },
+        { icon: 'linkedin', text: 'LinkedIn Prospect Collection' },
+        { icon: 'building', text: 'Local Business Search' }
+      ],
+      colorClass: 'purple-alt-card'
+    }
+  ];
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (carouselRef.current) {
+        const containerWidth = carouselRef.current.offsetWidth;
+        // Each card takes up 75% of the container, allowing for the next card to be partially visible
+        const calculatedCardWidth = containerWidth * 0.75;
+        setCardWidth(calculatedCardWidth);
+        setContainerWidth(containerWidth);
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+    };
+  }, []);
+
+  const nextSlide = () => {
+    if (currentIndex >= pricingData.length - 1) return;
+    
+    const newIndex = currentIndex + 1;
+    setCurrentIndex(newIndex);
+    setTranslateValue(-(cardWidth * newIndex));
+  };
+
+  const prevSlide = () => {
+    if (currentIndex <= 0) return;
+    
+    const newIndex = currentIndex - 1;
+    setCurrentIndex(newIndex);
+    setTranslateValue(-(cardWidth * newIndex));
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+    setTranslateValue(-(cardWidth * index));
+  };
+
+  return (
+    <div className="pricing-section">
+      <h1 className="pricing-title">Our Marketing Service Plans</h1>
+      
+      <div className="carousel-container" ref={carouselRef}>
+        <div 
+          className="carousel-track"
+          style={{
+            transform: `translateX(${translateValue}px)`,
+            transition: 'transform 0.45s ease'
+          }}
+        >
+          {pricingData.map(card => (
+            <div 
+              key={card.id} 
+              className="carousel-item" 
+              style={{ minWidth: `${cardWidth}px` }}
+            >
+              <PricingCard {...card} />
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <CarouselControls 
+        currentIndex={currentIndex}
+        total={pricingData.length}
+        prevSlide={prevSlide}
+        nextSlide={nextSlide}
+        goToSlide={goToSlide}
+      />
+    </div>
+  );
+};
+
+export default PricingCards;

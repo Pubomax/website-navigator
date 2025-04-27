@@ -300,64 +300,53 @@ export function DirectOfferCTA() {
   // Carousel references and state
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(content.offers.length - 1);
+  const [translateValue, setTranslateValue] = useState(0);
+  const [cardWidth, setCardWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const maxIndex = content.offers.length - 1;
   
-  // Set up carousel when component loads
+  // Set dimensions when component loads or window resizes
   useEffect(() => {
-    if (carouselRef.current) {
-      // Add custom styling for the carousel
-      const style = document.createElement('style');
-      style.textContent = `
-        .carousel-container {
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-        }
-        .carousel-container::-webkit-scrollbar {
-          display: none;
-        }
-        .carousel-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `;
-      document.head.appendChild(style);
-      
-      return () => {
-        document.head.removeChild(style);
-      };
-    }
+    const updateDimensions = () => {
+      if (carouselRef.current) {
+        const containerWidth = carouselRef.current.offsetWidth;
+        // Each card takes up 75% of the container on mobile, fixed width on desktop
+        const isMobile = window.innerWidth < 768;
+        const calculatedCardWidth = isMobile ? containerWidth * 0.75 : 340;
+        setCardWidth(calculatedCardWidth);
+        setContainerWidth(containerWidth);
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
-  
-  // Calculate card width for scrolling
-  const getCardWidth = () => {
-    if (carouselRef.current) {
-      const card = carouselRef.current.children[0];
-      return card ? (card as HTMLElement).offsetWidth + 32 : 370 + 32;
-    }
-    return 370 + 32;
-  };
-  
-  // Scroll to a specific card index
-  const scrollToCard = (index: number) => {
-    if (carouselRef.current) {
-      const cardWidth = getCardWidth();
-      carouselRef.current.scrollTo({
-        left: index * cardWidth,
-        behavior: 'smooth'
-      });
-      setCurrentIndex(index);
-    }
-  };
   
   // Handlers for prev/next buttons
   const handlePrev = () => {
-    const newIndex = Math.max(0, currentIndex - 1);
-    scrollToCard(newIndex);
+    if (currentIndex <= 0) return;
+    
+    const newIndex = currentIndex - 1;
+    setCurrentIndex(newIndex);
+    setTranslateValue(-(cardWidth * newIndex));
   };
   
   const handleNext = () => {
-    const newIndex = Math.min(maxIndex, currentIndex + 1);
-    scrollToCard(newIndex);
+    if (currentIndex >= maxIndex) return;
+    
+    const newIndex = currentIndex + 1;
+    setCurrentIndex(newIndex);
+    setTranslateValue(-(cardWidth * newIndex));
+  };
+  
+  // Go to a specific slide
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+    setTranslateValue(-(cardWidth * index));
   };
 
   return (
@@ -374,17 +363,17 @@ export function DirectOfferCTA() {
           </h2>
         </motion.div>
 
-        {/* Carousel Implementation */}
-        <div className="relative w-full max-w-4xl mx-auto">
+        {/* Carousel Implementation with Transform */}
+        <div className="relative w-full max-w-4xl mx-auto overflow-hidden" ref={carouselRef}>
           <div 
-            ref={carouselRef}
-            className="carousel-container flex overflow-x-auto snap-x snap-mandatory select-none px-2 md:px-0"
-            style={{ scrollPaddingLeft: '2rem' }}
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ transform: `translateX(${translateValue}px)` }}
           >
             {content.offers.map((offer, index) => (
               <motion.div
                 key={offer.id}
-                className="flex-shrink-0 snap-center w-3/4 md:w-[340px] mx-4 mt-2 mb-8"
+                className="flex-shrink-0 px-4"
+                style={{ width: cardWidth ? `${cardWidth}px` : '75%' }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -401,7 +390,7 @@ export function DirectOfferCTA() {
           
           {/* Carousel Controls */}
           <button
-            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none hidden md:block ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none md:block ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={handlePrev}
             disabled={currentIndex <= 0}
             aria-label="Previous"
@@ -409,13 +398,25 @@ export function DirectOfferCTA() {
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
-            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none hidden md:block ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none md:block ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={handleNext}
             disabled={currentIndex >= maxIndex}
             aria-label="Next"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
+          
+          {/* Dots indicator */}
+          <div className="flex justify-center mt-6">
+            {content.offers.map((_, index) => (
+              <button
+                key={index}
+                className={`w-2 h-2 mx-1 rounded-full ${currentIndex === index ? 'bg-gray-800 dark:bg-gray-200' : 'bg-gray-300 dark:bg-gray-600'}`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
         
         {/* Detailed features for each offering below */}
