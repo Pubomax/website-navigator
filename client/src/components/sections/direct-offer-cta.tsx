@@ -234,9 +234,16 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
   
   const colors = colorMap[offer.color as keyof typeof colorMap];
   
+  // Card width based on index
+  const widthClass = index === 0 
+    ? "w-[66.666%]" // First card takes exactly 2/3 width
+    : index === 1 
+      ? "w-[33.333%]" // Second card takes exactly 1/3 width
+      : "w-[85%] sm:w-[340px]"; // Other cards take default width
+  
   return (
-    <div className={`flex-shrink-0 snap-center w-[85%] sm:w-[340px] mx-4 mt-2 mb-8 ${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform`}>
-      <div className="p-7 pt-8 flex flex-col h-full">
+    <div className={`flex-shrink-0 snap-center ${widthClass} mx-4 mt-2 mb-8 ${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform`}>
+      <div className="p-6 md:p-7 pt-8 flex flex-col h-full">
         <div className="text-right text-lg font-semibold">
           {offer.price}<span className="text-base font-normal">/month</span>
         </div>
@@ -253,8 +260,8 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
           {offer.person}
         </div>
         
-        <ul className="mb-6 space-y-2 text-sm">
-          {offer.features.slice(0, 3).map((feature, idx) => (
+        <ul className="mb-4 sm:mb-6 space-y-2 text-sm">
+          {offer.features.slice(0, index === 0 ? 3 : 2).map((feature, idx) => (
             <li key={idx} className="flex items-center gap-2">
               <feature.icon className="h-4 w-4" />
               <span>{feature.title}</span>
@@ -262,7 +269,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
           ))}
         </ul>
         
-        <div className="flex gap-2 mt-auto">
+        <div className={`flex ${index === 1 ? 'flex-col' : 'flex-row'} gap-2 mt-auto`}>
           <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
             <a className={`inline-flex items-center justify-center px-4 py-2.5 bg-white text-[15px] font-medium ${colors.text} rounded-lg shadow ${colors.hover} transition`}>
               <span className="mr-2">{ctaText}</span>
@@ -270,17 +277,19 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
             </a>
           </OfferPopupForm>
           
-          <a 
-            className="inline-flex items-center justify-center px-4 py-2.5 bg-none text-[15px] font-medium text-white/90 rounded-lg hover:text-white border border-white border-opacity-10 transition"
-            onClick={() => {
-              const el = document.getElementById(`offer-details-${index}`);
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            {readMoreText}
-          </a>
+          {index !== 1 && (
+            <a 
+              className="inline-flex items-center justify-center px-4 py-2.5 bg-none text-[15px] font-medium text-white/90 rounded-lg hover:text-white border border-white border-opacity-10 transition"
+              onClick={() => {
+                const el = document.getElementById(`offer-details-${index}`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              {readMoreText}
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -341,7 +350,7 @@ export function DirectOfferCTA() {
   // Carousel references and state
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [maxIndex, setMaxIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(content.offers.length - 1);
   const [showButtons, setShowButtons] = useState(false);
   
   // Handle window resize
@@ -382,37 +391,37 @@ export function DirectOfferCTA() {
       `;
       document.head.appendChild(style);
       
-      // Calculate max index based on number of cards visible
-      const calculateMaxIndex = () => {
-        const carousel = carouselRef.current;
-        if (!carousel) return;
-        
-        const carouselWidth = carousel.offsetWidth;
-        const cardWidth = carousel.children[0]?.getBoundingClientRect().width + 32 || 340;
-        const visibleCards = Math.floor(carouselWidth / cardWidth);
-        const newMaxIndex = Math.max(0, content.offers.length - visibleCards);
-        setMaxIndex(newMaxIndex);
-      };
-      
-      calculateMaxIndex();
-      window.addEventListener('resize', calculateMaxIndex);
-      
       return () => {
         document.head.removeChild(style);
-        window.removeEventListener('resize', calculateMaxIndex);
       };
     }
-  }, [content.offers.length]);
+  }, []);
   
-  // Scroll to a specific card
+  // Scroll to a specific card index
   const scrollToCard = (index: number) => {
     if (carouselRef.current) {
-      const carousel = carouselRef.current;
-      const cardWidth = carousel.children[0]?.getBoundingClientRect().width + 32 || 340;
-      carousel.scrollTo({
-        left: index * cardWidth,
+      // The scrollLeft is different based on which card we want to show
+      let scrollAmount = 0;
+      
+      if (index === 0) {
+        // First card (already at beginning)
+        scrollAmount = 0;
+      } else if (index === 1) {
+        // For second card, scroll to show first card and second card
+        const firstCardWidth = carouselRef.current.children[0]?.getBoundingClientRect().width || 0;
+        scrollAmount = 0; // Keep first card visible
+      } else {
+        // For third card and beyond, scroll to fully reveal that card
+        const firstCardWidth = carouselRef.current.children[0]?.getBoundingClientRect().width || 0;
+        const secondCardWidth = carouselRef.current.children[1]?.getBoundingClientRect().width || 0;
+        scrollAmount = firstCardWidth + secondCardWidth - 32; // Minus the card gap
+      }
+      
+      carouselRef.current.scrollTo({
+        left: scrollAmount,
         behavior: 'smooth'
       });
+      
       setCurrentIndex(index);
     }
   };
@@ -443,26 +452,29 @@ export function DirectOfferCTA() {
         </motion.div>
 
         <div className="relative w-full max-w-4xl mx-auto">
-          {/* Carousel Container */}
-          <div 
-            ref={carouselRef}
-            className="carousel-container flex overflow-x-auto snap-x snap-mandatory select-none px-2 md:px-0"
-          >
-            {content.offers.map((offer, index) => (
-              <motion.div
-                key={offer.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-              >
-                <OfferCard 
-                  offer={offer}
-                  ctaText={content.cta}
-                  readMoreText={content.readMore}
-                  index={index}
-                />
-              </motion.div>
-            ))}
+          {/* Carousel Container - contains exactly cards 1 and 2 on initial view */}
+          <div className="relative overflow-hidden">
+            <div 
+              ref={carouselRef}
+              className="carousel-container flex overflow-x-auto snap-x snap-mandatory select-none"
+              style={{ width: '100%', paddingLeft: '8px' }}
+            >
+              {content.offers.map((offer, index) => (
+                <motion.div
+                  key={offer.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 * index }}
+                >
+                  <OfferCard 
+                    offer={offer}
+                    ctaText={content.cta}
+                    readMoreText={content.readMore}
+                    index={index}
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
           
           {/* Carousel Controls */}
@@ -477,7 +489,7 @@ export function DirectOfferCTA() {
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
-                className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none"
                 onClick={handleNext}
                 disabled={currentIndex >= maxIndex}
                 aria-label="Next"
