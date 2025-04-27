@@ -5,14 +5,15 @@ import {
   ArrowRight, Check, Calendar, BarChart, Users, MessageSquareText, 
   Search, Linkedin, MapPin, FileSpreadsheet, Brain, 
   MessageCircle, Mail, PhoneCall, BarChart2, Bot,
-  ChevronRight
+  ChevronRight, ChevronLeft
 } from "lucide-react";
 import { OfferPopupForm } from "./offer-popup-form";
+import { useEffect, useRef, useState } from "react";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
-    ? "Solutions d'Automatisation" 
-    : "Automation Solutions",
+    ? "Nos Plans de Service Marketing" 
+    : "Our Marketing Service Plans",
   subtitle: isPathFrench
     ? "Découvrez nos solutions spécialisées pour accélérer la croissance de votre entreprise"
     : "Discover our specialized solutions to accelerate your business growth",
@@ -31,55 +32,44 @@ const getContent = (isPathFrench: boolean) => ({
       testimonyTitle: isPathFrench 
         ? "La solution tout-en-un pour l'automatisation de vos tâches marketing." 
         : "The all-in-one solution for automating your marketing tasks.",
-      tagline: isPathFrench 
-        ? "Automatisez vos tâches marketing et obtenez des analyses d'experts" 
-        : "Automate your marketing tasks and get expert analysis",
       testimony: isPathFrench
         ? "L'automatisation nous permet de publier régulièrement du contenu sur nos réseaux sociaux sans y passer des heures. Les rapports hebdomadaires nous aident à suivre nos progrès et à prendre de meilleures décisions."
         : "Automation allows us to post content regularly on our social media without spending hours on it. The weekly reports help us track our progress and make better decisions.",
       person: isPathFrench ? "Marie Dubois, Marketing Manager" : "John Smith, Marketing Manager",
       color: "indigo",
-      image: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=2070&auto=format&fit=crop",
+      gradient: "bg-gradient-to-br from-indigo-600 to-blue-600",
       features: isPathFrench ? [
         {
           title: "Publications sur Réseaux Sociaux Automatisées",
-          description: "Publiez automatiquement sur toutes vos plateformes",
           icon: MessageSquareText
         },
         {
           title: "Rapports Hebdomadaires Automatisés",
-          description: "Obtenez des rapports sur vos performances",
           icon: BarChart
         },
         {
           title: "Gestion de Plateforme de Nurturing",
-          description: "Nous gérons votre plateforme de nurturing",
           icon: Users
         },
         {
           title: "Réunion Individuelle Mensuelle",
-          description: "Session de stratégie avec un expert",
           icon: Calendar
         },
       ] : [
         {
           title: "Automated Social Media Posting",
-          description: "Automatically post to all your platforms",
           icon: MessageSquareText
         },
         {
           title: "Weekly Automated Reporting",
-          description: "Get reports on your performance each week",
           icon: BarChart
         },
         {
           title: "Lead Nurturing Platform Management",
-          description: "We manage your lead nurturing platform",
           icon: Users
         },
         {
           title: "Monthly One-on-One Meeting",
-          description: "Strategy session with an expert",
           icon: Calendar
         },
       ],
@@ -91,65 +81,52 @@ const getContent = (isPathFrench: boolean) => ({
       testimonyTitle: isPathFrench 
         ? "Répondez automatiquement aux questions et capturez des leads 24h/24." 
         : "Automatically answer questions and capture leads 24/7.",
-      tagline: isPathFrench 
-        ? "Capturez et qualifiez vos leads automatiquement 24h/24 et 7j/7" 
-        : "Capture and qualify leads automatically 24/7",
       testimony: isPathFrench
         ? "Notre chatbot a transformé notre capacité à capturer des leads. Il répond aux questions de base même quand notre équipe n'est pas disponible, et nous envoie les informations des visiteurs intéressés directement dans notre CRM."
         : "Our chatbot has transformed our ability to capture leads. It answers basic questions even when our team isn't available, and sends information from interested visitors directly to our CRM.",
       person: isPathFrench ? "Thomas Martin, PDG" : "Sarah Johnson, CEO",
       color: "emerald",
-      image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=1974&auto=format&fit=crop",
+      gradient: "bg-gradient-to-br from-emerald-600 to-green-600",
       features: isPathFrench ? [
         {
           title: "Chatbot sur Votre Site Web 24/7",
-          description: "Répondez aux questions automatiquement",
           icon: MessageCircle
         },
         {
           title: "Capture Automatique de Leads",
-          description: "Obtenez les emails et numéros de téléphone",
           icon: Mail
         },
         {
           title: "Transfert Simple vers un Humain",
-          description: "Transfert à vous ou votre équipe",
           icon: PhoneCall
         },
         {
           title: "Rapport de Performance",
-          description: "Voyez combien de leads créés",
           icon: BarChart2
         },
         {
           title: "Session d'Amélioration du Chat",
-          description: "Une heure avec un expert en chatbot",
           icon: Bot
         },
       ] : [
         {
           title: "Chatbot on Your Website 24/7",
-          description: "Answer questions automatically",
           icon: MessageCircle
         },
         {
           title: "Automatic Lead Capture",
-          description: "Get emails and phone numbers",
           icon: Mail
         },
         {
           title: "Simple Human Handoff",
-          description: "Transfer to you or your team",
           icon: PhoneCall
         },
         {
           title: "Chat Performance Report",
-          description: "See how many leads created",
           icon: BarChart2
         },
         {
           title: "Chat Improvement Session",
-          description: "One hour with a chatbot expert",
           icon: Bot
         },
       ],
@@ -161,65 +138,52 @@ const getContent = (isPathFrench: boolean) => ({
       testimonyTitle: isPathFrench 
         ? "Nous recherchons et vous livrons des prospects qualifiés chaque semaine." 
         : "We research and deliver qualified prospects to you every week.",
-      tagline: isPathFrench 
-        ? "Nous trouvons et vous livrons des leads qualifiés chaque semaine" 
-        : "We find and deliver qualified leads to you every week",
       testimony: isPathFrench
         ? "Le service nous fournit une source constante de leads qualifiés que nous n'aurions jamais pu trouver par nous-mêmes. Les réseaux sociaux, LinkedIn et les annuaires locaux sont tous explorés pour nous trouver les meilleurs prospects."
         : "The service provides us with a constant source of qualified leads we would never have found on our own. Social media, LinkedIn, and local directories are all explored to find us the best prospects.",
       person: isPathFrench ? "Philippe Leclerc, Directeur des Ventes" : "Michael Brown, Sales Director",
       color: "purple",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop",
+      gradient: "bg-gradient-to-br from-purple-600 to-fuchsia-600",
       features: isPathFrench ? [
         {
           title: "Recherche sur Réseaux Sociaux",
-          description: "Trouvez des personnes recherchant vos services",
           icon: Search
         },
         {
           title: "Collecte de Prospects LinkedIn",
-          description: "Extraction des profils correspondants",
           icon: Linkedin
         },
         {
           title: "Recherche d'Entreprises Locales",
-          description: "Trouvez des sociétés près de chez vous",
           icon: MapPin
         },
         {
           title: "Liste Hebdomadaire de Leads",
-          description: "Fichier Excel/CSV avec contacts",
           icon: FileSpreadsheet
         },
         {
           title: "Session de Stratégie de Leads",
-          description: "Une heure avec un expert en leads",
           icon: Brain
         },
       ] : [
         {
           title: "Social Media Lead Finder",
-          description: "Find people asking for your services",
           icon: Search
         },
         {
           title: "LinkedIn Prospect Collection",
-          description: "Pull details from matching profiles",
           icon: Linkedin
         },
         {
           title: "Local Business Search",
-          description: "Find companies near you",
           icon: MapPin
         },
         {
           title: "Weekly Leads List",
-          description: "Excel/CSV file with ready contacts",
           icon: FileSpreadsheet
         },
         {
           title: "Leads Strategy Session",
-          description: "One hour with a lead expert",
           icon: Brain
         },
       ],
@@ -229,7 +193,6 @@ const getContent = (isPathFrench: boolean) => ({
 
 type Feature = {
   title: string;
-  description: string;
   icon: React.ElementType;
 };
 
@@ -237,12 +200,11 @@ type Offer = {
   id: string;
   title: string;
   price: string;
-  tagline: string;
   testimonyTitle: string;
   testimony: string;
   person: string;
   color: string;
-  image: string;
+  gradient: string;
   features: Feature[];
 };
 
@@ -254,78 +216,62 @@ type OfferCardProps = {
 };
 
 const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
+  // Map colors to tailwind classes
   const colorMap = {
     indigo: {
-      bg: "bg-indigo-900",
-      button: "bg-indigo-600 hover:bg-indigo-700 text-white",
-      secondaryButton: "bg-white/10 hover:bg-white/20 text-white"
-    },
-    purple: {
-      bg: "bg-purple-900",
-      button: "bg-purple-600 hover:bg-purple-700 text-white",
-      secondaryButton: "bg-white/10 hover:bg-white/20 text-white"
+      text: "text-indigo-700",
+      hover: "hover:bg-indigo-50"
     },
     emerald: {
-      bg: "bg-emerald-900",
-      button: "bg-emerald-600 hover:bg-emerald-700 text-white",
-      secondaryButton: "bg-white/10 hover:bg-white/20 text-white"
+      text: "text-emerald-700",
+      hover: "hover:bg-emerald-50"
+    },
+    purple: {
+      text: "text-purple-700",
+      hover: "hover:bg-purple-50"
     }
   };
   
   const colors = colorMap[offer.color as keyof typeof colorMap];
   
   return (
-    <div 
-      className={`${colors.bg} rounded-lg overflow-hidden shadow-xl h-full relative`}
-      style={{
-        backgroundImage: `linear-gradient(to right, ${offer.color === 'indigo' ? 'rgba(49, 46, 129, 0.95)' : offer.color === 'purple' ? 'rgba(88, 28, 135, 0.95)' : 'rgba(4, 120, 87, 0.95)'}, ${offer.color === 'indigo' ? 'rgba(49, 46, 129, 0.8)' : offer.color === 'purple' ? 'rgba(88, 28, 135, 0.8)' : 'rgba(4, 120, 87, 0.8)'}), url(${offer.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
-      <div className="p-8 sm:p-10 flex flex-col h-full relative z-10">
-        <div className="flex-1">
-          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/90 font-bold">
-            {offer.price}
-          </div>
-          
-          <div className="mt-6 mb-6">
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
-              {offer.testimonyTitle}
-            </h3>
-            <p className="text-white/90 text-base leading-relaxed mb-6">
-              {offer.testimony}
-            </p>
-            <p className="text-white/80 text-sm font-medium">
-              {offer.person}
-            </p>
-          </div>
-          
-          <div className="mt-8">
-            <div className="flex gap-4 flex-wrap">
-              {offer.features.slice(0, 3).map((feature, idx) => (
-                <div key={idx} className="flex items-center text-white/90 gap-1.5 text-sm">
-                  <feature.icon className="h-4 w-4 text-white/70" />
-                  <span>{feature.title}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+    <div className={`flex-shrink-0 snap-center w-[85%] sm:w-[340px] mx-4 mt-2 mb-8 ${offer.gradient} rounded-2xl shadow-lg text-white relative transition-transform`}>
+      <div className="p-7 pt-8 flex flex-col h-full">
+        <div className="text-right text-lg font-semibold">
+          {offer.price}<span className="text-base font-normal">/month</span>
         </div>
         
-        <div className="mt-8 pt-4 border-t border-white/10 flex flex-col sm:flex-row gap-4">
+        <h3 className="text-xl md:text-2xl font-bold mt-2 mb-2 leading-snug drop-shadow">
+          {offer.testimonyTitle}
+        </h3>
+        
+        <p className="mb-4 text-sm opacity-90">
+          {offer.testimony}
+        </p>
+        
+        <div className="mb-4 text-xs opacity-80">
+          {offer.person}
+        </div>
+        
+        <ul className="mb-6 space-y-2 text-sm">
+          {offer.features.slice(0, 3).map((feature, idx) => (
+            <li key={idx} className="flex items-center gap-2">
+              <feature.icon className="h-4 w-4" />
+              <span>{feature.title}</span>
+            </li>
+          ))}
+        </ul>
+        
+        <div className="flex gap-2 mt-auto">
           <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
-            <Button 
-              className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-medium text-base px-6 h-11 rounded-md"
-            >
-              {ctaText}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            <a className={`inline-flex items-center justify-center px-4 py-2.5 bg-white text-[15px] font-medium ${colors.text} rounded-lg shadow ${colors.hover} transition`}>
+              <span className="mr-2">{ctaText}</span>
+              <ArrowRight className="h-4 w-4" />
+            </a>
           </OfferPopupForm>
           
-          <Button
-            variant="outline"
-            className="w-full sm:w-auto text-white border-white border-opacity-50 hover:bg-white/10 bg-transparent text-base px-6 h-11 rounded-md"
+          <a 
+            className="inline-flex items-center justify-center px-4 py-2.5 bg-none text-[15px] font-medium text-white/90 rounded-lg hover:text-white border border-white border-opacity-10 transition"
             onClick={() => {
               const el = document.getElementById(`offer-details-${index}`);
               if (el) {
@@ -334,8 +280,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
             }}
           >
             {readMoreText}
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
+          </a>
         </div>
       </div>
     </div>
@@ -379,7 +324,6 @@ const OfferDetails = ({ offer, index }: { offer: Offer, index: number }) => {
               </div>
               <div>
                 <h4 className="font-semibold text-lg mb-1">{feature.title}</h4>
-                <p className="text-muted-foreground">{feature.description}</p>
               </div>
             </div>
           </div>
@@ -393,6 +337,96 @@ export function DirectOfferCTA() {
   const [location] = useLocation();
   const isPathFrench = location.startsWith("/fr");
   const content = getContent(isPathFrench);
+  
+  // Carousel references and state
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
+  const [showButtons, setShowButtons] = useState(false);
+  
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setShowButtons(true);
+      } else {
+        setShowButtons(false);
+      }
+    };
+    
+    handleResize(); // Run once on mount
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  // Set up carousel when component loads
+  useEffect(() => {
+    if (carouselRef.current) {
+      // Add custom styling for the carousel
+      const style = document.createElement('style');
+      style.textContent = `
+        .carousel-container {
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+        }
+        .carousel-container::-webkit-scrollbar {
+          display: none;
+        }
+        .carousel-container {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Calculate max index based on number of cards visible
+      const calculateMaxIndex = () => {
+        const carousel = carouselRef.current;
+        if (!carousel) return;
+        
+        const carouselWidth = carousel.offsetWidth;
+        const cardWidth = carousel.children[0]?.getBoundingClientRect().width + 32 || 340;
+        const visibleCards = Math.floor(carouselWidth / cardWidth);
+        const newMaxIndex = Math.max(0, content.offers.length - visibleCards);
+        setMaxIndex(newMaxIndex);
+      };
+      
+      calculateMaxIndex();
+      window.addEventListener('resize', calculateMaxIndex);
+      
+      return () => {
+        document.head.removeChild(style);
+        window.removeEventListener('resize', calculateMaxIndex);
+      };
+    }
+  }, [content.offers.length]);
+  
+  // Scroll to a specific card
+  const scrollToCard = (index: number) => {
+    if (carouselRef.current) {
+      const carousel = carouselRef.current;
+      const cardWidth = carousel.children[0]?.getBoundingClientRect().width + 32 || 340;
+      carousel.scrollTo({
+        left: index * cardWidth,
+        behavior: 'smooth'
+      });
+      setCurrentIndex(index);
+    }
+  };
+  
+  // Handlers for prev/next buttons
+  const handlePrev = () => {
+    const newIndex = Math.max(0, currentIndex - 1);
+    scrollToCard(newIndex);
+  };
+  
+  const handleNext = () => {
+    const newIndex = Math.min(maxIndex, currentIndex + 1);
+    scrollToCard(newIndex);
+  };
 
   return (
     <section className="py-16 sm:py-24 bg-background">
@@ -401,32 +435,57 @@ export function DirectOfferCTA() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
             {content.title}
           </h2>
-          <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
-            {content.subtitle}
-          </p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {content.offers.map((offer, index) => (
-            <motion.div
-              key={offer.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-            >
-              <OfferCard 
-                offer={offer}
-                ctaText={content.cta}
-                readMoreText={content.readMore}
-                index={index}
-              />
-            </motion.div>
-          ))}
+        <div className="relative w-full max-w-4xl mx-auto">
+          {/* Carousel Container */}
+          <div 
+            ref={carouselRef}
+            className="carousel-container flex overflow-x-auto snap-x snap-mandatory select-none px-2 md:px-0"
+          >
+            {content.offers.map((offer, index) => (
+              <motion.div
+                key={offer.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+              >
+                <OfferCard 
+                  offer={offer}
+                  ctaText={content.cta}
+                  readMoreText={content.readMore}
+                  index={index}
+                />
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Carousel Controls */}
+          {showButtons && (
+            <>
+              <button
+                className={`absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none ${currentIndex <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={handlePrev}
+                disabled={currentIndex <= 0}
+                aria-label="Previous"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                className={`absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 rounded-full shadow px-2 py-2 transition focus:outline-none ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={handleNext}
+                disabled={currentIndex >= maxIndex}
+                aria-label="Next"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </>
+          )}
         </div>
         
         {/* Detailed features for each offering below */}
@@ -436,7 +495,7 @@ export function DirectOfferCTA() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className={index > 0 ? "mt-20" : ""}
+            className={index > 0 ? "mt-20" : "mt-16"}
           >
             <OfferDetails offer={offer} index={index} />
             {index < content.offers.length - 1 && (
