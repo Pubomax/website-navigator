@@ -12,8 +12,8 @@ export default function Home() {
       <PageTitle pageKey="home" />
       <Hero />
       <WhatWeDo />
-      <SolutionsGrid />
       <DirectOfferCTA />
+      <SolutionsGrid />
       <WhyChooseUs />
       <CaseStudies />
     </main>

@@ -1,0 +1,79 @@
+Objective:
+Extend the existing Starter Automation Plan by adding two more offers in a carousel layout. The carousel should allow users to slide horizontally between the 3 plans: Starter Automation Plan, Qualified Leads Delivery Plan, and Chatbot Leads & Support Plan.
+
+General Instructions:
+- Keep all 3 plans in the same design style (font, spacing, colors).
+- Use a horizontal sliding carousel (SwiperJS, GlideJS, SplideJS or any basic custom carousel logic) with simple left/right arrows or swipe gesture on mobile.
+- Display 1 card at a time on mobile, and 2–3 cards at a time on desktop.
+- Each plan card should have:
+  - Plan Title
+  - Price
+  - Short Tagline
+  - List of Features with ✅ icon
+  - "Get Started" button at the bottom
+
+Starter Plan (already present):
+- No change unless polishing for visual consistency.
+
+Add These Two Plans:
+
+---
+
+Qualified Leads Delivery Plan — $1,500/month
+We search, find, and deliver fresh leads to you — every week.
+
+✅ Social Media Lead Finder
+  - We scan Facebook, Instagram, and other platforms to find people asking for services like yours.
+✅ LinkedIn Prospect Collection
+  - We automatically pull contact details from LinkedIn profiles that fit your ideal customer.
+✅ Local Business Search Automation
+  - We search Google Maps and Business Listings to find companies near you that need your services.
+✅ Weekly Leads List
+  - You get a simple Excel/CSV file every week with ready-to-contact leads.
+✅ Monthly Leads Strategy Session
+  - One hour with a lead generation expert to improve your results.
+
+---
+
+Chatbot Leads & Support Plan — $800/month
+Talk to your visitors. Capture more leads. Grow while you sleep.
+
+✅ Chatbot on Your Website 24/7
+  - Answer common questions automatically — even when you're closed.
+✅ Automatic Lead Capture from Chats
+  - Get emails and phone numbers from visitors ready to buy.
+✅ Simple Human Handoff
+  - If the chatbot can't help, transfer to you or your team.
+✅ Weekly Chat Performance Report
+  - See how many chats and leads your bot created each week.
+✅ Monthly Chat Improvement Session
+  - One hour with a chatbot expert to make it even better.
+
+---
+
+Design Style:
+- Background: White cards with subtle shadow and rounded corners (rounded-2xl).
+- Title: Large font (text-2xl font-bold text-gray-900).
+- Price: Medium font (text-lg font-semibold text-primary or text-blue-600).
+- Tagline: Small font (text-gray-500 text-sm italic).
+- Features: Checkmark icon before each feature (use ✅ or FontAwesome/Feather).
+- Button: "Get Started" (bg-primary text-white rounded-md hover:bg-primary/90 transition).
+
+Carousel Behavior:
+- Auto-scroll every 8 seconds.
+- Allow manual scroll left/right.
+- Pause auto-scroll if user interacts (hover or click).
+- Snap center active card into view.
+
+Accessibility:
+- Add aria-labels for carousel controls (next, previous).
+- Ensure tab-index is logical for card focus on keyboard navigation.
+
+Deliverables:
+- Clean, modular React/HTML/Tailwind structure ready for Replit deployment.
+- Fully responsive carousel across mobile, tablet, and desktop screens.
+
+Important:
+- Match visual style and tone of the existing Starter Plan.
+- No overwhelming animations — smooth, Stripe-like interaction.
+

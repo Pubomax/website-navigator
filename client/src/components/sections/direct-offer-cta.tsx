@@ -68,7 +68,7 @@ export function DirectOfferCTA() {
   const content = getContent(isPathFrench);
 
   return (
-    <section className="py-20 bg-primary/5">
+    <section className="py-16 sm:py-20 bg-background">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -90,7 +90,7 @@ export function DirectOfferCTA() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <Card className="border-primary/20 shadow-lg overflow-hidden">
+          <Card className="border-primary/20 shadow-lg overflow-hidden bg-gradient-to-b from-primary/5 to-background">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary to-primary/60"></div>
             <CardHeader className="text-center pb-4">
               <div className="mx-auto mb-3">
@@ -126,7 +126,7 @@ export function DirectOfferCTA() {
             </CardContent>
             <CardFooter className="p-6 flex justify-center">
               <OfferPopupForm offerType="Standard Package $500/month">
-                <Button size="lg" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-md">
                   {content.cta}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
