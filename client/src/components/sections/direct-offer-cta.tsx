@@ -244,13 +244,15 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
           <a 
             className="inline-flex items-center justify-center px-4 py-2.5 bg-transparent text-[15px] font-medium text-white rounded-lg hover:text-white border border-white/10 transition"
             onClick={() => {
-              const el = document.getElementById(`offer-details-${index}`);
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-              }
+              // Future video modal implementation will go here
+              alert("Video will be available soon!"); // Temporary placeholder
             }}
           >
-            {readMoreText}
+            <span className="flex items-center">
+              {readMoreText} <svg className="w-4 h-4 ml-1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 6.82001V17.18C8 17.97 8.87 18.45 9.54 18.02L17.68 12.84C18.3 12.45 18.3 11.55 17.68 11.15L9.54 5.98001C8.87 5.55001 8 6.03001 8 6.82001Z" fill="currentColor"/>
+              </svg>
+            </span>
           </a>
         </div>
       </div>
@@ -258,51 +260,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
   );
 };
 
-const OfferDetails = ({ offer, index }: { offer: Offer, index: number }) => {
-  const colorMap = {
-    indigo: {
-      bg: "bg-indigo-50 dark:bg-indigo-950/20",
-      border: "border-indigo-200 dark:border-indigo-800",
-      text: "text-indigo-600 dark:text-indigo-400",
-      shadow: "shadow-indigo-100 dark:shadow-none",
-    },
-    purple: {
-      bg: "bg-purple-50 dark:bg-purple-950/20",
-      border: "border-purple-200 dark:border-purple-800",
-      text: "text-purple-600 dark:text-purple-400",
-      shadow: "shadow-purple-100 dark:shadow-none",
-    },
-    emerald: {
-      bg: "bg-emerald-50 dark:bg-emerald-950/20",
-      border: "border-emerald-200 dark:border-emerald-800", 
-      text: "text-emerald-600 dark:text-emerald-400",
-      shadow: "shadow-emerald-100 dark:shadow-none",
-    }
-  };
-  
-  const colors = colorMap[offer.color as keyof typeof colorMap];
-  
-  return (
-    <div id={`offer-details-${index}`} className="mt-16 pt-8 border-t border-muted">
-      <h3 className={`text-2xl font-bold mb-2 ${colors.text}`}>{offer.title}</h3>
-      <p className="text-lg text-muted-foreground mb-8 max-w-3xl">Everything included in this service:</p>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
-        {offer.features.map((feature, idx) => (
-          <div key={idx} className={`p-6 border rounded-xl ${colors.border} ${colors.bg} ${colors.shadow} transition-all duration-200 hover:shadow-md`}>
-            <div className="flex flex-col gap-4">
-              <div className={`p-2 rounded-full ${colors.bg} border ${colors.border} w-10 h-10 flex items-center justify-center`}>
-                <feature.icon className={`h-5 w-5 ${colors.text}`} />
-              </div>
-              <div>
-                <h4 className="font-semibold text-lg mb-1">{feature.title}</h4>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+// This component was removed as it's being replaced by videos
 
 export function DirectOfferCTA() {
   const [location] = useLocation();
@@ -472,21 +430,7 @@ export function DirectOfferCTA() {
           </div>
         </div>
         
-        {/* Detailed features for each offering below */}
-        {content.offers.map((offer, index) => (
-          <motion.div
-            key={`details-${offer.id}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className={index > 0 ? "mt-20" : "mt-16"}
-          >
-            <OfferDetails offer={offer} index={index} />
-            {index < content.offers.length - 1 && (
-              <div className="mt-16 border-b border-muted"></div>
-            )}
-          </motion.div>
-        ))}
+        {/* Space for future video integration */}
 
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
