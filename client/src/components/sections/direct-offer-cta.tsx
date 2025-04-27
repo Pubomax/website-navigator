@@ -210,7 +210,6 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
               <span className="text-3xl md:text-4xl font-extrabold tracking-tight">
                 {offer.price}
               </span>
-              <span className="text-lg font-medium ml-1.5">/month</span>
             </div>
           </div>
           
