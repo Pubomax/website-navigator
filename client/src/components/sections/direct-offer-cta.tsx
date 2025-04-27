@@ -330,11 +330,12 @@ export function DirectOfferCTA() {
       // Calculate card widths based on viewport
       let widths: number[] = [];
       if (isMobile) {
-        // On mobile, all cards are the same width at 75% of container
-        widths = content.offers.map(() => containerWidth * 0.75);
+        // On mobile, all cards are the same width at 85% of container
+        widths = content.offers.map(() => containerWidth * 0.85);
       } else {
-        // On desktop, all cards are the same width at 75% of container
-        widths = content.offers.map(() => containerWidth * 0.75);
+        // On desktop, all cards are the same width at 70% of container with some padding
+        const cardWidth = containerWidth * 0.7;
+        widths = content.offers.map(() => cardWidth);
       }
       
       setCardWidths(widths);
@@ -411,7 +412,7 @@ export function DirectOfferCTA() {
         </motion.div>
 
         {/* Carousel Implementation with Transform */}
-        <div className="relative w-full mx-auto" ref={carouselRef}>
+        <div className="relative w-full mx-auto overflow-hidden" ref={carouselRef}>
           <div 
             ref={trackRef}
             className="flex transition-transform duration-300 ease-out"
@@ -420,10 +421,9 @@ export function DirectOfferCTA() {
             {content.offers.map((offer, index) => (
               <motion.div
                 key={offer.id}
-                className="flex-shrink-0 pr-2 pl-2 md:pl-0"
+                className="flex-shrink-0 pr-4 md:pr-6"
                 style={{ 
-                  width: cardWidths[index] ? `${cardWidths[index]}px` : '66.6%',
-                  marginRight: index === maxIndex ? '0' : '0'
+                  width: cardWidths[index] ? `${cardWidths[index]}px` : '66.6%'
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
