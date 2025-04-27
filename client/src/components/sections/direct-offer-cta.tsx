@@ -316,8 +316,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
         <div className="mt-8 pt-4 border-t border-white/10 flex flex-col sm:flex-row gap-4">
           <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
             <Button 
-              size="lg" 
-              className="w-full sm:w-auto bg-white text-gray-900 hover:bg-white/90 font-medium shadow-sm"
+              className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-medium text-base px-6 h-11 rounded-md"
             >
               {ctaText}
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -325,9 +324,8 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
           </OfferPopupForm>
           
           <Button
-            variant="ghost"
-            size="lg"
-            className="text-white border border-white/30 hover:bg-white/10 font-medium"
+            variant="outline"
+            className="w-full sm:w-auto text-white border-white border-opacity-50 hover:bg-white/10 bg-transparent text-base px-6 h-11 rounded-md"
             onClick={() => {
               const el = document.getElementById(`offer-details-${index}`);
               if (el) {
