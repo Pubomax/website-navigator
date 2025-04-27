@@ -225,13 +225,12 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
         <div className="flex gap-2 mt-auto">
           <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
             <a className={`inline-flex items-center justify-center px-4 py-2.5 bg-white text-[15px] font-medium ${colors.text} rounded-lg shadow ${colors.hover} transition`}>
-              <span className="mr-2">{ctaText}</span>
-              <ArrowRight className="h-4 w-4" />
+              {ctaText} <ArrowRight className="h-4 w-4 ml-2" />
             </a>
           </OfferPopupForm>
           
           <a 
-            className="inline-flex items-center justify-center px-4 py-2.5 bg-none text-[15px] font-medium text-white/90 rounded-lg hover:text-white border border-white border-opacity-10 transition"
+            className="inline-flex items-center justify-center px-4 py-2.5 bg-transparent text-[15px] font-medium text-white rounded-lg hover:text-white border border-white/10 transition"
             onClick={() => {
               const el = document.getElementById(`offer-details-${index}`);
               if (el) {
