@@ -27,6 +27,7 @@ const getContent = (isPathFrench: boolean) => ({
   offers: [
     {
       id: "starter",
+      commercialName: isPathFrench ? "VELOCITY" : "VELOCITY",
       title: isPathFrench ? "Automatisation de Base" : "Starter Automation",
       price: isPathFrench ? "500$/mois" : "$500/month",
       testimonyTitle: isPathFrench 
@@ -68,6 +69,7 @@ const getContent = (isPathFrench: boolean) => ({
     },
     {
       id: "chatbot",
+      commercialName: isPathFrench ? "ACCELERATE" : "ACCELERATE",
       title: isPathFrench ? "Service Chatbot & Capture de Leads" : "Chatbot & Lead Capture Service",
       price: isPathFrench ? "800$/mois" : "$800/month",
       testimonyTitle: isPathFrench 
@@ -109,6 +111,7 @@ const getContent = (isPathFrench: boolean) => ({
     },
     {
       id: "qualified",
+      commercialName: isPathFrench ? "DOMINATE" : "DOMINATE",
       title: isPathFrench ? "Service de Génération de Leads" : "Lead Generation Service",
       price: isPathFrench ? "1500$/mois" : "$1,500/month",
       testimonyTitle: isPathFrench 
@@ -158,6 +161,7 @@ type Feature = {
 
 type Offer = {
   id: string;
+  commercialName: string;
   title: string;
   price: string;
   testimonyTitle: string;
@@ -199,8 +203,13 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
       <div className="p-6 flex flex-col h-full">
         {/* Main content with more horizontal layout */}
         <div className="flex flex-col">
+          {/* Commercial name displayed prominently */}
+          <div className="uppercase text-sm font-extrabold tracking-widest mb-2 bg-white/10 px-3 py-1 rounded-lg inline-block">
+            {offer.commercialName}
+          </div>
+          
           {/* Title without price overlapping */}
-          <h3 className="text-2xl md:text-3xl font-bold mt-2 mb-3 leading-snug drop-shadow">
+          <h3 className="text-2xl md:text-3xl font-bold mt-1 mb-3 leading-snug drop-shadow">
             {offer.testimonyTitle}
           </h3>
           
@@ -235,7 +244,7 @@ const OfferCard = ({ offer, ctaText, readMoreText, index }: OfferCardProps) => {
         
         {/* Action buttons */}
         <div className="flex gap-2 mt-auto">
-          <OfferPopupForm offerType={`${offer.title} - ${offer.price}`}>
+          <OfferPopupForm offerType={`${offer.commercialName} - ${offer.title} - ${offer.price}`}>
             <a className={`inline-flex items-center justify-center px-4 py-2.5 bg-white text-[15px] font-medium ${colors.text} rounded-lg shadow ${colors.hover} transition`}>
               {ctaText} <ArrowRight className="h-4 w-4 ml-2" />
             </a>
