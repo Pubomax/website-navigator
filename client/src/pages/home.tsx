@@ -20,7 +20,10 @@ export default function Home() {
     <main className="w-full">
       <PageTitle 
         pageKey="home"
-        keywords="AI automation Montreal, small business automation, make more money work less, business AI solutions, lead generation Montreal, sales automation Quebec, AI for small business" 
+        customTitle={isPathFrench ? "Automatisation IA à Montréal | Gagnez Plus, Travaillez Moins | Groupe Minecore" : "AI Automation in Montreal | Make More Money, Work Less | Minecore Group"}
+        customDescription={isPathFrench ? "Solutions d'automatisation IA pour les PME à Montréal. Augmentez vos revenus et réduisez votre temps de travail avec nos solutions personnalisées. 20 ans d'expérience." : "AI automation solutions for small businesses in Montreal. Increase your revenue and reduce your workload with our tailored solutions. 20 years of experience."}
+        keywords="AI automation Montreal, small business automation, make more money work less, business AI solutions, lead generation Montreal, sales automation Quebec, AI for small business, Montreal AI services" 
+        imageUrl="https://www.minecoregroup.com/images/montreal-business-automation.jpg"
       />
       
       {/* Add Experience Badge to Hero */}

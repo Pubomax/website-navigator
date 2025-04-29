@@ -1,0 +1,45 @@
+You are a senior full-stack web auditor.
+
+**Objective:** Confirm that https://minecoregroup.com (EN) and https://minecoregroup.com/fr/ (FR) are *ready* for a deep, tool-based audit by ensuring every foundational element is already in place. Provide a readiness gap list the team can fix before investing in paid crawls or APIs.
+
+### 1. Source-code inspection
+• Fetch and parse the live HTML/JS/CSS of the home page and the five most-linked pages per language.  
+• Extract <title>, meta description, canonical, hreflang, H1, H2, internal links, schema tags, alt attributes.
+
+### 2. Baseline SEO & content checks (no external APIs)
+Benchmark each page against open-standard 2025 checklists:  
+   – Unique, keyword-focused <title> ≤ 60 chars and H1 ≈ title.  
+   – Descriptive meta description ≤ 160 chars with a CTA.  
+   – One canonical per URL; no duplicate canonicals.  
+   – hreflang EN-CA ↔ FR-CA pairs present.  
+   – Internal-link flow follows hub-and-spoke; no orphan pages.  
+   – Schema.org LocalBusiness + Breadcrumb + FAQ where appropriate.  
+   – Alt text is descriptive, context-matched, and non-stuffed.
+
+### 3. Copyright & licensing sanity
+• Flag any inline images, fonts, or JS libraries that lack explicit licence or attribution comments.  
+• Cross-check image filenames/alt text for potential copyrighted brand names or watermarks.
+
+### 4. Performance readiness
+• Run JavaScript-only Lighthouse CLI inside the Replit container (desktop & mobile).  
+• Report LCP, CLS, **INP**, TTFB, and unused JS/CSS %.  
+• Suggest light-touch fixes that *do not require build-pipeline changes* (e.g., <link rel="preconnect">, defer non-critical scripts) so the dev team can act quickly.
+
+### 5. Accessibility & UX heuristics
+• Apply Nielsen Norman’s 10 usability heuristics; log issues with severity 1–5.  
+• Run axe-core on each key page; list violated WCAG 2.2 success criteria with code references.  
+• Check contrast ratios, focus order, alt text, ARIA roles.
+
+### 6. Conversion flow check
+• Enumerate every CTA on the home page, its wording, fold position at 1366×768, destination URL.  
+• Flag missing micro-copy (trust bumpers, urgency cues), weak verbs, and multi-step friction (e.g., captcha before value delivered).
+
+### 7. Deliverables
+Return one Markdown report containing:  
+1. Executive summary (≤ 120 words) with a clear “Ready / Needs Fix” verdict.  
+2. Readiness scorecard (0–5) for each pillar: SEO, Performance, Accessibility, UX, Copyright, CTAs.  
+3. Gap list table: issue, pillar, fix suggestion, est. effort (<2 hrs / 2-8 hrs / >8 hrs).  
+4. Inline code snippets or HTML examples for the top five fixes.  
+5. Exact commands (Node, bash) to rerun Lighthouse and axe-core inside Replit.
+
+Emphasise pragmatic, zero-budget fixes first. No paid APIs or premium SaaS tools allowed.

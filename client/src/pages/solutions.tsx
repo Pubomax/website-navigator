@@ -126,6 +126,8 @@ export default function Solutions() {
     <main className="pt-12 pb-24">
       <PageTitle 
         pageKey="solutions" 
+        customTitle={isPathFrench ? "Solutions d'Automatisation IA à Montréal | Groupe Minecore" : "AI Automation Solutions in Montreal | Minecore Group"}
+        customDescription={isPathFrench ? "Solutions d'automatisation IA pour PME à Montréal. Génération de leads, nurturing et ventes automatisés pour travailler moins et gagner plus." : "AI automation solutions for Montreal small businesses. Automated lead generation, nurturing, and sales to work less and earn more."}
         keywords="AI automation Montreal, small business automation, lead generation Montreal, sales automation Quebec, AI for small business, marketing automation Montreal"
       />
       <div className="container px-4 sm:px-6">
