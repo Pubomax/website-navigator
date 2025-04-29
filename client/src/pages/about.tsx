@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Target, Lightbulb, Users } from "lucide-react";
 import { useLocation } from "wouter";
+import { PageTitle } from "@/components/page-title";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "À Propos de Minecore Group" : "About Minecore Group",
@@ -101,6 +102,7 @@ export default function About() {
 
   return (
     <main className="py-24">
+      <PageTitle pageKey="about" />
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
