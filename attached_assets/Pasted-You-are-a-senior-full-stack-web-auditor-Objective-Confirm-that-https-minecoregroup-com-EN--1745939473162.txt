@@ -1,0 +1,54 @@
+You are a senior full-stack web auditor.
+
+**Objective:** Confirm that https://minecoregroup.com (EN) and https://minecoregroup.com/fr/ (FR) are launch-ready for Montréal-SMB lead generation by stress-testing every critical layer — technical SEO, backlinks, privacy/legal, performance, accessibility, UX, CTAs, analytics, security, and deliverability — using only open-source or free utilities.
+
+### 1. Source-code & asset scan
+ ▸ Fetch and parse live HTML/JS/CSS for the home page plus the 5 highest-internal-link pages per language.  
+ ▸ Extract: <title>, meta description, canonical, hreflang pairs, H1–H2s, structured-data JSON-LD, internal-link graph, image alt text, CSS/JS bundle sizes.
+
+### 2. Baseline SEO & content hygiene
+ ▸ Match each page against Moz 2025 audit criteria (unique titles/H1, descriptive meta ≤ 160 chars, single canonical, sitemap inclusion, robots.txt rules, schema completeness).  
+ ▸ Flag hreflang mis-pairs and any orphan pages (>3 clicks depth).  
+ ▸ Check keyword coverage: “AI marketing Montréal PME”, “automatisation vente”, etc.
+
+### 3. Backlink & authority readiness
+ ▸ Pull external-link CSVs from Google Search Console Links report (owner-provided).  
+ ▸ Run Ahrefs Backlink Checker, Moz Link Explorer, and Semrush Backlink Audit (free tiers) for root domain + 3 local competitors; capture top-metrics (DA/DR, do-follow %, anchor diversity, spam/toxic score).  
+ ▸ List “link-intersect” opportunities (domains that link to ≥2 competitors but not us) and any anchors >5 % frequency (over-optimisation risk).  
+ ▸ Generate a provisional disavow .txt only if spam score ≥ 7 % or toxic score ≥ 45.
+
+### 4. Legal & policy compliance
+ ▸ Validate bilingual privacy policy, cookie banner, and contact-privacy-officer statement meet Québec **Law 25** (effective 22 Sept 2024).  
+ ▸ Ensure email forms collect express consent and store timestamp/IP to satisfy **CASL**.  
+ ▸ GDPR notice if any EU traffic detected.
+
+### 5. Performance & Core Web Vitals
+ ▸ Run Lighthouse CI (desktop + mobile) inside Replit; record LCP, CLS, **INP**.  
+ ▸ Flag any INP > 200 ms or LCP > 2.5 s and suggest inline critical-CSS or script-defer quick wins.
+
+### 6. Accessibility & UX heuristics
+ ▸ Execute axe-core; list WCAG 2.2 AA failures (Focus Appearance, Dragging Movements, Target Size, etc.).  
+ ▸ Apply Nielsen’s 10 heuristics; rate each issue Severity 1-5 with screenshot references.
+
+### 7. Conversion flow & CTAs
+ ▸ Map every CTA: wording, fold-position (1366×768), destination, micro-copy, trust badges.  
+ ▸ Time a complete booking/form journey; flag friction (captchas, endless steps, missing validation messaging).
+
+### 8. Security & deliverability
+ ▸ Confirm HTTPS + HSTS, no mixed content.  
+ ▸ Check DNS for valid SPF, DKIM, DMARC; report failures that could block Gmail/Yahoo sends.  
+ ▸ Note WAF / rate-limit headers and basic hardening (X-Frame-Options, CSP).
+
+### 9. Analytics & experimentation
+ ▸ Verify GA4 Key Events: cta_click, form_submit, booking_confirmed.  
+ ▸ Ensure Consent Mode v2 is triggered by the cookie banner.  
+ ▸ Suggest first 90-day A/B test (e.g., headline vs. CTA colour) and record baseline KPIs.
+
+### 10. Deliverables
+Return one Markdown report that includes:  
+1. **Executive verdict** (≤ 120 words) ready/not-ready.  
+2. **Scorecard** (0-5) for each pillar above.  
+3. **Gap table** (issue ▸ pillar ▸ fix ▸ effort < 2 h / 2-8 h / > 8 h).  
+4. **Backlink appendix** with link-intersect domains, spam/ toxic list, draft disavow.txt (if needed).  
+5. **CLI commands** to rerun Lighthouse CI and axe-core in Replit.  
+Keep recommendations concrete, prioritised, and budget-friendly.
