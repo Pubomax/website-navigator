@@ -49,11 +49,11 @@ export function WorkLessCalculator() {
   };
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
-      <div className="container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mt-2 sm:mt-4 bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
+    <section className="py-6 sm:py-8 md:py-10 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mt-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           {!showResults ? (
-            <form onSubmit={handleCalculate} className="p-4 sm:p-6 md:p-8">
+            <form onSubmit={handleCalculate} className="p-3 sm:p-4 md:p-5">
               <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label className="block text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base mb-2">
@@ -128,36 +128,36 @@ export function WorkLessCalculator() {
               </div>
             </form>
           ) : (
-            <div className="p-4 sm:p-6 md:p-8">
+            <div className="p-3 sm:p-4 md:p-5">
               <motion.h3
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-xl sm:text-2xl font-bold text-center text-gray-800 dark:text-white mb-4 sm:mb-6 md:mb-8"
+                className="text-lg sm:text-xl font-bold text-center text-gray-800 dark:text-white mb-3 sm:mb-4"
               >
                 {labels.resultsTitle}
               </motion.h3>
               
-              <div className="flex flex-wrap justify-between gap-4 sm:gap-6">
+              <div className="flex flex-wrap justify-between gap-3 sm:gap-4">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="flex-1 bg-indigo-50 dark:bg-indigo-900/30 p-4 sm:p-6 rounded-xl text-center min-w-[140px]"
+                  className="flex-1 bg-indigo-50 dark:bg-indigo-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
                 >
-                  <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-2 sm:mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                  <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600 dark:text-indigo-400 mx-auto mb-1 sm:mb-2" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2 text-xs sm:text-sm">
                     {labels.timeSavedTitle}
                   </h4>
-                  <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-2">
+                  <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-0 sm:mb-1">
                     {hoursSaved.toFixed(1)}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
                     {labels.timeSavedWeek}
                   </div>
-                  <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-2 sm:mt-4 mb-1 sm:mb-2">
+                  <div className="text-lg sm:text-xl font-bold text-indigo-600 dark:text-indigo-400 mt-1 sm:mt-2 mb-0 sm:mb-1">
                     {hoursSavedYearly.toFixed(0)}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
                     {labels.timeSavedYear}
                   </div>
                 </motion.div>
@@ -166,16 +166,16 @@ export function WorkLessCalculator() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="flex-1 bg-green-50 dark:bg-green-900/30 p-4 sm:p-6 rounded-xl text-center min-w-[140px]"
+                  className="flex-1 bg-green-50 dark:bg-green-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
                 >
-                  <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 mx-auto mb-2 sm:mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                  <DollarSign className="w-6 h-6 sm:w-7 sm:h-7 text-green-600 dark:text-green-400 mx-auto mb-1 sm:mb-2" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2 text-xs sm:text-sm">
                     {labels.moneySavedTitle}
                   </h4>
-                  <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
+                  <div className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400 mb-0 sm:mb-1">
                     ${moneySaved.toLocaleString()}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
                     {labels.moneySavedYear}
                   </div>
                 </motion.div>
@@ -184,32 +184,32 @@ export function WorkLessCalculator() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="flex-1 bg-amber-50 dark:bg-amber-900/30 p-4 sm:p-6 rounded-xl text-center min-w-[140px]"
+                  className="flex-1 bg-amber-50 dark:bg-amber-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
                 >
-                  <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600 dark:text-amber-400 mx-auto mb-2 sm:mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                  <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-amber-600 dark:text-amber-400 mx-auto mb-1 sm:mb-2" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2 text-xs sm:text-sm">
                     {labels.productivityTitle}
                   </h4>
-                  <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 mb-1 sm:mb-2">
+                  <div className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400 mb-0 sm:mb-1">
                     +{focusGained}%
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
                     Efficiency
                   </div>
                 </motion.div>
               </div>
               
-              <div className="mt-6 sm:mt-8 md:mt-10 text-center flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+              <div className="mt-4 sm:mt-5 text-center flex flex-col sm:flex-row justify-center gap-2 sm:gap-3">
                 <button 
                   onClick={handleReset}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-sm sm:text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-xs sm:text-sm font-medium rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                 >
                   {labels.recalculateButton}
                 </button>
                 
                 <a 
                   href="/solutions" 
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base font-medium rounded-lg hover:bg-indigo-700 transition shadow-md"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-3 sm:px-4 py-1.5 sm:py-2 bg-indigo-600 text-white text-xs sm:text-sm font-medium rounded-md hover:bg-indigo-700 transition shadow-md"
                 >
                   {labels.learnMoreButton}
                 </a>
