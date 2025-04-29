@@ -56,24 +56,32 @@ type PathKey =
 const pageTitles: Record<PathKey, PageTitleData> = {
   home: {
     title: {
-      en: 'Minecore Group | Business AI Automation',
-      fr: 'Groupe Minecore | Automatisation IA pour Entreprises'
+      en: 'Minecore Group | AI Business Automation for Montreal SMBs',
+      fr: 'Groupe Minecore | Automatisation IA pour PME à Montréal'
     },
     description: {
-      en: 'Make more money, work less with Minecore Group. AI-powered business automation solutions that accelerate revenue generation.',
-      fr: 'Gagnez plus d\'argent, travaillez moins avec Groupe Minecore. Solutions d\'automatisation d\'entreprise alimentées par l\'IA qui accélèrent la génération de revenus.'
+      en: 'Make more money, work less with Minecore Group. AI-powered business automation solutions for Montreal small businesses that accelerate lead generation and revenue growth.',
+      fr: 'Gagnez plus d\'argent, travaillez moins avec Groupe Minecore. Solutions d\'automatisation d\'entreprise alimentées par l\'IA pour les petites entreprises de Montréal qui accélèrent la génération de prospects et la croissance des revenus.'
     }
   },
   contact: {
     title: {
-      en: 'Contact Us | Minecore Group',
-      fr: 'Contactez-nous | Groupe Minecore'
+      en: 'Contact Us | Minecore Group Montreal',
+      fr: 'Contactez-nous | Groupe Minecore Montréal'
+    },
+    description: {
+      en: 'Contact Minecore Group for AI automation solutions tailored for Montreal small businesses. Increase revenue and reduce workload with our specialized services.',
+      fr: 'Contactez Groupe Minecore pour des solutions d\'automatisation IA adaptées aux petites entreprises de Montréal. Augmentez vos revenus et réduisez votre charge de travail avec nos services spécialisés.'
     }
   },
   consultation: {
     title: {
-      en: 'Book a Consultation | Minecore Group',
-      fr: 'Réservez une Consultation | Groupe Minecore'
+      en: 'Free AI Automation Consultation | Minecore Group Montreal',
+      fr: 'Consultation Gratuite d\'Automatisation IA | Groupe Minecore Montréal'
+    },
+    description: {
+      en: 'Book a free consultation with Minecore Group\'s Montreal automation experts. Learn how our AI solutions can help your small business generate more leads and revenue.',
+      fr: 'Réservez une consultation gratuite avec les experts en automatisation de Groupe Minecore à Montréal. Découvrez comment nos solutions d\'IA peuvent aider votre petite entreprise à générer plus de prospects et de revenus.'
     }
   },
   privacy: {
@@ -108,14 +116,22 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   services: {
     title: {
-      en: 'Our Services | Minecore Group',
-      fr: 'Nos Services | Groupe Minecore'
+      en: 'AI Automation Services for Montreal SMBs | Minecore Group',
+      fr: 'Services d\'Automatisation IA pour PME à Montréal | Groupe Minecore'
+    },
+    description: {
+      en: 'Discover our full range of AI automation services designed specifically for Montreal small businesses. Sales automation, lead generation, and marketing solutions that save time and grow revenue.',
+      fr: 'Découvrez notre gamme complète de services d\'automatisation IA conçus spécifiquement pour les petites entreprises de Montréal. Automatisation des ventes, génération de leads et solutions marketing qui économisent du temps et augmentent les revenus.'
     }
   },
   solutions: {
     title: {
-      en: 'AI Automation Solutions | Minecore Group',
-      fr: 'Solutions d\'Automatisation IA | Groupe Minecore'
+      en: 'AI Automation Solutions for Montreal Small Businesses | Minecore Group',
+      fr: 'Solutions d\'Automatisation IA pour Petites Entreprises à Montréal | Groupe Minecore'
+    },
+    description: {
+      en: 'Tailored AI automation solutions for Montreal small businesses. Increase revenue and reduce workload with our intelligent lead generation and sales acceleration packages.',
+      fr: 'Solutions d\'automatisation IA sur mesure pour les petites entreprises de Montréal. Augmentez vos revenus et réduisez votre charge de travail grâce à nos forfaits intelligents de génération de leads et d\'accélération des ventes.'
     }
   },
   about: {
@@ -234,8 +250,12 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   micro: {
     title: {
-      en: 'AI Solutions for Small Businesses | Minecore Group',
-      fr: 'Solutions IA pour Petites Entreprises | Groupe Minecore'
+      en: 'AI Automation for Montreal Small Businesses | Minecore Group',
+      fr: 'Automatisation IA pour Petites Entreprises à Montréal | Groupe Minecore'
+    },
+    description: {
+      en: 'Affordable AI automation solutions specifically designed for Montreal small businesses. Grow your business, save time, and reduce stress with our specialized automation tools.',
+      fr: 'Solutions d\'automatisation IA abordables spécialement conçues pour les petites entreprises de Montréal. Développez votre entreprise, gagnez du temps et réduisez le stress grâce à nos outils d\'automatisation spécialisés.'
     }
   },
   midSized: {
@@ -270,8 +290,12 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   quebec: {
     title: {
-      en: 'AI Solutions in Quebec | Minecore Group',
-      fr: 'Solutions IA au Québec | Groupe Minecore'
+      en: 'AI Automation Solutions in Montreal & Quebec | Minecore Group',
+      fr: 'Solutions d\'Automatisation IA à Montréal et au Québec | Groupe Minecore'
+    },
+    description: {
+      en: 'Minecore Group provides specialized AI automation services for small businesses in Montreal and throughout Quebec. Local expertise, global technology.',
+      fr: 'Groupe Minecore fournit des services d\'automatisation IA spécialisés pour les petites entreprises à Montréal et partout au Québec. Expertise locale, technologie mondiale.'
     }
   },
   notFound: {

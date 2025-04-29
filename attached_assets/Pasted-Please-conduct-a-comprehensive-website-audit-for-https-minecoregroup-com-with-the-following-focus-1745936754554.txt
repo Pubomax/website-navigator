@@ -1,0 +1,79 @@
+Please conduct a comprehensive website audit for https://minecoregroup.com/ with the following focus:
+
+TARGET AUDIENCE: Small business owners in Montreal seeking AI-powered sales and marketing automation solutions.
+
+BUSINESS GOALS: Generate qualified leads and conversions from small businesses looking to save time, reduce stress, and increase revenue through AI-enhanced marketing and sales services.
+
+Please analyze and provide detailed recommendations on:
+
+1. TECHNICAL SEO ASSESSMENT:
+   - Site speed and performance metrics across devices
+   - Indexability and crawlability issues
+   - Schema markup implementation
+   - Robots.txt and sitemap configuration
+   - Core Web Vitals scores and improvement opportunities
+   - Mobile responsiveness across all pages
+
+2. ON-PAGE SEO EVALUATION:
+   - Keyword optimization for Montreal small business market
+   - Meta tags (title, description) effectiveness
+   - Header structure and content hierarchy
+   - Image optimization (alt text, compression)
+   - Internal linking structure and anchor text
+   - Local SEO elements (NAP consistency, Google Business Profile alignment)
+   - Content quality, relevance, and search intent match
+
+3. USER EXPERIENCE ANALYSIS:
+   - Navigation structure and information architecture
+   - Customer journey mapping from entry to conversion
+   - Call-to-action placement, clarity, and effectiveness
+   - Form functionality and conversion optimization
+   - Page layout and content prioritization
+   - Load time and interactivity on critical pages
+   - Accessibility compliance (WCAG standards)
+
+4. CONTENT EVALUATION:
+   - Messaging alignment with target audience pain points
+   - Value proposition clarity and differentiation
+   - Multilingual content quality (English/French parity)
+   - Trust signals and social proof implementation
+   - Service descriptions and benefit articulation
+   - Content gaps for key decision points
+
+5. CONVERSION OPTIMIZATION:
+   - Lead capture mechanisms effectiveness
+   - Sales funnel analysis and friction points
+   - Trust building elements placement
+   - Value demonstration clarity
+   - Pricing presentation and psychology
+   - Objection handling throughout the site
+
+6. TECHNICAL STACK ASSESSMENT:
+   - Platform stability and security
+   - Analytics implementation and tracking setup
+   - Integration with marketing automation tools
+   - Form submission and data handling processes
+   - Cookie compliance and privacy considerations
+   - Site architecture and code quality
+
+7. COMPETITIVE POSITIONING:
+   - Unique selling proposition visibility
+   - Competitive differential factors highlighting
+   - Market positioning clarity
+   - Brand consistency across touchpoints
+
+8. COMPLIANCE REVIEW:
+   - Copyright notices and dates
+   - Privacy policy completeness
+   - Terms of service clarity
+   - GDPR/CCPA/PIPEDA compliance elements
+   - Accessibility standards adherence
+
+Please provide the analysis with:
+- Severity ratings for each issue (Critical, High, Medium, Low)
+- Screenshots highlighting specific problems
+- Actionable recommendations for each area
+- Prioritized implementation roadmap based on impact vs. effort
+- Benchmark comparisons to industry standards where applicable
+
+The goal is to ensure every aspect of the website is optimized to attract, engage and convert small business owners in Montreal seeking AI-powered marketing and sales automation solutions.

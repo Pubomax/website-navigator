@@ -124,7 +124,10 @@ export default function Solutions() {
 
   return (
     <main className="pt-12 pb-24">
-      <PageTitle pageKey="solutions" />
+      <PageTitle 
+        pageKey="solutions" 
+        keywords="AI automation Montreal, small business automation, lead generation Montreal, sales automation Quebec, AI for small business, marketing automation Montreal"
+      />
       <div className="container px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
