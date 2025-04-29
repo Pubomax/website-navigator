@@ -69,6 +69,62 @@ export function PageTitle({
       {/* Geo Targeting for Montreal */}
       <meta name="geo.region" content="CA-QC" />
       <meta name="geo.placename" content="Montreal" />
+      <meta name="geo.position" content="45.5088;-73.5878" /> 
+      <meta name="ICBM" content="45.5088, -73.5878" />
+      
+      {/* Additional metadata for site information */}
+      <meta name="author" content="Minecore Group" />
+      <meta name="copyright" content={`© ${new Date().getFullYear()} Minecore Group`} />
+      
+      {/* Mobile optimization */}
+      <meta name="format-detection" content="telephone=yes" />
+      <meta name="theme-color" content="#4f46e5" />
+      
+      {/* Schema.org structured data for local business */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "Minecore Group",
+          "url": "https://minecoregroup.com",
+          "logo": "https://minecoregroup.com/logo-social.png",
+          "image": siteImage,
+          "description": finalDescription,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "3580 boulevard saint elzear, ouest",
+            "addressLocality": "Laval",
+            "addressRegion": "QC",
+            "postalCode": "h7p-0l7",
+            "addressCountry": "CA"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "45.5088",
+            "longitude": "-73.5878"
+          },
+          "telephone": "+15146030598",
+          "email": "hello@minecoregroup.com",
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "17:00"
+          },
+          "priceRange": "$$",
+          "serviceArea": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+              "@type": "GeoCoordinates",
+              "latitude": "45.5088",
+              "longitude": "-73.5878"
+            },
+            "geoRadius": "50000"
+          }
+        })}
+      </script>
     </Helmet>
   );
 }
