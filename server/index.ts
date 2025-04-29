@@ -6,6 +6,31 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Security headers
+app.use((req, res, next) => {
+  // HTTPS enforcement
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  // Prevent clickjacking
+  res.setHeader('X-Frame-Options', 'DENY');
+  // XSS protection
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  // Prevent MIME type sniffing
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  // Referrer policy
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // Basic Content Security Policy
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://www.google-analytics.com;"
+  );
+  // Permissions policy
+  res.setHeader(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(self), interest-cohort=()'
+  );
+  next();
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;

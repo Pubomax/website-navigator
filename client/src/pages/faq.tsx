@@ -10,6 +10,7 @@ import { faqCategories } from "@/data/faq";
 import { cn } from "@/lib/utils";
 import { useLocation } from "wouter";
 import { PageTitle } from "@/components/page-title";
+import { generateFAQSchema, serializeSchema } from "@/lib/schema-org";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Questions Fréquemment Posées" : "Frequently Asked Questions",
@@ -23,28 +24,28 @@ export default function FAQ() {
   const isPathFrench = location.startsWith("/fr");
   const content = getContent(isPathFrench);
 
-  // Generate FAQSchema from FAQ data
-  const generateFAQSchema = () => {
-    const mainEntityArray = [];
+  // Prepare FAQ data for schema
+  const prepareFaqData = () => {
+    // Convert object to array and flatten the questions
+    const faqData: { question: string; answer: string }[] = [];
     
-    faqCategories.forEach(category => {
-      category.questions.forEach(question => {
-        mainEntityArray.push({
-          "@type": "Question",
-          "name": question.question,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": question.answer
-          }
+    // Type safe iterating through the categories
+    Object.values(faqCategories).forEach(category => {
+      if (category && category.questions) {
+        category.questions.forEach(question => {
+          faqData.push({
+            question: isPathFrench && 'frenchQuestion' in question ? 
+              (question.frenchQuestion || question.question) : 
+              question.question,
+            answer: isPathFrench && 'frenchAnswer' in question ? 
+              (question.frenchAnswer || question.answer) : 
+              question.answer
+          });
         });
-      });
+      }
     });
     
-    return {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": mainEntityArray
-    };
+    return faqData;
   };
 
   return (

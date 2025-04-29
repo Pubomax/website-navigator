@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { useLocation } from "wouter";
 import { getPageTitleData } from "@/lib/page-titles";
+import { generateLocalBusinessSchema, generateBreadcrumbSchema, serializeSchema, generateWebPageSchema } from "@/lib/schema-org";
 
 type PageKey = Parameters<typeof getPageTitleData>[0];
 
@@ -82,76 +83,32 @@ export function PageTitle({
       
       {/* Schema.org structured data for local business */}
       <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ProfessionalService",
-          "name": "Minecore Group",
-          "url": "https://minecoregroup.com",
-          "logo": "https://minecoregroup.com/logo-social.png",
-          "image": siteImage,
-          "description": finalDescription,
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "3580 boulevard saint elzear, ouest",
-            "addressLocality": "Laval",
-            "addressRegion": "QC",
-            "postalCode": "h7p-0l7",
-            "addressCountry": "CA"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "45.5088",
-            "longitude": "-73.5878"
-          },
-          "telephone": "+15146030598",
-          "email": "hello@minecoregroup.com",
-          "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-              "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
-            ],
-            "opens": "09:00",
-            "closes": "17:00"
-          },
-          "priceRange": "$$",
-          "serviceArea": {
-            "@type": "GeoCircle",
-            "geoMidpoint": {
-              "@type": "GeoCoordinates",
-              "latitude": "45.5088",
-              "longitude": "-73.5878"
-            },
-            "geoRadius": "50000"
-          },
-          "sameAs": [
-            "https://x.com/minecoregroup",
-            "https://www.instagram.com/minecoregroup/",
-            "https://www.tiktok.com/@minecoregroup"
-          ]
-        })}
+        {serializeSchema(generateLocalBusinessSchema(isPathFrench ? 'fr' : 'en'))}
+      </script>
+      
+      {/* Schema.org structured data for webpage */}
+      <script type="application/ld+json">
+        {serializeSchema(generateWebPageSchema({
+          title: finalTitle,
+          description: finalDescription,
+          url: canonicalUrl,
+          imageUrl: siteImage
+        }))}
       </script>
       
       {/* Schema.org structured data for BreadcrumbList - only on non-home pages */}
       {pageKey !== 'home' && (
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": isPathFrench ? "Accueil" : "Home",
-                "item": `https://minecoregroup.com${isPathFrench ? "/fr" : ""}`
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": finalTitle.split("|")[0].trim(),
-                "item": canonicalUrl
-              }
-            ]
-          })}
+          {serializeSchema(generateBreadcrumbSchema([
+            {
+              name: isPathFrench ? "Accueil" : "Home",
+              url: `https://minecoregroup.com${isPathFrench ? "/fr" : ""}`
+            },
+            {
+              name: finalTitle.split("|")[0].trim(),
+              url: canonicalUrl
+            }
+          ]))}
         </script>
       )}
     </Helmet>
