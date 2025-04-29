@@ -248,11 +248,11 @@ const navigation: NavigationItem[] = [
             iconColor: "text-cyan-500"
           },
           { 
-            name: "Team", 
-            href: "/about/team",
-            description: "Meet our expert team.",
+            name: "Careers", 
+            href: "/careers",
+            description: "Join our team of automation experts.",
             icon: Users,
-            iconColor: "text-blue-500"
+            iconColor: "text-purple-500"
           }
         ]
       },
