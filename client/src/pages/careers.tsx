@@ -43,7 +43,7 @@ const getContent = (isPathFrench: boolean) => ({
         "Excellent communication skills",
         "Ability to translate business needs into technical solutions"
       ],
-      icon: Robot
+      icon: Bot
     },
     {
       title: "Full Stack Developer",

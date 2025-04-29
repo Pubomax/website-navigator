@@ -20,6 +20,7 @@ import Blog from "@/pages/blog";
 import CaseStudies from "@/pages/case-studies";
 import Solutions from "@/pages/solutions";
 import About from "@/pages/about";
+import Careers from "@/pages/careers";
 
 // Integration pages
 import Integrations from "@/pages/integrations";
@@ -134,6 +135,7 @@ function Router() {
           <Route path="/about/story" component={Story} />
           <Route path="/about/team" component={Team} />
           <Route path="/about/mission" component={Mission} />
+          <Route path="/careers" component={Careers} />
 
           {/* French Routes */}
           <Route path="/fr" component={Home} />
@@ -191,6 +193,7 @@ function Router() {
           <Route path="/fr/about/story" component={Story} />
           <Route path="/fr/about/team" component={Team} />
           <Route path="/fr/about/mission" component={Mission} />
+          <Route path="/fr/careers" component={Careers} />
 
           {/* Catch all for 404 */}
           <Route component={NotFound} />
