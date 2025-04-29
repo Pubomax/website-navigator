@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/lib/i18n";
-import { LeadScoreWidget } from "@/components/lead-score-widget";
+import { WorkLessCalculator } from "@/components/work-less-calculator";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench 
@@ -105,14 +105,14 @@ export function Hero() {
               </motion.div>
             </motion.div>
             
-            {/* AI Lead Scoring Demo */}
+            {/* Work Less Calculator */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="max-w-md mx-auto lg:mx-0 lg:ml-auto"
             >
-              <LeadScoreWidget />
+              <WorkLessCalculator />
             </motion.div>
           </div>
         </div>

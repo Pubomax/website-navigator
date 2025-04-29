@@ -53,8 +53,7 @@ export default function Home() {
       {/* Add AI Simplified section */}
       <AiSimplifiedSection />
       
-      {/* Add Work Less Calculator */}
-      <WorkLessCalculator />
+      {/* Work Less Calculator is now in the Hero section */}
       
       {/* Add Local Testimonials */}
       <LocalTestimonialsSection />
