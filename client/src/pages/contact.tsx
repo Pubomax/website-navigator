@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PageTitle } from "@/components/page-title";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -326,6 +327,12 @@ export default function Contact() {
 
   return (
     <main className="py-20">
+      <PageTitle 
+        pageKey="contact" 
+        customTitle={isPathFrench ? "Contactez-nous à Montréal | Groupe Minecore" : "Contact Us in Montreal | Minecore Group"}
+        customDescription={isPathFrench ? "Contactez Groupe Minecore à Montréal pour des solutions d'automatisation IA adaptées aux PME québécoises. Augmentez vos revenus, travaillez moins." : "Contact Minecore Group in Montreal for AI automation solutions tailored for Quebec small businesses. Increase revenue, work less."}
+        keywords="Montreal business automation, contact AI business solutions, small business automation Montreal, sales automation Montreal, Quebec AI solutions"
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
