@@ -49,25 +49,9 @@ export function WorkLessCalculator() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+    <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
       <div className="container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-6 sm:mb-8"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-800 dark:text-white flex items-center justify-center">
-            <Calculator className="mr-2 sm:mr-3 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-indigo-600 dark:text-indigo-400" />
-            {labels.title}
-          </h2>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            {labels.subtitle}
-          </p>
-        </motion.div>
-        
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
+        <div className="mt-2 sm:mt-4 bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
           {!showResults ? (
             <form onSubmit={handleCalculate} className="p-4 sm:p-6 md:p-8">
               <div className="space-y-4 sm:space-y-6">
