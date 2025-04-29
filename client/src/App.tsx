@@ -17,6 +17,7 @@ import Terms from "@/pages/terms";
 import FAQ from "@/pages/faq";
 import Blog from "@/pages/blog";
 import CaseStudies from "@/pages/case-studies";
+import Solutions from "@/pages/solutions";
 
 // Integration pages
 import Integrations from "@/pages/integrations";
@@ -89,6 +90,9 @@ function Router() {
           <Route path="/integrations" component={Integrations} />
           <ProtectedRoute path="/integrations/n8n-guide" component={N8nGuide} />
 
+          {/* Solutions Main Page */}
+          <Route path="/solutions" component={Solutions} />
+
           {/* Solution Routes */}
           <Route path="/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />
           <Route path="/solutions/smart-nurturing" component={SmartNurturing} />
@@ -141,6 +145,9 @@ function Router() {
           {/* French Integration Routes - Protected */}
           <Route path="/fr/integrations" component={Integrations} />
           <ProtectedRoute path="/fr/integrations/n8n-guide" component={N8nGuide} />
+
+          {/* French Solutions Main Page */}
+          <Route path="/fr/solutions" component={Solutions} />
 
           {/* French Solution Routes */}
           <Route path="/fr/solutions/automated-lead-generation" component={AutomatedLeadGeneration} />

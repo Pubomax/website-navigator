@@ -218,20 +218,20 @@ export default function Solutions() {
                     <solution.icon className="h-6 w-6 text-primary" />
                   </div>
                   <Badge className="mb-4">
-                    {isPathFrench ? solution.frenchTargetClient || solution.targetClient : solution.targetClient}
+                    {solution.targetClient}
                   </Badge>
                   <CardTitle className="text-xl">
-                    {isPathFrench ? solution.frenchName || solution.name : solution.name}
+                    {solution.name}
                   </CardTitle>
                   <CardDescription>
-                    {isPathFrench ? solution.frenchDescription || solution.description : solution.description}
+                    {solution.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col">
                   <div className="mb-6">
                     <h3 className="font-semibold mb-2">{content.sections.keyDeliverables}:</h3>
                     <ul className="space-y-2">
-                      {(isPathFrench ? solution.frenchKeyDeliverables || solution.keyDeliverables : solution.keyDeliverables).map((deliverable) => (
+                      {solution.keyDeliverables.map((deliverable: string) => (
                         <li key={deliverable} className="flex items-start">
                           <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
                           <span className="text-sm text-muted-foreground">{deliverable}</span>
@@ -243,7 +243,7 @@ export default function Solutions() {
                   <div className="mb-6">
                     <h3 className="font-semibold mb-2">{content.sections.benefits}:</h3>
                     <ul className="space-y-2">
-                      {(isPathFrench ? solution.frenchBenefits || solution.benefits : solution.benefits).map((benefit) => (
+                      {solution.benefits.map((benefit: string) => (
                         <li key={benefit} className="flex items-start">
                           <Check className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
                           <span className="text-sm text-muted-foreground">{benefit}</span>
@@ -256,7 +256,7 @@ export default function Solutions() {
                     <div className="mb-4">
                       <h3 className="font-semibold mb-1">{content.sections.pricingModel}:</h3>
                       <p className="text-sm text-muted-foreground">
-                        {isPathFrench ? solution.pricingModel.frenchDetails || solution.pricingModel.details : solution.pricingModel.details}
+                        {solution.pricingModel.details}
                       </p>
                     </div>
 
