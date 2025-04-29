@@ -1,0 +1,239 @@
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { motion } from "framer-motion";
+import { Calculator, Clock, DollarSign, TimerOff, Zap } from "lucide-react";
+
+export function WorkLessCalculator() {
+  const [location] = useLocation();
+  const isPathFrench = location.startsWith("/fr");
+  
+  const [hoursPerWeek, setHoursPerWeek] = useState(15);
+  const [hourlyRate, setHourlyRate] = useState(50);
+  const [weeksPerYear, setWeeksPerYear] = useState(48);
+  const [showResults, setShowResults] = useState(false);
+  
+  // Calculate results
+  const timeAutoReduction = 0.8; // 80% time reduction through automation
+  const hoursSaved = hoursPerWeek * timeAutoReduction;
+  const hoursSavedYearly = hoursSaved * weeksPerYear;
+  const moneySaved = hoursSaved * hourlyRate * weeksPerYear;
+  const focusGained = 40; // 40% focus improvement through automation
+  
+  const labels = {
+    title: isPathFrench ? "Calculateur « Travaillez Moins »" : "Work Less Calculator",
+    subtitle: isPathFrench 
+      ? "Découvrez combien de temps et d'argent vous pourriez économiser grâce à l'automatisation" 
+      : "Find out how much time and money you could save with automation",
+    hoursLabel: isPathFrench ? "Heures par semaine passées sur les tâches de marketing et de vente" : "Hours per week spent on marketing and sales tasks",
+    hourlyRateLabel: isPathFrench ? "Valeur horaire estimée de votre temps ($/heure)" : "Estimated hourly value of your time ($/hour)",
+    weeksLabel: isPathFrench ? "Semaines de travail par an" : "Working weeks per year",
+    calculateButton: isPathFrench ? "Calculer Mes Économies" : "Calculate My Savings",
+    recalculateButton: isPathFrench ? "Recalculer" : "Recalculate",
+    resultsTitle: isPathFrench ? "Voici Vos Résultats" : "Here Are Your Results",
+    timeSavedTitle: isPathFrench ? "Temps Économisé" : "Time Saved",
+    timeSavedWeek: isPathFrench ? "heures par semaine" : "hours per week",
+    timeSavedYear: isPathFrench ? "heures par an" : "hours per year",
+    moneySavedTitle: isPathFrench ? "Argent Économisé" : "Money Saved",
+    moneySavedYear: isPathFrench ? "$ par an" : "$ per year",
+    productivityTitle: isPathFrench ? "Gain de Productivité" : "Productivity Gain",
+    learnMoreButton: isPathFrench ? "En Savoir Plus sur Nos Solutions" : "Learn More About Our Solutions",
+  };
+
+  const handleCalculate = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowResults(true);
+  };
+  
+  const handleReset = () => {
+    setShowResults(false);
+  };
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800 dark:text-white flex items-center justify-center">
+            <Calculator className="mr-3 w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+            {labels.title}
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            {labels.subtitle}
+          </p>
+        </motion.div>
+        
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
+          {!showResults ? (
+            <form onSubmit={handleCalculate} className="p-8">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                    {labels.hoursLabel}
+                  </label>
+                  <div className="flex items-center">
+                    <Clock className="w-5 h-5 text-indigo-500 mr-2" />
+                    <input
+                      type="range"
+                      min="1"
+                      max="40"
+                      value={hoursPerWeek}
+                      onChange={(e) => setHoursPerWeek(parseInt(e.target.value))}
+                      className="flex-1 h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    />
+                    <span className="ml-3 w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400">
+                      {hoursPerWeek}
+                    </span>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                    {labels.hourlyRateLabel}
+                  </label>
+                  <div className="flex items-center">
+                    <DollarSign className="w-5 h-5 text-indigo-500 mr-2" />
+                    <input
+                      type="range"
+                      min="20"
+                      max="200"
+                      step="5"
+                      value={hourlyRate}
+                      onChange={(e) => setHourlyRate(parseInt(e.target.value))}
+                      className="flex-1 h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    />
+                    <span className="ml-3 w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400">
+                      ${hourlyRate}
+                    </span>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                    {labels.weeksLabel}
+                  </label>
+                  <div className="flex items-center">
+                    <TimerOff className="w-5 h-5 text-indigo-500 mr-2" />
+                    <input
+                      type="range"
+                      min="30"
+                      max="52"
+                      value={weeksPerYear}
+                      onChange={(e) => setWeeksPerYear(parseInt(e.target.value))}
+                      className="flex-1 h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    />
+                    <span className="ml-3 w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400">
+                      {weeksPerYear}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-10 text-center">
+                <button 
+                  type="submit"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition shadow-md"
+                >
+                  <Zap className="w-5 h-5 mr-2" />
+                  {labels.calculateButton}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="p-8">
+              <motion.h3
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-8"
+              >
+                {labels.resultsTitle}
+              </motion.h3>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="bg-indigo-50 dark:bg-indigo-900/30 p-6 rounded-xl text-center"
+                >
+                  <Clock className="w-10 h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-4">
+                    {labels.timeSavedTitle}
+                  </h4>
+                  <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">
+                    {hoursSaved.toFixed(1)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    {labels.timeSavedWeek}
+                  </div>
+                  <div className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-4 mb-2">
+                    {hoursSavedYearly.toFixed(0)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    {labels.timeSavedYear}
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-green-50 dark:bg-green-900/30 p-6 rounded-xl text-center"
+                >
+                  <DollarSign className="w-10 h-10 text-green-600 dark:text-green-400 mx-auto mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-4">
+                    {labels.moneySavedTitle}
+                  </h4>
+                  <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+                    ${moneySaved.toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    {labels.moneySavedYear}
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-amber-50 dark:bg-amber-900/30 p-6 rounded-xl text-center"
+                >
+                  <Zap className="w-10 h-10 text-amber-600 dark:text-amber-400 mx-auto mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-4">
+                    {labels.productivityTitle}
+                  </h4>
+                  <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">
+                    +{focusGained}%
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Efficiency
+                  </div>
+                </motion.div>
+              </div>
+              
+              <div className="mt-10 text-center flex flex-col sm:flex-row justify-center gap-4">
+                <button 
+                  onClick={handleReset}
+                  className="inline-flex items-center justify-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                >
+                  {labels.recalculateButton}
+                </button>
+                
+                <a 
+                  href="/solutions" 
+                  className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition shadow-md"
+                >
+                  {labels.learnMoreButton}
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
