@@ -85,7 +85,7 @@ export function AiSimplifiedSection() {
     emphasis: isPathFrench
       ? "Concentrez-vous sur la gestion de votre entreprise. Nous nous occupons de l'automatisation."
       : "Focus on running your business. We'll handle the automation.",
-    cta: isPathFrench ? "Voir Nos Solutions" : "See Our Solutions",
+    cta: isPathFrench ? "Explorer Toutes Nos Solutions" : "Explore All Our Solutions",
   };
 
   return (
@@ -156,7 +156,7 @@ export function AiSimplifiedSection() {
                 {content.emphasis}
               </p>
               <a 
-                href="/solutions" 
+                href={isPathFrench ? "/fr/solutions" : "/solutions"}
                 className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-md"
               >
                 {content.cta}
