@@ -18,7 +18,10 @@ export default function Home() {
   
   return (
     <main className="w-full">
-      <PageTitle pageKey="home" />
+      <PageTitle 
+        pageKey="home"
+        keywords="AI automation Montreal, small business automation, make more money work less, business AI solutions, lead generation Montreal, sales automation Quebec, AI for small business" 
+      />
       
       {/* Add Experience Badge to Hero */}
       <div className="relative">
