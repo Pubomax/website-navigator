@@ -69,14 +69,14 @@ export function WorkLessCalculator() {
         
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
           {!showResults ? (
-            <form onSubmit={handleCalculate} className="p-8">
-              <div className="space-y-6">
+            <form onSubmit={handleCalculate} className="p-4 sm:p-6 md:p-8">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base mb-2">
                     {labels.hoursLabel}
                   </label>
                   <div className="flex items-center">
-                    <Clock className="w-5 h-5 text-indigo-500 mr-2" />
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 mr-2 flex-shrink-0" />
                     <input
                       type="range"
                       min="1"
@@ -85,18 +85,18 @@ export function WorkLessCalculator() {
                       onChange={(e) => setHoursPerWeek(parseInt(e.target.value))}
                       className="flex-1 h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
-                    <span className="ml-3 w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400">
+                    <span className="ml-2 sm:ml-3 w-10 sm:w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400 text-sm sm:text-base">
                       {hoursPerWeek}
                     </span>
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base mb-2">
                     {labels.hourlyRateLabel}
                   </label>
                   <div className="flex items-center">
-                    <DollarSign className="w-5 h-5 text-indigo-500 mr-2" />
+                    <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 mr-2 flex-shrink-0" />
                     <input
                       type="range"
                       min="20"
@@ -106,18 +106,18 @@ export function WorkLessCalculator() {
                       onChange={(e) => setHourlyRate(parseInt(e.target.value))}
                       className="flex-1 h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
-                    <span className="ml-3 w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400">
+                    <span className="ml-2 sm:ml-3 w-10 sm:w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400 text-sm sm:text-base">
                       ${hourlyRate}
                     </span>
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-200 font-medium text-sm sm:text-base mb-2">
                     {labels.weeksLabel}
                   </label>
                   <div className="flex items-center">
-                    <TimerOff className="w-5 h-5 text-indigo-500 mr-2" />
+                    <TimerOff className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 mr-2 flex-shrink-0" />
                     <input
                       type="range"
                       min="30"
@@ -126,54 +126,54 @@ export function WorkLessCalculator() {
                       onChange={(e) => setWeeksPerYear(parseInt(e.target.value))}
                       className="flex-1 h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
-                    <span className="ml-3 w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400">
+                    <span className="ml-2 sm:ml-3 w-10 sm:w-12 text-center font-semibold text-indigo-600 dark:text-indigo-400 text-sm sm:text-base">
                       {weeksPerYear}
                     </span>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-10 text-center">
+              <div className="mt-6 sm:mt-8 text-center">
                 <button 
                   type="submit"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition shadow-md"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition shadow-md"
                 >
-                  <Zap className="w-5 h-5 mr-2" />
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   {labels.calculateButton}
                 </button>
               </div>
             </form>
           ) : (
-            <div className="p-8">
+            <div className="p-4 sm:p-6 md:p-8">
               <motion.h3
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-8"
+                className="text-xl sm:text-2xl font-bold text-center text-gray-800 dark:text-white mb-4 sm:mb-6 md:mb-8"
               >
                 {labels.resultsTitle}
               </motion.h3>
               
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="bg-indigo-50 dark:bg-indigo-900/30 p-6 rounded-xl text-center"
+                  className="bg-indigo-50 dark:bg-indigo-900/30 p-4 sm:p-6 rounded-xl text-center"
                 >
-                  <Clock className="w-10 h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-4">
+                  <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-2 sm:mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
                     {labels.timeSavedTitle}
                   </h4>
-                  <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-2">
                     {hoursSaved.toFixed(1)}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {labels.timeSavedWeek}
                   </div>
-                  <div className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-4 mb-2">
+                  <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-2 sm:mt-4 mb-1 sm:mb-2">
                     {hoursSavedYearly.toFixed(0)}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {labels.timeSavedYear}
                   </div>
                 </motion.div>
@@ -182,16 +182,16 @@ export function WorkLessCalculator() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="bg-green-50 dark:bg-green-900/30 p-6 rounded-xl text-center"
+                  className="bg-green-50 dark:bg-green-900/30 p-4 sm:p-6 rounded-xl text-center"
                 >
-                  <DollarSign className="w-10 h-10 text-green-600 dark:text-green-400 mx-auto mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-4">
+                  <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 mx-auto mb-2 sm:mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
                     {labels.moneySavedTitle}
                   </h4>
-                  <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
                     ${moneySaved.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {labels.moneySavedYear}
                   </div>
                 </motion.div>
@@ -200,32 +200,32 @@ export function WorkLessCalculator() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="bg-amber-50 dark:bg-amber-900/30 p-6 rounded-xl text-center"
+                  className="bg-amber-50 dark:bg-amber-900/30 p-4 sm:p-6 rounded-xl text-center sm:col-span-2 md:col-span-1"
                 >
-                  <Zap className="w-10 h-10 text-amber-600 dark:text-amber-400 mx-auto mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-4">
+                  <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600 dark:text-amber-400 mx-auto mb-2 sm:mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
                     {labels.productivityTitle}
                   </h4>
-                  <div className="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-2">
+                  <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 mb-1 sm:mb-2">
                     +{focusGained}%
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     Efficiency
                   </div>
                 </motion.div>
               </div>
               
-              <div className="mt-10 text-center flex flex-col sm:flex-row justify-center gap-4">
+              <div className="mt-6 sm:mt-8 md:mt-10 text-center flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                 <button 
                   onClick={handleReset}
-                  className="inline-flex items-center justify-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white text-sm sm:text-base font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                 >
                   {labels.recalculateButton}
                 </button>
                 
                 <a 
                   href="/solutions" 
-                  className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition shadow-md"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base font-medium rounded-lg hover:bg-indigo-700 transition shadow-md"
                 >
                   {labels.learnMoreButton}
                 </a>
