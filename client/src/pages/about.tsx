@@ -55,42 +55,6 @@ const getContent = (isPathFrench: boolean) => ({
           icon: Users,
         },
       ]
-    },
-    team: {
-      title: isPathFrench ? "Équipe de Direction" : "Leadership Team",
-      members: isPathFrench ? [
-        {
-          name: "Sarah Johnson",
-          role: "PDG & Fondatrice",
-          image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-        },
-        {
-          name: "Michael Chen",
-          role: "Directeur Technique",
-          image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
-        },
-        {
-          name: "Emily Rodriguez",
-          role: "Directrice des Solutions IA",
-          image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e",
-        },
-      ] : [
-        {
-          name: "Sarah Johnson",
-          role: "CEO & Founder",
-          image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-        },
-        {
-          name: "Michael Chen",
-          role: "Chief Technology Officer",
-          image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
-        },
-        {
-          name: "Emily Rodriguez",
-          role: "Head of AI Solutions",
-          image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e",
-        },
-      ]
     }
   }
 });
@@ -135,31 +99,6 @@ export default function About() {
                     <p className="text-muted-foreground">{value.description}</p>
                   </CardContent>
                 </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-24">
-          <h2 className="text-3xl font-bold text-center mb-16">{content.sections.team.title}</h2>
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {content.sections.team.members.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="mx-auto h-40 w-40 overflow-hidden rounded-full">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <h3 className="mt-6 text-lg font-semibold">{member.name}</h3>
-                <p className="text-sm text-muted-foreground">{member.role}</p>
               </motion.div>
             ))}
           </div>

@@ -28,6 +28,7 @@ type PathKey =
   | 'team'
   | 'story'
   | 'mission'
+  | 'careers'
   | 'admin'
   | 'integrations'
   | 'digitalFoundation'
@@ -156,6 +157,16 @@ const pageTitles: Record<PathKey, PageTitleData> = {
     title: {
       en: 'Our Mission | Minecore Group',
       fr: 'Notre Mission | Groupe Minecore'
+    }
+  },
+  careers: {
+    title: {
+      en: 'Careers | Minecore Group',
+      fr: 'Carrières | Groupe Minecore'
+    },
+    description: {
+      en: 'Join our team at Minecore Group. We are looking for talented individuals to help us build AI automation solutions for small businesses in Montreal.',
+      fr: 'Rejoignez notre équipe chez Groupe Minecore. Nous recherchons des personnes talentueuses pour nous aider à construire des solutions d\'automatisation IA pour les petites entreprises à Montréal.'
     }
   },
   admin: {
