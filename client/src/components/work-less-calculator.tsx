@@ -36,7 +36,7 @@ export function WorkLessCalculator() {
     moneySavedTitle: isPathFrench ? "Argent Économisé" : "Money Saved",
     moneySavedYear: isPathFrench ? "$ par an" : "$ per year",
     productivityTitle: isPathFrench ? "Gain de Productivité" : "Productivity Gain",
-    learnMoreButton: isPathFrench ? "En Savoir Plus sur Nos Solutions" : "Learn More About Our Solutions",
+    learnMoreButton: isPathFrench ? "En Savoir Plus" : "Learn More",
   };
 
   const handleCalculate = (e: React.FormEvent) => {
@@ -137,68 +137,66 @@ export function WorkLessCalculator() {
                 {labels.resultsTitle}
               </motion.h3>
               
-              <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="bg-indigo-50 dark:bg-indigo-900/30 p-4 sm:p-6 rounded-xl text-center"
-                  >
-                    <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-2 sm:mb-4" />
-                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
-                      {labels.timeSavedTitle}
-                    </h4>
-                    <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-2">
-                      {hoursSaved.toFixed(1)}
-                    </div>
-                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {labels.timeSavedWeek}
-                    </div>
-                    <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-2 sm:mt-4 mb-1 sm:mb-2">
-                      {hoursSavedYearly.toFixed(0)}
-                    </div>
-                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {labels.timeSavedYear}
-                    </div>
-                  </motion.div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-green-50 dark:bg-green-900/30 p-4 sm:p-6 rounded-xl text-center"
-                  >
-                    <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 mx-auto mb-2 sm:mb-4" />
-                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
-                      {labels.moneySavedTitle}
-                    </h4>
-                    <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
-                      ${moneySaved.toLocaleString()}
-                    </div>
-                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {labels.moneySavedYear}
-                    </div>
-                  </motion.div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="bg-amber-50 dark:bg-amber-900/30 p-4 sm:p-6 rounded-xl text-center"
-                  >
-                    <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600 dark:text-amber-400 mx-auto mb-2 sm:mb-4" />
-                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
-                      {labels.productivityTitle}
-                    </h4>
-                    <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 mb-1 sm:mb-2">
-                      +{focusGained}%
-                    </div>
-                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      Efficiency
-                    </div>
-                  </motion.div>
-                </div>
+              <div className="flex flex-wrap justify-between gap-4 sm:gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="flex-1 bg-indigo-50 dark:bg-indigo-900/30 p-4 sm:p-6 rounded-xl text-center min-w-[140px]"
+                >
+                  <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-2 sm:mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                    {labels.timeSavedTitle}
+                  </h4>
+                  <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-2">
+                    {hoursSaved.toFixed(1)}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                    {labels.timeSavedWeek}
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-2 sm:mt-4 mb-1 sm:mb-2">
+                    {hoursSavedYearly.toFixed(0)}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                    {labels.timeSavedYear}
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex-1 bg-green-50 dark:bg-green-900/30 p-4 sm:p-6 rounded-xl text-center min-w-[140px]"
+                >
+                  <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 mx-auto mb-2 sm:mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                    {labels.moneySavedTitle}
+                  </h4>
+                  <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
+                    ${moneySaved.toLocaleString()}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                    {labels.moneySavedYear}
+                  </div>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex-1 bg-amber-50 dark:bg-amber-900/30 p-4 sm:p-6 rounded-xl text-center min-w-[140px]"
+                >
+                  <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600 dark:text-amber-400 mx-auto mb-2 sm:mb-4" />
+                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                    {labels.productivityTitle}
+                  </h4>
+                  <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 mb-1 sm:mb-2">
+                    +{focusGained}%
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                    Efficiency
+                  </div>
+                </motion.div>
               </div>
               
               <div className="mt-6 sm:mt-8 md:mt-10 text-center flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
