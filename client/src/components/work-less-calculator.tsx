@@ -56,13 +56,13 @@ export function WorkLessCalculator() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-6 sm:mb-8"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800 dark:text-white flex items-center justify-center">
-            <Calculator className="mr-3 w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-800 dark:text-white flex items-center justify-center">
+            <Calculator className="mr-2 sm:mr-3 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-indigo-600 dark:text-indigo-400" />
             {labels.title}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             {labels.subtitle}
           </p>
         </motion.div>
@@ -153,66 +153,68 @@ export function WorkLessCalculator() {
                 {labels.resultsTitle}
               </motion.h3>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="bg-indigo-50 dark:bg-indigo-900/30 p-4 sm:p-6 rounded-xl text-center"
-                >
-                  <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-2 sm:mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
-                    {labels.timeSavedTitle}
-                  </h4>
-                  <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-2">
-                    {hoursSaved.toFixed(1)}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    {labels.timeSavedWeek}
-                  </div>
-                  <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-2 sm:mt-4 mb-1 sm:mb-2">
-                    {hoursSavedYearly.toFixed(0)}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    {labels.timeSavedYear}
-                  </div>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-green-50 dark:bg-green-900/30 p-4 sm:p-6 rounded-xl text-center"
-                >
-                  <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 mx-auto mb-2 sm:mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
-                    {labels.moneySavedTitle}
-                  </h4>
-                  <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
-                    ${moneySaved.toLocaleString()}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    {labels.moneySavedYear}
-                  </div>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="bg-amber-50 dark:bg-amber-900/30 p-4 sm:p-6 rounded-xl text-center sm:col-span-2 md:col-span-1"
-                >
-                  <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600 dark:text-amber-400 mx-auto mb-2 sm:mb-4" />
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
-                    {labels.productivityTitle}
-                  </h4>
-                  <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 mb-1 sm:mb-2">
-                    +{focusGained}%
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    Efficiency
-                  </div>
-                </motion.div>
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="bg-indigo-50 dark:bg-indigo-900/30 p-4 sm:p-6 rounded-xl text-center"
+                  >
+                    <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-2 sm:mb-4" />
+                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                      {labels.timeSavedTitle}
+                    </h4>
+                    <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1 sm:mb-2">
+                      {hoursSaved.toFixed(1)}
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      {labels.timeSavedWeek}
+                    </div>
+                    <div className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-2 sm:mt-4 mb-1 sm:mb-2">
+                      {hoursSavedYearly.toFixed(0)}
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      {labels.timeSavedYear}
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-green-50 dark:bg-green-900/30 p-4 sm:p-6 rounded-xl text-center"
+                  >
+                    <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 mx-auto mb-2 sm:mb-4" />
+                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                      {labels.moneySavedTitle}
+                    </h4>
+                    <div className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400 mb-1 sm:mb-2">
+                      ${moneySaved.toLocaleString()}
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      {labels.moneySavedYear}
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="bg-amber-50 dark:bg-amber-900/30 p-4 sm:p-6 rounded-xl text-center"
+                  >
+                    <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-amber-600 dark:text-amber-400 mx-auto mb-2 sm:mb-4" />
+                    <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-4 text-sm sm:text-base">
+                      {labels.productivityTitle}
+                    </h4>
+                    <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 mb-1 sm:mb-2">
+                      +{focusGained}%
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      Efficiency
+                    </div>
+                  </motion.div>
+                </div>
               </div>
               
               <div className="mt-6 sm:mt-8 md:mt-10 text-center flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
