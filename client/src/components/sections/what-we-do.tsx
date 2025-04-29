@@ -11,38 +11,38 @@ const getContent = (isPathFrench: boolean) => ({
     : "Minecore Group specializes in AI Automation solutions designed to streamline business operations and drive growth. Our core expertise lies in three key areas:",
   pillars: isPathFrench ? [
     {
-      title: "Fondation Numérique",
+      title: "Résultats Rapides",
       description: "Établissez une présence numérique solide avec nos solutions qui créent une base d'automatisation efficace pour votre entreprise.",
       icon: MessageSquare,
       link: "/services/digital-foundation"
     },
     {
-      title: "Automatisation IA",
+      title: "Augmentez Vos Revenus",
       description: "Augmentez vos revenus et réduisez votre charge de travail grâce à nos solutions d'automatisation IA intelligentes.",
       icon: DollarSign,
       link: "/services/ai-automation-starter"
     },
     {
-      title: "Développement Sur Mesure",
+      title: "Moins de Travail",
       description: "Solutions logicielles personnalisées conçues pour vos besoins uniques, du développement CRM aux chatbots intelligents.",
       icon: Code,
       link: "/services/custom-software"
     }
   ] : [
     {
-      title: "Digital Foundation",
+      title: "Fast Results",
       description: "Establish a strong digital presence with our solutions that create an effective automation foundation for your business.",
       icon: MessageSquare,
       link: "/services/digital-foundation"
     },
     {
-      title: "AI Automation",
+      title: "Increase Revenue",
       description: "Increase your revenue and reduce your workload with our intelligent AI automation solutions.",
       icon: DollarSign,
       link: "/services/ai-automation-starter"
     },
     {
-      title: "Custom Development",
+      title: "Less Work",
       description: "Tailored software solutions designed for your unique needs, from custom CRM development to intelligent chatbots.",
       icon: Code,
       link: "/services/custom-software"
@@ -81,32 +81,32 @@ export function WhatWeDo() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card className={`h-full flex flex-col shadow-lg border-primary/10 hover:shadow-xl transition-shadow ${
-                pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                pillar.link.includes("digital-foundation")
                   ? "bg-blue-50/50" 
-                  : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                  : pillar.link.includes("ai-automation") 
                     ? "bg-emerald-50/50" 
                     : "bg-purple-50/50"
               }`}>
                 <CardHeader>
                   <div className={`inline-block p-3 rounded-lg mb-4 ${
-                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                    pillar.link.includes("digital-foundation")
                       ? "bg-blue-100/80" 
-                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                      : pillar.link.includes("ai-automation") 
                         ? "bg-emerald-100/80" 
                         : "bg-purple-100/80"
                   }`}>
                     <pillar.icon className={`h-6 w-6 ${
-                      pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                      pillar.link.includes("digital-foundation")
                       ? "text-blue-500" 
-                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                      : pillar.link.includes("ai-automation")
                         ? "text-emerald-500" 
                         : "text-purple-500"
                     }`} />
                   </div>
                   <CardTitle className={`text-xl ${
-                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                    pillar.link.includes("digital-foundation")
                       ? "text-blue-700" 
-                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                      : pillar.link.includes("ai-automation")
                         ? "text-emerald-700" 
                         : "text-purple-700"
                   }`}>{pillar.title}</CardTitle>
@@ -118,9 +118,9 @@ export function WhatWeDo() {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-2">
                   <Button variant="outline" className={`w-full border-primary/30 hover:bg-transparent ${
-                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                    pillar.link.includes("digital-foundation")
                       ? "text-blue-600 hover:text-blue-700 hover:border-blue-300" 
-                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                      : pillar.link.includes("ai-automation")
                         ? "text-emerald-600 hover:text-emerald-700 hover:border-emerald-300" 
                         : "text-purple-600 hover:text-purple-700 hover:border-purple-300"
                   }`} asChild>
@@ -130,9 +130,9 @@ export function WhatWeDo() {
                     </Link>
                   </Button>
                   <Button variant="default" className={`w-full shadow-sm ${
-                    pillar.title.includes("Digital") || pillar.title.includes("Fondation") 
+                    pillar.link.includes("digital-foundation")
                       ? "bg-blue-600 hover:bg-blue-700" 
-                      : pillar.title.includes("AI") || pillar.title.includes("IA") 
+                      : pillar.link.includes("ai-automation")
                         ? "bg-emerald-600 hover:bg-emerald-700" 
                         : "bg-purple-600 hover:bg-purple-700"
                   }`} asChild>
