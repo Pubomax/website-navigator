@@ -1,24 +1,20 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /api/
-Disallow: /private/
-Disallow: /temp/
+Disallow: /integrations/
 
-# Language specific sitemaps
+# Allow search engine to index all content
+Allow: /*.js
+Allow: /*.css
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+
+# Sitemap
 Sitemap: https://minecoregroup.com/sitemap.xml
-Sitemap: https://minecoregroup.com/sitemap-fr.xml
 
-# Regional sitemaps
-Sitemap: https://minecoregroup.com/sitemap-regions.xml
-
-# Allow Googlebot to access JS and CSS
-User-agent: Googlebot
-Allow: /*.js$
-Allow: /*.css$
-
-# Country specific crawl rules
-User-agent: Googlebot
-Allow: /regions/
-Allow: /fr/
-Allow: /en/
+# Crawl delay for bots
+Crawl-delay: 10

@@ -5,6 +5,7 @@ import { insertContactMessageSchema, insertNewsletterSubscriptionSchema, insertB
 import session from 'express-session';
 import MemoryStore from 'memorystore';
 import { ZodError } from 'zod';
+import { setupSitemap } from './sitemap';
 
 // Helper function to check if an error is a ZodError
 function isZodError(error: unknown): error is ZodError {
@@ -69,6 +70,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }));
 
   // Chat functionality has been removed
+  
+  // Add sitemap route
+  app.use(setupSitemap());
 
   // Admin Routes
   app.post("/api/admin/login", async (req, res) => {

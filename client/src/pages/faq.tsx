@@ -29,17 +29,13 @@ export default function FAQ() {
     // Convert object to array and flatten the questions
     const faqData: { question: string; answer: string }[] = [];
     
-    // Type safe iterating through the categories
-    Object.values(faqCategories).forEach(category => {
+    // Type safe iterating through object entries
+    Object.values(faqCategories).forEach((category: any) => {
       if (category && category.questions) {
-        category.questions.forEach(question => {
+        category.questions.forEach((question: any) => {
           faqData.push({
-            question: isPathFrench && 'frenchQuestion' in question ? 
-              (question.frenchQuestion || question.question) : 
-              question.question,
-            answer: isPathFrench && 'frenchAnswer' in question ? 
-              (question.frenchAnswer || question.answer) : 
-              question.answer
+            question: question.question,
+            answer: question.answer
           });
         });
       }
@@ -60,7 +56,7 @@ export default function FAQ() {
       {/* Add FAQ Schema.org structured data */}
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify(generateFAQSchema())}
+          {serializeSchema(generateFAQSchema(prepareFaqData()))}
         </script>
       </Helmet>
       
