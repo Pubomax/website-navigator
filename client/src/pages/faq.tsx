@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 import {
   Accordion,
   AccordionContent,
@@ -8,6 +9,7 @@ import {
 import { faqCategories } from "@/data/faq";
 import { cn } from "@/lib/utils";
 import { useLocation } from "wouter";
+import { PageTitle } from "@/components/page-title";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Questions Fréquemment Posées" : "Frequently Asked Questions",
@@ -21,8 +23,46 @@ export default function FAQ() {
   const isPathFrench = location.startsWith("/fr");
   const content = getContent(isPathFrench);
 
+  // Generate FAQSchema from FAQ data
+  const generateFAQSchema = () => {
+    const mainEntityArray = [];
+    
+    faqCategories.forEach(category => {
+      category.questions.forEach(question => {
+        mainEntityArray.push({
+          "@type": "Question",
+          "name": question.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": question.answer
+          }
+        });
+      });
+    });
+    
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": mainEntityArray
+    };
+  };
+
   return (
     <main className="py-24">
+      <PageTitle 
+        pageKey="faq"
+        customTitle={isPathFrench ? "FAQ | Automatisation d'Entreprise à Montréal | Groupe Minecore" : "FAQ | Business Automation in Montreal | Minecore Group"}
+        customDescription={isPathFrench ? "Réponses aux questions fréquentes sur nos services d'automatisation IA pour les entreprises montréalaises. Découvrez comment nous pouvons vous aider." : "Answers to frequently asked questions about our AI automation services for Montreal businesses. Find out how we can help you."}
+        keywords="Montreal business automation FAQ, AI automation questions, small business technology Montreal, sales automation FAQ, marketing automation FAQ"
+      />
+      
+      {/* Add FAQ Schema.org structured data */}
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(generateFAQSchema())}
+        </script>
+      </Helmet>
+      
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -122,9 +122,38 @@ export function PageTitle({
               "longitude": "-73.5878"
             },
             "geoRadius": "50000"
-          }
+          },
+          "sameAs": [
+            "https://x.com/minecoregroup",
+            "https://www.instagram.com/minecoregroup/",
+            "https://www.tiktok.com/@minecoregroup"
+          ]
         })}
       </script>
+      
+      {/* Schema.org structured data for BreadcrumbList - only on non-home pages */}
+      {pageKey !== 'home' && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": isPathFrench ? "Accueil" : "Home",
+                "item": `https://minecoregroup.com${isPathFrench ? "/fr" : ""}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": finalTitle.split("|")[0].trim(),
+                "item": canonicalUrl
+              }
+            ]
+          })}
+        </script>
+      )}
     </Helmet>
   );
 }
