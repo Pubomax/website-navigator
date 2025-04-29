@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { insertNewsletterSubscriptionSchema } from "@shared/schema";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { Sitemap } from "@/components/sections/sitemap";
 import { 
   Mail, 
   Instagram
@@ -177,7 +178,14 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <Separator className="opacity-50" />
+        
+        {/* Add the sitemap component for complete site navigation */}
+        <div className="mt-8 border-t pt-8">
+          <h2 className="text-lg font-bold mb-4">Complete Site Map</h2>
+          <Sitemap />
+        </div>
+        
+        <Separator className="opacity-50 mt-8" />
         <div className="py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} Minecore Group. All rights reserved.

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, Check, Target, Users, DollarSign, MessageSquare, AreaChart, Zap } from "lucide-react";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
   Card,
   CardContent,
@@ -131,6 +132,18 @@ export default function Solutions() {
         keywords="AI automation Montreal, small business automation, lead generation Montreal, sales automation Quebec, AI for small business, marketing automation Montreal"
       />
       <div className="container px-4 sm:px-6">
+        {/* Add breadcrumb navigation */}
+        <Breadcrumb 
+          items={[
+            {
+              label: isPathFrench ? "Solutions" : "Solutions",
+              href: isPathFrench ? "/fr/solutions" : "/solutions",
+              current: true
+            }
+          ]} 
+          className="mb-8"
+        />
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
