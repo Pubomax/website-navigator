@@ -18,10 +18,10 @@ app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   // Referrer policy
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  // Basic Content Security Policy
+  // Enhanced Content Security Policy for SEO and Analytics
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://www.google-analytics.com;"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com https://analytics.google.com; img-src 'self' data: https: https://www.google-analytics.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://tagmanager.google.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://www.googletagmanager.com;"
   );
   // Permissions policy
   res.setHeader(
@@ -82,14 +82,14 @@ app.use((req, res, next) => {
   // Try ports sequentially
   const tryPort = async (port: number): Promise<void> => {
     try {
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         server.listen({
           port,
           host: "0.0.0.0",
         }, () => {
           log(`Server listening on port ${port}`);
-          resolve(undefined);
-        }).on('error', (e: Error) => {
+          resolve();
+        }).on('error', (e: NodeJS.ErrnoException) => {
           if (e.code === 'EADDRINUSE') {
             log(`Port ${port} is in use, trying port ${port + 1}...`);
             reject(e);
@@ -99,11 +99,12 @@ app.use((req, res, next) => {
           }
         });
       });
-    } catch (e: any) {
-      if (e.code === 'EADDRINUSE') {
+    } catch (e) {
+      const err = e as NodeJS.ErrnoException;
+      if (err.code === 'EADDRINUSE') {
         await tryPort(port + 1);
       } else {
-        throw e;
+        throw err;
       }
     }
   };

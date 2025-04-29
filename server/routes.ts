@@ -312,7 +312,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       logError(error, 'creating post via integration API');
       
-      if (error.name === 'ZodError') {
+      if (isZodError(error)) {
         return res.status(400).json({ 
           success: false,
           message: "Invalid blog post data",
@@ -383,7 +383,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
     } catch (error) {
-      if (error.name === 'ZodError') {
+      if (isZodError(error)) {
         return res.status(400).json({ 
           success: false,
           message: "Invalid blog post data",

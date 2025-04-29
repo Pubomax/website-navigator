@@ -83,16 +83,16 @@ export default function FAQ() {
               >
                 <div className="flex items-center gap-2 mb-4">
                   <category.icon className="h-5 w-5 text-primary" />
-                  <h2 className="text-xl font-semibold">{isPathFrench ? category.frenchTitle || category.title : category.title}</h2>
+                  <h2 className="text-xl font-semibold">{category.title}</h2>
                 </div>
                 <Accordion type="single" collapsible className="w-full">
                   {category.questions.map((faq, index) => (
                     <AccordionItem key={index} value={`${key}-${index}`}>
                       <AccordionTrigger className="text-left">
-                        {isPathFrench ? faq.frenchQuestion || faq.question : faq.question}
+                        {faq.question}
                       </AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
-                        {isPathFrench ? faq.frenchAnswer || faq.answer : faq.answer}
+                        {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
                   ))}
