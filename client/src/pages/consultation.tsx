@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocation } from "wouter";
+import { PageTitle } from "@/components/page-title";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -51,7 +53,6 @@ import {
 import { insertContactMessageSchema, type InsertContactMessage } from "@shared/schema";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
-import { useLocation } from "wouter";
 import { Badge } from "@/components/ui/badge";
 
 // Business challenges that the user can select
@@ -124,6 +125,8 @@ export default function Consultation() {
       businessChallenge: z.string().optional(),
       contactJobTitle: z.string().optional(),
       additionalNotes: z.string().optional(),
+      message: z.string().optional(),
+      subject: z.string().optional(),
     });
   
   type FormValues = z.infer<typeof formSchema>;
@@ -135,8 +138,6 @@ export default function Consultation() {
       contactEmail: "",
       contactPhone: "",
       companyName: "",
-      subject: "",
-      message: "",
       businessChallenge: "",
       annualRevenue: "",
       employeeCount: "",
@@ -237,6 +238,12 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
 
   return (
     <main className="py-16 md:py-24">
+      <PageTitle 
+        pageKey="consultation" 
+        customTitle={isPathFrench ? "Consultation Gratuite pour PME à Montréal | Groupe Minecore" : "Free Montreal Small Business Consultation | Minecore Group"}
+        customDescription={isPathFrench ? "Obtenez une consultation gratuite pour votre PME à Montréal. Solutions d'automatisation IA pour augmenter vos revenus et travailler moins." : "Get a free consultation for your Montreal small business. AI automation solutions to increase revenue and work less."}
+        keywords="Montreal business automation, free consultation Montreal, small business automation consultation, AI business solutions Montreal, sales automation Quebec"
+      />
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
