@@ -6,6 +6,7 @@ import session from 'express-session';
 import MemoryStore from 'memorystore';
 import { ZodError } from 'zod';
 import { setupSitemap } from './sitemap';
+import { sendConfirmationEmail } from './email';
 
 // Helper function to check if an error is a ZodError
 function isZodError(error: unknown): error is ZodError {
@@ -218,7 +219,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const data = insertContactMessageSchema.parse(req.body);
       const message = await storage.createContactMessage(data);
       console.log("Created contact message:", message);
-      res.status(201).json(message);
+      
+      // Send confirmation email
+      try {
+        await sendConfirmationEmail(message);
+      } catch (emailError) {
+        console.error("Error sending confirmation email:", emailError);
+        // Don't fail the request if email sending fails, just log the error
+      }
+      
+      res.status(201).json({
+        ...message,
+        emailSent: true,
+        message: "Thank you for your message. We'll be in touch shortly!"
+      });
     } catch (error) {
       console.error("Error creating contact message:", error);
       logError(error, 'creating contact message');
