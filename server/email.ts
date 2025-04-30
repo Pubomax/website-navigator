@@ -3,10 +3,14 @@ import { ContactMessage } from '@shared/schema';
 
 // Create reusable transporter object using SMTP
 const createTransporter = () => {
+  // Clean up any spaces in the host value
+  const emailHost = process.env.EMAIL_HOST ? process.env.EMAIL_HOST.trim() : 'smtp.office365.com';
+  const emailPort = process.env.EMAIL_PORT ? parseInt(process.env.EMAIL_PORT.trim()) : 587;
+  
   // Log email configuration (without sensitive data)
   console.log('Email configuration:', {
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
+    host: emailHost,
+    port: emailPort,
     secure: process.env.EMAIL_SECURE === 'true',
     hasUser: !!process.env.EMAIL_USER,
     hasPassword: !!process.env.EMAIL_PASSWORD,
@@ -14,8 +18,8 @@ const createTransporter = () => {
   
   // Create transporter
   return nodemailer.createTransport({
-    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.EMAIL_PORT || '587'),
+    host: emailHost,
+    port: emailPort,
     secure: process.env.EMAIL_SECURE === 'true',
     auth: {
       user: process.env.EMAIL_USER,
