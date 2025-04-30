@@ -101,6 +101,8 @@ export async function sendConfirmationEmail(contactMessage: ContactMessage): Pro
               <li><strong>Business Challenges:</strong> ${contactMessage.businessChallenges.join(', ')}</li>
               <li><strong>Annual Revenue Range:</strong> ${contactMessage.annualRevenue}</li>
               <li><strong>Company Size:</strong> ${contactMessage.companySize}</li>
+              <li><strong>Preferred Contact Method:</strong> ${contactMessage.preferredContactMethod}</li>
+              ${contactMessage.bestTimeToContact ? `<li><strong>Best Time to Contact:</strong> ${contactMessage.bestTimeToContact}</li>` : ''}
             </ul>
             
             <p>We look forward to discussing how our AI automation solutions can help your business increase revenue while reducing your workload.</p>
@@ -140,6 +142,7 @@ export async function sendConfirmationEmail(contactMessage: ContactMessage): Pro
         <p><strong>Contact:</strong> ${contactMessage.contactName} (${contactMessage.contactEmail})</p>
         <p><strong>Phone:</strong> ${contactMessage.contactPhone}</p>
         <p><strong>Preferred Contact Method:</strong> ${contactMessage.preferredContactMethod}</p>
+        <p><strong>Best Time to Contact:</strong> ${contactMessage.bestTimeToContact || 'Any time'}</p>
         <p><strong>Job Title:</strong> ${contactMessage.contactJobTitle || 'Not provided'}</p>
         <p><strong>Company:</strong> ${contactMessage.companyName}</p>
         <p><strong>Annual Revenue:</strong> ${contactMessage.annualRevenue}</p>

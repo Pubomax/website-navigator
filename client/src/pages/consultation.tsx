@@ -206,6 +206,7 @@ export default function Consultation() {
 Annual Revenue: ${data.annualRevenue}
 Employee Count: ${data.employeeCount}
 Preferred Contact Method: ${data.preferredContactMethod}
+${data.bestTimeToContact ? `Best Time to Contact: ${data.bestTimeToContact}` : ""}
 ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
 
     // Cast to InsertContactMessage since our API expects that type
@@ -704,6 +705,59 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
                                   </FormLabel>
                                 </FormItem>
                               </RadioGroup>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="bestTimeToContact"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              {isPathFrench ? "Meilleur Moment pour Vous Contacter" : "Best Time to Contact You"}
+                            </FormLabel>
+                            <FormDescription>
+                              {isPathFrench 
+                                ? "Quand préférez-vous être contacté? (Ex: Matin, Après-midi, Soir)" 
+                                : "When do you prefer to be contacted? (E.g., Morning, Afternoon, Evening)"}
+                            </FormDescription>
+                            <FormControl>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue 
+                                      placeholder={
+                                        isPathFrench 
+                                          ? "Sélectionnez le meilleur moment" 
+                                          : "Select best time"
+                                      } 
+                                    />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="morning">
+                                    {isPathFrench ? "Matin (9h - 12h)" : "Morning (9AM - 12PM)"}
+                                  </SelectItem>
+                                  <SelectItem value="early_afternoon">
+                                    {isPathFrench ? "Début d'après-midi (12h - 15h)" : "Early Afternoon (12PM - 3PM)"}
+                                  </SelectItem>
+                                  <SelectItem value="late_afternoon">
+                                    {isPathFrench ? "Fin d'après-midi (15h - 18h)" : "Late Afternoon (3PM - 6PM)"}
+                                  </SelectItem>
+                                  <SelectItem value="evening">
+                                    {isPathFrench ? "Soir (Après 18h)" : "Evening (After 6PM)"}
+                                  </SelectItem>
+                                  <SelectItem value="any_business_hours">
+                                    {isPathFrench ? "N'importe quand (Heures de bureau)" : "Any time (Business hours)"}
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
