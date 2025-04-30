@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { PageTitle } from "@/components/page-title";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -127,6 +127,7 @@ export default function Consultation() {
       additionalNotes: z.string().optional(),
       message: z.string().optional(),
       subject: z.string().optional(),
+      bestTimeToContact: z.string().optional(),
     });
   
   type FormValues = z.infer<typeof formSchema>;
@@ -150,6 +151,7 @@ export default function Consultation() {
       businessChallenges: [],
       desiredOutcomes: "",
       preferredContactMethod: "email", // Default to email
+      bestTimeToContact: ""
     },
   });
 
@@ -753,12 +755,21 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
                     </CardHeader>
                     <CardContent className="pb-6">
                       <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
-                        <Button onClick={() => navigate(isPathFrench ? "/fr" : "/")} variant="outline">
-                          {isPathFrench ? "Retour à l'Accueil" : "Back to Home"}
+                        <Button 
+                          asChild
+                          variant="outline"
+                        >
+                          <Link to={isPathFrench ? "/fr" : "/"}>
+                            {isPathFrench ? "Retour à l'Accueil" : "Back to Home"}
+                          </Link>
                         </Button>
-                        <Button onClick={() => navigate(isPathFrench ? "/fr/services" : "/services")}>
-                          {isPathFrench ? "Explorer Nos Services" : "Explore Our Services"}
-                          <ArrowRight className="ml-2 h-4 w-4" />
+                        <Button 
+                          asChild
+                        >
+                          <Link to={isPathFrench ? "/fr/solutions" : "/solutions"}>
+                            {isPathFrench ? "Explorer Nos Solutions" : "Explore Our Solutions"}
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
                         </Button>
                       </div>
                     </CardContent>
