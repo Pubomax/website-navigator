@@ -3,6 +3,16 @@ import { ContactMessage } from '@shared/schema';
 
 // Create reusable transporter object using SMTP
 const createTransporter = () => {
+  // Log email configuration (without sensitive data)
+  console.log('Email configuration:', {
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: process.env.EMAIL_SECURE === 'true',
+    hasUser: !!process.env.EMAIL_USER,
+    hasPassword: !!process.env.EMAIL_PASSWORD,
+  });
+  
+  // Create transporter
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.EMAIL_PORT || '587'),
@@ -11,6 +21,9 @@ const createTransporter = () => {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
     },
+    tls: {
+      rejectUnauthorized: false // Allowing self-signed certificates
+    }
   });
 };
 
@@ -135,7 +148,7 @@ export async function sendConfirmationEmail(contactMessage: ContactMessage): Pro
     // Send notification email to company address
     const notificationInfo = await transporter.sendMail({
       from: `"Form Submission" <${process.env.EMAIL_USER}>`,
-      to: process.env.NOTIFICATION_EMAIL || "hello@minecoregroup.com",
+      to: process.env.EMAIL_USER, // Send to same email as sender to avoid DNS issues
       subject: `New Consultation Request: ${contactMessage.companyName}`,
       html: `
         <h2>New Consultation Request</h2>
@@ -160,6 +173,19 @@ export async function sendConfirmationEmail(contactMessage: ContactMessage): Pro
     return true;
   } catch (error) {
     console.error('Error sending confirmation email:', error);
+    // Log detailed error information for debugging
+    if (error.code) {
+      console.error(`Error code: ${error.code}`);
+    }
+    if (error.command) {
+      console.error(`Error command: ${error.command}`);
+    }
+    if (error.response) {
+      console.error(`Error response: ${error.response}`);
+    }
+    if (error.responseCode) {
+      console.error(`Error response code: ${error.responseCode}`);
+    }
     return false;
   }
 }

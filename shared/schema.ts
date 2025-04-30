@@ -59,6 +59,7 @@ export const contactMessages = pgTable("contact_messages", {
   contactPhone: text("contact_phone").notNull(),
   contactJobTitle: text("contact_job_title"),
   preferredContactMethod: text("preferred_contact_method").notNull(),
+  bestTimeToContact: text("best_time_to_contact"),
   additionalNotes: text("additional_notes"),
   
   createdAt: timestamp("created_at").defaultNow(),
