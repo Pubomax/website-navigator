@@ -221,8 +221,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Created contact message:", message);
       
       // Send confirmation email
+      let emailSent = false;
       try {
-        await sendConfirmationEmail(message);
+        emailSent = await sendConfirmationEmail(message);
+        console.log("Email confirmation result:", emailSent ? "Email sent successfully" : "Email failed to send");
       } catch (emailError) {
         console.error("Error sending confirmation email:", emailError);
         // Don't fail the request if email sending fails, just log the error
@@ -230,8 +232,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(201).json({
         ...message,
-        emailSent: true,
-        message: "Thank you for your message. We'll be in touch shortly!"
+        emailSent: emailSent,
+        message: emailSent 
+          ? "Thank you for your message. We'll be in touch shortly!" 
+          : "Thank you for your message. Your request has been recorded, but we couldn't send a confirmation email. We'll be in touch shortly!"
       });
     } catch (error) {
       console.error("Error creating contact message:", error);

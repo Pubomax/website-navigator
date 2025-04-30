@@ -161,9 +161,22 @@ export default function Consultation() {
       const res = await apiRequest("POST", "/api/contact", data);
       return res.json();
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       setCurrentStep(FormStep.Success);
       form.reset();
+      
+      // Display toast notification if email sending failed
+      if (response && response.emailSent === false) {
+        toast({
+          title: isPathFrench 
+            ? "Demande reçue" 
+            : "Request received",
+          description: isPathFrench 
+            ? "Votre demande a été enregistrée. Cependant, nous n'avons pas pu vous envoyer un email de confirmation. Notre équipe vous contactera bientôt."
+            : "Your request has been recorded. However, we couldn't send you a confirmation email. Our team will contact you soon.",
+          duration: 6000,
+        });
+      }
     },
     onError: (error) => {
       toast({
@@ -808,6 +821,11 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="pb-6">
+                      <div className="text-sm text-muted-foreground mt-4 mb-6 max-w-md mx-auto">
+                        {isPathFrench
+                          ? "Un membre de notre équipe vous contactera pendant votre créneau horaire préféré pour discuter de la façon dont nous pouvons vous aider à augmenter vos revenus et à réduire votre charge de travail."
+                          : "A member of our team will contact you during your preferred time slot to discuss how we can help you increase revenue and reduce your workload."}
+                      </div>
                       <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
                         <Button 
                           asChild

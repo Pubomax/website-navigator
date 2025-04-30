@@ -174,17 +174,19 @@ export async function sendConfirmationEmail(contactMessage: ContactMessage): Pro
   } catch (error) {
     console.error('Error sending confirmation email:', error);
     // Log detailed error information for debugging
-    if (error.code) {
-      console.error(`Error code: ${error.code}`);
-    }
-    if (error.command) {
-      console.error(`Error command: ${error.command}`);
-    }
-    if (error.response) {
-      console.error(`Error response: ${error.response}`);
-    }
-    if (error.responseCode) {
-      console.error(`Error response code: ${error.responseCode}`);
+    if (error && typeof error === 'object') {
+      if ('code' in error && error.code) {
+        console.error(`Error code: ${error.code}`);
+      }
+      if ('command' in error && error.command) {
+        console.error(`Error command: ${error.command}`);
+      }
+      if ('response' in error && error.response) {
+        console.error(`Error response: ${error.response}`);
+      }
+      if ('responseCode' in error && error.responseCode) {
+        console.error(`Error response code: ${error.responseCode}`);
+      }
     }
     return false;
   }
