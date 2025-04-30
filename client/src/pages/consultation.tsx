@@ -149,6 +149,7 @@ export default function Consultation() {
       companySize: "",
       businessChallenges: [],
       desiredOutcomes: "",
+      preferredContactMethod: "email", // Default to email
     },
   });
 
@@ -182,10 +183,27 @@ export default function Consultation() {
       data.businessChallenge = "Not specified";
     }
     
+    // Set businessChallenges array for schema compliance
+    data.businessChallenges = selectedChallenges;
+    
+    // Set a default value for required fields if they are missing
+    if (!data.industry) {
+      data.industry = "Not specified";
+    }
+    
+    if (!data.companySize) {
+      data.companySize = data.employeeCount; // Use employee count as company size
+    }
+    
+    if (!data.desiredOutcomes) {
+      data.desiredOutcomes = "Increase revenue and reduce workload";
+    }
+    
     // Create a message from the challenges for the standard contact message field
     data.message = `Business Challenges: ${data.businessChallenge}
 Annual Revenue: ${data.annualRevenue}
 Employee Count: ${data.employeeCount}
+Preferred Contact Method: ${data.preferredContactMethod}
 ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
 
     // Cast to InsertContactMessage since our API expects that type
@@ -202,7 +220,7 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
     });
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (currentStep === FormStep.BusinessChallenge) {
       // For first step, only need to have at least one challenge selected
       if (selectedChallenges.length === 0) {
@@ -220,13 +238,28 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
     } 
     else if (currentStep === FormStep.BusinessDetails) {
       // Validate business details step
-      const annualRevenueValid = form.trigger("annualRevenue");
-      const employeeCountValid = form.trigger("employeeCount");
-      const companyNameValid = form.trigger("companyName");
+      const annualRevenueValid = await form.trigger("annualRevenue");
+      const employeeCountValid = await form.trigger("employeeCount");
+      const companyNameValid = await form.trigger("companyName");
       
-      if (!(annualRevenueValid && employeeCountValid && companyNameValid)) {
+      if (!annualRevenueValid || !employeeCountValid || !companyNameValid) {
         return;
       }
+    }
+    else if (currentStep === FormStep.ContactDetails) {
+      // Validate contact details step before submitting
+      const contactNameValid = await form.trigger("contactName");
+      const contactEmailValid = await form.trigger("contactEmail");
+      const contactPhoneValid = await form.trigger("contactPhone");
+      const preferredContactMethodValid = await form.trigger("preferredContactMethod");
+      
+      if (!contactNameValid || !contactEmailValid || !contactPhoneValid || !preferredContactMethodValid) {
+        return;
+      }
+      
+      // If all validations pass, submit the form directly
+      form.handleSubmit(onSubmit)();
+      return; // Don't proceed to next step as handleSubmit will handle it
     }
     
     setCurrentStep(prev => prev + 1);
@@ -632,6 +665,43 @@ ${data.additionalNotes ? `\nAdditional Notes: ${data.additionalNotes}` : ""}`;
                                 {...field}
                                 value={field.value || ''}
                               />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="preferredContactMethod"
+                        render={({ field }) => (
+                          <FormItem className="space-y-3">
+                            <FormLabel>
+                              {isPathFrench ? "Méthode de Contact Préférée" : "Preferred Contact Method"} *
+                            </FormLabel>
+                            <FormControl>
+                              <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                className="flex flex-col space-y-1"
+                              >
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                  <FormControl>
+                                    <RadioGroupItem value="email" />
+                                  </FormControl>
+                                  <FormLabel className="font-normal">
+                                    {isPathFrench ? "Email" : "Email"}
+                                  </FormLabel>
+                                </FormItem>
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                  <FormControl>
+                                    <RadioGroupItem value="phone" />
+                                  </FormControl>
+                                  <FormLabel className="font-normal">
+                                    {isPathFrench ? "Téléphone" : "Phone"}
+                                  </FormLabel>
+                                </FormItem>
+                              </RadioGroup>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
