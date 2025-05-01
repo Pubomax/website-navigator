@@ -170,6 +170,11 @@ function Router() {
           <Route path="/fr/solutions/instant-customer-engagement" component={InstantCustomerEngagement} />
           <Route path="/fr/solutions/quick-acquisition" component={QuickAcquisition} />
           
+          {/* French Plan Routes */}
+          <Route path="/fr/plans/velocity" component={VelocityPlan} />
+          <Route path="/fr/plans/accelerate" component={AcceleratePlan} />
+          <Route path="/fr/plans/dominate" component={DominatePlan} />
+          
           {/* French Service Routes */}
           <Route path="/fr/services/digital-foundation" component={DigitalFoundation} />
           <Route path="/fr/services/transformation-consulting" component={TransformationConsulting} />

@@ -8,8 +8,10 @@ import {
   Clock, 
   Users, 
   BarChart2, 
-  Inbox,
-  Phone
+  Rocket,
+  Phone,
+  ArrowRight,
+  Wallet
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,73 +30,73 @@ export default function VelocityPlan() {
   const features = [
     "2 Automation Workflows",
     "1 API Integration",
-    "Form-to-Email Automation",
-    "Lead Capture Systems",
-    "Monthly Reports",
+    "Lead Capture System",
+    "Basic Marketing Automation",
+    "Monthly Performance Reports",
     "Email Support",
     "14-Day Implementation"
   ];
   
   const idealFor = [
-    "Micro businesses (1-10 employees)",
-    "Startups looking for quick wins",
-    "Businesses with limited budgets",
+    "Small businesses (1-10 employees)",
+    "New businesses and startups",
+    "Solopreneurs and freelancers",
     "Service-based businesses",
-    "Local businesses in Montreal"
+    "Local Montreal businesses with limited budgets"
   ];
   
   const benefits = [
     {
-      title: "Faster Results",
-      description: "Start seeing efficiency gains within just 2 weeks of implementation.",
-      icon: Zap
-    },
-    {
-      title: "More Free Time",
-      description: "Save 5-10 hours per week by automating repetitive tasks.",
+      title: "Save Time",
+      description: "Automate repetitive tasks and save 5-10 hours per week.",
       icon: Clock
     },
     {
-      title: "Better Lead Management",
-      description: "Never miss a lead with automated capture and follow-up.",
+      title: "Increase Leads",
+      description: "Never miss a potential customer with automated lead capture.",
       icon: Users
     },
     {
-      title: "Increased Revenue",
-      description: "Grow your business with more effective follow-up processes.",
+      title: "Grow Revenue",
+      description: "Convert more prospects with consistent follow-up sequences.",
       icon: BarChart2
+    },
+    {
+      title: "Affordable Start",
+      description: "Begin your automation journey without breaking the bank.",
+      icon: Wallet
     }
   ];
   
   const testimonials = [
     {
-      quote: "The VELOCITY plan helped us automate our email responses and saved me at least 8 hours every week. Worth every penny!",
-      author: "Sophie Martin",
-      position: "Owner, Petit Café Montreal"
+      quote: "The VELOCITY plan has been a game-changer for our small business. We've automated our lead capture and follow-up process, and it's already paid for itself many times over.",
+      author: "Sophie Tremblay",
+      position: "Owner, Montreal Boutique Shop"
     },
     {
-      quote: "As a solo entrepreneur, I was drowning in admin work. The form-to-email automation alone paid for itself in the first month.",
-      author: "Jean Tremblay",
+      quote: "As a solopreneur, I was drowning in admin tasks. The VELOCITY plan automated my client onboarding and follow-up, giving me back 8 hours every week to focus on billable work.",
+      author: "Jean Bergeron",
       position: "Independent Consultant"
     }
   ];
   
   const faqs = [
     {
-      question: "How quickly can I get started with the VELOCITY plan?",
-      answer: "We can have your first automation workflow up and running within 7 business days after our initial consultation call."
+      question: "What kind of tasks can be automated with the VELOCITY plan?",
+      answer: "The VELOCITY plan is perfect for automating your lead capture, email follow-ups, appointment scheduling, client onboarding, and other repetitive tasks. We'll work with you to identify the two workflows that will have the biggest impact on your business."
     },
     {
-      question: "What is included in the monthly fee?",
-      answer: "Your $500/month fee includes implementation of 2 automation workflows, 1 API integration, form-to-email automation, lead capture systems, monthly performance reports, and email support."
+      question: "Do I need technical skills to use these automations?",
+      answer: "Not at all! Our team takes care of all the technical setup and implementation. Once your automations are in place, they run in the background with minimal input needed from you."
     },
     {
-      question: "Do I need any technical knowledge to use this plan?",
-      answer: "No technical knowledge is required. Our team handles all the technical setup and provides you with simple interfaces to manage your automation."
+      question: "How quickly will I see results?",
+      answer: "Most clients start seeing results within the first week of implementation. Time savings are immediate, and revenue improvements typically follow within 2-4 weeks as leads are more effectively captured and nurtured."
     },
     {
-      question: "Can I upgrade to a different plan later?",
-      answer: "Yes! You can easily upgrade to our ACCELERATE or DOMINATE plans as your business grows. We'll apply your existing automations to the new plan."
+      question: "Can I upgrade to a more advanced plan later?",
+      answer: "Absolutely! The VELOCITY plan is designed to be a starting point. As your business grows and you see the benefits of automation, you can easily upgrade to our ACCELERATE or DOMINATE plans to expand your automation capabilities."
     }
   ];
   
@@ -107,8 +109,8 @@ export default function VelocityPlan() {
       <Helmet>
         <script type="application/ld+json">
           {serializeSchema(generateWebPageSchema({
-            title: "VELOCITY Plan - $500/month Automation Solution | Minecore Group",
-            description: "Get started with AI automation for just $500/month. Our VELOCITY plan includes 2 automation workflows, lead capture, and more. Save time and increase revenue.",
+            title: "VELOCITY Plan - $500/month Starter Automation | Minecore Group",
+            description: "Start automating your business with our affordable VELOCITY plan at $500/month. Get 2 automation workflows, lead capture system, and more. Save 5-10 hours per week.",
             url: "https://minecoregroup.com/plans/velocity",
             imageUrl: "https://minecoregroup.com/images/velocity-plan.png"
           }))}
@@ -118,25 +120,25 @@ export default function VelocityPlan() {
       <PageTitle 
         pageKey="velocity" 
         customTitle="VELOCITY Plan - $500/month Starter Automation" 
-        customDescription="Start automating your business with our affordable VELOCITY plan. Just $500/month for 2 automation workflows, lead capture systems, and more. Ideal for small businesses in Montreal."
+        customDescription="Get started with AI automation for just $500/month. Our VELOCITY plan includes 2 automation workflows, lead capture systems, and more. Perfect for small Montreal businesses."
       />
       
       {/* Hero Section */}
       <section className="grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
           <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-            <Zap className="mr-1 h-4 w-4" />
+            <Rocket className="mr-1 h-4 w-4" />
             <span>VELOCITY Plan</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             Start Automating<br />
-            <span className="text-indigo-600">For Just $500/Month</span>
+            <span className="text-indigo-600">Your Business Today</span>
           </h1>
           
           <p className="text-xl text-gray-600">
-            Get your business running on autopilot with our affordable starter plan. 
-            Save time, increase revenue, and work less - starting in just 14 days.
+            Begin your automation journey with an affordable plan that eliminates manual tasks
+            and helps you capture more leads with less effort.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
@@ -171,7 +173,7 @@ export default function VelocityPlan() {
               <span className="text-3xl font-bold text-indigo-600">$500<span className="text-base text-gray-500">/month</span></span>
             </CardTitle>
             <CardDescription className="text-base">
-              Perfect for small businesses ready to automate
+              The perfect starter automation plan for small businesses
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-6">
@@ -205,13 +207,84 @@ export default function VelocityPlan() {
         </Card>
       </section>
       
+      {/* Comparison Section */}
+      <section className="py-12 bg-gray-50 rounded-2xl p-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold">Why Choose VELOCITY?</h2>
+          <p className="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">
+            The perfect starting point for your business automation journey
+          </p>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full bg-white rounded-lg shadow">
+            <thead>
+              <tr>
+                <th className="py-4 px-6 text-left bg-gray-100">Feature</th>
+                <th className="py-4 px-6 text-center bg-indigo-50">VELOCITY <span className="text-sm font-normal">($500/mo)</span></th>
+                <th className="py-4 px-6 text-center bg-blue-50">ACCELERATE <span className="text-sm font-normal">($1,500/mo)</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">Automation Workflows</td>
+                <td className="py-3 px-6 text-center font-bold text-indigo-600">2</td>
+                <td className="py-3 px-6 text-center">5</td>
+              </tr>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">API Integrations</td>
+                <td className="py-3 px-6 text-center font-bold text-indigo-600">1</td>
+                <td className="py-3 px-6 text-center">3</td>
+              </tr>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">Lead Capture</td>
+                <td className="py-3 px-6 text-center font-bold text-indigo-600">✓</td>
+                <td className="py-3 px-6 text-center">✓</td>
+              </tr>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">CRM Integration</td>
+                <td className="py-3 px-6 text-center">❌</td>
+                <td className="py-3 px-6 text-center">✓</td>
+              </tr>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">Email Marketing</td>
+                <td className="py-3 px-6 text-center font-bold text-indigo-600">Basic</td>
+                <td className="py-3 px-6 text-center">Advanced</td>
+              </tr>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">Support Level</td>
+                <td className="py-3 px-6 text-center font-bold text-indigo-600">Email Only</td>
+                <td className="py-3 px-6 text-center">Priority Email & Chat</td>
+              </tr>
+              <tr className="border-t">
+                <td className="py-3 px-6 font-medium">Implementation Time</td>
+                <td className="py-3 px-6 text-center font-bold text-indigo-600">14 Days</td>
+                <td className="py-3 px-6 text-center">10 Days</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div className="mt-8 text-center">
+          <Link href="/plans/accelerate">
+            <Button variant="outline" size="sm" className="mr-2">
+              View ACCELERATE Plan
+            </Button>
+          </Link>
+          <Link href="/plans/dominate">
+            <Button variant="outline" size="sm">
+              View DOMINATE Plan
+            </Button>
+          </Link>
+        </div>
+      </section>
+      
       {/* Benefits Section */}
       <section className="py-12">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold">How VELOCITY Will Transform Your Business</h2>
           <p className="text-xl text-gray-600 mt-4 max-w-3xl mx-auto">
-            Our starter automation plan is designed to give you immediate time savings 
-            and revenue growth with minimal investment.
+            Even with just two automation workflows, you'll see dramatic improvements in your daily operations
           </p>
         </div>
         
@@ -303,9 +376,9 @@ export default function VelocityPlan() {
       <section className="bg-indigo-600 text-white rounded-2xl p-8 md:p-12">
         <div className="md:flex items-center justify-between">
           <div className="mb-8 md:mb-0">
-            <h2 className="text-3xl font-bold">Ready to start automating?</h2>
+            <h2 className="text-3xl font-bold">Ready to get started?</h2>
             <p className="text-indigo-100 mt-2 text-lg">
-              Get started with VELOCITY for just $500/month and start saving time today.
+              Begin your automation journey with our affordable VELOCITY plan.
             </p>
           </div>
           
