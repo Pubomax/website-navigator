@@ -22,6 +22,11 @@ import Solutions from "@/pages/solutions";
 import About from "@/pages/about";
 import Careers from "@/pages/careers";
 
+// Plan pages
+import VelocityPlan from "@/pages/plans/velocity";
+import AcceleratePlan from "@/pages/plans/accelerate";
+import DominatePlan from "@/pages/plans/dominate";
+
 // Integration pages
 import Integrations from "@/pages/integrations";
 import N8nGuide from "@/pages/integrations/n8n-guide";
@@ -101,6 +106,11 @@ function Router() {
           <Route path="/solutions/smart-nurturing" component={SmartNurturing} />
           <Route path="/solutions/instant-customer-engagement" component={InstantCustomerEngagement} />
           <Route path="/solutions/quick-acquisition" component={QuickAcquisition} />
+          
+          {/* Plan Routes */}
+          <Route path="/plans/velocity" component={VelocityPlan} />
+          <Route path="/plans/accelerate" component={AcceleratePlan} />
+          <Route path="/plans/dominate" component={DominatePlan} />
           
           {/* Service Routes */}
           <Route path="/services/digital-foundation" component={DigitalFoundation} />

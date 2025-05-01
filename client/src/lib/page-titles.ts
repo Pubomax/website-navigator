@@ -51,6 +51,9 @@ type PathKey =
   | 'britishColumbia'
   | 'alberta'
   | 'quebec'
+  | 'velocity'
+  | 'accelerate'
+  | 'dominate'
   | 'notFound';
 
 // Title format: Page Name | Minecore Group
@@ -307,6 +310,36 @@ const pageTitles: Record<PathKey, PageTitleData> = {
     description: {
       en: 'Minecore Group provides specialized AI automation services for small businesses in Montreal and throughout Quebec. Local expertise, global technology.',
       fr: 'Groupe Minecore fournit des services d\'automatisation IA spécialisés pour les petites entreprises à Montréal et partout au Québec. Expertise locale, technologie mondiale.'
+    }
+  },
+  velocity: {
+    title: {
+      en: 'VELOCITY Plan - $500/month Starter Automation | Minecore Group',
+      fr: 'Plan VELOCITY - Automatisation de Base à 500$/mois | Groupe Minecore'
+    },
+    description: {
+      en: 'Get started with AI automation for just $500/month. Our VELOCITY plan includes 2 automation workflows, lead capture systems, and more. Perfect for small Montreal businesses.',
+      fr: 'Commencez avec l\'automatisation IA pour seulement 500$/mois. Notre plan VELOCITY comprend 2 flux d\'automatisation, des systèmes de capture de leads, et plus. Parfait pour les petites entreprises de Montréal.'
+    }
+  },
+  accelerate: {
+    title: {
+      en: 'ACCELERATE Plan - $1,500/month Advanced Automation | Minecore Group',
+      fr: 'Plan ACCELERATE - Automatisation Avancée à 1 500$/mois | Groupe Minecore'
+    },
+    description: {
+      en: 'Scale your business with our ACCELERATE plan at $1,500/month. Get 5 automation workflows, CRM integration, email marketing automation, and more. Increase revenue by 20-30%.',
+      fr: 'Développez votre entreprise avec notre plan ACCELERATE à 1 500$/mois. Obtenez 5 flux d\'automatisation, l\'intégration CRM, l\'automatisation du marketing par e-mail, et plus. Augmentez vos revenus de 20-30%.'
+    }
+  },
+  dominate: {
+    title: {
+      en: 'DOMINATE Plan - $3,500/month Complete Automation Solution | Minecore Group',
+      fr: 'Plan DOMINATE - Solution d\'Automatisation Complète à 3 500$/mois | Groupe Minecore'
+    },
+    description: {
+      en: 'Transform your entire business operations with our comprehensive DOMINATE plan at $3,500/month. Get 10+ custom automation workflows, AI-driven marketing, predictive analytics, and a dedicated account manager.',
+      fr: 'Transformez l\'ensemble de vos opérations commerciales avec notre plan DOMINATE complet à 3 500$/mois. Obtenez plus de 10 flux d\'automatisation personnalisés, du marketing piloté par l\'IA, des analyses prédictives et un gestionnaire de compte dédié.'
     }
   },
   notFound: {
