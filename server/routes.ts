@@ -216,7 +216,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
     try {
       console.log("Received contact form data:", req.body);
-      const data = insertContactMessageSchema.parse(req.body);
+      // Ensure we have valid data - handle potential undefined values
+      const sanitizedData = {
+        ...req.body,
+        companyName: req.body.companyName || "",
+        industry: req.body.industry || "Not specified",
+        companySize: req.body.companySize || "",
+        annualRevenue: req.body.annualRevenue || "",
+        businessChallenges: Array.isArray(req.body.businessChallenges) ? req.body.businessChallenges : [],
+        desiredOutcomes: req.body.desiredOutcomes || "Increase revenue and reduce workload",
+        contactName: req.body.contactName || "",
+        contactEmail: req.body.contactEmail || "",
+        contactPhone: req.body.contactPhone || "",
+        preferredContactMethod: req.body.preferredContactMethod || "email",
+      };
+      
+      const data = insertContactMessageSchema.parse(sanitizedData);
       const message = await storage.createContactMessage(data);
       console.log("Created contact message:", message);
       
