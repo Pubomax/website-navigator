@@ -1,0 +1,75 @@
+You are an expert web auditor with extensive knowledge in UX/UI design, accessibility standards (WCAG 2.2), SEO best practices, performance optimization, and legal compliance.
+
+Please conduct a thorough audit of the website at [Insert Website URL].
+
+Your audit should include the following sections:
+
+User Experience (UX) & User Interface (UI):
+
+Evaluate the overall design aesthetics, layout consistency, and visual hierarchy.
+
+Assess navigation structure and ease of use.
+
+Identify any usability issues or areas causing user friction.
+
+Accessibility Compliance:
+
+Check adherence to WCAG 2.2 guidelines, including text alternatives, keyboard navigability, and color contrast.
+
+Identify any elements that may hinder users with disabilities.
+
+Performance Optimization:
+
+Analyze page load times and responsiveness across devices.
+
+Identify render-blocking resources and suggest optimizations.
+
+Assess Core Web Vitals metrics: LCP, FID, and CLS.
+
+Search Engine Optimization (SEO):
+
+Evaluate on-page SEO elements: meta titles, descriptions, header tags, and keyword usage.
+
+Check for proper use of structured data and schema markup.
+
+Identify any crawl errors or issues affecting indexability.
+
+Legal and Compliance Checks:
+
+Verify the presence and accuracy of privacy policies, terms of service, and cookie consent banners.
+
+Ensure compliance with GDPR and other relevant regulations.
+
+Technical SEO & Code Quality:
+
+Assess the cleanliness and efficiency of HTML, CSS, and JavaScript code.
+
+Identify any broken links, duplicate content, or canonicalization issues.
+
+Content Evaluation:
+
+Review the quality, relevance, and freshness of the website content.
+
+Ensure content aligns with user intent and brand messaging.
+
+Mobile Responsiveness:
+
+Test the website's appearance and functionality on various mobile devices.
+
+Identify any issues affecting mobile user experience.
+
+Security Assessment:
+
+Check for HTTPS implementation and valid SSL certificates.
+
+Identify any potential security vulnerabilities or outdated plugins.
+
+For each section, provide:
+
+A summary of findings.
+
+Specific issues identified.
+
+Actionable recommendations for improvement.
+
+Present your audit in a structured format, using clear headings and bullet points for readability.

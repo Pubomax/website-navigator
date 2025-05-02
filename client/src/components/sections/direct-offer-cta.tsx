@@ -71,7 +71,7 @@ const getContent = (isPathFrench: boolean) => ({
       id: "chatbot",
       commercialName: isPathFrench ? "ACCELERATE" : "ACCELERATE",
       title: isPathFrench ? "Service Chatbot & Capture de Leads" : "Chatbot & Lead Capture Service",
-      price: isPathFrench ? "800$/mois" : "$800/month",
+      price: isPathFrench ? "1500$/mois" : "$1,500/month",
       testimonyTitle: isPathFrench 
         ? "Répondez automatiquement aux questions et capturez des leads 24h/24." 
         : "Automatically answer questions and capture leads 24/7.",
@@ -113,7 +113,7 @@ const getContent = (isPathFrench: boolean) => ({
       id: "qualified",
       commercialName: isPathFrench ? "DOMINATE" : "DOMINATE",
       title: isPathFrench ? "Service de Génération de Leads" : "Lead Generation Service",
-      price: isPathFrench ? "1500$/mois" : "$1,500/month",
+      price: isPathFrench ? "3500$/mois" : "$3,500/month",
       testimonyTitle: isPathFrench 
         ? "Nous recherchons et vous livrons des prospects qualifiés chaque semaine." 
         : "We research and deliver qualified prospects to you every week.",
