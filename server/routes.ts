@@ -89,25 +89,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Add proxy for n8n webhook POST requests to avoid CORS issues
   app.post("/api/chat-proxy", async (req, res) => {
     try {
+      // Forward the request to n8n with the required headers
       const response = await axios.post(
-        'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103',
+        'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
         req.body,
         {
           headers: {
             'Content-Type': 'application/json',
             'Origin': req.headers.origin || 'https://minecoregroup.com',
             'Referer': req.headers.referer || 'https://minecoregroup.com',
+            'Authorization': req.headers.authorization || 'Bearer YOUR_TOKEN',
           }
         }
       );
       
+      // Return the response from n8n
       res.status(response.status).json(response.data);
     } catch (error: any) {
       console.error('Error proxying to n8n webhook:', error.message);
       if (error.response) {
+        // Forward the error status and data from n8n
         res.status(error.response.status).json(error.response.data);
       } else {
-        res.status(500).json({ error: 'Failed to reach n8n webhook' });
+        // Generic error if we couldn't reach n8n
+        res.status(500).json({ error: 'Failed to reach n8n chat service' });
       }
     }
   });
