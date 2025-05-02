@@ -53,10 +53,12 @@ const adminAuthMiddleware = async (req: any, res: any, next: any) => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Serve robots.txt directly from public folder
-  app.get('/robots.txt', (req, res) => {
-    res.sendFile('robots.txt', { root: './client/public' });
-  });
+  // Only serve robots.txt from our API in production to avoid conflicts with Vite
+  if (process.env.NODE_ENV === 'production') {
+    app.get('/robots.txt', (req, res) => {
+      res.sendFile('robots.txt', { root: './client/public' });
+    });
+  }
   // Create HTTP server first
   const httpServer = createServer(app);
 
