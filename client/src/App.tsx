@@ -7,7 +7,6 @@ import { Footer } from "@/components/layout/footer";
 import { CookieConsent } from "@/components/cookie-consent";
 import { ProtectedRoute } from "./lib/protected-route";
 import { Helmet } from "react-helmet";
-import N8nChat from "@/components/n8n-chat";
 
 // Main pages
 import Home from "@/pages/home";
@@ -248,7 +247,6 @@ function App() {
       <Router />
       <CookieConsent />
       <Toaster />
-      <N8nChat />
     </QueryClientProvider>
   );
 }

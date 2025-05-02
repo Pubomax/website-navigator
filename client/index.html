@@ -7,5 +7,46 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- n8n Chat Widget -->
+    <script src="https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat"></script>
+    <style>
+      /* Custom styles for n8n chat widget */
+      .n8n-chat-widget {
+        z-index: 1000 !important;
+      }
+      
+      .n8n-chat-widget-button {
+        background-color: #4f46e5 !important; /* Indigo color matching theme */
+        color: white !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3) !important;
+        width: 56px !important;
+        height: 56px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: fixed !important;
+        bottom: 24px !important;
+        right: 24px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease-in-out !important;
+      }
+      
+      .n8n-chat-widget-button:hover {
+        transform: scale(1.05) !important;
+        box-shadow: 0 8px 16px rgba(79, 70, 229, 0.4) !important;
+      }
+      
+      .n8n-chat-window {
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+      }
+      
+      .n8n-chat-header {
+        background-color: #4f46e5 !important;
+        color: white !important;
+      }
+    </style>
   </body>
 </html>
