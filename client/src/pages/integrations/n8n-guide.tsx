@@ -176,6 +176,36 @@ export default function N8nGuide() {
         <TabsContent value="blog-automation" className="space-y-8">
           <Card>
             <CardHeader>
+              <CardTitle>Comprehensive Blog Automation Guide</CardTitle>
+              <CardDescription>
+                We've created a detailed guide to help you automate your entire blog workflow with n8n.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <FileJson className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-blue-800">Complete Blog Automation Workflows</h4>
+                  <p className="text-sm text-blue-700 mt-1">
+                    Our comprehensive guide includes ready-to-use n8n workflows for content generation, 
+                    enhancement, and automatic translation between English and French.
+                  </p>
+                  <div className="mt-4">
+                    <Button asChild variant="outline" size="sm" className="text-blue-600 border-blue-300">
+                      <a href="/docs/blog-automation-guide.md" target="_blank" rel="noopener noreferrer">
+                        Download Complete Guide <ArrowRight className="ml-1 h-3 w-3" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle>Blog Post Management API</CardTitle>
               <CardDescription>
                 Automate your blog content creation and management using these API endpoints.
