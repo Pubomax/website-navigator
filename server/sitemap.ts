@@ -27,6 +27,10 @@ export function setupSitemap() {
     const pages = [
       { path: '/', key: 'home', priority: 1.0, changefreq: 'weekly' as const },
       { path: '/about', key: 'about', priority: 0.8, changefreq: 'monthly' as const },
+      { path: '/about/story', key: 'story', priority: 0.7, changefreq: 'monthly' as const },
+      { path: '/about/mission', key: 'mission', priority: 0.7, changefreq: 'monthly' as const },
+      { path: '/about/team', key: 'team', priority: 0.7, changefreq: 'monthly' as const },
+      { path: '/careers', key: 'careers', priority: 0.7, changefreq: 'weekly' as const },
       { path: '/services', key: 'services', priority: 0.9, changefreq: 'monthly' as const },
       { path: '/solutions', key: 'solutions', priority: 0.9, changefreq: 'monthly' as const },
       { path: '/consultation', key: 'consultation', priority: 0.9, changefreq: 'monthly' as const },
@@ -37,6 +41,11 @@ export function setupSitemap() {
       { path: '/privacy', key: 'privacy', priority: 0.4, changefreq: 'yearly' as const },
       { path: '/terms', key: 'terms', priority: 0.4, changefreq: 'yearly' as const },
       
+      // Plans
+      { path: '/plans/velocity', key: 'velocity', priority: 0.9, changefreq: 'monthly' as const },
+      { path: '/plans/accelerate', key: 'accelerate', priority: 0.9, changefreq: 'monthly' as const },
+      { path: '/plans/dominate', key: 'dominate', priority: 0.9, changefreq: 'monthly' as const },
+      
       // Services
       { path: '/services/digital-foundation', key: 'digitalFoundation', priority: 0.8, changefreq: 'monthly' as const },
       { path: '/services/transformation-consulting', key: 'transformationConsulting', priority: 0.8, changefreq: 'monthly' as const },
@@ -46,6 +55,12 @@ export function setupSitemap() {
       { path: '/services/intelligent-support', key: 'intelligentSupport', priority: 0.8, changefreq: 'monthly' as const },
       { path: '/services/sales-automation', key: 'salesAutomation', priority: 0.8, changefreq: 'monthly' as const },
       { path: '/services/marketing-automation', key: 'marketingAutomation', priority: 0.8, changefreq: 'monthly' as const },
+      
+      // Solutions
+      { path: '/solutions/automated-lead-generation', key: 'automatedLeadGeneration', priority: 0.8, changefreq: 'monthly' as const },
+      { path: '/solutions/smart-nurturing', key: 'smartNurturing', priority: 0.8, changefreq: 'monthly' as const },
+      { path: '/solutions/instant-customer-engagement', key: 'instantCustomerEngagement', priority: 0.8, changefreq: 'monthly' as const },
+      { path: '/solutions/quick-acquisition', key: 'quickAcquisition', priority: 0.8, changefreq: 'monthly' as const },
       
       // Industries/Sectors
       { path: '/sectors/manufacturing', key: 'manufacturing', priority: 0.7, changefreq: 'monthly' as const },

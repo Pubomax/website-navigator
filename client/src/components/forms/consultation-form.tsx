@@ -6,6 +6,11 @@ import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
+// Helper function to handle null/undefined values safely in controlled inputs
+const safeValue = (value: string | null | undefined): string => {
+  return value === null || value === undefined ? "" : value;
+};
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -227,10 +232,7 @@ Additional Notes: ${values.additionalNotes}${preselectedPlan ? `\n\nSelected Pla
     }
   }
 
-  // Helper function to safely convert null values to empty strings for input fields
-  const safeValue = (value: string | null | undefined): InputValue => {
-    return value === null ? "" : value;
-  };
+  // We already have a safeValue function declared at the top of the file
 
   return (
     <div className="container mx-auto max-w-3xl py-6">
