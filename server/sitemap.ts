@@ -17,6 +17,12 @@ interface SitemapUrl {
 export function setupSitemap() {
   const router = Router();
   
+  // Serve robots.txt
+  router.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.sendFile('robots.txt', { root: './client/public' });
+  });
+  
   router.get('/sitemap.xml', (req, res) => {
     // Generate URLs for all pages in both languages
     const urls: SitemapUrl[] = [];

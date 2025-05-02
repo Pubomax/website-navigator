@@ -1,20 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /api/
 Disallow: /integrations/
-
-# Allow search engine to index all content
-Allow: /*.js
-Allow: /*.css
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.jpeg
-Allow: /*.gif
-Allow: /*.svg
-Allow: /*.webp
 
 # Sitemap
 Sitemap: https://minecoregroup.com/sitemap.xml
-
-# Crawl delay for bots
-Crawl-delay: 10

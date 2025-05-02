@@ -322,7 +322,7 @@ export function Header() {
       <div className="container mx-auto max-w-7xl px-4 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href={getLocalizedPath("/")} className="shrink-0">
-          <img src="/images/logo.png" alt="Minecore Group" className="h-14" />
+          <img src="/images/logo.png" alt="Minecore Group" className="h-14" loading="eager" />
         </Link>
 
         {/* Desktop navigation - centered */}
