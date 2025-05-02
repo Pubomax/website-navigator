@@ -4,7 +4,7 @@ import axios from 'axios';
 // Set up proxy to handle chat requests
 export async function setupChatProxy(req: Request, res: Response) {
   try {
-    // Return a simple chat HTML page
+    // Return a lead-focused chat HTML page
     const htmlContent = `
       <!DOCTYPE html>
       <html lang="en">
@@ -151,12 +151,115 @@ export async function setupChatProxy(req: Request, res: Response) {
             animation: pulse 1s infinite 0.4s;
           }
           
+          /* Lead form styles */
+          .lead-form {
+            display: none;
+            flex-direction: column;
+            padding: 16px;
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+          }
+          
+          .form-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #111827;
+          }
+          
+          .form-group {
+            margin-bottom: 12px;
+          }
+          
+          .form-label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: #374151;
+          }
+          
+          .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+          }
+          
+          .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+          }
+          
+          .form-input.error {
+            border-color: #ef4444;
+          }
+          
+          .form-error {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 2px;
+          }
+          
+          .submit-button {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+          }
+          
+          .submit-button:hover {
+            background-color: #4338ca;
+          }
+          
+          .submit-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+          }
+          
+          .n8n-container {
+            display: none;
+            height: 100%;
+            width: 100%;
+            position: relative;
+          }
+          
+          #loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+          }
+          
+          .loader {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(79, 70, 229, 0.2);
+            border-radius: 50%;
+            border-top-color: #4f46e5;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 16px;
+          }
+          
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+          
           @keyframes pulse {
             0% { opacity: 0.4; }
             50% { opacity: 1; }
             100% { opacity: 0.4; }
           }
         </style>
+        <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
       </head>
       <body>
         <div class="header">
@@ -164,10 +267,11 @@ export async function setupChatProxy(req: Request, res: Response) {
           <div id="close-button" style="cursor: pointer; font-size: 20px; font-weight: bold;">&times;</div>
         </div>
         
-        <div class="chat-container">
+        <!-- Our custom chat interface -->
+        <div class="chat-container" id="custom-chat">
           <div class="messages" id="messages">
             <div class="message bot-message">
-              Hello! I'm Minecore's virtual assistant. How can I help you today?
+              👋 Hi there! I'm the Minecore assistant. Want to save time and make more money with AI automation? I can help you get started with our $500/month starter package.
             </div>
           </div>
           
@@ -177,7 +281,7 @@ export async function setupChatProxy(req: Request, res: Response) {
             <span></span>
           </div>
           
-          <div class="input-area">
+          <div class="input-area" id="chat-input-area">
             <input type="text" class="message-input" id="message-input" placeholder="Type your message..." aria-label="Type your message">
             <button id="send-button" class="send-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -186,58 +290,131 @@ export async function setupChatProxy(req: Request, res: Response) {
               </svg>
             </button>
           </div>
+          
+          <!-- Lead capture form -->
+          <div class="lead-form" id="lead-form">
+            <div class="form-title">Great! Let's schedule your free consultation</div>
+            <div class="form-group">
+              <label for="name" class="form-label">Your Name</label>
+              <input type="text" id="name" class="form-input" placeholder="John Smith">
+              <div class="form-error" id="name-error"></div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" id="email" class="form-input" placeholder="john@example.com">
+              <div class="form-error" id="email-error"></div>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" id="phone" class="form-input" placeholder="(555) 123-4567">
+              <div class="form-error" id="phone-error"></div>
+            </div>
+            <div class="form-group">
+              <label for="company" class="form-label">Company Name</label>
+              <input type="text" id="company" class="form-input" placeholder="Acme Inc.">
+              <div class="form-error" id="company-error"></div>
+            </div>
+            <div class="form-group">
+              <label for="interest" class="form-label">What interests you most?</label>
+              <select id="interest" class="form-input">
+                <option value="sales">Sales Automation</option>
+                <option value="marketing">Marketing Automation</option>
+                <option value="customer-service">Customer Service Automation</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <button id="submit-lead" class="submit-button">Schedule My Consultation</button>
+          </div>
+        </div>
+        
+        <!-- n8n chat container (will attempt to load) -->
+        <div id="n8n-container" class="n8n-container">
+          <div id="n8n-chat-target"></div>
+          <div id="loading-indicator">
+            <div class="loader"></div>
+            <div>Connecting to chat service...</div>
+          </div>
         </div>
         
         <script>
-          // DOM elements
+          // DOM elements for our custom chat
+          const customChat = document.getElementById('custom-chat');
           const messagesContainer = document.getElementById('messages');
           const messageInput = document.getElementById('message-input');
           const sendButton = document.getElementById('send-button');
           const typingIndicator = document.getElementById('typing-indicator');
           const closeButton = document.getElementById('close-button');
+          const chatInputArea = document.getElementById('chat-input-area');
+          const leadForm = document.getElementById('lead-form');
           
-          // Predefined responses for the chat bot
-          const responses = [
-            "Thanks for reaching out! Our team specializes in AI automation solutions to help businesses save time and increase revenue.",
-            "Minecore Group offers solutions for sales automation, marketing automation, and customer service automation. What area interests you most?",
-            "Our starter automation package starts at just $500/month and can help you automate repetitive tasks, customer communications, and lead generation.",
-            "We've helped businesses increase their revenue by 30% and save up to 20 hours per week through our automation services.",
-            "Would you like to schedule a consultation call to discuss your specific business needs?",
-            "Our team has over 20 years of experience in automation and digital transformation projects.",
-            "You can learn more about our services at minecoregroup.com, or I can put you in touch with one of our specialists.",
-            "We focus on making businesses more efficient so owners can make more money while working less - that's our core value proposition.",
-            "Is there a specific business challenge you're trying to solve with automation?"
+          // DOM elements for n8n integration
+          const n8nContainer = document.getElementById('n8n-container');
+          const loadingIndicator = document.getElementById('loading-indicator');
+          
+          // Lead form elements
+          const nameInput = document.getElementById('name');
+          const emailInput = document.getElementById('email');
+          const phoneInput = document.getElementById('phone');
+          const companyInput = document.getElementById('company');
+          const interestSelect = document.getElementById('interest');
+          const submitLeadButton = document.getElementById('submit-lead');
+          
+          // Flag to track if the lead form has been shown
+          let leadFormShown = false;
+          
+          // Track conversation steps
+          let conversationStep = 0;
+          let userName = '';
+          
+          // Sequence of messages to encourage lead generation
+          const conversationFlow = [
+            "What type of business do you run? I can help recommend the best automation solutions based on your industry.",
+            "What's your biggest time-consuming challenge at work? Many businesses spend too much time on repetitive tasks that can be automated.",
+            "Would you be interested in seeing a free demo of how our automation solutions could save you time and increase your revenue?",
+            "Great! Could you share your name so I can personalize our conversation?",
+            "Thanks, {name}! To set up your free consultation, we just need a few details to understand your needs better."
           ];
           
-          // Context-specific responses based on user input
-          const contextResponses = {
-            pricing: [
-              "Our pricing is designed to scale with your business. The starter automation package is $500/month, our accelerate package is $1,500/month, and our dominate package is $3,500/month.",
-              "All our packages include ongoing support and maintenance of your automation workflows."
-            ],
-            sales: [
-              "Our sales automation solutions help with lead scoring, automated follow-ups, pipeline management, and sales forecasting.",
-              "Many of our clients have seen a 40% increase in sales team productivity after implementing our solutions."
-            ],
-            marketing: [
-              "For marketing automation, we offer email campaign management, social media scheduling, lead nurturing, and analytics dashboards.",
-              "Our marketing automation tools can help you generate more qualified leads while spending less time on repetitive tasks."
-            ],
-            consultation: [
-              "I'd be happy to set up a consultation call with one of our specialists. What's the best email to reach you at?",
-              "Great! Someone from our team will contact you within one business day to schedule your consultation."
-            ]
-          };
+          // Specific trigger phrases that should immediately show the lead form
+          const leadTriggers = [
+            'yes',
+            'sure',
+            'interested',
+            'tell me more',
+            'consultation',
+            'demo',
+            'more information',
+            'contact',
+            'talk',
+            'call'
+          ];
+          
+          // Function to check if user's message contains any lead triggers
+          function containsLeadTrigger(message) {
+            const lowerMessage = message.toLowerCase();
+            return leadTriggers.some(trigger => lowerMessage.includes(trigger));
+          }
           
           // Function to add a message to the chat
           function addMessage(text, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
             messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            
+            // Replace {name} placeholder with actual name if provided
+            if (userName && !isUser) {
+              text = text.replace('{name}', userName);
+            }
+            
             messageDiv.textContent = text;
             messagesContainer.appendChild(messageDiv);
             // Scroll to the bottom
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // If we've reached the name question and this is a user message, save their name
+            if (conversationStep === 3 && isUser && !userName) {
+              userName = text.trim();
+            }
           }
           
           // Function to show the typing indicator
@@ -252,49 +429,65 @@ export async function setupChatProxy(req: Request, res: Response) {
             typingIndicator.style.display = 'none';
           }
           
-          // Determine if a message contains certain keywords
-          function getResponseContext(message) {
-            const lowerMessage = message.toLowerCase();
-            
-            if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('package') || lowerMessage.includes('plan')) {
-              return 'pricing';
-            } else if (lowerMessage.includes('sales') || lowerMessage.includes('lead') || lowerMessage.includes('customer') || lowerMessage.includes('client')) {
-              return 'sales';
-            } else if (lowerMessage.includes('marketing') || lowerMessage.includes('campaign') || lowerMessage.includes('email') || lowerMessage.includes('social')) {
-              return 'marketing';
-            } else if (lowerMessage.includes('call') || lowerMessage.includes('meeting') || lowerMessage.includes('talk') || lowerMessage.includes('consultation')) {
-              return 'consultation';
+          // Function to get the next bot message in the conversation flow
+          function getNextBotMessage() {
+            if (conversationStep < conversationFlow.length) {
+              return conversationFlow[conversationStep++];
             }
             
+            // If we've gone through all steps, show lead form
+            showLeadForm();
             return null;
           }
           
-          // Function to get a bot response
-          function getBotResponse(userMessage) {
-            // Check for context-specific response
-            const context = getResponseContext(userMessage);
-            if (context && contextResponses[context]) {
-              const contextResponseList = contextResponses[context];
-              return contextResponseList[Math.floor(Math.random() * contextResponseList.length)];
+          // Function to show the lead form
+          function showLeadForm() {
+            if (!leadFormShown) {
+              leadFormShown = true;
+              chatInputArea.style.display = 'none';
+              leadForm.style.display = 'flex';
+              addMessage("Please fill out the form below to schedule your free consultation.", false);
             }
-            
-            // Default to random response
-            return responses[Math.floor(Math.random() * responses.length)];
           }
           
-          // Function to simulate a bot response
-          function simulateBotResponse(userMessage) {
+          // Function to handle bot response
+          function botResponse(userMessage) {
             showTypingIndicator();
             
-            // Random response delay between 1-3 seconds
-            const delay = Math.floor(Math.random() * 2000) + 1000;
+            // Check if the user message contains a lead trigger phrase
+            if (containsLeadTrigger(userMessage)) {
+              // If it's a trigger phrase, expedite to the lead form
+              setTimeout(() => {
+                hideTypingIndicator();
+                addMessage("That's great! I'd be happy to help you get started right away.", false);
+                
+                // Ask for name first if we don't have it
+                if (!userName) {
+                  setTimeout(() => {
+                    addMessage("To personalize our conversation, could you please tell me your name?", false);
+                    conversationStep = 3; // Set to the name question step
+                  }, 1000);
+                } else {
+                  // If we already have the name, show the lead form
+                  setTimeout(() => {
+                    showLeadForm();
+                  }, 1000);
+                }
+              }, 1000);
+              return;
+            }
+            
+            // Random response delay between 1-2 seconds
+            const delay = Math.floor(Math.random() * 1000) + 1000;
             
             setTimeout(() => {
               hideTypingIndicator();
               
-              // Get a response based on user message
-              const botResponse = getBotResponse(userMessage);
-              addMessage(botResponse, false);
+              // Get the next message in our conversation flow
+              const botMessage = getNextBotMessage();
+              if (botMessage) {
+                addMessage(botMessage, false);
+              }
               
               // Re-enable the input and button
               messageInput.disabled = false;
@@ -302,18 +495,6 @@ export async function setupChatProxy(req: Request, res: Response) {
               messageInput.focus();
             }, delay);
           }
-          
-          // Handle send button click
-          sendButton.addEventListener('click', function() {
-            sendMessage();
-          });
-          
-          // Handle Enter key press in input
-          messageInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-              sendMessage();
-            }
-          });
           
           // Function to send a message
           function sendMessage() {
@@ -329,9 +510,162 @@ export async function setupChatProxy(req: Request, res: Response) {
               messageInput.disabled = true;
               sendButton.disabled = true;
               
-              // Simulate bot response
-              simulateBotResponse(message);
+              // Process bot response
+              botResponse(message);
             }
+          }
+          
+          // Handle send button click
+          sendButton.addEventListener('click', function() {
+            sendMessage();
+          });
+          
+          // Handle Enter key press in input
+          messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              sendMessage();
+            }
+          });
+          
+          // Form validation
+          function validateForm() {
+            let isValid = true;
+            
+            // Validate name
+            if (!nameInput.value.trim()) {
+              document.getElementById('name-error').textContent = 'Please enter your name';
+              nameInput.classList.add('error');
+              isValid = false;
+            } else {
+              document.getElementById('name-error').textContent = '';
+              nameInput.classList.remove('error');
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+            if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+              document.getElementById('email-error').textContent = 'Please enter a valid email address';
+              emailInput.classList.add('error');
+              isValid = false;
+            } else {
+              document.getElementById('email-error').textContent = '';
+              emailInput.classList.remove('error');
+            }
+            
+            // Validate phone (optional but if entered, must be valid)
+            if (phoneInput.value.trim()) {
+              const phoneRegex = /^[\\d\\s\\(\\)\\-\\+]+$/;
+              if (!phoneRegex.test(phoneInput.value.trim())) {
+                document.getElementById('phone-error').textContent = 'Please enter a valid phone number';
+                phoneInput.classList.add('error');
+                isValid = false;
+              } else {
+                document.getElementById('phone-error').textContent = '';
+                phoneInput.classList.remove('error');
+              }
+            }
+            
+            return isValid;
+          }
+          
+          // Handle lead form submission
+          submitLeadButton.addEventListener('click', function() {
+            if (validateForm()) {
+              // Show processing state
+              submitLeadButton.disabled = true;
+              submitLeadButton.textContent = 'Processing...';
+              
+              // Collect form data
+              const formData = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                company: companyInput.value.trim(),
+                interest: interestSelect.value
+              };
+              
+              // Post data to server
+              fetch('/api/lead-capture', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+              })
+              .then(response => response.json())
+              .then(data => {
+                // Hide the form
+                leadForm.style.display = 'none';
+                
+                // Show success message
+                addMessage("Thank you for your interest! One of our automation specialists will contact you within 24 hours to schedule your free consultation. In the meantime, feel free to explore our website for more information.", false);
+              })
+              .catch(error => {
+                console.error('Error submitting lead:', error);
+                submitLeadButton.disabled = false;
+                submitLeadButton.textContent = 'Schedule My Consultation';
+                addMessage("I apologize, but we encountered an issue processing your request. Please try again or contact us directly at hello@minecoregroup.com", false);
+              });
+            }
+          });
+          
+          // Try to load n8n chat
+          let n8nAvailable = false;
+          
+          function loadN8nChat() {
+            // First check if n8n is available
+            fetch('https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat', {
+              method: 'GET',
+              mode: 'no-cors'
+            })
+            .then(() => {
+              try {
+                // Import the n8n chat module
+                import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js')
+                  .then(module => {
+                    const { createChat } = module;
+                    
+                    // Create the chat with the webhook URL
+                    createChat({
+                      webhookUrl: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+                      webhookConfig: {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
+                      },
+                      targetElement: '#n8n-chat-target'
+                    })
+                    .then(() => {
+                      console.log('n8n chat loaded successfully');
+                      n8nAvailable = true;
+                      loadingIndicator.style.display = 'none';
+                      
+                      // Show the n8n chat interface, hide our custom chat
+                      customChat.style.display = 'none';
+                      n8nContainer.style.display = 'block';
+                    })
+                    .catch(error => {
+                      console.error('Failed to initialize n8n chat:', error);
+                    });
+                  })
+                  .catch(error => {
+                    console.error('Error importing n8n chat module:', error);
+                  });
+              } catch (error) {
+                console.error('Error setting up n8n chat:', error);
+              }
+            })
+            .catch(error => {
+              console.error('n8n endpoint not available:', error);
+            });
+            
+            // Timeout to fall back to our custom chat if n8n doesn't load
+            setTimeout(() => {
+              if (!n8nAvailable) {
+                // Make sure our custom chat is visible
+                customChat.style.display = 'flex';
+                n8nContainer.style.display = 'none';
+              }
+            }, 3000);
           }
           
           // Close chat when clicking the close button
@@ -339,8 +673,21 @@ export async function setupChatProxy(req: Request, res: Response) {
             window.parent.postMessage('close-chat', '*');
           });
           
-          // Focus the input field when the chat loads
-          messageInput.focus();
+          // Initialize the chat interface
+          function initChat() {
+            // Try to load n8n chat first
+            loadN8nChat();
+            
+            // Make sure our custom chat is visible initially
+            customChat.style.display = 'flex';
+            n8nContainer.style.display = 'none';
+            
+            // Focus the input field when the chat loads
+            messageInput.focus();
+          }
+          
+          // Start the chat
+          initChat();
         </script>
       </body>
       </html>

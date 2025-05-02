@@ -116,6 +116,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     }
   });
+  
+  // Endpoint to handle lead capture from chat
+  app.post("/api/lead-capture", async (req, res) => {
+    try {
+      const leadData = req.body;
+      
+      console.log('Lead captured from chat:', leadData);
+      
+      // Create a contact message entry in the database
+      const contactData = {
+        subject: `Lead from Chat Widget - ${leadData.interest}`,
+        message: `A new lead was captured from the chat widget.
+          
+Name: ${leadData.name}
+Email: ${leadData.email}
+Phone: ${leadData.phone || 'Not provided'}
+Company: ${leadData.company || 'Not provided'}
+Interest: ${leadData.interest}
+`,
+        contactName: leadData.name,
+        contactEmail: leadData.email,
+        contactPhone: leadData.phone || '',
+        companyName: leadData.company || '',
+        preferredContactMethod: 'email',
+        industry: 'Not specified',
+        companySize: 'Not specified',
+        annualRevenue: 'Not specified',
+        businessChallenges: [leadData.interest],
+        desiredOutcomes: 'Increase revenue and reduce workload',
+      };
+      
+      try {
+        // Create a contact message in the database (this will trigger an email notification)
+        const message = await storage.createContactMessage(contactData);
+        
+        console.log("Created contact message from chat lead:", message);
+        
+        // Attempt to send confirmation email
+        let emailSent = false;
+        try {
+          emailSent = await sendConfirmationEmail(message);
+          console.log("Email confirmation for chat lead:", emailSent ? "Sent successfully" : "Failed to send");
+        } catch (emailError) {
+          console.error("Error sending confirmation email for chat lead:", emailError);
+        }
+        
+        // Try to also submit to n8n if available
+        try {
+          // Send to n8n webhook if available
+          const n8nResponse = await axios.post(
+            'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103',
+            leadData,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Origin': req.headers.origin || 'https://minecoregroup.com',
+              }
+            }
+          );
+          console.log('n8n lead submission successful:', n8nResponse.status);
+        } catch (n8nError) {
+          console.log('n8n lead submission failed (continuing anyway):', n8nError.message);
+        }
+        
+        res.status(201).json({
+          success: true,
+          message: "Lead captured successfully"
+        });
+      } catch (dbError) {
+        console.error("Database error storing chat lead:", dbError);
+        // Still return success even if DB storage fails
+        res.status(201).json({
+          success: true,
+          message: "Lead received (but database storage failed)",
+          error: dbError instanceof Error ? dbError.message : "Unknown database error"
+        });
+      }
+    } catch (error) {
+      console.error('Error processing lead capture:', error);
+      res.status(400).json({ 
+        success: false,
+        message: "Failed to process lead information"
+      });
+    }
+  });
 
   // Admin Routes
   app.post("/api/admin/login", async (req, res) => {
