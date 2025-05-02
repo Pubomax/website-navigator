@@ -154,12 +154,14 @@ export default function VelocityPlan() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                <DialogTitle className="text-lg font-bold">
-                  Get Started with the VELOCITY Plan
-                </DialogTitle>
-                <DialogDescription className="text-sm text-muted-foreground mb-4">
-                  Fill out this form to start your automation journey with our VELOCITY plan.
-                </DialogDescription>
+                <div className="mb-4">
+                  <h2 className="text-lg font-bold">
+                    Get Started with the VELOCITY Plan
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Fill out this form to start your automation journey with our VELOCITY plan.
+                  </p>
+                </div>
                 <ConsultationForm 
                   onSuccess={() => setIsFormOpen(false)}
                   preselectedPlan="VELOCITY"
@@ -204,6 +206,14 @@ export default function VelocityPlan() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                <div className="mb-4">
+                  <h2 className="text-lg font-bold">
+                    Get Started with the VELOCITY Plan
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Fill out this form to start your automation journey with our VELOCITY plan.
+                  </p>
+                </div>
                 <ConsultationForm 
                   onSuccess={() => setIsFormOpen(false)}
                   preselectedPlan="VELOCITY"
@@ -400,12 +410,14 @@ export default function VelocityPlan() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                <DialogTitle className="text-lg font-bold">
-                  Get Started with the VELOCITY Plan
-                </DialogTitle>
-                <DialogDescription className="text-sm text-muted-foreground mb-4">
-                  Fill out this form to start your automation journey with our VELOCITY plan.
-                </DialogDescription>
+                <div className="mb-4">
+                  <h2 className="text-lg font-bold">
+                    Get Started with the VELOCITY Plan
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Fill out this form to start your automation journey with our VELOCITY plan.
+                  </p>
+                </div>
                 <ConsultationForm 
                   onSuccess={() => setIsFormOpen(false)}
                   preselectedPlan="VELOCITY"
