@@ -24,11 +24,11 @@ export function ChatWidget() {
           </div>
           <div className="flex-1 overflow-hidden">
             <iframe 
-              src="https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat-embed" 
+              src="https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103" 
               title="Chat" 
               className="w-full h-full border-0"
               allow="microphone"
-              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-top-navigation"
             ></iframe>
           </div>
         </div>
