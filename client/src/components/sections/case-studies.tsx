@@ -69,6 +69,7 @@ export function CaseStudies() {
                   <img
                     src={study.imageUrl}
                     alt={study.title}
+                    loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </CardHeader>

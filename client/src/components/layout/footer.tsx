@@ -84,6 +84,7 @@ export function Footer() {
                 <img 
                   src="/images/logo.png" 
                   alt="Minecore Group" 
+                  loading="lazy"
                   className="h-16 w-auto"
                 />
               </Link>

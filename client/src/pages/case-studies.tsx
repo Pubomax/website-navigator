@@ -72,6 +72,7 @@ export default function CaseStudies() {
                   <img
                     src={study.imageUrl}
                     alt={isPathFrench ? study.frenchTitle || study.title : study.title}
+                    loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </CardHeader>

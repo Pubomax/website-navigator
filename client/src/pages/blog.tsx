@@ -139,6 +139,7 @@ function BlogPostCard({
           <img
             src={post.imageUrl}
             alt={isPathFrench ? post.frenchTitle || post.title : post.title}
+            loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
           />
         </CardHeader>

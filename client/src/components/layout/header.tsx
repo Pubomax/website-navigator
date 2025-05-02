@@ -904,7 +904,7 @@ export function Header() {
               {/* Logo in mobile menu */}
               <div className="flex justify-center mb-6">
                 <Link href={getLocalizedPath("/")} onClick={() => setMobileMenuOpen(false)}>
-                  <img src="/images/logo.png" alt="Minecore Group" className="h-10" />
+                  <img src="/images/logo.png" alt="Minecore Group" className="h-10" loading="lazy" />
                 </Link>
               </div>
               <div className="flex-1 overflow-y-auto">
