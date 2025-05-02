@@ -8,6 +8,7 @@ import { ZodError } from 'zod';
 import { setupSitemap } from './sitemap';
 import { sendConfirmationEmail } from './email';
 import { setupChatProxy } from './proxy';
+import axios from 'axios';
 
 // Helper function to check if an error is a ZodError
 function isZodError(error: unknown): error is ZodError {
@@ -82,8 +83,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Add sitemap route
   app.use(setupSitemap());
   
-  // Add n8n chat proxy route
+  // Add n8n chat proxy routes
   app.get("/api/chat-proxy", setupChatProxy);
+  
+  // Add proxy for n8n webhook POST requests to avoid CORS issues
+  app.post("/api/chat-proxy", async (req, res) => {
+    try {
+      const response = await axios.post(
+        'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103',
+        req.body,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Origin': req.headers.origin || 'https://minecoregroup.com',
+            'Referer': req.headers.referer || 'https://minecoregroup.com',
+          }
+        }
+      );
+      
+      res.status(response.status).json(response.data);
+    } catch (error: any) {
+      console.error('Error proxying to n8n webhook:', error.message);
+      if (error.response) {
+        res.status(error.response.status).json(error.response.data);
+      } else {
+        res.status(500).json({ error: 'Failed to reach n8n webhook' });
+      }
+    }
+  });
 
   // Admin Routes
   app.post("/api/admin/login", async (req, res) => {

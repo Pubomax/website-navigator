@@ -84,7 +84,15 @@ export async function setupChatProxy(req: Request, res: Response) {
         <div id="chat-container"></div>
         
         <!-- n8n Chat Script -->
-        <script src="https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+        <script type="module">
+          import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+          
+          createChat({
+            webhookUrl: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103',
+            targetElement: '#chat-container'
+          });
+        </script>
       </body>
       </html>
     `;
