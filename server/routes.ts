@@ -7,6 +7,7 @@ import MemoryStore from 'memorystore';
 import { ZodError } from 'zod';
 import { setupSitemap } from './sitemap';
 import { sendConfirmationEmail } from './email';
+import { setupChatProxy } from './proxy';
 
 // Helper function to check if an error is a ZodError
 function isZodError(error: unknown): error is ZodError {
@@ -80,6 +81,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Add sitemap route
   app.use(setupSitemap());
+  
+  // Add n8n chat proxy route
+  app.get("/api/chat-proxy", setupChatProxy);
 
   // Admin Routes
   app.post("/api/admin/login", async (req, res) => {
