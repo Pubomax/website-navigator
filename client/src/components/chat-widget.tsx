@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MessageCircle } from 'lucide-react';
 
 export function ChatWidget() {
@@ -7,6 +7,23 @@ export function ChatWidget() {
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
+  
+  // Handle message from iframe to close chat
+  const handleMessage = useCallback((event: MessageEvent) => {
+    if (event.data === 'close-chat') {
+      setIsOpen(false);
+    }
+  }, []);
+  
+  // Add event listener for messages from chat iframe
+  useEffect(() => {
+    window.addEventListener('message', handleMessage);
+    
+    // Clean up event listener on unmount
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [handleMessage]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
