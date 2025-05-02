@@ -20,7 +20,11 @@ import { PageTitle } from "@/components/page-title";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 // Consultation Form Modal
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogTrigger
+} from "@/components/ui/dialog";
 import { ConsultationForm } from "@/components/forms/consultation-form";
 
 export default function VelocityPlan() {
@@ -150,6 +154,12 @@ export default function VelocityPlan() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                <DialogTitle className="text-lg font-bold">
+                  Get Started with the VELOCITY Plan
+                </DialogTitle>
+                <DialogDescription className="text-sm text-muted-foreground mb-4">
+                  Fill out this form to start your automation journey with our VELOCITY plan.
+                </DialogDescription>
                 <ConsultationForm 
                   onSuccess={() => setIsFormOpen(false)}
                   preselectedPlan="VELOCITY"
@@ -187,19 +197,19 @@ export default function VelocityPlan() {
             </ul>
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-4 bg-gray-50 rounded-b-lg -mx-6 px-6 py-4 mt-4">
-            <Button size="lg" className="w-full bg-indigo-600 hover:bg-indigo-700">
-              <Dialog open={isFormOpen} onOpenChange={handleOpenChange}>
-                <DialogTrigger className="w-full h-full">
+            <Dialog open={isFormOpen} onOpenChange={handleOpenChange}>
+              <DialogTrigger asChild>
+                <Button size="lg" className="w-full bg-indigo-600 hover:bg-indigo-700">
                   Get Started Now
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                  <ConsultationForm 
-                    onSuccess={() => setIsFormOpen(false)}
-                    preselectedPlan="VELOCITY"
-                  />
-                </DialogContent>
-              </Dialog>
-            </Button>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                <ConsultationForm 
+                  onSuccess={() => setIsFormOpen(false)}
+                  preselectedPlan="VELOCITY"
+                />
+              </DialogContent>
+            </Dialog>
             <p className="text-center text-sm text-gray-500">
               No long-term contract, cancel anytime
             </p>
@@ -390,6 +400,12 @@ export default function VelocityPlan() {
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                <DialogTitle className="text-lg font-bold">
+                  Get Started with the VELOCITY Plan
+                </DialogTitle>
+                <DialogDescription className="text-sm text-muted-foreground mb-4">
+                  Fill out this form to start your automation journey with our VELOCITY plan.
+                </DialogDescription>
                 <ConsultationForm 
                   onSuccess={() => setIsFormOpen(false)}
                   preselectedPlan="VELOCITY"
