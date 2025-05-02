@@ -194,7 +194,7 @@ export default function N8nGuide() {
                   </p>
                   <div className="mt-4">
                     <Button asChild variant="outline" size="sm" className="text-blue-600 border-blue-300">
-                      <a href="/docs/blog-automation-guide.md" target="_blank" rel="noopener noreferrer">
+                      <a href="/docs/blog-automation-guide.md" download target="_blank" rel="noopener noreferrer">
                         Download Complete Guide <ArrowRight className="ml-1 h-3 w-3" />
                       </a>
                     </Button>
