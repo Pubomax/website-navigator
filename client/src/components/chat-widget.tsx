@@ -37,9 +37,53 @@ export function ChatWidget() {
     setIsLoading(true);
     setMessage('');
     
+    // Simulate a delay for the bot response (replace this with actual API call when CORS is resolved)
+    setTimeout(() => {
+      // Generate a response based on the user's message
+      let botResponse = "";
+      const userMessageLower = userMessage.text.toLowerCase();
+      
+      if (userMessageLower.includes('hello') || userMessageLower.includes('hi') || userMessageLower.includes('hey')) {
+        botResponse = "Hello! How can I help you with our AI automation services today?";
+      } 
+      else if (userMessageLower.includes('price') || userMessageLower.includes('cost') || userMessageLower.includes('pricing')) {
+        botResponse = "We offer three service plans: VELOCITY at $500/month, ACCELERATE at $1,500/month, and DOMINATE at $3,500/month. Would you like more information about any of these?";
+      }
+      else if (userMessageLower.includes('service') || userMessageLower.includes('offer')) {
+        botResponse = "Minecore Group specializes in AI automation solutions for small businesses. Our services include sales automation, marketing automation, and custom AI solutions that help you make more money while working less.";
+      }
+      else if (userMessageLower.includes('contact') || userMessageLower.includes('phone') || userMessageLower.includes('email')) {
+        botResponse = "You can reach us at phone: 514-603-0598 or email: hello@minecoregroup.com. Would you like to schedule a consultation?";
+      }
+      else if (userMessageLower.includes('location') || userMessageLower.includes('address') || userMessageLower.includes('office')) {
+        botResponse = "Our office is located at 3580 boulevard saint elzear, ouest, Laval, QC h7p-0l7.";
+      }
+      else if (userMessageLower.includes('consultation') || userMessageLower.includes('meeting') || userMessageLower.includes('call')) {
+        botResponse = "I'd be happy to schedule a free consultation for you. Please visit our consultation page at /consultation or provide your phone number and email, and our team will contact you shortly.";
+      }
+      else {
+        botResponse = "Thank you for your message. Our team would be happy to provide you with more information about our AI automation services. Would you like to know more about how we can help your business make more money while working less?";
+      }
+      
+      // Add bot response to chat
+      const botMessage: Message = {
+        text: botResponse,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      
+      setMessages((prev) => [...prev, botMessage]);
+      setIsLoading(false);
+    }, 1500);
+    
+    // Note: The actual API integration code is commented out due to CORS issues
+    // When a proxy is set up on the server side, we can replace the above setTimeout
+    // with the following code:
+    
+    /*
     try {
-      // Send message to n8n webhook
-      const response = await fetch('https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103', {
+      // Send message to n8n webhook via our own backend proxy
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,6 +130,7 @@ export function ChatWidget() {
     } finally {
       setIsLoading(false);
     }
+    */
   };
 
   // Scroll to bottom of messages when messages change
