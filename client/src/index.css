@@ -81,6 +81,11 @@
   transform: translateX(var(--translate-x, 0px));
 }
 
+/* Position utilities for dynamic positioning */
+.left-position-dynamic {
+  left: var(--left-position, auto);
+}
+
 /* Progress indicator class (applied via JS for dynamic width) */
 .progress-indicator {
   transition: width 300ms ease-out;

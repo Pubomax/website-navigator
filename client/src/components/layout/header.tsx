@@ -373,16 +373,16 @@ export function Header() {
                     <AnimatePresence>
                       {activeItem === item.name && (
                         <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
+                          initial={{ opacity: 'var(--initial-opacity)', y: 'var(--initial-y)' }}
+                          animate={{ opacity: 'var(--animate-opacity)', y: 'var(--animate-y)' }}
+                          exit={{ opacity: 'var(--initial-opacity)', y: 'var(--initial-y)' }}
+                          className="motion-slide-up absolute z-10 mt-3 w-screen max-w-4xl transform px-2 left-position-dynamic"
                           transition={{ duration: 0.2 }}
-                          className="absolute left-0 z-10 mt-3 w-screen max-w-4xl transform px-2"
                           style={{ 
-                            left: item.name === "Industries" || item.name === "Company" 
+                            '--left-position': item.name === "Industries" || item.name === "Company" 
                               ? "calc(50% - 300px)" 
                               : "calc(50% - 200px)" 
-                          }}
+                          } as React.CSSProperties}
                           onMouseEnter={() => setActiveItem(item.name)}
                         >
                           <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-black ring-opacity-5">
