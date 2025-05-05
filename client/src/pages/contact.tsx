@@ -625,7 +625,8 @@ export default function Contact() {
                                     <Textarea 
                                       placeholder={content.form.currentSolutions.placeholder} 
                                       className="min-h-[80px]"
-                                      {...field} 
+                                      {...field}
+                                      value={field.value || ''}
                                     />
                                   </FormControl>
                                   <FormMessage />
@@ -643,7 +644,8 @@ export default function Contact() {
                                     <Textarea 
                                       placeholder={content.form.desiredOutcomes.placeholder} 
                                       className="min-h-[100px]"
-                                      {...field} 
+                                      {...field}
+                                      value={field.value || ''}
                                     />
                                   </FormControl>
                                   <FormMessage />
@@ -658,7 +660,7 @@ export default function Contact() {
                                 render={({ field }) => (
                                   <FormItem>
                                     <FormLabel>{content.form.timeline.label}</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value || ''}>
                                       <FormControl>
                                         <SelectTrigger>
                                           <SelectValue placeholder={content.form.timeline.placeholder} />
@@ -683,7 +685,7 @@ export default function Contact() {
                                 render={({ field }) => (
                                   <FormItem>
                                     <FormLabel>{content.form.budget.label}</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value || ''}>
                                       <FormControl>
                                         <SelectTrigger>
                                           <SelectValue placeholder={content.form.budget.placeholder} />
@@ -714,7 +716,7 @@ export default function Contact() {
                                 <FormItem>
                                   <FormLabel>{content.form.contactName.label}</FormLabel>
                                   <FormControl>
-                                    <Input placeholder={content.form.contactName.placeholder} {...field} />
+                                    <Input placeholder={content.form.contactName.placeholder} {...field} value={field.value || ''} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -728,7 +730,7 @@ export default function Contact() {
                                 <FormItem>
                                   <FormLabel>{content.form.contactEmail.label}</FormLabel>
                                   <FormControl>
-                                    <Input placeholder={content.form.contactEmail.placeholder} {...field} />
+                                    <Input placeholder={content.form.contactEmail.placeholder} {...field} value={field.value || ''} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -743,7 +745,7 @@ export default function Contact() {
                                   <FormItem>
                                     <FormLabel>{content.form.contactPhone.label}</FormLabel>
                                     <FormControl>
-                                      <Input placeholder={content.form.contactPhone.placeholder} {...field} />
+                                      <Input placeholder={content.form.contactPhone.placeholder} {...field} value={field.value || ''} />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -757,7 +759,7 @@ export default function Contact() {
                                   <FormItem>
                                     <FormLabel>{content.form.contactJobTitle.label}</FormLabel>
                                     <FormControl>
-                                      <Input placeholder={content.form.contactJobTitle.placeholder} {...field} />
+                                      <Input placeholder={content.form.contactJobTitle.placeholder} {...field} value={field.value || ''} />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -804,7 +806,8 @@ export default function Contact() {
                                     <Textarea 
                                       placeholder={content.form.additionalNotes.placeholder} 
                                       className="min-h-[80px]"
-                                      {...field} 
+                                      {...field}
+                                      value={field.value || ''} 
                                     />
                                   </FormControl>
                                   <FormMessage />
