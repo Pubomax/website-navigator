@@ -70,12 +70,12 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   contact: {
     title: {
-      en: 'Contact Us | Minecore Group Montreal',
-      fr: 'Contactez-nous | Groupe Minecore Montréal'
+      en: 'Get Started | AI Business Automation',
+      fr: 'Commencez | Automatisation d\'Entreprise IA'
     },
     description: {
-      en: 'Contact Minecore Group for AI automation solutions tailored for Montreal small businesses. Increase revenue and reduce workload with our specialized services.',
-      fr: 'Contactez Groupe Minecore pour des solutions d\'automatisation IA adaptées aux petites entreprises de Montréal. Augmentez vos revenus et réduisez votre charge de travail avec nos services spécialisés.'
+      en: 'Contact Minecore Group now to start making more money while working less. Our AI automation solutions are tailored for Montreal small businesses.',
+      fr: 'Contactez Groupe Minecore maintenant pour commencer à gagner plus d\'argent tout en travaillant moins. Nos solutions d\'automatisation IA sont adaptées aux petites entreprises de Montréal.'
     }
   },
   consultation: {
@@ -102,40 +102,52 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   faq: {
     title: {
-      en: 'Frequently Asked Questions | Minecore Group',
-      fr: 'Questions Fréquemment Posées | Groupe Minecore'
+      en: 'AI Business Automation FAQ | Minecore Group',
+      fr: 'FAQ Automatisation d\'Entreprise IA | Groupe Minecore'
+    },
+    description: {
+      en: 'Find answers to common questions about AI automation for small businesses. Learn how our solutions help you make more money while working less.',
+      fr: 'Trouvez des réponses aux questions courantes sur l\'automatisation IA pour les petites entreprises. Découvrez comment nos solutions vous aident à gagner plus d\'argent tout en travaillant moins.'
     }
   },
   blog: {
     title: {
-      en: 'Blog | Minecore Group',
-      fr: 'Blog | Groupe Minecore'
+      en: 'AI Automation Tips & Insights | Blog',
+      fr: 'Conseils & Idées d\'Automatisation IA | Blog'
+    },
+    description: {
+      en: 'Learn how small businesses use AI automation to save time and increase revenue. Practical tips, success stories, and insights from Montreal\'s automation experts.',
+      fr: 'Découvrez comment les petites entreprises utilisent l\'automatisation IA pour gagner du temps et augmenter leurs revenus. Conseils pratiques, histoires de réussite et perspectives des experts en automatisation de Montréal.'
     }
   },
   caseStudies: {
     title: {
-      en: 'Case Studies | Minecore Group',
-      fr: 'Études de Cas | Groupe Minecore'
+      en: 'Small Business Success Stories | Case Studies',
+      fr: 'Histoires de Réussite de PME | Études de Cas'
+    },
+    description: {
+      en: 'Real results from Montreal businesses using our AI automation solutions. See how our clients increased revenue and saved time with Minecore Group\'s services.',
+      fr: 'Résultats réels d\'entreprises montréalaises utilisant nos solutions d\'automatisation IA. Découvrez comment nos clients ont augmenté leurs revenus et gagné du temps avec les services de Groupe Minecore.'
     }
   },
   services: {
     title: {
-      en: 'AI Services | Minecore Group',
-      fr: 'Services IA | Groupe Minecore'
+      en: 'Make More Money, Work Less | AI Services',
+      fr: 'Gagnez Plus, Travaillez Moins | Services IA'
     },
     description: {
-      en: 'Discover our full range of AI automation services designed specifically for Montreal small businesses. Sales automation, lead generation, and marketing solutions that save time and grow revenue.',
-      fr: 'Découvrez notre gamme complète de services d\'automatisation IA conçus spécifiquement pour les petites entreprises de Montréal. Automatisation des ventes, génération de leads et solutions marketing qui économisent du temps et augmentent les revenus.'
+      en: 'AI automation services for Montreal small businesses. Sales automation, lead generation, and marketing solutions that save time and grow revenue with less work.',
+      fr: 'Services d\'automatisation IA pour les petites entreprises de Montréal. Automatisation des ventes, génération de leads et solutions marketing qui économisent du temps et augmentent les revenus avec moins de travail.'
     }
   },
   solutions: {
     title: {
-      en: 'AI Solutions for Montreal SMBs | Minecore Group',
-      fr: 'Solutions IA pour PME | Groupe Minecore'
+      en: 'More Revenue, Less Work | AI Solutions',
+      fr: 'Plus de Revenus, Moins de Travail | Solutions IA'
     },
     description: {
-      en: 'Tailored AI automation solutions for Montreal small businesses. Increase revenue and reduce workload with our intelligent lead generation and sales acceleration packages.',
-      fr: 'Solutions d\'automatisation IA sur mesure pour les petites entreprises de Montréal. Augmentez vos revenus et réduisez votre charge de travail grâce à nos forfaits intelligents de génération de leads et d\'accélération des ventes.'
+      en: 'AI automation solutions for Montreal small businesses. Save time and increase revenue with our intelligent lead generation and sales acceleration tools.',
+      fr: 'Solutions d\'automatisation IA pour les petites entreprises de Montréal. Économisez du temps et augmentez vos revenus grâce à nos outils intelligents de génération de leads et d\'accélération des ventes.'
     }
   },
   about: {
@@ -318,32 +330,32 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   velocity: {
     title: {
-      en: 'VELOCITY Plan - $500/month | Minecore Group',
-      fr: 'Plan VELOCITY - 500$/mois | Groupe Minecore'
+      en: 'VELOCITY: $500/mo Starter Plan | Minecore Group',
+      fr: 'VELOCITY: Forfait Débutant à 500$/mois | Groupe Minecore'
     },
     description: {
-      en: 'Get started with AI automation for just $500/month. Our VELOCITY plan includes 2 automation workflows, lead capture systems, and more. Perfect for small Montreal businesses.',
-      fr: 'Commencez avec l\'automatisation IA pour seulement 500$/mois. Notre plan VELOCITY comprend 2 flux d\'automatisation, des systèmes de capture de leads, et plus. Parfait pour les petites entreprises de Montréal.'
+      en: 'Our starter automation plan at $500/month includes 2 workflows, lead capture, and email marketing. Perfect for small Montreal businesses ready to grow.',
+      fr: 'Notre forfait d\'automatisation de départ à 500$/mois comprend 2 flux de travail, la capture de leads et le marketing par e-mail. Parfait pour les petites entreprises de Montréal prêtes à se développer.'
     }
   },
   accelerate: {
     title: {
-      en: 'ACCELERATE Plan - $1,500/month | Minecore Group',
-      fr: 'Plan ACCELERATE - 1 500$/mois | Groupe Minecore'
+      en: 'ACCELERATE: $1,500/mo Growth Plan | Minecore Group',
+      fr: 'ACCELERATE: Forfait Croissance à 1 500$/mois | Groupe Minecore'
     },
     description: {
-      en: 'Scale your business with our ACCELERATE plan at $1,500/month. Get 5 automation workflows, CRM integration, email marketing automation, and more. Increase revenue by 20-30%.',
-      fr: 'Développez votre entreprise avec notre plan ACCELERATE à 1 500$/mois. Obtenez 5 flux d\'automatisation, l\'intégration CRM, l\'automatisation du marketing par e-mail, et plus. Augmentez vos revenus de 20-30%.'
+      en: 'Scale your business with 5 automation workflows, CRM integration, and comprehensive marketing automation. Increase revenue by 20-30% with our $1,500/month plan.',
+      fr: 'Développez votre entreprise avec 5 flux d\'automatisation, l\'intégration CRM et l\'automatisation marketing complète. Augmentez vos revenus de 20-30% avec notre forfait à 1 500$/mois.'
     }
   },
   dominate: {
     title: {
-      en: 'DOMINATE Plan - $3,500/month | Minecore Group',
-      fr: 'Plan DOMINATE - 3 500$/mois | Groupe Minecore'
+      en: 'DOMINATE: $3,500/mo Enterprise Plan | Minecore Group',
+      fr: 'DOMINATE: Forfait Entreprise à 3 500$/mois | Groupe Minecore'
     },
     description: {
-      en: 'Transform your entire business operations with our comprehensive DOMINATE plan at $3,500/month. Get 10+ custom automation workflows, AI-driven marketing, predictive analytics, and a dedicated account manager.',
-      fr: 'Transformez l\'ensemble de vos opérations commerciales avec notre plan DOMINATE complet à 3 500$/mois. Obtenez plus de 10 flux d\'automatisation personnalisés, du marketing piloté par l\'IA, des analyses prédictives et un gestionnaire de compte dédié.'
+      en: 'Transform your business with 10+ custom automation workflows, AI-driven marketing, predictive analytics, and a dedicated account manager at $3,500/month.',
+      fr: 'Transformez votre entreprise avec plus de 10 flux d\'automatisation personnalisés, marketing piloté par l\'IA, analyses prédictives et un gestionnaire de compte dédié à 3 500$/mois.'
     }
   },
   notFound: {
