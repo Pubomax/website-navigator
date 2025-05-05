@@ -1,8 +1,32 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
 Disallow: /api/
+Disallow: /admin/
 Disallow: /integrations/
 
-# Sitemap
+# Prevent crawling of non-canonical pages
+Disallow: /*?
+Disallow: /*&
+Disallow: /*/undefined
+Disallow: /404
+
+# Allow key pages for priority crawling
+Allow: /services
+Allow: /solutions
+Allow: /contact
+Allow: /about
+Allow: /fr/services
+Allow: /fr/solutions
+Allow: /fr/contact
+Allow: /fr/about
+
+# Allow major search engines
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Slurp
+Allow: /
+
+# Specify the sitemap location
 Sitemap: https://minecoregroup.com/sitemap.xml

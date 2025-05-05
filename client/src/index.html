@@ -6,16 +6,22 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     
-    <!-- Preload critical CSS -->
+    <!-- Optimize critical rendering path -->
     <link rel="preload" href="/src/index.css" as="style" />
     <link rel="stylesheet" href="/src/index.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="/src/index.css"></noscript>
+    
+    <!-- Preconnect to required domains -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Leading digital transformation solutions in Canada. Enterprise-grade business automation, AI integration, and custom software development services across Toronto, Vancouver, Montreal, and other major Canadian cities." />
-    <meta name="keywords" content="digital transformation canada, enterprise solutions toronto, business automation vancouver, canadian tech solutions, AI integration montreal, software development ottawa, cloud solutions calgary" />
+    <meta name="description" content="AI automation for Montreal small businesses. Make more money while working less with our sales and marketing automation solutions. Starter plan from $500/month." />
+    <meta name="keywords" content="AI automation Montreal, small business automation, make more money work less, sales automation montreal, lead generation quebec, marketing automation small business" />
 
     <!-- OpenGraph Meta Tags -->
-    <meta property="og:title" content="Minecore Group | Digital Transformation Solutions" />
-    <meta property="og:description" content="Leading digital transformation solutions in Canada. Enterprise-grade business automation, AI integration, and custom software development services." />
+    <meta property="og:title" content="Make More Money, Work Less | Montreal AI Solutions" />
+    <meta property="og:description" content="AI automation for Montreal small businesses. Increase revenue while reducing workload with intelligent lead generation and sales automation." />
     <meta property="og:image" content="https://minecoregroup.com/images/og-image.png" />
     <meta property="og:url" content="https://minecoregroup.com" />
     <meta property="og:type" content="website" />
@@ -25,49 +31,63 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Minecore Group | Digital Transformation Solutions" />
-    <meta name="twitter:description" content="Leading digital transformation solutions in Canada. Enterprise-grade business automation and AI integration." />
+    <meta name="twitter:title" content="Make More Money, Work Less | Montreal AI Solutions" />
+    <meta name="twitter:description" content="AI automation for Montreal small businesses. Increase revenue while reducing workload." />
     <meta name="twitter:image" content="https://minecoregroup.com/images/twitter-card.png" />
 
     <!-- Geo Meta Tags -->
-    <meta name="geo.region" content="CA" />
-    <meta name="geo.placename" content="Toronto" />
-    <meta name="geo.position" content="43.653226;-79.383184" />
-    <meta name="ICBM" content="43.653226, -79.383184" />
+    <meta name="geo.region" content="CA-QC" />
+    <meta name="geo.placename" content="Montreal" />
+    <meta name="geo.position" content="45.5017;-73.5673" />
+    <meta name="ICBM" content="45.5017, -73.5673" />
 
     <!-- Language Alternates -->
     <link rel="alternate" hreflang="fr-CA" href="https://minecoregroup.com/fr" />
     <link rel="alternate" hreflang="en-CA" href="https://minecoregroup.com" />
     <link rel="canonical" href="https://minecoregroup.com" />
 
-    <title>Minecore Group | Digital Transformation Solutions</title>
+    <title>Make More Money, Work Less | Montreal AI Solutions</title>
 
-    <!-- Google Tags - Ads and Analytics (non-blocking) -->
-    <script async defer src="https://www.googletagmanager.com/gtag/js?id=AW-17032394525"></script>
-    <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-2S9WTCBXWT"></script>
+    <!-- Google Tags - Optimized loading -->
     <script>
+      // Dynamically load GTM after page content
       window.addEventListener('load', function() {
+        // Analytics
+        var analyticsScript = document.createElement('script');
+        analyticsScript.async = true;
+        analyticsScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-2S9WTCBXWT';
+        document.head.appendChild(analyticsScript);
+        
+        // Ads
+        var adsScript = document.createElement('script');
+        adsScript.async = true;
+        adsScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17032394525';
+        document.head.appendChild(adsScript);
+        
+        // Initialize
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
-        // Google Ads tag
         gtag('config', 'AW-17032394525');
-        
-        // Google Analytics tag
         gtag('config', 'G-2S9WTCBXWT');
       });
     </script>
 
-    <!-- Schema.org markup is loaded asynchronously via external JS file -->
+    <!-- Optimize resource loading -->
+    <link rel="preload" href="/preload.js" as="script">
+    
+    <!-- Early redirect script to avoid multiple redirects -->
+    <script src="/redirect.js"></script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Preload critical JS -->
+    <!-- Critical JS -->
     <link rel="preload" href="/src/main.tsx" as="script" type="module">
-    <!-- Defer non-critical JS -->
-    <script type="module" src="/src/main.tsx" defer></script>
+    <!-- Main application script with optimized loading -->
+    <script type="module" src="/src/main.tsx"></script>
     <!-- Load schemas asynchronously -->
-    <script src="/schemas.js" async defer></script>
+    <script src="/schemas.js" async></script>
+    <!-- Load preloader for route optimization -->
+    <script src="/preload.js" async></script>
   </body>
 </html>
