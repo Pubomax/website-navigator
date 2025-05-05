@@ -130,20 +130,20 @@ export function WorkLessCalculator() {
           ) : (
             <div className="p-3 sm:p-4 md:p-5">
               <motion.h3
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 'var(--initial-opacity)' }}
+                animate={{ opacity: 'var(--animate-opacity)' }}
                 transition={{ duration: 0.5 }}
-                className="text-lg sm:text-xl font-bold text-center text-gray-800 dark:text-white mb-3 sm:mb-4"
+                className="text-lg sm:text-xl font-bold text-center text-gray-800 dark:text-white mb-3 sm:mb-4 motion-fade-in"
               >
                 {labels.resultsTitle}
               </motion.h3>
               
               <div className="flex flex-wrap justify-between gap-3 sm:gap-4">
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 'var(--initial-opacity)', y: 'var(--initial-y)' }}
+                  animate={{ opacity: 'var(--animate-opacity)', y: 'var(--animate-y)' }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="flex-1 bg-indigo-50 dark:bg-indigo-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
+                  className="motion-slide-up flex-1 bg-indigo-50 dark:bg-indigo-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
                 >
                   <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600 dark:text-indigo-400 mx-auto mb-1 sm:mb-2" />
                   <h4 className="font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2 text-xs sm:text-sm">
@@ -164,10 +164,10 @@ export function WorkLessCalculator() {
                 </motion.div>
                 
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 'var(--initial-opacity)', y: 'var(--initial-y)' }}
+                  animate={{ opacity: 'var(--animate-opacity)', y: 'var(--animate-y)' }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="flex-1 bg-green-50 dark:bg-green-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
+                  className="motion-slide-up flex-1 bg-green-50 dark:bg-green-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
                 >
                   <DollarSign className="w-6 h-6 sm:w-7 sm:h-7 text-green-600 dark:text-green-400 mx-auto mb-1 sm:mb-2" />
                   <h4 className="font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2 text-xs sm:text-sm">
@@ -182,10 +182,10 @@ export function WorkLessCalculator() {
                 </motion.div>
                 
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 'var(--initial-opacity)', y: 'var(--initial-y)' }}
+                  animate={{ opacity: 'var(--animate-opacity)', y: 'var(--animate-y)' }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  className="flex-1 bg-amber-50 dark:bg-amber-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
+                  className="motion-slide-up flex-1 bg-amber-50 dark:bg-amber-900/30 p-3 sm:p-4 rounded-lg text-center min-w-[100px]"
                 >
                   <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-amber-600 dark:text-amber-400 mx-auto mb-1 sm:mb-2" />
                   <h4 className="font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2 text-xs sm:text-sm">

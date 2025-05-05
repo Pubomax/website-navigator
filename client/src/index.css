@@ -35,6 +35,19 @@
   animation-delay: 1s;
 }
 
+/* Framer Motion animation variants */
+.motion-fade-in {
+  --initial-opacity: 0;
+  --animate-opacity: 1;
+}
+
+.motion-slide-up {
+  --initial-opacity: 0;
+  --initial-y: 20px;
+  --animate-opacity: 1;
+  --animate-y: 0px;
+}
+
 /* Utility width classes for progress bars */
 .w-80p {
   width: 80%;
