@@ -5,6 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="stylesheet" href="/src/index.css" media="print" onload="this.media='all'" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Leading digital transformation solutions in Canada. Enterprise-grade business automation, AI integration, and custom software development services across Toronto, Vancouver, Montreal, and other major Canadian cities." />
     <meta name="keywords" content="digital transformation canada, enterprise solutions toronto, business automation vancouver, canadian tech solutions, AI integration montreal, software development ottawa, cloud solutions calgary" />
@@ -38,138 +42,32 @@
 
     <title>Minecore Group | Digital Transformation Solutions</title>
 
-    <!-- Google Tags - Ads and Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17032394525"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2S9WTCBXWT"></script>
+    <!-- Google Tags - Ads and Analytics (non-blocking) -->
+    <script async defer src="https://www.googletagmanager.com/gtag/js?id=AW-17032394525"></script>
+    <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-2S9WTCBXWT"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      window.addEventListener('load', function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      // Google Ads tag
-      gtag('config', 'AW-17032394525');
-      
-      // Google Analytics tag
-      gtag('config', 'G-2S9WTCBXWT');
+        // Google Ads tag
+        gtag('config', 'AW-17032394525');
+        
+        // Google Analytics tag
+        gtag('config', 'G-2S9WTCBXWT');
+      });
     </script>
 
-    <!-- Schema.org markup for Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Minecore Group",
-      "url": "https://minecoregroup.com",
-      "logo": "https://minecoregroup.com/images/logo.png",
-      "description": "Leading digital transformation solutions provider in Canada",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "CA",
-        "addressRegion": "ON",
-        "addressLocality": "Toronto"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+1-XXX-XXX-XXXX",
-        "contactType": "sales",
-        "areaServed": ["CA"],
-        "availableLanguage": ["English", "French"]
-      },
-      "sameAs": [
-        "https://www.linkedin.com/company/minecoregroup",
-        "https://twitter.com/minecoregroup",
-        "https://www.facebook.com/minecoregroup"
-      ]
-    }
-    </script>
-
-    <!-- Local Business Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Minecore Group",
-      "image": "https://minecoregroup.com/images/logo.png",
-      "priceRange": "$$$$",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Your Street Address",
-        "addressLocality": "Toronto",
-        "addressRegion": "ON",
-        "postalCode": "Your Postal Code",
-        "addressCountry": "CA"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 43.653226,
-        "longitude": -79.383184
-      },
-      "areaServed": [
-        {
-          "@type": "City",
-          "name": "Toronto"
-        },
-        {
-          "@type": "City",
-          "name": "Vancouver"
-        },
-        {
-          "@type": "City",
-          "name": "Montreal"
-        },
-        {
-          "@type": "City",
-          "name": "Calgary"
-        },
-        {
-          "@type": "City",
-          "name": "Ottawa"
-        }
-      ]
-    }
-    </script>
-
-    <!-- Service Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "serviceType": "Digital Transformation",
-      "provider": {
-        "@type": "Organization",
-        "name": "Minecore Group"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Canada"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Digital Transformation Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "AI Automation",
-              "description": "Enterprise-grade AI automation solutions"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Digital Foundation",
-              "description": "Core digital infrastructure and transformation"
-            }
-          }
-        ]
-      }
-    }
-    </script>
+    <!-- Schema.org markup is loaded asynchronously via external JS file -->
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <!-- Preload critical JS -->
+    <link rel="preload" href="/src/main.tsx" as="script" type="module">
+    <!-- Defer non-critical JS -->
+    <script type="module" src="/src/main.tsx" defer></script>
+    <!-- Load schemas asynchronously -->
+    <script src="/schemas.js" async defer></script>
   </body>
 </html>
