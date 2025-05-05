@@ -381,15 +381,17 @@ export function DirectOfferCTA() {
         <div className="relative w-full mx-auto overflow-hidden" ref={carouselRef}>
           <div 
             ref={trackRef}
-            className="flex transition-transform duration-300 ease-out"
+            className="flex carousel-transform"
             style={{ transform: `translateX(${translateValue}px)` }}
           >
             {content.offers.map((offer, index) => (
               <motion.div
                 key={offer.id}
-                className="flex-shrink-0 pr-4 md:pr-6"
-                style={{ 
-                  width: cardWidths[index] ? `${cardWidths[index]}px` : '66.6%'
+                className="flex-shrink-0 pr-4 md:pr-6 carousel-card"
+                ref={(el) => {
+                  if (el && cardWidths[index]) {
+                    el.style.width = `${cardWidths[index]}px`;
+                  }
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

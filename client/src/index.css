@@ -53,6 +53,16 @@
   transition: transform 300ms ease-out;
 }
 
+/* Dynamic card width utility (applied via JS) */
+.carousel-card {
+  width: 66.6%; /* Default fallback width */
+}
+
+/* Progress indicator class (applied via JS for dynamic width) */
+.progress-indicator {
+  transition: width 300ms ease-out;
+}
+
 @layer base {
   * {
     @apply border-border;

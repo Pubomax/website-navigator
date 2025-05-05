@@ -336,9 +336,9 @@ export default function AutomatedLeadGeneration() {
                       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                         <Target className="h-24 w-24 text-primary/30" />
                       </div>
-                      <div className="absolute top-1/4 right-1/4 w-10 h-10 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: '3s' }}></div>
-                      <div className="absolute bottom-1/4 left-1/3 w-8 h-8 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: '2.5s' }}></div>
-                      <div className="absolute top-1/3 left-1/5 w-6 h-6 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: '4s' }}></div>
+                      <div className="absolute top-1/4 right-1/4 w-10 h-10 rounded-full bg-primary/10 animate-ping-slow"></div>
+                      <div className="absolute bottom-1/4 left-1/3 w-8 h-8 rounded-full bg-primary/10 animate-ping-medium"></div>
+                      <div className="absolute top-1/3 left-1/5 w-6 h-6 rounded-full bg-primary/10 animate-ping-very-slow"></div>
                     </div>
                   </div>
                 </div>
@@ -411,8 +411,8 @@ export default function AutomatedLeadGeneration() {
                       <BrainCircuit className="h-24 w-24 text-primary/20" />
                     </div>
                     <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-primary/40 rounded-full animate-ping"></div>
-                    <div className="absolute top-1/3 right-1/3 w-2 h-2 bg-primary/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="absolute bottom-1/4 right-1/4 w-4 h-4 bg-primary/20 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute top-1/3 right-1/3 w-2 h-2 bg-primary/30 rounded-full animate-ping animation-delay-500"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-4 h-4 bg-primary/20 rounded-full animate-ping animation-delay-1000"></div>
                   </div>
                 </div>
               </TabsContent>
@@ -439,7 +439,7 @@ export default function AutomatedLeadGeneration() {
                     <h3 className="text-xl font-semibold">{content.results.leads}</h3>
                   </div>
                   <div className="w-full bg-background rounded-full h-2">
-                    <div className="bg-primary h-2 rounded-full" style={{ width: '80%' }}></div>
+                    <div className="bg-primary h-2 rounded-full w-80p"></div>
                   </div>
                 </div>
                 
@@ -451,7 +451,7 @@ export default function AutomatedLeadGeneration() {
                     <h3 className="text-xl font-semibold">{content.results.cost}</h3>
                   </div>
                   <div className="w-full bg-background rounded-full h-2">
-                    <div className="bg-primary h-2 rounded-full" style={{ width: '45%' }}></div>
+                    <div className="bg-primary h-2 rounded-full w-45p"></div>
                   </div>
                 </div>
                 
@@ -463,7 +463,7 @@ export default function AutomatedLeadGeneration() {
                     <h3 className="text-xl font-semibold">{content.results.conversion}</h3>
                   </div>
                   <div className="w-full bg-background rounded-full h-2">
-                    <div className="bg-primary h-2 rounded-full" style={{ width: '37%' }}></div>
+                    <div className="bg-primary h-2 rounded-full w-37p"></div>
                   </div>
                 </div>
               </div>
