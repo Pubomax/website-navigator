@@ -60,12 +60,12 @@ type PathKey =
 const pageTitles: Record<PathKey, PageTitleData> = {
   home: {
     title: {
-      en: 'Minecore Group | AI Automation for Montreal SMBs',
-      fr: 'Groupe Minecore | Automatisation IA pour PME'
+      en: 'Make More Money, Work Less | Minecore Group',
+      fr: 'Gagnez Plus, Travaillez Moins | Groupe Minecore'
     },
     description: {
-      en: 'Make more money, work less with Minecore Group. AI-powered business automation solutions for Montreal small businesses that accelerate lead generation and revenue growth.',
-      fr: 'Gagnez plus d\'argent, travaillez moins avec Groupe Minecore. Solutions d\'automatisation d\'entreprise alimentées par l\'IA pour les petites entreprises de Montréal qui accélèrent la génération de prospects et la croissance des revenus.'
+      en: 'AI-powered business automation solutions for Montreal small businesses. Generate more leads, increase revenue, and reduce your workload.',
+      fr: 'Solutions d\'automatisation IA pour PME à Montréal. Générez plus de prospects, augmentez vos revenus et réduisez votre charge de travail.'
     }
   },
   contact: {
@@ -142,6 +142,10 @@ const pageTitles: Record<PathKey, PageTitleData> = {
     title: {
       en: 'About Us | Minecore Group',
       fr: 'À Propos de Nous | Groupe Minecore'
+    },
+    description: {
+      en: '20 years of experience in helping Montreal businesses grow with AI automation. Learn about our mission to make small businesses more profitable with less work.',
+      fr: '20 ans d\'expérience à aider les entreprises de Montréal à se développer grâce à l\'automatisation IA. Découvrez notre mission de rendre les petites entreprises plus rentables avec moins de travail.'
     }
   },
   team: {
