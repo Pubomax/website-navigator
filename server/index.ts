@@ -1,8 +1,25 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Enable compression for all HTTP responses
+app.use(compression({
+  // Set compression level to maximum (9)
+  level: 9,
+  // Only compress responses with a content-type that matches this regex
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      // Don't compress responses with this request header
+      return false;
+    }
+    // Compress all other responses
+    return compression.filter(req, res);
+  }
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
