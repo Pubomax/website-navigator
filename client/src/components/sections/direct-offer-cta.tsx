@@ -20,8 +20,8 @@ const getContent = (isPathFrench: boolean) => ({
   disclaimer: isPathFrench 
     ? "Pas de contrat à long terme requis. Annulez à tout moment. Commencez par un appel de consultation pour voir si nos solutions sont adaptées à vos besoins."
     : "No long-term contract required. Cancel anytime. Start with a consultation call to see if our solutions fit your needs.",
-  cta: isPathFrench ? "Commencer Maintenant" : "Get Started Now",
-  readMore: isPathFrench ? "Voir les détails" : "View details",
+  cta: isPathFrench ? "Réserver Votre Consultation" : "Book Your Consultation",
+  readMore: isPathFrench ? "Voir la Démo de l'Automatisation" : "Watch Automation Demo",
   
   // The offers
   offers: [
