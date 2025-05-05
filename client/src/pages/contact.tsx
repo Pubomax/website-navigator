@@ -433,8 +433,12 @@ export default function Contact() {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
                   <div 
-                    className="bg-primary h-2.5 rounded-full transition-all duration-300" 
-                    style={{ width: `${((currentStep + 1) / content.steps.length) * 100}%` }}
+                    className="bg-primary h-2.5 rounded-full progress-indicator" 
+                    ref={(el) => {
+                      if (el) {
+                        el.style.width = `${((currentStep + 1) / content.steps.length) * 100}%`;
+                      }
+                    }}
                   ></div>
                 </div>
               </div>
@@ -557,7 +561,7 @@ export default function Contact() {
                                 <FormItem>
                                   <FormLabel>{content.form.websiteUrl.label}</FormLabel>
                                   <FormControl>
-                                    <Input placeholder={content.form.websiteUrl.placeholder} {...field} />
+                                    <Input placeholder={content.form.websiteUrl.placeholder} {...field} value={field.value || ''} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
