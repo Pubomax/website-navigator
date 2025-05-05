@@ -125,7 +125,9 @@ export function WhatWeDo() {
                         : "text-purple-600 hover:text-purple-700 hover:border-purple-300"
                   }`} asChild>
                     <Link href={pillar.link}>
-                      {isPathFrench ? "En Savoir Plus" : "Learn More"}
+                      {isPathFrench 
+                        ? `Explorer nos solutions ${pillar.title.toLowerCase()}` 
+                        : `Explore our ${pillar.title.toLowerCase()} solutions`}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -137,7 +139,7 @@ export function WhatWeDo() {
                         : "bg-purple-600 hover:bg-purple-700"
                   }`} asChild>
                     <Link href={isPathFrench ? "/fr/consultation" : "/consultation"}>
-                      {isPathFrench ? "Commencer" : "Get Started"}
+                      {isPathFrench ? "Planifier une consultation" : "Schedule a consultation"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
