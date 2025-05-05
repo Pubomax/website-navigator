@@ -102,21 +102,7 @@ app.use((req, res, next) => {
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    // For production, first handle the 404 status for client-side routes that don't exist
-    app.use('*', (req, res, next) => {
-      // Skip API routes as they're handled separately
-      if (req.originalUrl.startsWith('/api/')) {
-        return next();
-      }
-      
-      // For all client routes that don't exist, set status to 404
-      // This allows search engines to properly index 404 pages
-      // while still letting the React Router handle the rendering
-      res.status(404);
-      next();
-    });
-    
-    // Then serve static files
+    // Serve static files
     serveStatic(app);
   }
 
