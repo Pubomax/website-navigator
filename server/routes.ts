@@ -307,6 +307,35 @@ Interest: ${leadData.interest}
     const categories = await storage.getBlogCategories();
     res.json(categories);
   });
+  
+  app.get("/api/blog-posts", async (_req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      logError(error, 'fetching public blog posts');
+      res.status(500).json({ message: "Error fetching blog posts" });
+    }
+  });
+  
+  app.get("/api/blog-posts/:id", async (req, res) => {
+    try {
+      const postId = parseInt(req.params.id);
+      if (isNaN(postId)) {
+        return res.status(400).json({ message: "Invalid post ID" });
+      }
+      
+      const post = await storage.getBlogPostById(postId);
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      res.json(post);
+    } catch (error) {
+      logError(error, 'fetching specific blog post');
+      res.status(500).json({ message: "Error fetching blog post" });
+    }
+  });
 
   app.get("/api/blog-categories/:id", async (req, res) => {
     const category = await storage.getBlogCategoryById(Number(req.params.id));
@@ -317,22 +346,7 @@ Interest: ${leadData.interest}
     res.json(category);
   });
 
-  app.get("/api/blog-posts", async (req, res) => {
-    const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
-    const posts = categoryId
-      ? await storage.getBlogPostsByCategory(categoryId)
-      : await storage.getBlogPosts();
-    res.json(posts);
-  });
 
-  app.get("/api/blog-posts/:id", async (req, res) => {
-    const post = await storage.getBlogPostById(Number(req.params.id));
-    if (!post) {
-      res.status(404).json({ message: "Blog post not found" });
-      return;
-    }
-    res.json(post);
-  });
 
   app.get("/api/case-studies", async (_req, res) => {
     const caseStudies = await storage.getCaseStudies();
