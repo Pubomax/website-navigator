@@ -139,7 +139,7 @@ export function AiSimplifiedSection() {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="md:w-1/3 flex justify-center">
               <div className="relative">
-                <div className="absolute inset-0 bg-blue-500 rounded-full opacity-20 animate-ping" style={{ animationDuration: '3s' }}></div>
+                <div className="absolute inset-0 bg-blue-500 rounded-full opacity-20 animate-ping-slow"></div>
                 <div className="relative bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-full">
                   <BrainCircuit className="w-16 h-16 text-white" />
                 </div>

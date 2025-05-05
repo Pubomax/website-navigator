@@ -13,6 +13,46 @@
   background: linear-gradient(135deg, #9333ea 20%, #7f5fff 100%);
 }
 
+/* Custom animation durations */
+.animate-ping-slow {
+  animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-ping-medium {
+  animation: ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-ping-very-slow {
+  animation: ping 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Animation delays */
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+/* Utility width classes for progress bars */
+.w-80p {
+  width: 80%;
+}
+
+.w-45p {
+  width: 45%;
+}
+
+.w-37p {
+  width: 37%;
+}
+
+/* Carousel utilities */
+.carousel-transform {
+  transition: transform 300ms ease-out;
+}
+
 @layer base {
   * {
     @apply border-border;
