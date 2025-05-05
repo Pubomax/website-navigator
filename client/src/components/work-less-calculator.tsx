@@ -36,7 +36,7 @@ export function WorkLessCalculator() {
     moneySavedTitle: isPathFrench ? "Argent Économisé" : "Money Saved",
     moneySavedYear: isPathFrench ? "$ par an" : "$ per year",
     productivityTitle: isPathFrench ? "Gain de Productivité" : "Productivity Gain",
-    learnMoreButton: isPathFrench ? "En Savoir Plus" : "Learn More",
+    learnMoreButton: isPathFrench ? "Découvrir nos solutions d'automatisation" : "Explore our automation solutions",
   };
 
   const handleCalculate = (e: React.FormEvent) => {
