@@ -143,7 +143,9 @@ export function SolutionsGrid() {
                 <div className="p-6 pt-0 mt-auto">
                   <Button variant="outline" className="w-full" asChild>
                     <Link href={solution.link}>
-                      {isPathFrench ? "En Savoir Plus" : "Learn More"}
+                      {isPathFrench 
+                        ? `Découvrir ${solution.title}` 
+                        : `Explore ${solution.title}`}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

@@ -85,7 +85,7 @@ export function AiSimplifiedSection() {
     emphasis: isPathFrench
       ? "Concentrez-vous sur la gestion de votre entreprise. Nous nous occupons de l'automatisation."
       : "Focus on running your business. We'll handle the automation.",
-    cta: isPathFrench ? "Explorer Toutes Nos Solutions" : "Explore All Our Solutions",
+    cta: isPathFrench ? "Découvrir Nos Solutions d'Automatisation" : "Discover Our AI Automation Solutions",
   };
 
   return (

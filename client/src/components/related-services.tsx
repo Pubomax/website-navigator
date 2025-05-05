@@ -63,7 +63,9 @@ export function RelatedServices({
                       href={service.href} 
                       className="text-sm font-medium text-primary flex items-center hover:underline"
                     >
-                      {isPathFrench ? "En savoir plus" : "Learn more"}
+                      {isPathFrench 
+                        ? `Découvrir notre service ${service.title.toLowerCase()}` 
+                        : `Learn about our ${service.title.toLowerCase()} service`}
                       <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>
                   </div>
