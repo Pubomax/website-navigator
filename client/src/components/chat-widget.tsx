@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-export function N8nChatWidget() {
-  // This component will load the N8n chat widget from a CDN
+const ChatWidget = () => {
   useEffect(() => {
     // Add N8n chat CSS
     const cssLink = document.createElement('link');
@@ -9,9 +8,9 @@ export function N8nChatWidget() {
     cssLink.rel = 'stylesheet';
     document.head.appendChild(cssLink);
 
-    // Add chat widget configuration
-    const configScript = document.createElement('script');
-    configScript.textContent = `
+    // Create script tag for configuration
+    const script = document.createElement('script');
+    script.innerHTML = `
       window.ChatWidgetConfig = {
         webhook: {
           url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
@@ -32,25 +31,25 @@ export function N8nChatWidget() {
         }
       };
     `;
-    document.head.appendChild(configScript);
+    document.body.appendChild(script);
 
     // Add N8n chat script
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.textContent = `
+    const chatScript = document.createElement('script');
+    chatScript.type = 'module';
+    chatScript.textContent = `
       import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
       createChat(window.ChatWidgetConfig);
     `;
-    document.body.appendChild(script);
+    document.body.appendChild(chatScript);
 
-    // Clean up on component unmount
     return () => {
       document.head.removeChild(cssLink);
-      document.head.removeChild(configScript);
       document.body.removeChild(script);
+      document.body.removeChild(chatScript);
     };
   }, []);
 
-  // This component doesn't render anything directly as N8n chat is injected into the DOM
   return null;
-}
+};
+
+export default ChatWidget;
