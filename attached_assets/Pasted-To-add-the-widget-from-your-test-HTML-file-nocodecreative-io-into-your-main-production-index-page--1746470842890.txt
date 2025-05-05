@@ -1,0 +1,59 @@
+To add the widget from your test HTML file (nocodecreative.io) into your main production index page at minecoregroup.com, you just need to do one simple thing:
+
+✅ Replace the <script> that loads the widget JS
+Currently, your production page uses:
+
+html
+Copy
+Edit
+<script src="https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js"></script>
+But your test widget page (nocodecreative.io) uses a different webhook.url (https://n8n.nccio.co.uk/...), which is likely more current.
+
+🔧 Step-by-Step Instructions:
+Update the ChatWidgetConfig script block if you haven’t already, so it points to your correct endpoint. For example:
+
+html
+Copy
+Edit
+<script>
+    window.ChatWidgetConfig = {
+        webhook: {
+            url: 'https://n8n.nccio.co.uk/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+            route: 'general'
+        },
+        branding: {
+            logo: 'https://minecoregroup.com/logo-social.png',
+            name: 'Minecore Group',
+            welcomeText: 'Hi 👋, how can we help?',
+            responseTimeText: 'We typically respond right away'
+        },
+        style: {
+            primaryColor: '#854fff',
+            secondaryColor: '#6b3fd4',
+            position: 'right',
+            backgroundColor: '#ffffff',
+            fontColor: '#333333'
+        }
+    };
+</script>
+Ensure the widget loads from the correct source. If the JS file URL has changed (e.g., newer GitHub release, or custom domain), update this line:
+
+html
+Copy
+Edit
+<script src="https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js"></script>
+If Wayne has a newer version (or your own hosted fork), use that instead.
+
+✅ Place both <script> tags just before the closing </body> tag of your index.html so it loads after the page:
+
+html
+Copy
+Edit
+    <!-- Widget Configuration -->
+    <script>...ChatWidgetConfig...</script>
+    <script src="...chat-widget.js"></script>
+</body>
+✅ Final Tip:
+If you're deploying this into a React or Vite app and your index.html is inside public/, this setup will work as-is and load globally on every page load (unless you route-gate it).
+
+Let me know if you want the widget to show only on specific routes, pages, or under conditions (like scroll, or delay).
