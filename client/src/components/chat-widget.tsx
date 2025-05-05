@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export function ChatWidget() {
+export function N8nChatWidget() {
   // This component will load the N8n chat widget from a CDN
   useEffect(() => {
     // Add N8n chat CSS
