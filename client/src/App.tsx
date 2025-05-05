@@ -1,3 +1,4 @@
+import React, { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -93,6 +94,16 @@ function Router() {
           <Route path="/terms" component={Terms} />
           <Route path="/faq" component={FAQ} />
           <Route path="/blog" component={Blog} />
+          <Route path="/blog/:id">
+            {(params) => {
+              const BlogPostDetail = React.lazy(() => import('@/pages/blog/[id]'));
+              return (
+                <React.Suspense fallback={<div className="container py-24">Loading...</div>}>
+                  <BlogPostDetail />
+                </React.Suspense>
+              );
+            }}
+          </Route>
           <Route path="/case-studies" component={CaseStudies} />
           
           {/* Integration Routes - Protected */}
@@ -156,6 +167,16 @@ function Router() {
           <Route path="/fr/terms" component={Terms} />
           <Route path="/fr/faq" component={FAQ} />
           <Route path="/fr/blog" component={Blog} />
+          <Route path="/fr/blog/:id">
+            {(params) => {
+              const BlogPostDetail = lazy(() => import('@/pages/blog/[id]'));
+              return (
+                <Suspense fallback={<div className="container py-24">Loading...</div>}>
+                  <BlogPostDetail />
+                </Suspense>
+              );
+            }}
+          </Route>
           <Route path="/fr/case-studies" component={CaseStudies} />
           
           {/* French Integration Routes - Protected */}

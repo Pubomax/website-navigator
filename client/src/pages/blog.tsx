@@ -12,13 +12,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import type { BlogPost, BlogCategory } from "@shared/schema";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
+import { PageTitle } from "@/components/page-title";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Derniers Articles" : "Latest Insights",
   subtitle: isPathFrench
-    ? "Perspectives d'experts sur la transformation numérique et les tendances technologiques"
-    : "Expert perspectives on digital transformation and technology trends",
+    ? "Découvrez comment l'automatisation IA peut vous aider à gagner plus d'argent tout en travaillant moins"
+    : "Discover how AI automation can help you make more money while working less",
   tabs: {
     all: isPathFrench ? "Tous les Articles" : "All Posts"
   }
@@ -40,6 +41,7 @@ export default function Blog() {
   if (categoriesLoading || postsLoading) {
     return (
       <div className="container py-24">
+        <PageTitle pageKey="blog" />
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
             <Card key={i} className="animate-pulse">
@@ -53,6 +55,7 @@ export default function Blog() {
 
   return (
     <main className="py-24">
+      <PageTitle pageKey="blog" />
       <div className="container px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -74,7 +77,7 @@ export default function Blog() {
               <TabsTrigger value="all">{content.tabs.all}</TabsTrigger>
               {categories?.map((category) => (
                 <TabsTrigger key={category.id} value={category.slug}>
-                  {isPathFrench ? category.frenchName || category.name : category.name}
+                  {isPathFrench ? category.frenchDescription || category.name : category.name}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -146,7 +149,7 @@ function BlogPostCard({
         <CardContent className="p-6">
           {category && (
             <Badge variant="secondary" className="mb-4">
-              {isPathFrench ? category.frenchName || category.name : category.name}
+              {isPathFrench ? category.frenchDescription || category.name : category.name}
             </Badge>
           )}
           <div className="mb-4 text-sm text-muted-foreground">
@@ -160,18 +163,18 @@ function BlogPostCard({
           <CardDescription className="mb-4">
             {isPathFrench ? post.frenchSummary || post.summary : post.summary}
           </CardDescription>
-          <a 
-            href={`/blog/${post.id}`} 
+          <Link
+            to={`/blog/${post.id}`}
             className="text-sm font-medium text-primary flex items-center hover:underline"
           >
             {isPathFrench 
-              ? `Lire l'article complet sur ${post.frenchTitle || post.title}` 
-              : `Read full article about ${post.title}`
+              ? `Lire l'article complet` 
+              : `Read full article`
             }
             <svg className="ml-1 h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </a>
+          </Link>
         </CardContent>
       </Card>
     </motion.div>

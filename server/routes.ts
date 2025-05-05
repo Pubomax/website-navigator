@@ -362,6 +362,48 @@ Interest: ${leadData.interest}
     res.json(caseStudy);
   });
 
+  // Blog API endpoints
+  app.get("/api/blog-categories", async (_req, res) => {
+    const categories = await storage.getBlogCategories();
+    res.json(categories);
+  });
+
+  app.get("/api/blog-categories/:id", async (req, res) => {
+    const category = await storage.getBlogCategoryById(Number(req.params.id));
+    if (!category) {
+      res.status(404).json({ message: "Blog category not found" });
+      return;
+    }
+    res.json(category);
+  });
+
+  app.get("/api/blog-posts", async (req, res) => {
+    const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
+    try {
+      const posts = categoryId
+        ? await storage.getBlogPostsByCategory(categoryId)
+        : await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ message: "Error fetching blog posts" });
+    }
+  });
+
+  app.get("/api/blog-posts/:id", async (req, res) => {
+    try {
+      const post = await storage.getBlogPostById(Number(req.params.id));
+      if (!post) {
+        res.status(404).json({ message: "Blog post not found" });
+        return;
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ message: "Error fetching blog post" });
+    }
+  });
+
   app.post("/api/contact", async (req, res) => {
     try {
       console.log("Received contact form data:", req.body);
