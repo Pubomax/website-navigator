@@ -2,7 +2,6 @@ import { Hero } from "@/components/sections/hero";
 import { WhatWeDo } from "@/components/sections/what-we-do";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { CaseStudies } from "@/components/sections/case-studies";
-import { DirectOfferCTA } from "@/components/sections/direct-offer-cta";
 import { PageTitle } from "@/components/page-title";
 import { useLocation } from "wouter";
 import { ExperienceBadge, ExperienceBannerFull } from "@/components/experience-badge";
@@ -11,6 +10,7 @@ import { BeforeAfterSection } from "@/components/sections/before-after";
 import { AiSimplifiedSection } from "@/components/sections/ai-simplified";
 import { LocalTestimonialsSection } from "@/components/sections/local-testimonials";
 import { WorkLessCalculator } from "@/components/work-less-calculator";
+import { MinimalistCarousel } from "@/components/minimalist-carousel";
 
 export default function Home() {
   const [location] = useLocation();
@@ -43,8 +43,23 @@ export default function Home() {
       {/* Add Montreal Focus section */}
       <MontrealFocus />
       
-      {/* Add Direct Offer CTA */}
-      <DirectOfferCTA />
+      {/* New Minimalist Carousel for service plans */}
+      <section className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-center text-gray-800 dark:text-gray-100">
+            {isPathFrench ? "Nos Plans de Service Marketing" : "Our Marketing Service Plans"}
+          </h2>
+          <MinimalistCarousel />
+          
+          <div className="mt-12 text-center">
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+              {isPathFrench 
+                ? "Pas de contrat à long terme requis. Annulez à tout moment. Commencez par un appel de consultation pour voir si nos solutions sont adaptées à vos besoins."
+                : "No long-term contract required. Cancel anytime. Start with a consultation call to see if our solutions fit your needs."}
+            </p>
+          </div>
+        </div>
+      </section>
       
       {/* Add Before/After section */}
       <BeforeAfterSection />
