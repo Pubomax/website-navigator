@@ -97,17 +97,21 @@ export function Footer() {
                 <p>Email: hello@minecoregroup.com</p>
                 <p>Address: 3580 Boulevard Saint Elzear Ouest, Laval, QC H7P 0L7</p>
               </div>
-              <div className="flex space-x-4">
-                {navigation.social.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <span className="sr-only">{item.name}</span>
-                    <item.icon className="h-5 w-5" />
-                  </a>
-                ))}
+              <div className="flex flex-col space-y-2">
+                <h4 className="text-sm font-semibold">Social Media & Contact</h4>
+                <div className="flex flex-col space-y-2">
+                  {navigation.social.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors hover:underline"
+                      aria-label={`Follow us on ${item.name}`}
+                    >
+                      <item.icon className="h-4 w-4 mr-2" />
+                      <span>{item.name}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:col-span-2">

@@ -157,9 +157,21 @@ function BlogPostCard({
           <CardTitle className="mb-2">
             {isPathFrench ? post.frenchTitle || post.title : post.title}
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="mb-4">
             {isPathFrench ? post.frenchSummary || post.summary : post.summary}
           </CardDescription>
+          <a 
+            href={`/blog/${post.id}`} 
+            className="text-sm font-medium text-primary flex items-center hover:underline"
+          >
+            {isPathFrench 
+              ? `Lire l'article complet sur ${post.frenchTitle || post.title}` 
+              : `Read full article about ${post.title}`
+            }
+            <svg className="ml-1 h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
         </CardContent>
       </Card>
     </motion.div>
