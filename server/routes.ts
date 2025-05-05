@@ -176,7 +176,8 @@ Interest: ${leadData.interest}
             }
           );
           console.log('n8n lead submission successful:', n8nResponse.status);
-        } catch (n8nError) {
+        } catch (error) {
+          const n8nError = error as Error;
           console.log('n8n lead submission failed (continuing anyway):', n8nError.message);
         }
         
@@ -559,5 +560,14 @@ Interest: ${leadData.interest}
     }
   });
 
+  // Add API 404 handler - this will only be reached if no other routes matched
+  app.use('/api/*', (req, res) => {
+    res.status(404).json({
+      status: 404,
+      message: "API endpoint not found",
+      path: req.originalUrl
+    });
+  });
+  
   return httpServer;
 }

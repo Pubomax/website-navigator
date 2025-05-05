@@ -344,8 +344,12 @@ const pageTitles: Record<PathKey, PageTitleData> = {
   },
   notFound: {
     title: {
-      en: 'Page Not Found | Minecore Group',
-      fr: 'Page Non Trouvée | Groupe Minecore'
+      en: '404 Page Not Found | Minecore Group',
+      fr: '404 Page Non Trouvée | Groupe Minecore'
+    },
+    description: {
+      en: 'Sorry, the page you are looking for might have been removed or is temporarily unavailable. Please visit our homepage or explore popular sections to find what you need.',
+      fr: 'Désolé, la page que vous recherchez a peut-être été supprimée ou est temporairement indisponible. Veuillez visiter notre page d\'accueil ou explorer les sections populaires pour trouver ce dont vous avez besoin.'
     }
   }
 };
