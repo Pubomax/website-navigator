@@ -42,7 +42,7 @@ export function SimpleChatWidget() {
     setIsWaiting(true);
 
     try {
-      // Call webhook
+      // Call webhook with proper format
       const response = await fetch('https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat', {
         method: 'POST',
         headers: {
@@ -51,6 +51,7 @@ export function SimpleChatWidget() {
         body: JSON.stringify({
           message: userMessage.text,
           sessionId: 'web-' + Date.now(),
+          route: 'general'
         }),
       });
 
@@ -60,9 +61,12 @@ export function SimpleChatWidget() {
 
       const data = await response.json();
       
-      // Add bot response
+      // Add bot response - handle different possible response formats from n8n
+      const botResponse = data.response || data.message || data.text || data.content || 
+                        (typeof data === 'string' ? data : "Thank you for your message! We'll get back to you soon.");
+      
       setMessages(prev => [...prev, {
-        text: data.response || "Thank you for your message! We'll get back to you soon.",
+        text: botResponse,
         sender: 'bot',
         timestamp: new Date()
       }]);
