@@ -89,5 +89,16 @@
     <script src="/schemas.js" async></script>
     <!-- Load preloader for route optimization -->
     <script src="/preload.js" async></script>
+    
+    <!-- N8n Chat Widget -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css">
+    <script type="module">
+      import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+      createChat({
+        webhook: {
+          url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat'
+        }
+      });
+    </script>
   </body>
 </html>
