@@ -8,7 +8,6 @@ import { Footer } from "@/components/layout/footer";
 import { CookieConsent } from "@/components/cookie-consent";
 import { ProtectedRoute } from "./lib/protected-route";
 import { Helmet } from "react-helmet";
-import { SimpleChatWidget } from "@/components/simple-chat-widget";
 
 // Main pages
 import Home from "@/pages/home";
@@ -269,7 +268,6 @@ function App() {
       <Router />
       <CookieConsent />
       <Toaster />
-      <SimpleChatWidget />
     </QueryClientProvider>
   );
 }
