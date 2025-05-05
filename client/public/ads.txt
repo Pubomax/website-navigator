@@ -1,0 +1,5 @@
+# Authorized Digital Sellers for minecoregroup.com
+# Contact: hello@minecoregroup.com
+
+# This is a placeholder ads.txt file. Replace with actual advertising partners when available.
+# Format: <PartnerDomain>, <PublisherAccountID>, <AccountType>, <CertificationAuthorityID>

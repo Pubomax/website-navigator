@@ -20,6 +20,15 @@ app.use(compression({
   }
 }));
 
+// Handle special files like ads.txt to ensure correct Content-Type in all environments
+app.use((req, res, next) => {
+  // For ads.txt, set the correct MIME type
+  if (req.path === '/ads.txt') {
+    res.set('Content-Type', 'text/plain; charset=utf-8');
+  }
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
