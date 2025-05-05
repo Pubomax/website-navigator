@@ -90,13 +90,19 @@
     <!-- Load preloader for route optimization -->
     <script src="/preload.js" async></script>
     
-    <!-- N8n Chat Widget -->
+    <!-- N8n Chat Widget - Direct Approach -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css">
     <script type="module">
-      import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-      createChat({
-        webhook: {
-          url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat'
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          const { createChat } = await import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js');
+          createChat({
+            webhook: {
+              url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat'
+            }
+          });
+        } catch (error) {
+          console.error('Failed to load n8n chat widget:', error);
         }
       });
     </script>
