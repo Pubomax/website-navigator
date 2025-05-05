@@ -58,6 +58,16 @@
   width: 66.6%; /* Default fallback width */
 }
 
+/* Dynamic width utility */
+.w-dynamic {
+  width: var(--dynamic-width, auto);
+}
+
+/* Translation utility for dynamically positioned carousels */
+.translate-x-dynamic {
+  transform: translateX(var(--translate-x, 0px));
+}
+
 /* Progress indicator class (applied via JS for dynamic width) */
 .progress-indicator {
   transition: width 300ms ease-out;

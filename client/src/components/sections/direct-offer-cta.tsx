@@ -381,16 +381,16 @@ export function DirectOfferCTA() {
         <div className="relative w-full mx-auto overflow-hidden" ref={carouselRef}>
           <div 
             ref={trackRef}
-            className="flex carousel-transform"
-            style={{ transform: `translateX(${translateValue}px)` }}
+            className="flex carousel-transform translate-x-dynamic"
+            style={{ '--translate-x': `${translateValue}px` } as React.CSSProperties}
           >
             {content.offers.map((offer, index) => (
               <motion.div
                 key={offer.id}
-                className="flex-shrink-0 pr-4 md:pr-6 carousel-card"
+                className="flex-shrink-0 pr-4 md:pr-6 carousel-card w-dynamic"
                 ref={(el) => {
                   if (el && cardWidths[index]) {
-                    el.style.width = `${cardWidths[index]}px`;
+                    el.style.setProperty('--dynamic-width', `${cardWidths[index]}px`);
                   }
                 }}
                 initial={{ opacity: 0, y: 20 }}
