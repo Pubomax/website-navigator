@@ -112,6 +112,46 @@
             }
         };
     </script>
+    
+    <!-- CSS override for "powered by n8n" text -->
+    <link rel="stylesheet" href="powered-by-override.css">
+    
+    <!-- n8n chat widget script -->
     <script src="https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js"></script>
+    
+    <!-- Script to modify "powered by n8n" to "powered by Minecore" -->
+    <script>
+        // Multiple approaches to replace the text
+        window.addEventListener('load', function() {
+            // Function to replace the text
+            function replacePoweredBy() {
+                // Method 1: Direct text node replacement
+                document.querySelectorAll('*').forEach(function(element) {
+                    if (element.childNodes && element.childNodes.length > 0) {
+                        element.childNodes.forEach(function(node) {
+                            if (node.nodeType === 3 && node.textContent && node.textContent.includes('powered by n8n')) {
+                                node.textContent = node.textContent.replace('powered by n8n', 'powered by Minecore');
+                            }
+                        });
+                    }
+                });
+                
+                // Method 2: For elements with "Powered by n8n" as display text
+                document.querySelectorAll('div, span, p, a').forEach(function(el) {
+                    if (el.textContent && el.textContent.trim() === 'Powered by n8n') {
+                        el.textContent = 'Powered by Minecore';
+                    }
+                });
+            }
+            
+            // Run immediately
+            replacePoweredBy();
+            
+            // Also run after delays to catch dynamically loaded elements
+            setTimeout(replacePoweredBy, 500);
+            setTimeout(replacePoweredBy, 1000);
+            setTimeout(replacePoweredBy, 2000);
+        });
+    </script>
   </body>
 </html>
