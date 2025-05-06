@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CookieConsent } from "@/components/cookie-consent";
+import { SimpleChatWidget } from "@/components/simple-chat-widget";
 import { ProtectedRoute } from "./lib/protected-route";
 import { Helmet } from "react-helmet";
 
@@ -266,6 +267,7 @@ function App() {
         </script>
       </Helmet>
       <Router />
+      <SimpleChatWidget />
       <CookieConsent />
       <Toaster />
     </QueryClientProvider>
