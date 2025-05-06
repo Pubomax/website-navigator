@@ -46,10 +46,13 @@ export function SimpleChatWidget() {
       const webhookUrl = 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat';
       console.log("Webhook URL:", webhookUrl);
       
+      const sessionId = 'web-' + Date.now();
       const messagePayload = {
         message: userMessage.text,
-        sessionId: 'web-' + Date.now(),
-        route: 'general'
+        sessionId: sessionId,
+        route: 'general',
+        url: window.location.href,
+        userAgent: navigator.userAgent
       };
       console.log("Payload:", JSON.stringify(messagePayload));
       
@@ -70,6 +73,17 @@ export function SimpleChatWidget() {
 
       const data = await response.json();
       console.log("Response data:", data);
+      
+      // Check if the response is just echoing back our message
+      if (data && data.message === userMessage.text) {
+        console.log("Webhook is echoing back the message. Sending a fallback response instead.");
+        setMessages(prev => [...prev, {
+          text: "Thank you for your message! We'll be in touch shortly to help you increase revenue while working less.",
+          sender: 'bot',
+          timestamp: new Date()
+        }]);
+        return;
+      }
       
       // Add bot response - handle different possible response formats from n8n
       const botResponse = data.response || data.message || data.text || data.content || 
