@@ -1,5 +1,29 @@
 // Self-contained chat widget implementation
-(function() {
+// Debug flag to help troubleshoot
+window.__n8nChatWidgetLoaded = false;
+
+// Initialize widget function - will be called by multiple events to ensure it runs
+function initializeChatWidget() {
+  // Prevent multiple initializations
+  if (window.__n8nChatWidgetLoaded) {
+    console.log("N8n Chat Widget: Already initialized, skipping");
+    return;
+  }
+  
+  console.log("N8n Chat Widget: Starting initialization");
+  window.__n8nChatWidgetLoaded = true;
+  console.log("N8n Chat Widget: DOM fully loaded, initializing widget...");
+  
+  // Add CSP meta tag to allow external sources
+  try {
+    const meta = document.createElement('meta');
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;";
+    document.head.appendChild(meta);
+    console.log("N8n Chat Widget: Added CSP meta tag");
+  } catch (e) {
+    console.warn("N8n Chat Widget: Couldn't add CSP meta tag:", e);
+  }
   // Create the chat widget container
   const widget = document.createElement('div');
   widget.id = 'n8n-chat-widget';
@@ -325,4 +349,31 @@
     input.style.height = 'auto';
     input.style.height = (input.scrollHeight < 150 ? input.scrollHeight : 150) + 'px';
   });
-})();
+  
+  console.log("N8n Chat Widget: Initialization complete");
+}
+
+// Try multiple initialization strategies to ensure the widget loads
+// 1. DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("N8n Chat Widget: DOMContentLoaded fired");
+  setTimeout(initializeChatWidget, 100); // Small delay to ensure DOM is fully ready
+});
+
+// 2. Window load event (backup)
+window.addEventListener('load', function() {
+  console.log("N8n Chat Widget: Window load event fired");
+  setTimeout(initializeChatWidget, 500); // Small delay for any final DOM changes
+});
+
+// 3. Immediate execution with setTimeout (final backup)
+setTimeout(function() {
+  console.log("N8n Chat Widget: Delayed initialization attempt");
+  initializeChatWidget();
+}, 1500);
+
+// 4. Initial immediate execution attempt
+console.log("N8n Chat Widget: Script loaded, attempting immediate initialization");
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  setTimeout(initializeChatWidget, 10);
+}

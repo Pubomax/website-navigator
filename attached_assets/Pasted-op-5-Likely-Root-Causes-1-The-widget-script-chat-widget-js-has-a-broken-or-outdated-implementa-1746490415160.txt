@@ -1,0 +1,99 @@
+op 5 Likely Root Causes
+1. ⚠️ The widget script (chat-widget.js) has a broken or outdated implementation
+The widget you’re loading from https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js has had known issues reported with not rendering anything unless mounted in a very specific DOM state.
+
+It may expect window.ChatWidgetConfig before execution—but no fallback logic or polling exists in that script.
+
+It also has no error logging—so if the config is missing or malformed at execution, it just silently fails.
+
+✅ Fix:
+
+Replace this script with your working nocode-chat-embed.js, which is self-contained and actually renders a DOM element.
+
+Or, fork and fix Wayne’s widget, ensuring window.ChatWidgetConfig is either polled or awaited.
+
+2. 🚫 The ChatWidgetConfig is being declared too late (or asynchronously after script execution)
+Even with defer, if chat-widget.js loads before window.ChatWidgetConfig is defined, it will fail silently.
+
+This explains why the widget loads in a blank test HTML when structured properly, but not in Vite/React—where timing and render order are unpredictable.
+
+✅ Fix:
+Wrap the loader inside your config script:
+
+html
+Copy
+Edit
+<script>
+  window.ChatWidgetConfig = { /* ... config here ... */ };
+
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js';
+  script.async = true;
+  document.body.appendChild(script);
+</script>
+This guarantees the config exists before widget loads.
+
+3. ❌ No widget root element or DOM anchor point is injected
+The script expects to inject into the body or a container that may not yet exist in the DOM at time of execution.
+
+In a Vite/React environment, the app shell can delay hydration, causing the widget script to miss its injection window.
+
+✅ Fix: Make sure your script runs after window.onload or inject manually with your custom script after verifying the DOM is ready.
+
+4. 🔐 CSP (Content Security Policy) or CORs Block
+If you’re hosting from a secure domain or using Netlify/Cloudflare/Hostinger with a restrictive Content Security Policy, inline scripts or external scripts from jsdelivr.net may be blocked.
+
+Or, the N8n webhook might not respond properly due to CORS settings on your server.
+
+✅ Fix:
+
+Check DevTools > Console > Network and look for red errors, especially related to:
+
+Refused to load script...
+
+Blocked by CORS policy...
+
+Unexpected token or undefined at line x
+
+If needed, add this to your <meta> to temporarily relax CSP (for testing):
+
+html
+Copy
+Edit
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;">
+5. 🧱 CSS hides or misplaces the widget
+The widget might be rendering, but its CSS or z-index makes it invisible or places it off screen.
+
+If your layout container uses overflow: hidden or if a z-index: 0 overlay blocks interaction, this would do it.
+
+✅ Fix:
+
+In DevTools, search for DOM nodes containing chat-widget or similar.
+
+Manually inspect if it's:
+
+hidden (display: none)
+
+moved off screen (bottom: -9999px)
+
+visually covered (z-index issues)
+
+🔧 Recommended Action Plan
+✅ Use your working nocode-chat-embed.js script for full control. It bypasses third-party script timing issues.
+
+🛠️ Or wrap Wayne’s widget in your own loader (as shown above) to ensure it loads after ChatWidgetConfig is set.
+
+🔍 Check browser DevTools Console and Network tab for errors.
+
+🔒 Inspect for CSP or CORS errors in Network tab.
+
+🧪 Create a standalone HTML test file (not React/Vite) with just:
+
+ChatWidgetConfig
+
+your webhook
+
+script loader
+to verify that the config + webhook + loader combo works outside the app.
+
+👀 Inspect the DOM for widget presence and potential CSS conflicts.
