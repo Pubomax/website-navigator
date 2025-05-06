@@ -90,29 +90,372 @@
     <!-- Load preloader for route optimization -->
     <script src="/preload.js" async></script>
     
-    <!-- Chat widget configuration -->
-    <script>
-        window.ChatWidgetConfig = {
-            webhook: {
-                url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
-                route: 'general'
-            },
-            branding: {
-                logo: 'https://minecoregroup.com/logo-social.png',
-                name: 'nocodecreative.io',
-                welcomeText: 'Hi 👋, how can we help?',
-                responseTimeText: 'We typically respond right away'
-            },
-            style: {
-                primaryColor: '#854fff',
-                secondaryColor: '#6b3fd4',
-                position: 'right',
-                backgroundColor: '#ffffff', //Background color of the chat widget
-                fontColor: '#333333' //Text color for messages and interface
+    <!-- Chat widget implementation directly in the file -->
+    <div id="n8n-chat-widget" class="n8n-chat-widget" style="display:none">
+        <style>
+            .n8n-chat-widget {
+                --chat--color-primary: #854fff;
+                --chat--color-secondary: #6b3fd4;
+                --chat--color-background: #ffffff;
+                --chat--color-font: #333333;
+                font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             }
-        };
+
+            .n8n-chat-widget .chat-container {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 1000;
+                display: none;
+                width: 380px;
+                height: 600px;
+                max-height: 80vh;
+                background-color: var(--chat--color-background);
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                overflow: hidden;
+                flex-direction: column;
+                transition: all 0.3s ease;
+            }
+
+            .n8n-chat-widget .chat-header {
+                padding: 16px;
+                background-color: var(--chat--color-primary);
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .n8n-chat-widget .chat-title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 600;
+            }
+
+            .n8n-chat-widget .chat-logo {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .n8n-chat-widget .chat-toggle-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background-color: var(--chat--color-primary);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                z-index: 999;
+                transition: all 0.3s ease;
+            }
+
+            .n8n-chat-widget .chat-toggle-button svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .n8n-chat-widget .chat-toggle-button:hover {
+                transform: scale(1.05);
+                background-color: var(--chat--color-secondary);
+            }
+
+            .n8n-chat-widget .chat-close {
+                background: transparent;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                width: 24px;
+                height: 24px;
+            }
+
+            .n8n-chat-widget .chat-messages {
+                flex: 1;
+                padding: 16px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .n8n-chat-widget .message {
+                max-width: 70%;
+                padding: 12px 16px;
+                border-radius: 18px;
+                margin-bottom: 8px;
+                word-wrap: break-word;
+                line-height: 1.4;
+            }
+
+            .n8n-chat-widget .user-message {
+                align-self: flex-end;
+                background-color: var(--chat--color-primary);
+                color: white;
+                border-bottom-right-radius: 4px;
+            }
+
+            .n8n-chat-widget .bot-message {
+                align-self: flex-start;
+                background-color: #f0f2f5;
+                color: var(--chat--color-font);
+                border-bottom-left-radius: 4px;
+            }
+
+            .n8n-chat-widget .chat-input-container {
+                padding: 12px 16px;
+                display: flex;
+                border-top: 1px solid #eaeaea;
+            }
+
+            .n8n-chat-widget .chat-input {
+                flex: 1;
+                padding: 10px 14px;
+                border: 1px solid #e0e0e0;
+                border-radius: 24px;
+                outline: none;
+                font-size: 14px;
+            }
+
+            .n8n-chat-widget .chat-send {
+                background-color: var(--chat--color-primary);
+                color: white;
+                border: none;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                margin-left: 8px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .n8n-chat-widget .chat-send svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .n8n-chat-widget .chat-send:hover {
+                background-color: var(--chat--color-secondary);
+            }
+
+            .n8n-chat-widget .welcome-text {
+                font-size: 14px;
+                color: #666;
+                margin-top: 8px;
+                text-align: center;
+            }
+
+            .n8n-chat-widget .powered-by {
+                font-size: 12px;
+                color: #999;
+                text-align: center;
+                margin-bottom: 8px;
+            }
+        </style>
+        
+        <div class="chat-toggle-button" id="chat-toggle-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+        </div>
+        
+        <div class="chat-container" id="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <img class="chat-logo" src="https://minecoregroup.com/logo-social.png" alt="Logo">
+                    <span id="chat-brand-name">nocodecreative.io</span>
+                </div>
+                <button class="chat-close" id="chat-close">&times;</button>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot-message" id="welcome-message">
+                    Hi 👋, how can we help?
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+                <button class="chat-send" id="chat-send">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="welcome-text" id="response-time-text">
+                We typically respond right away
+            </div>
+            
+            <div class="powered-by">
+                Powered by n8n
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        (function() {
+            // Store the configuration
+            const config = {
+                webhook: {
+                    url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+                    route: 'general'
+                },
+                branding: {
+                    logo: 'https://minecoregroup.com/logo-social.png',
+                    name: 'nocodecreative.io',
+                    welcomeText: 'Hi 👋, how can we help?',
+                    responseTimeText: 'We typically respond right away'
+                },
+                style: {
+                    primaryColor: '#854fff',
+                    secondaryColor: '#6b3fd4',
+                    position: 'right',
+                    backgroundColor: '#ffffff',
+                    fontColor: '#333333'
+                }
+            };
+            
+            // Wait for DOM to be loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeChatWidget();
+            });
+            
+            // Initialize on load if DOM is already ready
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                initializeChatWidget();
+            }
+            
+            function initializeChatWidget() {
+                // Configure styles from config
+                const root = document.documentElement;
+                root.style.setProperty('--n8n-chat-primary-color', config.style.primaryColor);
+                root.style.setProperty('--n8n-chat-secondary-color', config.style.secondaryColor);
+                root.style.setProperty('--n8n-chat-background-color', config.style.backgroundColor);
+                root.style.setProperty('--n8n-chat-font-color', config.style.fontColor);
+                
+                // Set branding
+                if (config.branding.logo) {
+                    document.querySelector('.chat-logo').src = config.branding.logo;
+                }
+                if (config.branding.name) {
+                    document.getElementById('chat-brand-name').textContent = config.branding.name;
+                }
+                if (config.branding.welcomeText) {
+                    document.getElementById('welcome-message').textContent = config.branding.welcomeText;
+                }
+                if (config.branding.responseTimeText) {
+                    document.getElementById('response-time-text').textContent = config.branding.responseTimeText;
+                }
+                
+                // Get DOM elements
+                const widget = document.getElementById('n8n-chat-widget');
+                const toggleButton = document.getElementById('chat-toggle-button');
+                const chatContainer = document.getElementById('chat-container');
+                const closeButton = document.getElementById('chat-close');
+                const chatInput = document.getElementById('chat-input');
+                const sendButton = document.getElementById('chat-send');
+                const messagesContainer = document.getElementById('chat-messages');
+                
+                // Show widget
+                widget.style.display = 'block';
+                
+                // Toggle chat
+                toggleButton.addEventListener('click', function() {
+                    chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+                    if (chatContainer.style.display === 'flex') {
+                        chatInput.focus();
+                    }
+                });
+                
+                // Close chat
+                closeButton.addEventListener('click', function() {
+                    chatContainer.style.display = 'none';
+                });
+                
+                // Send message
+                function sendMessage() {
+                    const message = chatInput.value.trim();
+                    if (!message) return;
+                    
+                    // Add user message to the chat
+                    addMessage(message, 'user');
+                    
+                    // Clear input
+                    chatInput.value = '';
+                    
+                    // Send to webhook
+                    fetch(config.webhook.url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            route: config.webhook.route || 'general',
+                            meta: {
+                                url: window.location.href,
+                                userAgent: navigator.userAgent
+                            }
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Add the response from n8n
+                        if (data && data.message) {
+                            addMessage(data.message, 'bot');
+                        } else {
+                            // Fallback message if no valid response
+                            addMessage("Thank you for your message! I'll get back to you shortly.", 'bot');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error sending message to webhook:', error);
+                        addMessage("Sorry, there was an error connecting to our chat service. Please try again later.", 'bot');
+                    });
+                }
+                
+                // Add message to chat
+                function addMessage(text, type) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message');
+                    messageDiv.classList.add(type === 'user' ? 'user-message' : 'bot-message');
+                    messageDiv.textContent = text;
+                    messagesContainer.appendChild(messageDiv);
+                    
+                    // Scroll to the bottom
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+                
+                // Send on button click
+                sendButton.addEventListener('click', sendMessage);
+                
+                // Send on Enter key
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage();
+                    }
+                });
+                
+                console.log('Chat widget initialized');
+            }
+        })();
     </script>
-    <script src="https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js"></script>
     
 
   </body>
