@@ -42,24 +42,34 @@ export function SimpleChatWidget() {
     setIsWaiting(true);
 
     try {
+      console.log("Sending message to webhook...");
+      const webhookUrl = 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat';
+      console.log("Webhook URL:", webhookUrl);
+      
+      const messagePayload = {
+        message: userMessage.text,
+        sessionId: 'web-' + Date.now(),
+        route: 'general'
+      };
+      console.log("Payload:", JSON.stringify(messagePayload));
+      
       // Call webhook with proper format
-      const response = await fetch('https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat', {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          message: userMessage.text,
-          sessionId: 'web-' + Date.now(),
-          route: 'general'
-        }),
+        body: JSON.stringify(messagePayload),
       });
 
+      console.log("Response status:", response.status);
       if (!response.ok) {
-        throw new Error("Failed to get response");
+        console.error("Error response:", response);
+        throw new Error("Failed to get response: " + response.status);
       }
 
       const data = await response.json();
+      console.log("Response data:", data);
       
       // Add bot response - handle different possible response formats from n8n
       const botResponse = data.response || data.message || data.text || data.content || 
