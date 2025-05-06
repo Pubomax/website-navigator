@@ -89,7 +89,29 @@
     <script src="/schemas.js" async></script>
     <!-- Load preloader for route optimization -->
     <script src="/preload.js" async></script>
-    <!-- Load custom chat widget (self-contained) -->
-    <script src="/nocode-chat-embed.js" defer></script>
+    
+    <!-- Widget Configuration -->
+    <script>
+        window.ChatWidgetConfig = {
+            webhook: {
+                url: 'https://n8n.nccio.co.uk/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+                route: 'general'
+            },
+            branding: {
+                logo: 'https://minecoregroup.com/logo-social.png',
+                name: 'Minecore Group',
+                welcomeText: 'Hi 👋, how can we help?',
+                responseTimeText: 'We typically respond right away'
+            },
+            style: {
+                primaryColor: '#854fff',
+                secondaryColor: '#6b3fd4',
+                position: 'right',
+                backgroundColor: '#ffffff', 
+                fontColor: '#333333'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js"></script>
   </body>
 </html>
