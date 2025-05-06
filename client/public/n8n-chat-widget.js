@@ -1,7 +1,7 @@
 // N8N Chat Widget Configuration
 window.ChatWidgetConfig = {
     webhook: {
-        url: 'https://n8n.nccio.co.uk/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+        url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
         route: 'general'
     },
     branding: {
