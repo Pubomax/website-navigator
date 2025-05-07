@@ -1,78 +1,189 @@
-import { Link } from "wouter";
-import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
-import { useLocation } from "wouter";
+import React, { useEffect, useState } from 'react';
 
-interface RelatedService {
-  title: string;
+/**
+ * Related Services Component
+ * 
+ * Implements hub-and-spoke content clusters and contextual internal linking
+ * for improved site navigation and SEO performance.
+ */
+
+interface Service {
+  id: string;
+  name: string;
+  slug: string;
   description: string;
-  href: string;
-  icon: React.ElementType;
+  category: string;
+  icon?: string;
 }
 
 interface RelatedServicesProps {
-  currentService: string;
-  services: RelatedService[];
-  title?: string;
-  subtitle?: string;
+  currentServiceId?: string;
+  category?: string;
+  limit?: number;
+  showDescription?: boolean;
+  heading?: string;
+  className?: string;
 }
 
-export function RelatedServices({ 
-  currentService, 
-  services, 
-  title, 
-  subtitle 
+export function RelatedServices({
+  currentServiceId,
+  category,
+  limit = 3,
+  showDescription = true,
+  heading = "Related Services",
+  className = ""
 }: RelatedServicesProps) {
-  const [location] = useLocation();
-  const isPathFrench = location.startsWith("/fr");
+  // Mock data - in a real implementation, this would likely come from an API or data store
+  const allServices: Service[] = [
+    {
+      id: 'ai-automation-starter',
+      name: 'AI Automation Starter',
+      slug: '/services/ai-automation-starter',
+      description: 'Get started with AI automation quickly with our entry-level solution',
+      category: 'automation',
+      icon: 'sparkles'
+    },
+    {
+      id: 'custom-ai-automation',
+      name: 'Custom AI Automation',
+      slug: '/services/custom-ai-automation',
+      description: 'Fully tailored AI automation solutions for complex business processes',
+      category: 'automation',
+      icon: 'robot'
+    },
+    {
+      id: 'marketing-automation',
+      name: 'Marketing Automation',
+      slug: '/services/marketing-automation',
+      description: 'Streamline your marketing campaigns with intelligent automation',
+      category: 'marketing',
+      icon: 'megaphone'
+    },
+    {
+      id: 'sales-automation',
+      name: 'Sales Automation',
+      slug: '/services/sales-automation',
+      description: 'Optimize your sales process with AI-powered automation',
+      category: 'sales',
+      icon: 'chart-bar'
+    },
+    {
+      id: 'digital-foundation',
+      name: 'Digital Foundation',
+      slug: '/services/digital-foundation',
+      description: 'Build a strong digital infrastructure for your business',
+      category: 'infrastructure',
+      icon: 'server'
+    },
+    {
+      id: 'transformation-consulting',
+      name: 'Transformation Consulting',
+      slug: '/services/transformation-consulting',
+      description: 'Strategic guidance for your digital transformation journey',
+      category: 'consulting',
+      icon: 'light-bulb'
+    }
+  ];
   
-  // Filter out the current service and take only 3 related services
-  const filteredServices = services
-    .filter(service => service.href !== currentService)
-    .slice(0, 3);
+  const [relatedServices, setRelatedServices] = useState<Service[]>([]);
   
-  const defaultTitle = isPathFrench ? "Services Connexes" : "Related Services";
-  const defaultSubtitle = isPathFrench 
-    ? "Explorez d'autres solutions d'automatisation qui pourraient vous intéresser" 
-    : "Explore other automation solutions you might be interested in";
+  useEffect(() => {
+    // Filter services based on criteria
+    let filtered = allServices;
+    
+    // Don't show the current service
+    if (currentServiceId) {
+      filtered = filtered.filter(service => service.id !== currentServiceId);
+    }
+    
+    // Filter by category if provided
+    if (category) {
+      filtered = filtered.filter(service => service.category === category);
+    }
+    
+    // If no category provided and we have a currentServiceId, prioritize same category
+    if (!category && currentServiceId) {
+      const currentService = allServices.find(service => service.id === currentServiceId);
+      if (currentService) {
+        // First add services from same category
+        const sameCategory = filtered.filter(service => service.category === currentService.category);
+        const otherCategories = filtered.filter(service => service.category !== currentService.category);
+        filtered = [...sameCategory, ...otherCategories];
+      }
+    }
+    
+    // Limit number of results
+    filtered = filtered.slice(0, limit);
+    
+    setRelatedServices(filtered);
+  }, [currentServiceId, category, limit]);
+  
+  if (relatedServices.length === 0) {
+    return null;
+  }
   
   return (
-    <section className="py-12 border-t mt-16">
-      <div className="container px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold tracking-tight mb-2">
-            {title || defaultTitle}
-          </h2>
-          <p className="text-muted-foreground">
-            {subtitle || defaultSubtitle}
-          </p>
+    <section className={`related-services py-8 ${className}`} aria-labelledby="related-services-heading">
+      <div className="container mx-auto px-4">
+        <h2 id="related-services-heading" className="text-2xl font-bold mb-6">{heading}</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedServices.map(service => (
+            <div 
+              key={service.id} 
+              className="service-card bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            >
+              <h3 className="text-xl font-semibold mb-3">
+                <a
+                  href={service.slug}
+                  className="text-primary hover:underline flex items-center"
+                  aria-describedby={`${service.id}-desc`}
+                >
+                  {service.icon && (
+                    <span className="icon mr-2" aria-hidden="true">
+                      {/* Icon would be rendered here */}
+                    </span>
+                  )}
+                  {service.name}
+                </a>
+              </h3>
+              
+              {showDescription && (
+                <p id={`${service.id}-desc`} className="text-gray-600 mb-4">
+                  {service.description}
+                </p>
+              )}
+              
+              <a
+                href={service.slug}
+                className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                aria-label={`Learn more about ${service.name}`}
+              >
+                Learn more
+                <svg
+                  className="w-4 h-4 ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 010-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+            </div>
+          ))}
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6">
-          {filteredServices.map((service, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-start">
-                  <div className="mr-4 mt-1">
-                    <service.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg mb-2">{service.title}</CardTitle>
-                    <CardDescription className="mb-4">{service.description}</CardDescription>
-                    <Link 
-                      href={service.href} 
-                      className="text-sm font-medium text-primary flex items-center hover:underline"
-                    >
-                      {isPathFrench 
-                        ? `Découvrir notre service ${service.title.toLowerCase()}` 
-                        : `Learn about our ${service.title.toLowerCase()} service`}
-                      <ArrowRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mt-8 text-center">
+          <a
+            href="/services"
+            className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark"
+          >
+            View all services
+          </a>
         </div>
       </div>
     </section>

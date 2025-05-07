@@ -68,8 +68,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.sendFile('ads.txt', { root: './client/public' });
     });
   }
-  // Create HTTP server first
-  const httpServer = createServer(app);
+  
+  // Create HTTP server first - in Vercel this is passed in, not created here
+  const httpServer = process.env.NODE_ENV === 'production' ?
+    createServer(app) :
+    createServer(app);
 
   const SessionStore = MemoryStore(session);
   app.use(session({

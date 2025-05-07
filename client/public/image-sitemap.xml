@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    <!-- Homepage Images -->
+    <url>
+        <loc>https://minecoregroup.com/</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/hero-large.webp</image:loc>
+            <image:title>Minecore Group AI Automation Solutions</image:title>
+            <image:caption>Make More Money, Work Less with AI Automation</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/logo.png</image:loc>
+            <image:title>Minecore Group Logo</image:title>
+        </image:image>
+    </url>
+
+    <!-- About Page Images -->
+    <url>
+        <loc>https://minecoregroup.com/about</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/team-photo-large.webp</image:loc>
+            <image:title>Minecore Group Team</image:title>
+            <image:caption>Our team of automation experts</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Services Pages -->
+    <url>
+        <loc>https://minecoregroup.com/services/ai-automation-starter</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/ai-automation-large.webp</image:loc>
+            <image:title>AI Automation Starter</image:title>
+            <image:caption>Basic AI-powered automation package</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://minecoregroup.com/services/digital-foundation</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/digital-foundation-large.webp</image:loc>
+            <image:title>Digital Foundation</image:title>
+            <image:caption>Core digital infrastructure and transformation</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://minecoregroup.com/services/custom-ai-automation</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/custom-ai-large.webp</image:loc>
+            <image:title>Custom AI Automation</image:title>
+            <image:caption>Enterprise-grade AI automation solutions</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Solutions Pages -->
+    <url>
+        <loc>https://minecoregroup.com/solutions/automated-lead-generation</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/lead-generation-large.webp</image:loc>
+            <image:title>Automated Lead Generation</image:title>
+            <image:caption>Find prospects faster with AI</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://minecoregroup.com/solutions/smart-nurturing</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/smart-nurturing-large.webp</image:loc>
+            <image:title>Smart Nurturing</image:title>
+            <image:caption>Turn leads into clients automatically</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Sector Pages -->
+    <url>
+        <loc>https://minecoregroup.com/sectors/manufacturing</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/manufacturing-large.webp</image:loc>
+            <image:title>Manufacturing Automation</image:title>
+            <image:caption>Automation solutions for production and operations</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://minecoregroup.com/sectors/finance</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/finance-large.webp</image:loc>
+            <image:title>Finance Automation</image:title>
+            <image:caption>Smart solutions for financial services and banking</image:caption>
+        </image:image>
+    </url>
+
+    <!-- French versions of key pages -->
+    <url>
+        <loc>https://minecoregroup.com/fr</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/hero-large.webp</image:loc>
+            <image:title>Solutions d'automatisation IA de Minecore Group</image:title>
+            <image:caption>Gagnez Plus, Travaillez Moins avec l'automatisation IA</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://minecoregroup.com/fr/services/ai-automation-starter</loc>
+        <image:image>
+            <image:loc>https://minecoregroup.com/images/optimized/ai-automation-large.webp</image:loc>
+            <image:title>Pack de démarrage automatisation IA</image:title>
+            <image:caption>Solution d'automatisation basique alimentée par l'IA</image:caption>
+        </image:image>
+    </url>
+</urlset>

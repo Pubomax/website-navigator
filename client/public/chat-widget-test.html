@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget Test - Minecore Group</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #854fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        p {
+            margin-bottom: 16px;
+        }
+        a {
+            color: #854fff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .debug-info {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f2f2f2;
+        }
+        #widget-status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chat Widget Test - Minecore Group</h1>
+        <p>This is a standalone test page for the chat widget. You should see a chat button in the bottom right corner of the screen.</p>
+        <p><a href="/">Return to main site</a></p>
+        
+        <div class="debug-info">
+            <h3>Debug Information</h3>
+            <p>Widget Status: <span id="widget-status">Checking...</span></p>
+            <p>This page is using the direct widget code implementation.</p>
+            <button onclick="checkWidgetElements()">Check Widget Status</button>
+        </div>
+    </div>
+
+    <!-- Chat widget configuration -->
+    <script>
+        window.ChatWidgetConfig = {
+            webhook: {
+                url: 'https://n8n.srv793146.hstgr.cloud/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
+                route: 'general'
+            },
+            branding: {
+                logo: 'https://minecoregroup.com/logo-social.png',
+                name: 'Minecore Group',
+                welcomeText: 'Hi 👋, how can we help?',
+                responseTimeText: 'We typically respond right away'
+            },
+            style: {
+                primaryColor: '#854fff',
+                secondaryColor: '#6b3fd4',
+                position: 'right',
+                backgroundColor: '#ffffff',
+                fontColor: '#333333'
+            }
+        };
+        
+        console.log('ChatWidgetConfig:', window.ChatWidgetConfig);
+        
+        function checkWidgetElements() {
+            const widgetElements = document.querySelectorAll('.n8n-chat-widget');
+            const chatButtons = document.querySelectorAll('[aria-label*="chat"], .chat-widget-button');
+            
+            const statusElement = document.getElementById('widget-status');
+            
+            if (widgetElements.length > 0) {
+                statusElement.textContent = 'Found ' + widgetElements.length + ' widget elements';
+                statusElement.style.color = 'green';
+            } else if (chatButtons.length > 0) {
+                statusElement.textContent = 'Found ' + chatButtons.length + ' chat buttons';
+                statusElement.style.color = 'green';
+            } else {
+                statusElement.textContent = 'No widget elements found';
+                statusElement.style.color = 'red';
+            }
+            
+            console.log('Chat widget elements:', widgetElements);
+            console.log('Chat buttons found:', chatButtons);
+        }
+        
+        // Check widget status after 2 seconds
+        setTimeout(checkWidgetElements, 2000);
+    </script>
+    
+    <!-- Direct script loading -->
+    <script src="https://cdn.jsdelivr.net/gh/WayneSimpson/n8n-chatbot-template@ba944c3/chat-widget.js"></script>
+</body>
+</html>

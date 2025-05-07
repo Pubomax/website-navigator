@@ -1,6 +1,24 @@
+/* Import font definitions with font-display: swap */
+@import './styles/fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Enhanced focus styles for keyboard navigation */
+.user-is-tabbing :focus {
+  outline: 2px solid #4f46e5 !important; /* primary color */
+  outline-offset: 3px !important;
+}
+
+.user-is-tabbing :focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+.user-is-tabbing :focus-visible {
+  outline: 2px solid #4f46e5 !important;
+  outline-offset: 3px !important;
+}
 
 /* Custom card gradients for marketing service plans */
 .card-gradient1 {
@@ -98,5 +116,18 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Improve text rendering quality */
+  h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Prevent CLS by specifying image dimensions */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 }

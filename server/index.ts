@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import compression from "compression";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { createServer, type Server } from "http";
 
 const app = express();
 
@@ -77,9 +78,65 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  // Create HTTP server first
-  const server = await registerRoutes(app);
+// Create HTTP server
+let server: Server;
+
+if (process.env.NODE_ENV !== 'production') {
+  // Only create an actual HTTP server in development mode
+  (async () => {
+    server = await registerRoutes(app);
+
+    // Error handling middleware
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
+      log(`Error: ${message}`);
+      res.status(status).json({ message });
+    });
+
+    if (process.env.NODE_ENV === "development") {
+      await setupVite(app, server);
+    } else {
+      // Serve static files
+      serveStatic(app);
+    }
+
+    // Try ports sequentially
+    const tryPort = async (port: number): Promise<void> => {
+      try {
+        await new Promise<void>((resolve, reject) => {
+          server.listen({
+            port,
+            host: "0.0.0.0",
+          }, () => {
+            log(`Server listening on port ${port}`);
+            resolve();
+          }).on('error', (e: NodeJS.ErrnoException) => {
+            if (e.code === 'EADDRINUSE') {
+              log(`Port ${port} is in use, trying port ${port + 1}...`);
+              reject(e);
+            } else {
+              console.error(e);
+              process.exit(1);
+            }
+          });
+        });
+      } catch (e) {
+        const err = e as NodeJS.ErrnoException;
+        if (err.code === 'EADDRINUSE') {
+          await tryPort(port + 1);
+        } else {
+          throw err;
+        }
+      }
+    };
+
+    await tryPort(5000);
+  })();
+} else {
+  // In production (Vercel), just register the routes
+  server = createServer(app);
+  registerRoutes(app);
 
   // Error handling middleware
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -88,43 +145,10 @@ app.use((req, res, next) => {
     log(`Error: ${message}`);
     res.status(status).json({ message });
   });
+  
+  // Serve static files in production
+  serveStatic(app);
+}
 
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    // Serve static files
-    serveStatic(app);
-  }
-
-  // Try ports sequentially
-  const tryPort = async (port: number): Promise<void> => {
-    try {
-      await new Promise<void>((resolve, reject) => {
-        server.listen({
-          port,
-          host: "0.0.0.0",
-        }, () => {
-          log(`Server listening on port ${port}`);
-          resolve();
-        }).on('error', (e: NodeJS.ErrnoException) => {
-          if (e.code === 'EADDRINUSE') {
-            log(`Port ${port} is in use, trying port ${port + 1}...`);
-            reject(e);
-          } else {
-            console.error(e);
-            process.exit(1);
-          }
-        });
-      });
-    } catch (e) {
-      const err = e as NodeJS.ErrnoException;
-      if (err.code === 'EADDRINUSE') {
-        await tryPort(port + 1);
-      } else {
-        throw err;
-      }
-    }
-  };
-
-  await tryPort(5000);
-})();
+// Export the Express app for Vercel serverless functions
+export default app;

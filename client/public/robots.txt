@@ -23,10 +23,19 @@ Allow: /fr/about
 # Allow major search engines
 User-agent: Googlebot
 Allow: /
+
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
+
 User-agent: Slurp
 Allow: /
+Crawl-delay: 2
 
-# Specify the sitemap location
+# Add crawl-delay for other bots to reduce server load
+User-agent: *
+Crawl-delay: 3
+
+# Specify the sitemap locations
 Sitemap: https://minecoregroup.com/sitemap.xml
+Sitemap: https://minecoregroup.com/image-sitemap.xml

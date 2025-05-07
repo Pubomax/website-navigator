@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { 
-  Menu, 
   ChevronDown, 
   Factory, 
   Building2, 
@@ -14,13 +13,10 @@ import {
   Banknote
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-} from "@/components/ui/sheet";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { EnhancedMobileMenu } from "./enhanced-mobile-menu";
 
 // Type definition for navigation items with enhanced structure
 interface NavigationItem {
@@ -294,8 +290,6 @@ export function Header() {
   // State for managing dropdowns
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
 
   // Helper function to get localized path
   const getLocalizedPath = (path: string) => {
@@ -310,11 +304,6 @@ export function Header() {
   // Function to show a specific group in the dropdown
   const showGroup = (group: string) => {
     setActiveGroup(group);
-  };
-
-  // Function to toggle mobile navigation groups
-  const toggleMobileGroup = (name: string) => {
-    setOpenMobileGroup(prev => (prev === name ? null : name));
   };
 
   return (
@@ -581,7 +570,7 @@ export function Header() {
                                             ))
                                       }
                                     </div>
-
+                                    
                                     {/* Second section heading */}
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
                                       {item.name === "Industries" 
@@ -698,8 +687,7 @@ export function Header() {
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
                                       {t("Close More Sales")}
                                     </h4>
-                                    
-                                    <div className="space-y-5 mb-8">
+                                    <div className="space-y-5">
                                       {(item.items.find(g => g.group === "Sales Acceleration Solutions")?.items || []).map((subItem) => (
                                         <Link
                                           key={subItem.href}
@@ -727,13 +715,14 @@ export function Header() {
                                         </Link>
                                       ))}
                                     </div>
-
-                                    {/* Customer Engagement Section */}
+                                  </div>
+                                  
+                                  {/* Right column - Engagement Solutions */}
+                                  <div className="py-5 px-6 w-full max-w-md">
                                     <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                      {t("Customer Engagement")}
+                                      {t("Engage Customers")}
                                     </h4>
-                                    
-                                    <div className="space-y-5">
+                                    <div className="space-y-5 mb-8">
                                       {(item.items.find(g => g.group === "Customer Engagement Solutions")?.items || []).map((subItem) => (
                                         <Link
                                           key={subItem.href}
@@ -761,54 +750,39 @@ export function Header() {
                                         </Link>
                                       ))}
                                     </div>
+                                    
+                                    {/* Featured content */}
+                                    <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                                      <h4 className="font-medium text-primary mb-2">
+                                        {t("Featured Resource")}
+                                      </h4>
+                                      <p className="text-sm text-gray-600 mb-3">
+                                        {t("Discover how our customers save 20+ hours per week with automation.")}
+                                      </p>
+                                      <ul className="space-y-2 text-sm">
+                                        <li>
+                                          <Link 
+                                            href={getLocalizedPath("/case-studies")} 
+                                            className="text-primary hover:underline"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            {t("View Case Studies")}
+                                          </Link>
+                                        </li>
+                                        <li>
+                                          <Link 
+                                            href={getLocalizedPath("/contact")} 
+                                            className="text-primary hover:underline"
+                                            onClick={() => setActiveItem(null)}
+                                          >
+                                            {t("Request a Demo")}
+                                          </Link>
+                                        </li>
+                                      </ul>
+                                    </div>
                                   </div>
                                 </>
                               )}
-                              
-                              {/* Right column - Quick links (fixed content) */}
-                              <div className="py-5 px-6 min-w-[160px] max-w-[160px]">
-                                <h4 className="uppercase text-xs font-semibold text-gray-500 tracking-widest mb-4">
-                                  {t("more")}
-                                </h4>
-                                <ul className="space-y-2">
-                                  <li>
-                                    <Link 
-                                      href={getLocalizedPath("/about")} 
-                                      className="text-gray-700 hover:text-primary text-sm"
-                                      onClick={() => setActiveItem(null)}
-                                    >
-                                      {t("about")}
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link 
-                                      href={getLocalizedPath("/faq")} 
-                                      className="text-gray-700 hover:text-primary text-sm"
-                                      onClick={() => setActiveItem(null)}
-                                    >
-                                      {t("faq")}
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link 
-                                      href={getLocalizedPath("/blog")} 
-                                      className="text-gray-700 hover:text-primary text-sm"
-                                      onClick={() => setActiveItem(null)}
-                                    >
-                                      {t("blog")}
-                                    </Link>
-                                  </li>
-                                  <li>
-                                    <Link 
-                                      href={getLocalizedPath("/contact")} 
-                                      className="text-gray-700 hover:text-primary text-sm"
-                                      onClick={() => setActiveItem(null)}
-                                    >
-                                      {t("contact")}
-                                    </Link>
-                                  </li>
-                                </ul>
-                              </div>
                             </div>
                           </div>
                         </motion.div>
@@ -816,10 +790,15 @@ export function Header() {
                     </AnimatePresence>
                   </>
                 ) : (
-                  // Regular link for items without subitems
+                  // Simple link for items without subitems
                   <Link
                     href={getLocalizedPath(item.href!)}
-                    className="text-sm font-medium px-3 py-2 rounded-md transition-colors text-gray-600 hover:text-gray-900"
+                    className={cn(
+                      "inline-flex px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                      location === item.href || (isPathFrench && location.replace('/fr', '') === item.href)
+                        ? "text-primary"
+                        : "text-gray-600 hover:text-gray-900"
+                    )}
                   >
                     {t(item.name)}
                   </Link>
@@ -828,20 +807,17 @@ export function Header() {
             ))}
           </div>
         </div>
-
-        {/* Right section with language picker and CTA */}
+        
+        {/* Right-side actions */}
         <div className="hidden lg:flex items-center gap-2">
-          {/* Language Selector */}
+          {/* Language selector */}
           <div className="relative inline-block text-left">
             <button
               type="button"
-              className={cn(
-                "inline-flex items-center gap-x-1 text-sm font-medium px-3 py-2 rounded-md transition-colors",
-                activeItem === "language" ? "text-gray-900" : "text-gray-600 hover:text-gray-900"
-              )}
+              onClick={() => toggleDropdown("language")}
+              className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md"
               aria-expanded={activeItem === "language"}
               aria-haspopup="true"
-              onClick={() => toggleDropdown("language")}
             >
               {isPathFrench ? "FR" : "EN"}
               <ChevronDown className={cn(
@@ -850,7 +826,6 @@ export function Header() {
               )} />
             </button>
             
-            {/* Language selector dropdown */}
             <AnimatePresence>
               {activeItem === "language" && (
                 <motion.div
@@ -864,8 +839,13 @@ export function Header() {
                     {languages.map((lang) => (
                       <Link
                         key={lang.code}
-                        href={lang.code === "en" ? location.replace(/^\/fr/, "") : `/fr${location.replace(/^\/fr/, "")}`}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        href={lang.code === "en" ? location.replace(/^\/fr/, "") : isPathFrench ? location : `/fr${location}`}
+                        className={cn(
+                          "block px-4 py-2 text-sm",
+                          (lang.code === "en" && !isPathFrench) || (lang.code === "fr" && isPathFrench)
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-50"
+                        )}
                         onClick={() => setActiveItem(null)}
                       >
                         {lang.name}
@@ -876,133 +856,18 @@ export function Header() {
               )}
             </AnimatePresence>
           </div>
-
-          {/* CTA Button */}
+          
           <Button asChild className="ml-3">
-            <Link href={getLocalizedPath("/consultation")}>
-              {t("getStarted")}
+            <Link href={getLocalizedPath("/contact")}>
+              {t("Get Started")}
             </Link>
           </Button>
         </div>
-
-        {/* Mobile menu button */}
-        <div className="flex items-center lg:hidden">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Menu"
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
+        
+        {/* Enhanced Mobile Menu */}
+        <div className="lg:hidden">
+          <EnhancedMobileMenu navigation={navigation} />
         </div>
-
-        {/* Mobile menu */}
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetContent side="left" className="w-[300px] sm:w-[350px] pt-16">
-            <div className="flex flex-col h-full">
-              {/* Logo in mobile menu */}
-              <div className="flex justify-center mb-6">
-                <Link href={getLocalizedPath("/")} onClick={() => setMobileMenuOpen(false)}>
-                  <img src="/images/logo.png" alt="Minecore Group" className="h-10" loading="lazy" />
-                </Link>
-              </div>
-              <div className="flex-1 overflow-y-auto">
-                {/* Mobile Navigation */}
-                <div className="space-y-2 mt-4">
-                  {navigation.map((item) => (
-                    <div key={item.name} className="border-b border-gray-100 pb-2">
-                      {item.items ? (
-                        <>
-                          <button
-                            onClick={() => toggleMobileGroup(item.name)}
-                            className="flex justify-between items-center w-full py-2 text-base font-medium text-left"
-                          >
-                            {t(item.name)}
-                            <ChevronDown className={cn(
-                              "h-4 w-4 transition-transform",
-                              openMobileGroup === item.name ? "rotate-180" : ""
-                            )} />
-                          </button>
-                          {openMobileGroup === item.name && (
-                            <div className="ml-4 pl-4 mt-2 space-y-4 border-l border-gray-100">
-                              {item.items.map((group) => (
-                                <div key={group.group} className="mb-4">
-                                  <p className="text-xs font-semibold uppercase text-gray-500 pb-1">
-                                    {t(group.group)}
-                                  </p>
-                                  <div className="space-y-2">
-                                    {group.items.map((subItem) => (
-                                      <Link
-                                        key={subItem.href}
-                                        href={getLocalizedPath(subItem.href)}
-                                        className="flex items-center gap-2 py-1 text-sm text-gray-600 hover:text-gray-900"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                      >
-                                        {subItem.icon && (
-                                          <subItem.icon className={cn("h-4 w-4", subItem.iconColor || "text-gray-400")} />
-                                        )}
-                                        {t(subItem.name)}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <Link
-                          href={getLocalizedPath(item.href!)}
-                          className="block py-2 text-base font-medium text-gray-700 hover:text-gray-900"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {t(item.name)}
-                        </Link>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Language Selector - Mobile */}
-                <div className="mt-6 border-t border-gray-100 pt-6">
-                  <p className="text-xs font-semibold uppercase text-gray-500 pb-3">
-                    {t("language")}
-                  </p>
-                  <div className="flex space-x-2">
-                    {languages.map((lang) => (
-                      <Link
-                        key={lang.code}
-                        href={lang.code === "en" ? location.replace(/^\/fr/, "") : `/fr${location.replace(/^\/fr/, "")}`}
-                        className={cn(
-                          "px-3 py-1 text-sm rounded-md",
-                          lang.code === (isPathFrench ? "fr" : "en")
-                            ? "bg-gray-100 text-gray-900 font-medium"
-                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                        )}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {lang.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA Button - Mobile */}
-              <div className="pt-6 pb-4">
-                <Button asChild className="w-full">
-                  <Link 
-                    href={getLocalizedPath("/consultation")}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t("getStarted")}
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
       </div>
     </header>
   );

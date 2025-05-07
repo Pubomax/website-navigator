@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
-import { Brain, Bot, CheckCircle2 } from "lucide-react";
+import { Brain, Bot, CheckCircle2, Calculator } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
+import { ROICalculator } from "@/components/roi-calculator";
 
 const getContent = (isPathFrench: boolean) => ({
   title: isPathFrench ? "Pack d'IA & Automatisation Sur Mesure" : "Custom AI & Automation Package",
@@ -118,6 +119,24 @@ export default function CustomAIAutomation() {
                 <li key={app}>{app}</li>
               ))}
             </ul>
+
+            <h2>{isPathFrench ? "Calculez Votre Retour sur Investissement" : "Calculate Your ROI"}</h2>
+            <p>{isPathFrench
+              ? "Utilisez notre calculateur pour estimer le retour sur investissement potentiel de nos solutions d'automatisation IA personnalisées pour votre entreprise."
+              : "Use our calculator to estimate the potential return on investment of our custom AI automation solutions for your business."
+            }</p>
+            
+            <div className="w-full mt-6 mb-12">
+              <ROICalculator
+                defaultValues={{
+                  employees: 20,
+                  hourlyRate: 50,
+                  hoursPerWeek: 8,
+                  automationLevel: 85
+                }}
+                className="w-full"
+              />
+            </div>
 
             <div className="mt-12 flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg">

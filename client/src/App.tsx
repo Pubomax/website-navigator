@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -8,6 +8,11 @@ import { Footer } from "@/components/layout/footer";
 import { CookieConsent } from "@/components/cookie-consent";
 import { ProtectedRoute } from "./lib/protected-route";
 import { Helmet } from "react-helmet";
+import { useAnalytics } from "@/hooks/use-analytics";
+import { SkipLink } from "@/components/ui/skip-link";
+import { ResourceHints } from "@/components/ui/resource-hints";
+import { initFocusVisibility } from "@/lib/focus-management";
+import ChatWidget from "@/components/ChatWidget";
 
 // Main pages
 import Home from "@/pages/home";
@@ -78,8 +83,9 @@ import AdminDashboard from "@/pages/admin";
 function Router() {
   return (
     <div className="min-h-screen flex flex-col">
+      <SkipLink />
       <Header />
-      <div className="flex-1 pt-20">
+      <div id="main-content" className="flex-1 pt-20">
         <Switch>
           {/* Admin Routes - Place these before other routes */}
           <Route path="/admin/login" component={AdminLogin} />
@@ -241,33 +247,37 @@ function Router() {
 }
 
 function App() {
+  // Use optimized analytics loading
+  useAnalytics();
+  
+  // Initialize accessibility features
+  useEffect(() => {
+    // Set up focus visibility for keyboard navigation
+    initFocusVisibility();
+  }, []);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <Helmet>
-        {/* Google Tag for Ads (AW-17032394525) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17032394525"></script>
+        {/* Meta tags for SEO and proper rendering */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         
-        {/* Google Tag for Analytics (G-2S9WTCBXWT) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2S9WTCBXWT"></script>
-        
-        {/* Combined initialization script for both tags */}
-        <script>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            
-            // Google Ads tag
-            gtag('config', 'AW-17032394525');
-            
-            // Google Analytics tag
-            gtag('config', 'G-2S9WTCBXWT');
-          `}
-        </script>
+        {/* Font display swap for improved CLS */}
+        {/* Meta description with action-oriented text and clear value proposition */}
+        <meta
+          name="description"
+          content="Transform your business with AI automation solutions that save time and boost revenue. Our custom digital solutions help you grow while working less."
+        />
       </Helmet>
+      
+      {/* Add resource hints for performance optimization */}
+      <ResourceHints />
+      
       <Router />
       <CookieConsent />
       <Toaster />
+      <ChatWidget />
     </QueryClientProvider>
   );
 }
